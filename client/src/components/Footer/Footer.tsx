@@ -5,12 +5,12 @@ function Footer() {
     <>
       <FooterWrap>
         <List>
-          <span>RULES</span>
-          <span>ABOUT</span>
+          <span><a href='https://github.com/blind-42/Blind42/wiki/정책-정의서(1.3-update)'>RULES</a></span>
+          <span><a href='https://github.com/blind-42/Blind42'>ABOUT</a></span>
           <span>MAKER</span>
           <span>CONTACT</span>
         </List>
-        <Detail>Copyright © 2022 42Blind. All rights reserved.</Detail>
+        <Detail>Copyright © 2022 Blind42. All rights reserved.</Detail>
       </FooterWrap>
     </>
   );
