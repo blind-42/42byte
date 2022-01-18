@@ -14,12 +14,12 @@ function Menubar() {
 				</Logo>
 				<Button>
 						<Link to="/writing">
-							<input type={"button"} className='writingButton' value={"새 글 쓰기"} />
+							<input type="button" className='writingButton' value="새 글 쓰기" />
 						</Link>
 				</Button>
 				<Search>
-					<input type={"text"} className='textInput' placeholder='검색어를 입력하세요'/>
-					<input type={"button"} className='searchButton' value={"#"} />
+					<input type="text" className='textInput' placeholder='검색어를 입력하세요'/>
+					<input type="button" className='searchButton' value={"/"} />
 				</Search>
 				<MenuContent>
 

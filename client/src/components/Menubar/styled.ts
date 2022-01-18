@@ -22,11 +22,12 @@ export const Logo = styled.div`
 export const Button = styled.div`
 	flex: 0.5;
 	input {
-		height: 2rem;
-		width: 9rem;
+		height: 3.5vh;
+		width: 9vw;
 	}
 	.writingButton {
 		background: black;
+		font-weight: bolder;
 		color: white;
 	}
 `;
@@ -35,14 +36,15 @@ export const Search = styled.div`
 	flex: 0.5;
 	display: flex;
 	.textInput {
-		height: 1.5rem;
-		width: 7.5rem;
+		border: solid 1px black;
+		height: 2.5vh;
+		width: 7.5vw;
 	}
 	.searchButton {
 		background: black;
 		color: white;
-		height: 1.5rem;
-		width: 1.5rem;
+		height: 2.5vh;
+		width: 1.5vw;
 	}
 `;
 
