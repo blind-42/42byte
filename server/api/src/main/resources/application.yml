@@ -1,0 +1,61 @@
+spring:
+  # 데이터 소스 설정
+  datasource:
+    url: jdbc:mysql://localhost:3306/UserTable?serverTimezone=Asia/Seoul&characterEncoding=UTF-8
+    driverClassName: com.mysql.cj.jdbc.Driver
+    username: root
+    password: blind42blind42
+  # JPA 설정
+  jpa:
+    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
+    hibernate:
+      ddl-auto: create
+    properties:
+      hibernate:
+        show_sql: true
+        format_sql: true
+        use_sql_comments: true
+    logging:
+      level:
+        org.hibernate.SQL: debug
+  # Security OAuth
+  security:
+    oauth2.client:
+        registration:
+          42:
+            client-id: "aa9c83987ce3e0dc4b79cc7c2d9c80147ec532ec4ce6cb5df032338272d54df5"
+            client-secret: "abaefa17bb4af72ff5dbdcf2fb39c1353d0dc3f9bcc61d6daec8e6939eebe7ca"
+            redirect-uri: "{baseUrl}/{action}/oauth2/code/{registrationId}"
+            authorization-grant-type: authorization_code
+            scope: public
+        # Provider 설정
+        provider:
+          42:
+            authorization-uri: "https://api.intra.42.fr/oauth/authorize"
+            token-uri: "https://api.intra.42.fr/oauth/token"
+            user-info-uri: "https://api.intra.42.fr/v2/me"
+            user-name-attribute: id
+
+  # Swagger 설정
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
+
+# cors 설정
+cors:
+  allowed-origins: 'http://localhost:3000'
+  allowed-methods: GET,POST,PUT,DELETE,OPTIONS
+  allowed-headers: '*'
+  max-age: 3600
+
+app:
+  auth:
+    tokenSecret: 926D96C90030DD58429D2751AC1BDBBC
+    tokenExpiry: 1800000
+    refreshTokenExpiry: 604800000
+  oauth2:
+    authorizedRedirectUris:
+      - http://localhost:3000/oauth/redirect
+
+# jwt secret key 설정
+jwt.secret: a2f6abd304bcd1d2ff9691bb0e7c1bab1010d0466c628d23b49550fb932300a43054a6030811f6118eb8129d9033cf5e2b63b762c5bd7bee246f63d34ee04fd3
