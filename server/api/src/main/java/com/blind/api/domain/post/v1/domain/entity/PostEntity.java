@@ -1,5 +1,6 @@
 package com.blind.api.domain.post.v1.domain.entity;
 
+import com.blind.api.domain.user.domain.User;
 import com.blind.api.global.entity.BaseTimeEntity;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -28,30 +29,30 @@ public class PostEntity extends BaseTimeEntity {
     @Size(max = 24)
     private String title;
 
-    @Column(name = "author_id", length = 20, updatable = false)
-    private Long author_id;
+    @Column(name = "user_seq")
+    private Long userSeq;
 
     @Column(name = "content", length = 4200)
     @Size(max = 4200)
     private String content;
 
-    @Column(name = "view_count", columnDefinition = "Integer default 0", updatable = false)
+    @Column(name = "view_count", updatable = false)
     private Long viewCnt;
 
-    @Column(name = "like_count", columnDefinition = "Integer default 0", updatable = false)
+    @Column(name = "like_count", updatable = false)
     private Long likeCnt;
 
-    @Column(name = "is_notice", columnDefinition = "Boolean default 0", updatable = false)
+    @Column(name = "is_notice", updatable = false)
     private Boolean isNotice;
 
-    @Column(name = "is_blamed", columnDefinition = "Integer default 0", updatable = false)
+    @Column(name = "is_blamed", updatable = false)
     private Long blameCnt;
 
     @Builder
-    public PostEntity(Long postIdx, String title, Long author_id, String content, Long viewCnt, Long likeCnt, Boolean isNotice, Long blameCnt) {
+    public PostEntity(Long postIdx, String title, Long userSeq, String content, Long viewCnt, Long likeCnt, Boolean isNotice, Long blameCnt) {
         this.postIdx = postIdx;
         this.title = title;
-        this.author_id = author_id;
+        this.userSeq = userSeq;
         this.content = content;
         this.viewCnt = viewCnt;
         this.likeCnt = likeCnt;

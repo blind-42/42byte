@@ -1,10 +1,10 @@
 spring:
   # 데이터 소스 설정
   datasource:
-    url: jdbc:mysql://localhost:3306/UserTable?serverTimezone=Asia/Seoul&characterEncoding=UTF-8
+    url: jdbc:mysql://localhost:3306/blind-test?serverTimezone=Asia/Seoul&characterEncoding=UTF-8
     driverClassName: com.mysql.cj.jdbc.Driver
     username: root
-    password: blind42blind42
+    password: namjun1084
   # JPA 설정
   jpa:
     database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
@@ -36,7 +36,7 @@ spring:
             user-info-uri: "https://api.intra.42.fr/v2/me"
             user-name-attribute: id
 
-  # Swagger 설정
+# Swagger 설정
   mvc:
     pathmatch:
       matching-strategy: ant_path_matcher

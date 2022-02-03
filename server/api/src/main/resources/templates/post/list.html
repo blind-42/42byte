@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+
+</head>
+<body>
+<a th:href="@{/board/post}">글쓰기</a>
+
+<table>
+  <thead>
+  <tr>
+    <th class="one wide">번호</th>
+    <th class="ten wide">글제목</th>
+    <th class="two wide">작성자</th>
+    <th class="three wide">작성일</th>
+  </tr>
+  </thead>
+
+  <tbody>
+  <!-- CONTENTS !-->
+  <tr th:each="post : ${postList}">
+    <td>
+      <span th:text="${post.postIdx}"></span>
+    </td>
+    <td>
+      <a th:href="@{'/board/post/' + ${post.postIdx}}">
+        <span th:text="${post.title}"></span>
+      </a>
+    </td>
+    <td>
+      <span th:text="${post.userSeq}"></span>
+    </td>
+  </tr>
+  </tbody>
+</table>
+
+</body>
+</html>

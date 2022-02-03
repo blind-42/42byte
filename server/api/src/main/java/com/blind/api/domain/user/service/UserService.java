@@ -12,9 +12,18 @@ import org.springframework.stereotype.Service;
 public class UserService {
     private final UserRepository userRepository;
     private final TokenRepository tokenRepository;
+
     public User getUserBy(String id){
+
         return userRepository.findByUserId(id);
     }
+
+    /*임시 구현*/
+    public User getUserByUserSeq(Long id) {
+
+        return userRepository.findByUserSeq(id);
+    }
+
     public User getUserByToken(String token){
         UserRefreshToken userToken =  tokenRepository.findByAccessToken(token);
         if (userToken == null)

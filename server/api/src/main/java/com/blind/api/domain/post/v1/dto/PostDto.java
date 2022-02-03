@@ -1,6 +1,7 @@
 package com.blind.api.domain.post.v1.dto;
 
 import com.blind.api.domain.post.v1.domain.entity.PostEntity;
+import com.blind.api.domain.user.domain.User;
 import lombok.*;
 
 import java.time.LocalDateTime;
@@ -13,11 +14,12 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @ToString
+@AllArgsConstructor
 @NoArgsConstructor
 public class PostDto {
     private Long postIdx;
     private String title;
-    private Long author_id;
+    private Long userSeq;
     private String content;
     private Long viewCnt;
     private Long likeCnt;
@@ -29,22 +31,26 @@ public class PostDto {
     public PostEntity toEntity() {
         PostEntity postEntity = PostEntity.builder()
                 .postIdx(postIdx)
-                .author_id(author_id)
+                .userSeq(userSeq)
                 .title(title)
                 .content(content)
-                .viewCnt(viewCnt)
-                .likeCnt(likeCnt)
-                .isNotice(isNotice)
-                .blameCnt(blameCnt)
+                .viewCnt(0L)
+                .likeCnt(0L)
+                .isNotice(false)
+                .blameCnt(0L)
                 .build();
         return postEntity;
     }
 
+    public void setUser(Long userSeq) {
+        this.userSeq = userSeq;
+    }
+
     @Builder
-    public PostDto(Long postIdx, String title, Long author_id, String content, Long viewCnt, Long likeCnt, LocalDateTime createdDate, LocalDateTime modifiedDate, Boolean isNotice, Long blameCnt) {
+    public PostDto(Long postIdx, String title, Long userSeq, String content, Long viewCnt, Long likeCnt, LocalDateTime createdDate, LocalDateTime modifiedDate, Boolean isNotice, Long blameCnt) {
         this.postIdx = postIdx;
         this.title = title;
-        this.author_id = author_id;
+        this.userSeq = userSeq;
         this.content = content;
         this.viewCnt = viewCnt;
         this.likeCnt = likeCnt;
