@@ -47,6 +47,7 @@ public class User extends BaseTimeEntity {
         this.userId = userId;
         this.roleType = roleType;
     }*/
+
     public User(
             @NotNull @Size(max = 64) String userId,
             @NotNull RoleType roleType
