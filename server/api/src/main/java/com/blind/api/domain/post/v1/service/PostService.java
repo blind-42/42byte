@@ -3,7 +3,6 @@ package com.blind.api.domain.post.v1.service;
 import com.blind.api.domain.post.v1.domain.entity.PostEntity;
 import com.blind.api.domain.post.v1.domain.repository.PostRepository;
 import com.blind.api.domain.post.v1.dto.PostDto;
-import com.blind.api.domain.user.domain.User;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 

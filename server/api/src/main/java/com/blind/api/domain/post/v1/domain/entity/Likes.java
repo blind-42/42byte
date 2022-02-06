@@ -1,6 +1,6 @@
 package com.blind.api.domain.post.v1.domain.entity;
 
-import com.blind.api.domain.user.domain.User;
+import com.blind.api.domain.user.v1.domain.User;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -15,11 +15,11 @@ public class Likes {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @JoinColumn(name = "postIdx")
+    @JoinColumn(name = "post_id")
     @ManyToOne
     private PostEntity post;
 
-    @JoinColumn(name = "userSeq")
+    @JoinColumn(name = "user_seq")
     @ManyToOne
     private User user;
 
