@@ -9,6 +9,13 @@ group = 'com.42.blind'
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '11'
 
+/* War 생성 - BootWar*/
+bootWar {
+	archivesBaseName = 'api'
+	archiveFileName = 'api.war'
+	archiveVersion = '0.0.1'
+}
+
 configurations {
 	compileOnly {
 		extendsFrom annotationProcessor
@@ -52,7 +59,7 @@ dependencies {
 	/* annotation */
 	annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
 
-	/* another */
+	/* SHA256 */
 	implementation 'com.google.guava:guava:31.0.1-jre'
 
 	//thymeleaf

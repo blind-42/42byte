@@ -1,7 +1,6 @@
 package com.blind.api.domain.post.v1.dto;
 
 import com.blind.api.domain.post.v1.domain.entity.PostEntity;
-import com.blind.api.domain.user.domain.User;
 import lombok.*;
 
 import java.time.LocalDateTime;

@@ -1,6 +1,5 @@
 package com.blind.api.domain.post.v1.domain.entity;
 
-import com.blind.api.domain.user.domain.User;
 import com.blind.api.global.entity.BaseTimeEntity;
 import lombok.AccessLevel;
 import lombok.Builder;
