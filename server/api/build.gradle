@@ -9,6 +9,13 @@ group = 'com.42.blind'
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '11'
 
+/* War 생성 - BootWar*/
+bootWar {
+	archivesBaseName = 'api'
+	archiveFileName = 'api.war'
+	archiveVersion = '0.0.1'
+}
+
 configurations {
 	compileOnly {
 		extendsFrom annotationProcessor
@@ -38,8 +45,7 @@ dependencies {
 	implementation 'io.jsonwebtoken:jjwt-jackson:0.11.2'
 
 	/* Swagger */
-	implementation 'io.springfox:springfox-swagger-ui:2.9.2'
-	implementation 'io.springfox:springfox-swagger2:2.9.2'
+	implementation 'io.springfox:springfox-boot-starter:3.0.0'
 
 	/* Test */
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
@@ -52,7 +58,7 @@ dependencies {
 	/* annotation */
 	annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
 
-	/* another */
+	/* SHA256 */
 	implementation 'com.google.guava:guava:31.0.1-jre'
 
 	//thymeleaf
