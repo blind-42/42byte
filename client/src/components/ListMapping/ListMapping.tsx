@@ -1,4 +1,4 @@
-import { ListWrap } from './styled'
+import { ListWrap, ListRight, ListLeft } from './styled'
 
 interface dummyProps {
 	uuid: number
@@ -15,17 +15,27 @@ function ListMapping(dummy:dummyProps) {
 	return (
 		<>
 			<ListWrap>
-				<div className='listTitle'>
-					<span>{dummy.title}</span>
-					<span className='listComment'> ({dummy.comment})</span>
+				<ListLeft>
+					<div className='listTitle'>{dummy.title}</div>
+					<div className='listComment'>({dummy.comment})</div>
+				</ListLeft>
+				<ListRight>
+				<div className='listView'>
+					{dummy.view}
 				</div>
-				<div className='listView'>{dummy.view}</div>
-				<div className='listThumsup'>{dummy.thumsup}</div>
-				<div className='listWriter'>카뎃</div>
-				<div className='listCreatedat'>{dummy.createdAt.slice(0, 10)}</div>
+				<div className='listThumsup'>
+					{dummy.thumsup}
+				</div>
+				<div className='listWriter'>
+					카뎃
+				</div>
+				<div className='listCreatedat'>
+					{dummy.createdAt.slice(0, 10)}
+				</div>
+				</ListRight>
 			</ListWrap>
 		</>
 	);
 }
 
-export default ListMapping
+export default ListMapping;

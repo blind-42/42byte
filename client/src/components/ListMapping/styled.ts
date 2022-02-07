@@ -1,40 +1,76 @@
 import styled from 'styled-components';
 
 export const ListWrap = styled.div`
-	display: flex;
-	margin-top: 1vh;
-	padding-bottom: 1vh;
 	border-bottom: solid 2px black;
-	text-align: center;
-	div {
-		padding: 1vh;
+
+	@media screen and (min-width: 768px) {
+		display: flex;
+		align-items: center;
 	}
-	.listTitle {
-		flex: 6;
-		margin-left:1vw;
-		text-align: left;
-		font-weight: bolder;
-		.listComment {
-			color: gray;
-		}
-	}
-	.listView {
-		flex: 0.5;
+`;
+
+export const ListLeft = styled.div`
+	display: flex;
+	margin: 1.5vh;
+	font-size: larger;
+	font-weight: bolder;
+	.listComment {
+		padding-left:1vw;
 		color: gray;
+	}
+	@media screen and (min-width: 768px) {
+		flex: 6;
+		text-align: left;
+		font-size: medium;
+	}
+`;
+
+export const ListRight = styled.div`
+	display: flex;
+	padding: 1vh 2vh 1vh 2vh;
+	color: gray;
+	.listView {
+		flex: 1.5;
 		font-weight: bolder;
+		text-align: left;
 	}
 	.listThumsup {
-		flex: 0.5;
-		color: gray;
+		flex: 1.5;
 		font-weight: bolder;
+		text-align: left;
 	}
 	.listWriter {
-		flex: 1.5;
-		color: gray;
+		flex: 2;
+		visibility : hidden;
 	}
 	.listCreatedat {
-		flex: 1.5;
+		flex: 5;
+		text-align: right;
+	}
+	@media screen and (min-width: 768px) {
+		flex: 4;
+		display: flex;
+		margin: 1vh 0vh 1vh 0vh;
+		padding: 1vh;
 		color: gray;
-		font-size: small;
+		align-items: center;
+		.listView {
+			flex: 2;
+			text-align: center;
+		}
+		.listThumsup {
+			flex: 2;
+			text-align: center;
+		}
+		.listWriter {
+			flex: 3;
+			visibility : visible;
+			text-align: center;
+		}
+		.listCreatedat {
+			flex: 3;
+			text-align: center;
+			font-size: small;
+		}
 	}
 `;
