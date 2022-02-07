@@ -1,14 +1,18 @@
 import styled from 'styled-components';
 
 export const MenubarWrap = styled.div`
-	position: fixed;
-	display: flex;
-	flex-direction: column;
-	background: #C4C4C4;
-	border: solid 2px black;
-	height: 100vh;
-	width: 10vw;
-	align-items: center;
+	display: none;
+
+	@media screen and (min-width: 768px) {
+		position: fixed;
+		display: flex;
+		flex-direction: column;
+		background: #C4C4C4;
+		border: solid 2px black;
+		height: 100vh;
+		width: 10vw;
+		align-items: center;
+  }
 `;
 
 export const Logo = styled.div`
