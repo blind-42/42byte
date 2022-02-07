@@ -1,13 +1,20 @@
-import { Container, UserProfile, UserImg, UserName, DropdownMenu } from './styled';
+import { Container, MenubarLogoWrap, MenubarButton, Logo, UserProfile, UserImg, UserName, DropdownMenu } from './styled';
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import Menubar from '../Menubar/Menubar';
 
 function Header(/*{ isLogedIn }*/) {
 	
-	const [show, setShow] = useState(false);
+	const [showBox, setShowBox] = useState(false);
 	const dropdownHandler = () => {
-		setShow(!show);
+		setShowBox(!showBox);
 	}
+
+	const [showMenu, setShowMenu] = useState(true);
+	const menubarHandler = () => {
+		setShowMenu(!showMenu);
+	}
+
 	// const logOutHandler = () {
 
 	// }
@@ -15,9 +22,25 @@ function Header(/*{ isLogedIn }*/) {
   return (
     <>
       <Container>
+				<MenubarLogoWrap>
+					<MenubarButton onClick={menubarHandler}>
+						Button
+						{showMenu
+						? <Menubar />
+						: null
+						}
+					</MenubarButton>
+					<Logo>
+						<div className='logoImg'>
+							<Link to="/">
+								<img src="" alt="LOGO" />
+							</Link>
+						</div>
+					</Logo>
+				</MenubarLogoWrap>
 				<UserProfile onClick={dropdownHandler}>
 					<UserImg>
-						<img src='./egg.png' alt='profileimg' />
+						<img src='../../../public/images/egg.png' alt='pfimg' />
 					</UserImg>
 					<UserName>
 						{/* {isLogedIn
@@ -28,7 +51,7 @@ function Header(/*{ isLogedIn }*/) {
 						{/* :	<Link to='/login'>로그인</Link>
 						} */}
 					</UserName>
-					{/*isLogedIn && */show
+					{/*isLogedIn && */showBox
 						? <DropdownMenu>
 								<li><Link to='/mypage'>마이페이지</Link></li>
 								<li><Link to='/' /*onClick={logOutHandler}*/>로그아웃</Link></li>
