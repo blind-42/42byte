@@ -40,7 +40,7 @@ function Header(/*{ isLogedIn }*/) {
 				</MenubarLogoWrap>
 				<UserProfile onClick={dropdownHandler}>
 					<UserImg>
-						<img src='../../../public/images/egg.png' alt='pfimg' />
+						<img src='/images/egg.png' alt='pfimg' />
 					</UserImg>
 					<UserName>
 						{/* {isLogedIn
