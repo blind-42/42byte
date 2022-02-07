@@ -8,7 +8,6 @@ import lombok.NoArgsConstructor;
 import org.springframework.util.Assert;
 
 import javax.persistence.*;
-import java.util.Optional;
 
 @Getter
 @NoArgsConstructor

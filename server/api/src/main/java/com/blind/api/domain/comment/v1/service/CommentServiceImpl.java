@@ -65,11 +65,13 @@ public class CommentServiceImpl implements CommentService{
     /*
      * 게시글의 모든 댓글 조회
      * */
+    @Override
     @Transactional
     public List<Comment> findAllComment(Long boardId, Long postId) {
         return commentRepository.findAllByBoardIdAndPostId(boardId, postId);
     }
-
+    @Override
+    @Transactional
     public void updateLike(Long id, Long add) {
         commentRepository.updateLike(id, add);
     }

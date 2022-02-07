@@ -7,6 +7,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.DynamicInsert;
 import org.springframework.util.Assert;
 
 import javax.persistence.*;
@@ -14,6 +15,7 @@ import javax.persistence.*;
 @Entity
 @Getter
 @Setter
+@DynamicInsert
 @NoArgsConstructor
 public class Comment extends BaseTimeEntity {
     @Id
@@ -50,18 +52,6 @@ public class Comment extends BaseTimeEntity {
 
     @Column(name = "is_del", columnDefinition = "Boolean default false", updatable = false)
     private Boolean isDel;
-
-
-
-/*    @ManyToOne
-    @JsonIgnore
-    @JoinColumn(name="board_id")
-    private Board board;
-
-    @ManyToOne
-    @JsonIgnore
-    @JoinColumn(name="post_id")
-    private Post post;*/
 
     @Builder
     public Comment(Long boardId, Long postId, Long authorId, String content, Boolean isAuthor) {

@@ -1,7 +1,6 @@
 package com.blind.api.domain.like.domain;
 
 import com.blind.api.domain.comment.v1.domain.Comment;
-import com.blind.api.domain.post.v2.domain.Post;
 import com.blind.api.domain.user.v2.domain.User;
 import lombok.Builder;
 import lombok.Getter;

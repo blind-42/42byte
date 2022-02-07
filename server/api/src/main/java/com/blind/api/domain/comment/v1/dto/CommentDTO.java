@@ -1,14 +1,7 @@
 package com.blind.api.domain.comment.v1.dto;
 
 import com.blind.api.domain.comment.v1.domain.Comment;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.sun.istack.NotNull;
 import lombok.Builder;
-
-import javax.persistence.Column;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 
 public class CommentDTO {
     private Long id;

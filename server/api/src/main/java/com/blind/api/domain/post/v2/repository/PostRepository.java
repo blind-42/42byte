@@ -10,6 +10,11 @@ import org.springframework.data.repository.query.Param;
 
 public interface PostRepository extends PagingAndSortingRepository<Post, Long> {
     public Page<Post> findAllByBoardId(Long boardId, Pageable pageable);
+    @Query(
+            value = "SELECT p FROM Post p WHERE p.title LIKE %:keyword% OR p.content LIKE %:keyword%",
+            countQuery = "SELECT COUNT(p.id) FROM Post p WHERE p.title LIKE %:keyword% OR p.content LIKE %:keyword%"
+    )
+    Page<Post> findPostsWithKeyword(@Param(value = "keyword")String keyword, Pageable pageable);
 
     @Modifying
     @Query("update Post p set p.viewCnt = p.viewCnt + 1 where p.id = :id")

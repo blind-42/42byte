@@ -1,12 +1,13 @@
 package com.blind.api.domain.board.v1.controller;
 
 import com.blind.api.domain.board.v1.domain.Board;
-import com.blind.api.domain.post.v2.domain.Post;
 import com.blind.api.domain.board.v1.service.BoardService;
-import com.blind.api.domain.post.v2.service.PostService;
+import com.blind.api.domain.security.jwt.v1.domain.Token;
+import com.blind.api.domain.security.oauth.v2.repository.UserRefreshTokenRepository;
+import com.blind.api.domain.user.v2.domain.RoleType;
+import com.blind.api.domain.user.v2.domain.User;
+import com.blind.api.domain.user.v2.repository.UserRepository;
 import lombok.AllArgsConstructor;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.PostConstruct;
@@ -15,31 +16,25 @@ import javax.annotation.PostConstruct;
 @AllArgsConstructor
 public class BoardController {
     private final BoardService boardService;
-    private final PostService postService;
-
-    @RequestMapping(value="/board/{boardId}", method = RequestMethod.GET)
-    public Page<Post> findAllPost(@PathVariable Long boardId, Pageable pageable) {
-        return postService.findAllByBoardId(boardId, pageable);
-    }
+    private final UserRefreshTokenRepository testTokenRepository;
+    private final UserRepository testUserRepository;
 
     @RequestMapping(value="/board", method = RequestMethod.POST)
     public Board createPost(@RequestBody String name) {
         return boardService.save(name);
     }
 
-    /*
     @PostConstruct
     public void initiallize() {
-        Board board = boardService.save("blind");
-        for (int i = 0; i < 100; i++) {
-            Post viewPost = Post.builder()
-                    .board(board)
-                    .title(i + "번째 제목입니다")
-                    .content("empty")
-                    .authorId(1L)
-                    .build();
-            postService.save(viewPost);
-        }
+        Token token = new Token();
+        token.setAccessToken("access");
+        token.setRefreshToken("refresh");
+        token.setHashId("hashId");
+        testTokenRepository.save(token);
+
+        User user = new User();
+        user.setHashId("hashId");
+        user.setRoleType(RoleType.USER);
+        testUserRepository.save(user);
     }
-    */
 }

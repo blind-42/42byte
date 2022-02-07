@@ -9,9 +9,9 @@ import com.blind.api.domain.user.v2.service.UserService;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.Optional;
 
 @Service
@@ -22,14 +22,18 @@ public class PostServiceImpl implements PostService {
     private final UserService userService;
 
     @Override
+    @Transactional
     public Page<Post> findAllByBoardId(Long boardId, Pageable pageable) {
         return postRepository.findAllByBoardId(boardId, pageable);
     }
-
+    @Override
+    @Transactional
     public Optional<Post> findById(Long postId){
         return postRepository.findById(postId);
     }
 
+    @Override
+    @Transactional
     public Post save(Long boardId, String title, String content, String accessToken){
         Board board = boardService.findById(boardId)
                 .orElseThrow(RuntimeException::new);
@@ -44,13 +48,20 @@ public class PostServiceImpl implements PostService {
         return postRepository.save(post);
     }
 
-    public void updateView(Long id) {
-        postRepository.updateView(id);
+    @Override
+    @Transactional
+    public Page<Post> search(String keyword, Pageable pageable) {
+        return postRepository.findPostsWithKeyword(keyword, pageable);
     }
-
+    @Override
+    @Transactional
     public void updateLike(Long id, Long add) {
         postRepository.updateLike(id, add);
     }
 
-
+    @Override
+    @Transactional
+    public void updateView(Long id) {
+        postRepository.updateView(id);
+    }
 }

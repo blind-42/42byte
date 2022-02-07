@@ -5,20 +5,23 @@ import com.blind.api.domain.board.v1.repository.BoardRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.Optional;
 
 @Service
 @AllArgsConstructor
 public class BoardServiceImpl implements BoardService{
-    private final BoardRepository repository;
+    private final BoardRepository boardRepository;
     @Override
+    @Transactional
     public Board save(String name){
-        return repository.findBoardByName(name)
-                .orElseGet(() -> repository.save(new Board(name)));
+        return boardRepository.findBoardByName(name)
+                .orElseGet(() -> boardRepository.save(new Board(name)));
     }
 
     @Override
+    @Transactional
     public Optional<Board> findById(Long boardId) {
-        return repository.findById(boardId);
+        return boardRepository.findById(boardId);
     }
 }
