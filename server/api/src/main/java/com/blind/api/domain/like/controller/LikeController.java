@@ -14,12 +14,10 @@ import javax.servlet.http.HttpServletRequest;
 @AllArgsConstructor
 public class LikeController {
     private final LikeService likeService;
-
     @RequestMapping(value = {"/board/{boardId}/{postId}/like"}, method=RequestMethod.POST)
     public void postLike(@PathVariable("postId") Long postId, HttpServletRequest request){
         likeService.PostLike(postId, HeaderUtil.getAccessToken(request));
     }
-
     @RequestMapping(value = {"/board/{boardId}/{postId}/{commentId}/like"}, method=RequestMethod.POST)
     public void commentLike(@PathVariable("commentId") Long commentId, HttpServletRequest request){
         likeService.CommentLike(commentId, HeaderUtil.getAccessToken(request));

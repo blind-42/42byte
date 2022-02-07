@@ -10,5 +10,4 @@ public interface CommentService {
     List<Comment> findAllComment(Long boardId, Long postId);
     void delete(Long commentId);
     public void updateLike(Long id, Long add);
-
 }

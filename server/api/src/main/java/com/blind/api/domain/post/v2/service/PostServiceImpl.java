@@ -2,8 +2,6 @@ package com.blind.api.domain.post.v2.service;
 
 import com.blind.api.domain.board.v1.domain.Board;
 import com.blind.api.domain.board.v1.service.BoardService;
-import com.blind.api.domain.comment.v1.repository.CommentRepository;
-import com.blind.api.domain.comment.v1.service.CommentService;
 import com.blind.api.domain.post.v2.domain.Post;
 import com.blind.api.domain.post.v2.repository.PostRepository;
 import com.blind.api.domain.user.v2.domain.User;
@@ -14,8 +12,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Optional;
 
 @Service
@@ -24,7 +20,6 @@ public class PostServiceImpl implements PostService {
     private final PostRepository postRepository;
     private final BoardService boardService;
     private final UserService userService;
-
 
     @Override
     @Transactional

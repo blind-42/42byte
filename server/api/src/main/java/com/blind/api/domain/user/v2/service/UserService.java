@@ -7,7 +7,6 @@ import com.blind.api.domain.user.v2.repository.UserRepository;
 
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
-
 import javax.transaction.Transactional;
 import java.util.Optional;
 

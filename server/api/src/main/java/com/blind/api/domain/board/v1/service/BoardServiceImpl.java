@@ -2,11 +2,7 @@ package com.blind.api.domain.board.v1.service;
 
 import com.blind.api.domain.board.v1.domain.Board;
 import com.blind.api.domain.board.v1.repository.BoardRepository;
-import com.blind.api.domain.post.v2.domain.Post;
-import com.blind.api.domain.post.v2.service.PostService;
 import lombok.AllArgsConstructor;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;

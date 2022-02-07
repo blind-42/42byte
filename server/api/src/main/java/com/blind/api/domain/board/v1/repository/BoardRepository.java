@@ -1,8 +1,6 @@
 package com.blind.api.domain.board.v1.repository;
 
 import com.blind.api.domain.board.v1.domain.Board;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

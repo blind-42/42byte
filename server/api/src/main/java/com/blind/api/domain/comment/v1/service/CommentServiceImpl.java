@@ -39,6 +39,7 @@ public class CommentServiceImpl implements CommentService{
     @Transactional
     public Comment save(Long boardId, Long postId, String content, String token) {
         if (token == null) throw new RuntimeException();
+
         Long postAuthorId = postService.findById(postId)
                 .orElseThrow(RuntimeException::new)
                 .getAuthorId();
@@ -74,5 +75,4 @@ public class CommentServiceImpl implements CommentService{
     public void updateLike(Long id, Long add) {
         commentRepository.updateLike(id, add);
     }
-
 }

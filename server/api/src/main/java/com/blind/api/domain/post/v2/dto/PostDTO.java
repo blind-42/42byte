@@ -3,7 +3,6 @@ package com.blind.api.domain.post.v2.dto;
 
 import com.blind.api.domain.board.v1.domain.Board;
 import com.blind.api.domain.post.v2.domain.Post;
-import com.sun.istack.NotNull;
 import lombok.*;
 
 import java.time.LocalDateTime;
