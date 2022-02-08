@@ -7,4 +7,5 @@ export const AppContainer = styled.div`
 
 export const MainContainer = styled.div`
 	height: 79vh;
+	background: #929191;
 `;

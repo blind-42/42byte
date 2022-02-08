@@ -1,4 +1,4 @@
-import { Container, MenubarLogoWrap, MenubarButton, Logo, UserProfile, UserImg, UserName, DropdownMenu } from './styled';
+import { HeaderContainer, MenubarLogoWrap, MenubarButton, Logo, UserProfileWrap, UserImg, UserName, DropdownMenu } from './styled';
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import Menubar from '../Menubar/Menubar';
@@ -10,7 +10,7 @@ function Header(/*{ isLogedIn }*/) {
 		setShowBox(!showBox);
 	}
 
-	const [showMenu, setShowMenu] = useState(true);
+	const [showMenu, setShowMenu] = useState(false);
 	const menubarHandler = () => {
 		setShowMenu(!showMenu);
 	}
@@ -21,10 +21,12 @@ function Header(/*{ isLogedIn }*/) {
 
   return (
     <>
-      <Container>
+      <HeaderContainer>
 				<MenubarLogoWrap>
 					<MenubarButton onClick={menubarHandler}>
-						Button
+						<div className='hamburger'></div>
+						<div className='hamburger'></div>
+						<div className='hamburger'></div>
 						{showMenu
 						? <Menubar />
 						: null
@@ -38,7 +40,7 @@ function Header(/*{ isLogedIn }*/) {
 						</div>
 					</Logo>
 				</MenubarLogoWrap>
-				<UserProfile onClick={dropdownHandler}>
+				<UserProfileWrap onClick={dropdownHandler}>
 					<UserImg>
 						<img src='/images/egg.png' alt='pfimg' />
 					</UserImg>
@@ -58,8 +60,8 @@ function Header(/*{ isLogedIn }*/) {
 							</DropdownMenu>
 						: null
 					}
-				</UserProfile>
-      </Container>
+				</UserProfileWrap>
+      </HeaderContainer>
     </>
   );
 }
