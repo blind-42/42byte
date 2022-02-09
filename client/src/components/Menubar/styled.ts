@@ -1,57 +1,67 @@
 import styled from 'styled-components';
 
-export const MenubarWrap = styled.div`
+export const MenubarContainer = styled.div`
 	position: absolute;
-	top: 6vh;
+	top: 0;
 	left: 0;
 	display: flex;
 	flex-direction: column;
-	background: #C4C4C4;
-	border: solid 2px black;
-	height: 94vh;
-	width: 65vw;
 	align-items: center;
-	padding: 3rem;
+	background: #E5E5E5;
+	height: 100vh;
+	width: 70vw;
 	@media screen and (min-width: 768px) {
-		position: absolute;
-		top: 6vh;
-		left: 0;
-		display: flex;
-		flex-direction: column;
-		background: #C4C4C4;
-		border: solid 2px black;
-		height: 94vh;
+		height: 100vh;
 		width: 14vw;
-		align-items: center;
-		padding: 3rem;
   }
 `;
 
-export const Button = styled.div`
+export const ExitButton = styled.div`
+	width: 64vw;
+	display: flex;
+	align-items: flex-start;
+	justify-content: flex-end;
+	input {
+		background: none;
+		border: none;
+		font-size: 3rem;
+		margin: 0.3rem;
+		color: #929191;
+	}
+	@media screen and (min-width: 768px) {
+		width: 13vw;
+		input {
+			font-size: 1.6rem;
+			margin: 0.3rem;
+		}
+	}
+`;
+
+export const UtilWrap = styled.div`
+	margin: 3rem 0;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+`;
+
+export const WritingButton = styled.div`
 	input {
 		height: 6vh;
-		width: 45vw;
-		background: black;
-		font-weight: bolder;
+		width: 50vw;
+		margin: 0.5rem;
+		background: #0000AD;
+		font-family: Noto Sans KR;
+		font-weight: 700;
 		font-size: 2.6vh;
-		color: white;
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		margin: 1rem;
+		color: #fff;
+		border-radius: 5px;
 	}
 	@media screen and (min-width: 768px) {
 		input {
 			height: 4.5vh;
 			width: 11vw;
-			background: black;
-			font-weight: bolder;
-			font-size: 2vh;
-			color: white;
-			display: flex;
-			align-items: center;
-			justify-content: center;
 			margin: 1rem;
+			font-size: 2vh;
 		}
 	}
 `;
@@ -60,47 +70,39 @@ export const Search = styled.div`
 	display: flex;
 	justify-content: space-between;
 	border: solid 1px black;
+	border-radius: 3px;
 	height: 4vh;
-	width: 45vw;
-	background: white;
-	.searchText {
+	width: 50vw;
+	margin: 0.5rem;
+	background: #fff;
+	div {
 		font-size: 2vh;
 		display: flex;
 		align-items: center;
 		text-overflow: clip;
 		padding-left: 0.2rem;
 	}
-	.searchButton {
+	input {
 		margin-top: -1px;
-		background: black;
-		color: white;
+		background: #0000AD;
+		color: #fff;
 		height: 4vh;
 		width: 4vh;
+		border-radius: 3px;
 	}
 	@media screen and (min-width: 768px) {
-		display: flex;
-		justify-content: space-between;
-		border: solid 1px black;
 		height: 3vh;
 		width: 11vw;
-		background: white;
-		.searchText {
+		span {
 			font-size: 1.5vh;
-			display: flex;
-			align-items: center;
-			text-overflow: clip;
 			padding-left: 0.2rem;
 		}
-		.searchButton {
-			margin-top: -1px;
-			background: black;
-			color: white;
+		input {
 			height: 3vh;
 			width: 3vh;
 		}
 	}
 `;
 
-export const MenuContent = styled.div`
-	flex: 8;
+export const MenuListWrap = styled.div`
 `;
