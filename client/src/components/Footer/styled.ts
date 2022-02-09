@@ -6,6 +6,7 @@ export const FooterWrap = styled.div`
 	justify-content: space-evenly;
 	align-items: center;
 	height: 15vh;
+	width: 100vw;
 	background: #E5E5E5;
 	padding: 1rem;
 `;
