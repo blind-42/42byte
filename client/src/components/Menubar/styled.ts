@@ -21,7 +21,7 @@ export const ExitButton = styled.div`
 	display: flex;
 	align-items: flex-start;
 	justify-content: flex-end;
-	input {
+	div {
 		background: none;
 		border: none;
 		font-size: 3rem;
@@ -30,7 +30,7 @@ export const ExitButton = styled.div`
 	}
 	@media screen and (min-width: 768px) {
 		width: 13vw;
-		input {
+		div {
 			font-size: 1.6rem;
 			margin: 0.3rem;
 		}
@@ -54,7 +54,6 @@ export const WritingButton = styled.div`
 		font-weight: 700;
 		font-size: 2.6vh;
 		color: #fff;
-		border-radius: 5px;
 	}
 	@media screen and (min-width: 768px) {
 		input {
@@ -69,35 +68,37 @@ export const WritingButton = styled.div`
 export const Search = styled.div`
 	display: flex;
 	justify-content: space-between;
+	align-items: center;
 	border: solid 1px black;
-	border-radius: 3px;
 	height: 4vh;
 	width: 50vw;
 	margin: 0.5rem;
 	background: #fff;
-	div {
+	.textInput {
 		font-size: 2vh;
 		display: flex;
-		align-items: center;
-		text-overflow: clip;
 		padding-left: 0.2rem;
+		border: none;
+		height: 2.5vh;
+		width: 40vw;
 	}
-	input {
+	.searchButton {
 		margin-top: -1px;
 		background: #0000AD;
 		color: #fff;
 		height: 4vh;
 		width: 4vh;
-		border-radius: 3px;
+		color: white;
 	}
 	@media screen and (min-width: 768px) {
 		height: 3vh;
 		width: 11vw;
-		span {
+		.textInput {
 			font-size: 1.5vh;
 			padding-left: 0.2rem;
+			width: 8vw;
 		}
-		input {
+		.searchButton {
 			height: 3vh;
 			width: 3vh;
 		}

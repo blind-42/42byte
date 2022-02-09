@@ -12,7 +12,7 @@ function Menubar() {
 		<>
 			<MenubarContainer>
 				<ExitButton>
-					<input type='button' value='x' />
+					<div>&times;</div>
 				</ExitButton>
 				<UtilWrap>
 					<WritingButton>
@@ -21,8 +21,8 @@ function Menubar() {
 						</Link>
 					</WritingButton>
 					<Search>
-						<div>검색어를 입력하세요</div>
-						<input type="button" value='?' />
+						<input type="text" className='textInput' placeholder='검색어를 입력하세요'/>
+						<input type="button" className='searchButton' value='?' />
 					</Search>
 				</UtilWrap>
 				<MenuListWrap>
