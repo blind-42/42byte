@@ -4,7 +4,7 @@ import Main from './pages/Main/Main';
 import Login from './pages/Login/Login';
 import Blindboard from './pages/Blindboard/Blindboard';
 import Writing from './pages/Writing/Writing';
-import Postdetail from './pages/Postdetail/PostDetail';
+import Detail from './pages/Detail/Detail';
 import Mypage from './pages/Mypage/Mypage';
 import Notice from './pages/Notice/Notice';
 import Error from './pages/Error/Error';
@@ -20,7 +20,7 @@ function App() {
           <Route path='/login' element={<Login />} />
           <Route path='/blindboard' element={<Blindboard />} />
           <Route path='/writing' element={<Writing />} />
-          <Route path='/postdetail' element={<Postdetail />} />
+          <Route path='/detail' element={<Detail />} />
           <Route path='/mypage' element={<Mypage />} />
           <Route path='/notice' element={<Notice />} />
           <Route path='/error' element={<Error />} />
