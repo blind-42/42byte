@@ -15,7 +15,7 @@ function Blindboard() {
 	const [postData, setPostData] = useState([]);
 	useEffect(() => {
     instance
-      .get('/requests')
+      .get('/postings')
       .then((res) => setPostData(res.data))
       .catch((err) => console.log(err));
   }, []);
