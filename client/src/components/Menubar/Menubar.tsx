@@ -22,7 +22,9 @@ function Menubar() {
 					</WritingButton>
 					<Search>
 						<input type="text" className='textInput' placeholder='검색어를 입력하세요'/>
-						<input type="button" className='searchButton' value='?' />
+						<button className='searchButton'>
+							<div>&#9740;</div>
+						</button>
 					</Search>
 				</UtilWrap>
 				<MenuListWrap>

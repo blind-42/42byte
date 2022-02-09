@@ -89,6 +89,10 @@ export const Search = styled.div`
 		height: 4vh;
 		width: 4vh;
 		color: white;
+		div {
+			font-size: 2.5vh;
+			transform: rotate(100deg);
+		}
 	}
 	@media screen and (min-width: 768px) {
 		height: 3vh;
@@ -101,6 +105,9 @@ export const Search = styled.div`
 		.searchButton {
 			height: 3vh;
 			width: 3vh;
+			div {
+				font-size: 2vh; 
+			}
 		}
 	}
 `;
