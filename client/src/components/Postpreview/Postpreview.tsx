@@ -3,23 +3,12 @@
 import { PostDB } from 'utils/functions/type'
 import { PreviewContainer, TitleWrap, PostInfoWrap } from './styled';
 
-// interface dummyProps {
-// 	uuid: number
-// 	title: string
-// 	nickmane: string
-// 	createdAt: string
-// 	comment: number
-// 	view:number
-// 	thumsup: number
-// 	content: string
-// };
-
 type GreetingProps = {
-	el: PostDB;
+	postDB: PostDB;
 }
 
-function Postpreview({ el }: GreetingProps) {
-	const { uuid, title, nickname, createdAt, comment, view, thumsup, content } = el;
+function Postpreview({ postDB }: GreetingProps) {
+	const { uuid, title, nickname, createdAt, comment, view, thumsup, content } = postDB;
 	
 	return (
 		<>
@@ -30,6 +19,7 @@ function Postpreview({ el }: GreetingProps) {
 					<div>{thumsup}</div>
 					<div>{nickname}</div>
 					<div>{createdAt}</div>
+					<div>test</div>
 				</PostInfoWrap>
 			</PreviewContainer>
 		</>
