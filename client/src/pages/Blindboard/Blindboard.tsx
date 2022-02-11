@@ -1,23 +1,22 @@
+import { useState, useEffect, useRef } from 'react';
 import Header from '../../components/Header/Header';
 import Footer from '../../components/Footer/Footer';
-//import Postpreview from '../../components/Postpreview/Postpreview';
+import Postpreview from 'components/Postpreview/Postpreview';
 import PageNation from '../../components/PageNation/PageNation';
-import { Link } from 'react-router-dom';
-// import { dummy } from './dummy';
-//import { AppContainer, MainContainer, Title, TableWrap, Category, TableList } from './styled';
 import { PostDB } from 'utils/functions/type'
-import { useState, useEffect } from 'react';
 import instance from 'utils/functions/axios';
 import { AppContainer, MainContainer, BoardNameWrap, PostList, Category } from './styled'
-import Postpreview from 'components/Postpreview/Postpreview';
+//import { AppContainer, MainContainer, Title, TableWrap, Category, TableList } from './styled';
 
-interface Props {
-  postData: PostDB[];
-}
+function Blindboard() {
+	const [postData, setPostData] = useState([]);
+	useEffect(() => {
+		instance
+		.get('/board/1')
+		.then((res) => setPostData(res.data.content))
+		.catch((err) => console.log(err));
+	}, [])
 
-function Blindboard({ postData }: Props) {
-
-	
 	return (
 		<>
 			<AppContainer>
@@ -49,7 +48,7 @@ function Blindboard({ postData }: Props) {
 		</>
 	);
   // return (
-  //   <AppContainer>
+  //   <AppContainer></AppContainer>
   //     <Header />
 	// 		<MainContainer>
 	// 			<Title>

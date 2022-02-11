@@ -1,29 +1,28 @@
-// import { ListWrap, ListRight, ListLeft } from './styled'
-
+import { Link } from 'react-router-dom';
 import { PostDB } from 'utils/functions/type'
 import { PreviewContainer, TitleWrap, PostInfoWrap } from './styled';
-import { Link } from 'react-router-dom';
+// import { ListWrap, ListRight, ListLeft } from './styled'
 
 type GreetingProps = {
 	postDB: PostDB;
 }
 
 function Postpreview({ postDB }: GreetingProps) {
-	const { uuid, title, nickname, createdAt, comment, view, thumsup, content } = postDB;
-	// console.log(postDB)
+	const { createdDate, modifiedDate, id, authorId, title, content, commentCnt, viewCnt, likeCnt, isNotice, blameCnt } = postDB;
+
 	return (
 		<>
 			<PreviewContainer>
 				<TitleWrap>
-					<Link to='/detail'>
+					<Link to='/detail' state={{postDB}}> 
 						<div>{title}</div>
 					</Link>
 				</TitleWrap>
 				<PostInfoWrap>
-					<div>{view}</div>
-					<div>{thumsup}</div>
-					<div>{nickname}</div>
-					<div>{createdAt.slice(0, 10)}</div>
+					<div>{viewCnt}</div>
+					<div>{likeCnt}</div>
+					<div>{authorId}</div>
+					<div>{createdDate.slice(0, 10)}</div>
 				</PostInfoWrap>
 			</PreviewContainer>
 		</>
