@@ -22,6 +22,7 @@ export const MenubarButton = styled.div`
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;
+	cursor: pointer;
 	.hamburger {
 		width: 2.5rem;
 		height: 0.2rem;
@@ -54,6 +55,7 @@ export const UserProfileWrap = styled.div`
 	display: flex;
 	justify-content: flex-end;
 	alidn-items: center;
+	cursor: pointer;
 `;
 
 export const UserImg = styled.div`

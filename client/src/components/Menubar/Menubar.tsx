@@ -3,10 +3,10 @@ import { MenubarContainer, ExitButton, UtilWrap, WritingButton, Search, MenuList
 import React, { useState } from 'react';
 
 function Menubar() {
-	const [exit, setExit] = useState(false);
-	const exitButtonHandler = () => {
-		setExit(!exit);
-	}
+	// const [exit, setExit] = useState(false);
+	// const exitButtonHandler = () => {
+	// 	setExit(!exit);
+	// }
 
   return (
 		<>

@@ -16,7 +16,6 @@ function Header(/*{ isLogedIn }*/) {
 	}
 
 	// const logOutHandler = () {
-
 	// }
 
   return (
@@ -27,11 +26,9 @@ function Header(/*{ isLogedIn }*/) {
 						<div className='hamburger'></div>
 						<div className='hamburger'></div>
 						<div className='hamburger'></div>
-						{showMenu
-						? <Menubar />
-						: null
-						}
+						{showMenu && <Menubar />}
 					</MenubarButton>
+					{/* {showMenu && <Menubar />} */}
 					<Logo>
 						<div className='logoImg'>
 							<Link to="/">
