@@ -28,17 +28,21 @@ function Blindboard({ postData }: Props) {
 					</BoardNameWrap>
 					<PostList>
 						<Category>
-							<div className='title'>제목</div>
-							<div>조회</div>
-							<div>추천</div>
-							<div>글쓴이</div>
-							<div>작성일</div>
+							<div className='left'>
+								<div>제목</div>
+							</div>
+							<div className='rignt'>
+								<div>조회</div>
+								<div>추천</div>
+								<div>글쓴이</div>
+								<div>작성일</div>
+							</div>
 						</Category>
-					{postData.map((el: PostDB) => {
-						<Postpreview postDB={el} />
-						console.log(el);
+					{postData.map((el: PostDB, idx) => {
+						return (<Postpreview key={idx} postDB={el} />)
 					})}
 					</PostList>
+					<PageNation />
 				</MainContainer>
 				<Footer />
 			</AppContainer>

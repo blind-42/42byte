@@ -3,10 +3,10 @@ import styled from 'styled-components';
 export const AppContainer = styled.div`
 	display: flex;
 	flex-direction: column;
-	// justify-content: center;
+	justify-content: space-between;
 	align-items: center;
 	// width: 100vw;
-	// height: 100vh;
+	height: 100vh;
 `;
 
 export const MypageContainer = styled.div`

@@ -2,6 +2,7 @@
 
 import { PostDB } from 'utils/functions/type'
 import { PreviewContainer, TitleWrap, PostInfoWrap } from './styled';
+import { Link } from 'react-router-dom';
 
 type GreetingProps = {
 	postDB: PostDB;
@@ -9,17 +10,20 @@ type GreetingProps = {
 
 function Postpreview({ postDB }: GreetingProps) {
 	const { uuid, title, nickname, createdAt, comment, view, thumsup, content } = postDB;
-	
+	// console.log(postDB)
 	return (
 		<>
 			<PreviewContainer>
-				<TitleWrap>{title}</TitleWrap>
+				<TitleWrap>
+					<Link to='/detail'>
+						<div>{title}</div>
+					</Link>
+				</TitleWrap>
 				<PostInfoWrap>
 					<div>{view}</div>
 					<div>{thumsup}</div>
 					<div>{nickname}</div>
-					<div>{createdAt}</div>
-					<div>test</div>
+					<div>{createdAt.slice(0, 10)}</div>
 				</PostInfoWrap>
 			</PreviewContainer>
 		</>

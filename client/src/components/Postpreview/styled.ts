@@ -4,11 +4,22 @@ export const PreviewContainer = styled.div`
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
+	border-bottom: 1px solid black;
+	font-size: 1rem;
+	height: 3rem;
 `;
 
-export const TitleWrap = styled.div``;
+export const TitleWrap = styled.div`
+	flex: 5;
+	margin: 0 1.5rem;
+	`;
 
-export const PostInfoWrap = styled.div``;
+export const PostInfoWrap = styled.div`
+	flex: 5;
+	display: flex;
+	justify-content: space-between;
+	margin: 0 1.5rem;
+`;
 
 // export const ListWrap = styled.div`
 // 	border-bottom: solid 2px black;
