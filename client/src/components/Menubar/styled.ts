@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 
 export const MenubarContainer = styled.div`
+	z-index: 1;
 	position: fixed;
 	top: 0;
 	left: 0;
@@ -47,6 +48,7 @@ export const UtilWrap = styled.div`
 
 export const WritingButton = styled.div`
 	input {
+		cursor: pointer;
 		height: 6vh;
 		width: 50vw;
 		margin: 0.5rem;
