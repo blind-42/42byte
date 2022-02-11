@@ -10,49 +10,59 @@ export const AppContainer = styled.div`
 `;
 
 export const LoginContainer = styled.div`
-	margin: 2rem;
 	border: solid 2px black;
-	width: 80vw;
-	height: 40vh;
+	width: 22rem;
 	background-color: #ffffff;
 	text-align: center;
-	@media screen and (min-width: 768px) {
-		width: 20vw;
-	}
 `;
 
 export const TopWrap = styled.div`
-	background-color: gray;
-	.xIcon {
-		text-align: right;
-		margin-right: 0.5rem;
-		font-size: 3vh;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	height: 1.5rem;
+	border-bottom: solid 1px black;
+	background: #E5E5E5;
+	.decoration {
+		display: flex;
+		justify-content: center;
+		margin: 0 0.5rem;
+		div {
+			width: 0.7rem;
+			height: 0.7rem;
+			border-radius: 50%;
+			background: #E5E5E5;
+			margin: 0.15rem;
+		}
+		.visibleDot {
+			background: #C4C4C4;
+		}
 	}
 `;
 
 export const SeoulImg = styled.div`
-	margin: 4vh;
-	height: 8vh;
+	margin: 3rem;
+	height: 6rem;
 	img {
-		height: 11vh;
+		height: 8rem;
 	}
 `;
 
 export const TextWrap = styled.div`
 	.BiggerText {
-		margin: 2vh;
+		margin: 1.5rem;
 		font-weight: bolder;
-		font-size: 2.5vh;
+		font-size: 1.5rem;
 	}
 	.SmallerText {
-		line-height: 2.3vh;
-		font-size: 1.7vh;
+		line-height: 150%;
+		font-size: 1.1rem;
 	}
 `;
 
 export const ButtonWrap = styled.div`
-	margin: 3vh;
-	input {
+	margin: 2rem;
+	button {
 		height: 3rem;
 		width: 7rem;
 		background: black;
