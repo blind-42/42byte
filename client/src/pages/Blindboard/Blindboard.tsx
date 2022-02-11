@@ -9,16 +9,14 @@ import { PostDB } from 'utils/functions/type'
 import { useState, useEffect } from 'react';
 import instance from 'utils/functions/axios';
 import { AppContainer, MainContainer, BoardNameWrap, PostList, Category } from './styled'
+import Postpreview from 'components/Postpreview/Postpreview';
 
+interface Props {
+  postData: PostDB[];
+}
 
-function Blindboard() {
-	const [postData, setPostData] = useState([]);
-	useEffect(() => {
-    instance
-      .get('/postings')
-      .then((res) => setPostData(res.data))
-      .catch((err) => console.log(err));
-  }, []);
+function Blindboard({ postData }: Props) {
+
 	
 	return (
 		<>
@@ -30,16 +28,21 @@ function Blindboard() {
 					</BoardNameWrap>
 					<PostList>
 						<Category>
-							<div className='title'>제목</div>
-							<div>조회</div>
-							<div>추천</div>
-							<div>글쓴이</div>
-							<div>작성일</div>
+							<div className='left'>
+								<div>제목</div>
+							</div>
+							<div className='rignt'>
+								<div>조회</div>
+								<div>추천</div>
+								<div>글쓴이</div>
+								<div>작성일</div>
+							</div>
 						</Category>
-					{postData.map((el) => {
-						console.log(el);
+					{postData.map((el: PostDB, idx) => {
+						return (<Postpreview key={idx} postDB={el} />)
 					})}
 					</PostList>
+					<PageNation />
 				</MainContainer>
 				<Footer />
 			</AppContainer>

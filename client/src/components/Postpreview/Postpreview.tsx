@@ -2,34 +2,28 @@
 
 import { PostDB } from 'utils/functions/type'
 import { PreviewContainer, TitleWrap, PostInfoWrap } from './styled';
-
-// interface dummyProps {
-// 	uuid: number
-// 	title: string
-// 	nickmane: string
-// 	createdAt: string
-// 	comment: number
-// 	view:number
-// 	thumsup: number
-// 	content: string
-// };
+import { Link } from 'react-router-dom';
 
 type GreetingProps = {
-	el: PostDB;
+	postDB: PostDB;
 }
 
-function Postpreview({ el }: GreetingProps) {
-	const { uuid, title, nickname, createdAt, comment, view, thumsup, content } = el;
-	
+function Postpreview({ postDB }: GreetingProps) {
+	const { uuid, title, nickname, createdAt, comment, view, thumsup, content } = postDB;
+	// console.log(postDB)
 	return (
 		<>
 			<PreviewContainer>
-				<TitleWrap>{title}</TitleWrap>
+				<TitleWrap>
+					<Link to='/detail'>
+						<div>{title}</div>
+					</Link>
+				</TitleWrap>
 				<PostInfoWrap>
 					<div>{view}</div>
 					<div>{thumsup}</div>
 					<div>{nickname}</div>
-					<div>{createdAt}</div>
+					<div>{createdAt.slice(0, 10)}</div>
 				</PostInfoWrap>
 			</PreviewContainer>
 		</>

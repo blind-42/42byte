@@ -1,9 +1,16 @@
 import styled from 'styled-components';
 
-export const AppContainer = styled.div``;
+export const AppContainer = styled.div`
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	height: 100vh;
+`;
 
 export const MainContainer = styled.div`
-	margin: 0 auto;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
 `;
 
 export const BoardNameWrap = styled.div`
@@ -18,6 +25,11 @@ export const PostList = styled.div`
 	width: 100vw;
 	display: flex;
 	flex-direction: column;
+	margin: 1rem 0;
+	@media screen and (min-width: 768px) {
+		height: 60vh;
+		width: 80vh;
+	}
 `;
 
 export const Category = styled.div`
@@ -26,12 +38,18 @@ export const Category = styled.div`
 	align-items: center;
 	background: #E5E5E5;
 	height: 4vh;
+	border-bottom: 1px solid black;
 	div {
-		font-size: 1.2rem;
-		
+		font-size: 1rem;
 	}
-	.title {
-		width: 30vw;
+	.left {
+		flex: 5;
+		text-align: center;
+	}
+	.rignt {
+		flex: 5;
+		display: flex;
+		justify-content: space-around;
 	}
 `;
 
