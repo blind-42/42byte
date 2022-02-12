@@ -8,7 +8,7 @@ function Main() {
     <AppContainer>
 			<Header />
 			<MainContainer></MainContainer>
-			<Footer />
+			{/* <Footer /> */}
     </AppContainer>
   );
 }
