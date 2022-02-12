@@ -13,7 +13,7 @@ sourceCompatibility = '11'
 bootWar {
 	archivesBaseName = 'api'
 	archiveFileName = 'api.war'
-	archiveVersion = '0.0.1'
+	archiveVersion = "0.0.1"
 }
 
 configurations {
@@ -45,7 +45,8 @@ dependencies {
 	implementation 'io.jsonwebtoken:jjwt-jackson:0.11.2'
 
 	/* Swagger */
-	implementation 'io.springfox:springfox-boot-starter:3.0.0'
+	implementation "io.springfox:springfox-boot-starter:3.0.0"
+	implementation "io.springfox:springfox-swagger-ui:3.0.0"
 
 	/* Test */
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'

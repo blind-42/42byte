@@ -22,6 +22,16 @@ public class UserService {
     }
 
     @Transactional
+    public boolean compareUser(Long userId, String token){
+        Long sessionUserId = findByAccessToken(token)
+                .orElseThrow(RuntimeException::new)
+                .getId();
+        if (userId != sessionUserId)
+            return false;
+        return true;
+    }
+
+    @Transactional
     public Optional<User> findByAccessToken(String token){
         Token savedToken = tokenRepository.findByAccessToken(token).orElse(null);
         if (savedToken == null)

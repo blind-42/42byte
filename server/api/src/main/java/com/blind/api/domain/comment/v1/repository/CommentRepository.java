@@ -12,6 +12,7 @@ import java.util.List;
 @Repository
 public interface CommentRepository extends JpaRepository<Comment, Long> {
     List<Comment> findAllByBoardIdAndPostId(Long boardId, Long postId);
+    void deleteCommentByPostId(Long postId);
     @Modifying
     @Query("update Comment p set p.likeCnt = p.likeCnt + :add where p.id = :id")
     void updateLike(@Param("id") Long id, @Param("add") Long add);

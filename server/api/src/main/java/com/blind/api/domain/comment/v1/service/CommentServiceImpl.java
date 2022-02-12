@@ -1,8 +1,10 @@
 package com.blind.api.domain.comment.v1.service;
 
+import com.blind.api.domain.post.v2.domain.Post;
 import com.blind.api.domain.post.v2.service.PostService;
 import com.blind.api.domain.comment.v1.domain.Comment;
 import com.blind.api.domain.comment.v1.repository.CommentRepository;
+import com.blind.api.domain.user.v2.domain.User;
 import com.blind.api.domain.user.v2.service.UserService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -19,22 +21,25 @@ public class CommentServiceImpl implements CommentService{
 
     @Override
     @Transactional
-    public Comment update(Long commentId, String content) {
-        Comment comment = commentRepository.findById(commentId)
-                .orElseThrow(RuntimeException::new);
-        comment.setContent(content);
-        return commentRepository.save(comment);
+    public Comment update(Comment comment, String content) {
+            comment.setContent(content);
+            return comment;
     }
 
     @Override
     @Transactional
-    public void delete(Long commentId) {
-        commentRepository.deleteById(commentId);
+    public void delete(Comment comment) {
+            comment.setIsDel(true);
+            comment.setContent(null);
     }
 
-    /*
-     * 댓글 저장
-     * */
+    @Override
+    @Transactional
+    public void deleteCommentByPostId(Long postId) {
+        commentRepository.deleteCommentByPostId(postId);
+    }
+
+    /* 댓글 저장 */
     @Override
     @Transactional
     public Comment save(Long boardId, Long postId, String content, String token) {
@@ -70,6 +75,7 @@ public class CommentServiceImpl implements CommentService{
     public List<Comment> findAllComment(Long boardId, Long postId) {
         return commentRepository.findAllByBoardIdAndPostId(boardId, postId);
     }
+
     @Override
     @Transactional
     public void updateLike(Long id, Long add) {
