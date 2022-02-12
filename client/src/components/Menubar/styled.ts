@@ -154,7 +154,6 @@ export const Search = styled.div`
 		display: flex;
 		padding-left: 0.2rem;
 		border: none;
-		height: 2.5vh;
 	}
 	.searchButton {
 		cursor: pointer;
