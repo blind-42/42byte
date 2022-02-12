@@ -13,7 +13,7 @@ export const PageContainer = styled.div`
 	flex-direction: column;
 	// justify-content: space-between;
 	align-items: stretch;
-	height: 95vh;
+	height: 115vh;
 	width: 100vw;
 	background: #C4C4C4;
 	@media screen and (min-width: 768px) {
@@ -80,7 +80,7 @@ export const ContentContainer = styled.div`
 	flex-direction: column;
 	align-items: stretch;
 	background: #C4C4C4;
-	height: 88vh;
+	height: 90vh;
 	@media screen and (min-width: 768px) {
 		height: 70vh;
 	}
@@ -113,10 +113,6 @@ export const MypageMenu = styled.div`
 	flex-direction: column;
 	align-items: center;
 	justify-content: space-evenly;
-	// border-top: solid 2px #fff;
-	// border-left: solid 2px #fff;
-	// border-right: solid 2px #000;
-	// border-bottom: solid 2px #000;
 	// img {
 	// 	height: 5rem;
 	// 	width: 5rem;
@@ -138,6 +134,8 @@ export const ContentWrap = styled.div`
 	border-right: solid 2px #fff;
 	border-bottom: solid 2px #fff;
 	margin: 0 3px;
+	padding: 3px;
+	height: 85vh;
 	@media screen and (min-width: 768px) {
 	}
 `;

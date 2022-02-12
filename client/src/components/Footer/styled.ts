@@ -6,11 +6,9 @@ export const FooterWrap = styled.div`
 	justify-content: space-evenly;
 	align-items: center;
 	height: 15vh;
-	// width: 100vw;
 	background: #C4C4C4;
-	padding: 1rem 0 5vh 0;
+	padding: 1rem;
 	@media screen and (min-width: 768px) {
-		// width: 48vh;
 		padding: 1rem;
 	}
 `;
