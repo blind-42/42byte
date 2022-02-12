@@ -9,6 +9,10 @@ export const AppContainer = styled.div`
 `;
 
 export const PageContainer = styled.div`
+	display: flex;
+	flex-direction: column;
+	// justify-content: space-between;
+	align-items: stretch;
 	height: 95vh;
 	width: 100vw;
 	background: #C4C4C4;
@@ -78,7 +82,7 @@ export const ContentContainer = styled.div`
 	background: #C4C4C4;
 	height: 88vh;
 	@media screen and (min-width: 768px) {
-		height: 60vh;
+		height: 70vh;
 	}
 `;
 
