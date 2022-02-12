@@ -24,11 +24,11 @@ function Header(/*{ isLogedIn }*/) {
       <HeaderContainer>
 				<MenubarLogoWrap>
 					<MenubarButton onClick={menubarHandler}>
-						<div className='hamburger'></div>
-						<div className='hamburger'></div>
-						<div className='hamburger'></div>
-						{showMenu && <Menubar />}
+						<div className='hamburger'/>
+						<div className='hamburger'/>
+						<div className='hamburger'/>
 					</MenubarButton>
+					{showMenu && <Menubar menubarHandler={menubarHandler}/>}
 					{/* {showMenu && <Menubar />} */}
 					<Logo>
 						<div className='logoImg'>
@@ -52,11 +52,10 @@ function Header(/*{ isLogedIn }*/) {
 						} */}
 					</UserName>
 					{/*isLogedIn && */showBox
-						? <DropdownMenu>
+						&& <DropdownMenu>
 								<li><Link to='/mypage'>마이페이지</Link></li>
 								<li><Link to='/' /*onClick={logOutHandler}*/>로그아웃</Link></li>
 							</DropdownMenu>
-						: null
 					}
 				</UserProfileWrap>
       </HeaderContainer>
