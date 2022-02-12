@@ -1,10 +1,13 @@
 export interface PostDB {
-	uuid: number
+  createdDate: string
+  modifiedDate: string
+  id: number
+  authorId: number
   title: string
-  nickname: string
-  createdAt: string
-  comment: number
-  view: number
-  thumsup: number
   content: string
+  commentCnt: number
+  viewCnt: number
+  likeCnt: number
+  isNotice: boolean
+  blameCnt: number
 }

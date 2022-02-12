@@ -5,10 +5,6 @@ export const AppContainer = styled.div`
 	flex-direction: column;
 `;
 
-export const Left = styled.div``;
-
-export const Right = styled.div``;
-
 export const MainContainer = styled.div`
 	display: flex;
 	height: 79vh;
@@ -16,7 +12,7 @@ export const MainContainer = styled.div`
 	align-items: center;
 `;
 
-export const PostWrap = styled.div`
+export const DetailWrap = styled.div`
 	margin-top: 2rem;
 	border: solid 2px black;
 	padding: 1rem;
@@ -32,7 +28,7 @@ export const Title = styled.div`
 	font-weight: 700;
 `;
 
-export const Detail = styled.div`
+export const Info = styled.div`
 	display: flex;
 	margin-top: 0.7rem;
 	padding-bottom: 0.5rem;
@@ -71,22 +67,17 @@ export const LikesWrap = styled.div`
 export const LikesBox = styled.div<{boxState?: boolean;}>`
 		display: flex;
 		justify-content: center;
-		border: solid 2px ${(props) => props.boxState ? 'red' : 'gray'};;
+		border: solid 2px ${(props) => props.boxState ? 'red' : 'gray'};
 		padding: 0.5rem;
 		width: 5rem;
 		.likesIcon {
 			margin-right: 0.5rem;
 			font-size: 1.2rem;
 		}
-		.CountGray {
+		.likesCount{
 			font-size: 1.2rem;
 			font-weight: 700;
-			color: gray;
-		}
-		.CountRed {
-			font-size: 1.2rem;
-			font-weight: 700;
-			color: red;
+			color: ${(props) => props.boxState ? 'red' : 'gray'};;
 		}
 	}
 `;
@@ -101,7 +92,7 @@ export const CommentContainer = styled.div`
 	}
 `;
 
-export const CommentInput = styled(PostWrap)`
+export const CommentInput = styled(DetailWrap)`
 	display: flex;
 	flex-direction: column;
 	position:relative;

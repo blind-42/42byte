@@ -1,7 +1,8 @@
-import { HeaderContainer, MenubarLogoWrap, MenubarButton, Logo, UserProfileWrap, UserImg, UserName, DropdownMenu } from './styled';
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import Menubar from '../Menubar/Menubar';
+import { HeaderContainer, MenubarLogoWrap, MenubarButton, Logo, 
+	UserProfileWrap, UserImg, UserName, DropdownMenu } from './styled';
 
 function Header(/*{ isLogedIn }*/) {
 	
