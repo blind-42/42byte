@@ -1,14 +1,19 @@
 import styled from 'styled-components';
 
 export const HeaderContainer = styled.div`
-  height: 8vh;
+	position: fixed;
+	bottom: 0;
+  height: 5vh;
 	width: 100vw;
   display: flex;
   justify-content: space-between;
-	padding: 0 2rem;
+	padding: 3px;
+	background: #C4C4C4;
+	border-top: solid 2px #fff;
+	border-left: solid 2px #fff;
 	@media screen and (min-width: 768px){
-		height: 7vh;
-		padding: 0 2.5rem;
+		height: 5vh;
+		padding: 3px;
 	}
 `;
 
@@ -19,22 +24,20 @@ export const MenubarLogoWrap = styled.div`
 
 export const MenubarButton = styled.div`
 	display: flex;
-	flex-direction: column;
-	justify-content: center;
 	align-items: center;
 	cursor: pointer;
-	.hamburger {
-		width: 2.5rem;
-		height: 0.2rem;
-		background: #929191;
-		margin: 0.25rem 0;
+	border-top: solid 2px #fff;
+	border-left: solid 2px #fff;
+	border-right: solid 2px #000;
+	border-bottom: solid 2px #000;
+	padding: 0.8rem;
+	div {
+		font-size: 1.2rem;
 	}
 	@media screen and (min-width: 768px) {
-		.hamburger {
-			width: 2rem;
-			height: 0.13rem;
-			background: #929191;
-			margin: 0.2rem 0;
+		padding: 0 0.8rem;
+		div {
+			font-size: 1rem;
 		}
 	}
 `;
@@ -43,65 +46,10 @@ export const Logo = styled.div`
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	margin: 0 1rem;
-  .logoImg {
-	}
+	margin: 0 3px;
+	padding: 0 1rem;
+	border-right: solid 2px #929191;
+	border-left: solid 2px #929191;
 	@media screen and (min-width: 768px) {
-		margin: 0 2rem;
-	}
-`;
-
-export const UserProfileWrap = styled.div`
-	display: flex;
-	justify-content: flex-end;
-	alidn-items: center;
-	cursor: pointer;
-`;
-
-export const UserImg = styled.div`
-  display: flex;
-  align-items: center;
-	margin: 0 1rem;
-  img {
-    border-radius: 50%;
-    height: 4.5vh;
-  }
-	@media screen and (min-width: 768px) {
-		margin: 0 1rem;
-	}
-`;
-
-export const UserName = styled.div`
-  display: flex;
-  align-items: center;
-  font-size: 1.4rem;
-	@media screen and (min-width: 768px) {
-		font-size: 1rem;
-	}
-`;
-
-export const DropdownMenu = styled.div`
-	position: absolute;
-	top: 8vh;
-  right: 0;
-	width: 17vh;
-	height: 10vh;
-	background: #E5E5E5;
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	justify-content: space-evenly;
-	li {
-		list-style: none;
-		font-size: 1.4rem;
-	}
-	@media screen and (min-width: 768px) {
-		top: 7vh;
-		right: 1.2rem;
-		width: 15vh;
-		height: 9vh;
-		li {
-			font-size: 0.8rem;
-		}
 	}
 `;
