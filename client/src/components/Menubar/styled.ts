@@ -23,6 +23,7 @@ export const ExitButton = styled.div`
 	display: flex;
 	align-items: flex-start;
 	justify-content: flex-end;
+	cursor: pointer;
 	div {
 		background: none;
 		border: none;
@@ -53,7 +54,6 @@ export const WritingButton = styled.div`
 		width: 50vw;
 		margin: 0.5rem;
 		background: #0000AD;
-		font-family: Noto Sans KR;
 		font-weight: 700;
 		font-size: 2.6vh;
 		color: #fff;

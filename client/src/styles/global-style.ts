@@ -2,8 +2,11 @@
 import { createGlobalStyle } from 'styled-components';
 import { reset } from 'styled-reset';
 
+
 // 외부에서 import 할거니까 모듈 내보내자~!
 export const GlobalStyle = createGlobalStyle`
+	@import url('https://fonts.googleapis.com/css2?family=Nanum+Myeongjo&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700;900&display=swap');
   ${reset}
   
   /** reset css **/
@@ -19,7 +22,7 @@ export const GlobalStyle = createGlobalStyle`
   b, u, i, center,
   dl, dt, dd, ol, ul, li,
   fieldset, form, label, legend,
-  caption,article, aside, canvas, details, embed, 
+  caption,article, aside, canvas, details, embed,
   figure, figcaption, footer, header, hgroup, 
   menu, nav, output, ruby, section, summary,
   time, mark, audio, video {
@@ -76,8 +79,7 @@ export const GlobalStyle = createGlobalStyle`
 
   body {
     min-width: 320px;
-    font-family: 'Nanum Gothic', sans-serif, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-      'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue';
+    font-family: 'Noto Sans KR', sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     color: var(--color-black);
@@ -89,8 +91,7 @@ export const GlobalStyle = createGlobalStyle`
   button,
   span,
   textarea {
-    font-family: 'Nanum Gothic', sans-serif, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-      'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue';
+    font-family: 'Noto Sans KR', sans-serif;
     color: var(--color-black);
   }
 

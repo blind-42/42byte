@@ -1,17 +1,22 @@
+import  { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { MenubarContainer, ExitButton, UtilWrap, WritingButton, Search, MenuListWrap } from './styled';
-import React, { useState } from 'react';
 
-function Menubar() {
+type GreetingProps = {
+	menubarHandler: () => void;
+}
+
+function Menubar({ menubarHandler }: GreetingProps) {
 	// const [exit, setExit] = useState(false);
 	// const exitButtonHandler = () => {
 	// 	setExit(!exit);
 	// }
+	console.log(menubarHandler);
 
   return (
 		<>
 			<MenubarContainer>
-				<ExitButton>
+				<ExitButton onClick={menubarHandler}>
 					<div>&times;</div>
 				</ExitButton>
 				<UtilWrap>
