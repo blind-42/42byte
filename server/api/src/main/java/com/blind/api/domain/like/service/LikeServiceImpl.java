@@ -40,13 +40,15 @@ public class LikeServiceImpl implements LikeService{
 
     @Override
     @Transactional
-    public void CommentLike(Long commentId, String token) {
+    public void CommentLike(Long postId, Long commentId, String token) {
         User user = userService.findByAccessToken(token).orElseThrow(RuntimeException::new);
         Comment comment = commentService.findById(commentId).orElseThrow(RuntimeException::new);
+        Post post = postService.findById(postId).orElseThrow(RuntimeException::new);
 
         if (checkCommentLike(comment, user) == false) {
-            commentLikeRepository.save(new CommentLike(comment, user));
+            commentLikeRepository.save(new CommentLike(comment, post, user));
             commentService.updateLike(comment.getId(), 1L);
+            comment.setPostId(postId);
         } else {
             commentLikeRepository.deleteByCommentAndUser(comment, user);
             commentService.updateLike(comment.getId(), -1L);
@@ -65,5 +67,12 @@ public class LikeServiceImpl implements LikeService{
             return true;
         else
             return false;
+    }
+
+    @Override
+    @Transactional
+    public void deleteByPost(Post post) {
+        postLikeRepository.deleteByPostId(post.getId());
+        commentLikeRepository.deleteByPostId(post.getId());
     }
 }

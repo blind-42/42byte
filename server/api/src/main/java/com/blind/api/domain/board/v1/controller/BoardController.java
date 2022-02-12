@@ -7,6 +7,9 @@ import com.blind.api.domain.security.oauth.v2.repository.UserRefreshTokenReposit
 import com.blind.api.domain.user.v2.domain.RoleType;
 import com.blind.api.domain.user.v2.domain.User;
 import com.blind.api.domain.user.v2.repository.UserRepository;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
+import io.swagger.annotations.ApiOperation;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,21 +23,12 @@ public class BoardController {
     private final UserRepository testUserRepository;
 
     @RequestMapping(value="/board", method = RequestMethod.POST)
-    public Board createPost(@RequestBody String name) {
+    @ApiOperation(value = "게시판 생성", notes = "게시판을 생성하는 API입니다.")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "name", value = "게시판 이름", required = true)
+    })
+    public Board createPost(@RequestParam String name) {
         return boardService.save(name);
     }
 
-    @PostConstruct
-    public void initiallize() {
-        Token token = new Token();
-        token.setAccessToken("access");
-        token.setRefreshToken("refresh");
-        token.setHashId("hashId");
-        testTokenRepository.save(token);
-
-        User user = new User();
-        user.setHashId("hashId");
-        user.setRoleType(RoleType.USER);
-        testUserRepository.save(user);
-    }
 }

@@ -3,10 +3,7 @@ package com.blind.api.domain.like.controller;
 import com.blind.api.domain.like.service.LikeService;
 import com.blind.api.global.utils.HeaderUtil;
 import lombok.AllArgsConstructor;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -14,12 +11,14 @@ import javax.servlet.http.HttpServletRequest;
 @AllArgsConstructor
 public class LikeController {
     private final LikeService likeService;
-    @RequestMapping(value = {"/board/{boardId}/{postId}/like"}, method=RequestMethod.POST)
-    public void postLike(@PathVariable("postId") Long postId, HttpServletRequest request){
+
+    @RequestMapping(value = {"/post/like"}, method=RequestMethod.POST)
+    public void postLike(@RequestParam("postId") Long postId, HttpServletRequest request){
         likeService.PostLike(postId, HeaderUtil.getAccessToken(request));
     }
-    @RequestMapping(value = {"/board/{boardId}/{postId}/{commentId}/like"}, method=RequestMethod.POST)
-    public void commentLike(@PathVariable("commentId") Long commentId, HttpServletRequest request){
-        likeService.CommentLike(commentId, HeaderUtil.getAccessToken(request));
+
+    @RequestMapping(value = {"/comment/like"}, method=RequestMethod.POST)
+    public void commentLike(@RequestParam("postId") Long postId, @RequestParam("commentId") Long commentId, HttpServletRequest request){
+        likeService.CommentLike(postId, commentId, HeaderUtil.getAccessToken(request));
     }
 }

@@ -9,7 +9,8 @@ import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.data.repository.query.Param;
 
 public interface PostRepository extends PagingAndSortingRepository<Post, Long> {
-    public Page<Post> findAllByBoardId(Long boardId, Pageable pageable);
+    Page<Post> findAllByBoardId(Long boardId, Pageable pageable);
+    Page<Post> findAllByAuthorId(Long authorId, Pageable pageable);
     @Query(
             value = "SELECT p FROM Post p WHERE p.title LIKE %:keyword% OR p.content LIKE %:keyword%",
             countQuery = "SELECT COUNT(p.id) FROM Post p WHERE p.title LIKE %:keyword% OR p.content LIKE %:keyword%"
@@ -23,4 +24,5 @@ public interface PostRepository extends PagingAndSortingRepository<Post, Long> {
     @Modifying
     @Query("update Post p set p.likeCnt = p.likeCnt + :add where p.id = :id")
     void updateLike(@Param("id") Long id, @Param("add") Long add);
+
 }

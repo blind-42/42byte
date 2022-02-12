@@ -2,6 +2,7 @@ package com.blind.api.domain.post.v2.service;
 
 import com.blind.api.domain.board.v1.domain.Board;
 import com.blind.api.domain.board.v1.service.BoardService;
+import com.blind.api.domain.comment.v1.domain.Comment;
 import com.blind.api.domain.post.v2.domain.Post;
 import com.blind.api.domain.post.v2.repository.PostRepository;
 import com.blind.api.domain.user.v2.domain.User;
@@ -12,6 +13,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -25,6 +27,11 @@ public class PostServiceImpl implements PostService {
     @Transactional
     public Page<Post> findAllByBoardId(Long boardId, Pageable pageable) {
         return postRepository.findAllByBoardId(boardId, pageable);
+    }
+    @Override
+    @Transactional
+    public Page<Post> findAllByAuthorId(Long authorId, Pageable pageable){
+        return postRepository.findAllByAuthorId(authorId, pageable);
     }
     @Override
     @Transactional
@@ -63,5 +70,18 @@ public class PostServiceImpl implements PostService {
     @Transactional
     public void updateView(Long id) {
         postRepository.updateView(id);
+    }
+
+    @Override
+    @Transactional
+    public void updatePost(Post post, String title, String content) {
+        post.setTitle(title);
+        post.setContent(content);
+    }
+
+    @Override
+    @Transactional
+    public void deletePost(Post post) {
+        postRepository.deleteById(post.getId());
     }
 }

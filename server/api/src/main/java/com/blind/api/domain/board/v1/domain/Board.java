@@ -2,6 +2,7 @@ package com.blind.api.domain.board.v1.domain;
 
 import com.blind.api.global.entity.BaseTimeEntity;
 import com.sun.istack.NotNull;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -20,6 +21,7 @@ public class Board extends BaseTimeEntity {
 
     @NotNull
     @Column(name="name")
+    @ApiModelProperty(example = "Blind")
     String name;
 
     @Builder

@@ -50,7 +50,7 @@ public class Comment extends BaseTimeEntity {
     @Column(name = "is_author", columnDefinition = "Boolean default false", updatable = false)
     private Boolean isAuthor;
 
-    @Column(name = "is_del", columnDefinition = "Boolean default false", updatable = false)
+    @Column(name = "is_del", columnDefinition = "Boolean default false")
     private Boolean isDel;
 
     @Builder
