@@ -1,6 +1,6 @@
 import  { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { MenubarContainer, ExitButton, UtilWrap, WritingButton, Search, MenuListWrap } from './styled';
+import { MenubarContainer, ExitButton, UserProfileWrap, UserImg, UserName, UserMenu, UtilWrap, WritingButton, Search, MenuListWrap } from './styled';
 
 type GreetingProps = {
 	menubarHandler: () => void;
@@ -11,7 +11,6 @@ function Menubar({ menubarHandler }: GreetingProps) {
 	// const exitButtonHandler = () => {
 	// 	setExit(!exit);
 	// }
-	console.log(menubarHandler);
 
   return (
 		<>
@@ -19,6 +18,28 @@ function Menubar({ menubarHandler }: GreetingProps) {
 				<ExitButton onClick={menubarHandler}>
 					<div>&times;</div>
 				</ExitButton>
+				<UserProfileWrap>
+					<UserImg>
+						<img src='/images/egg.png' alt='pfimg' />
+					</UserImg>
+					<UserName>
+						{/* {isLogedIn
+						?  */}
+						<div>
+								<strong>카뎃</strong>
+							</div>
+						{/* :	<Link to='/login'>로그인</Link>
+						} */}
+					</UserName>
+					<UserMenu>
+						<Link to='/mypage'>
+							<div>마이페이지</div>
+						</Link>
+						<Link to='/' /*onClick={logOutHandler}*/>
+							<div>로그아웃</div>
+						</Link>
+					</UserMenu>
+				</UserProfileWrap>
 				<UtilWrap>
 					<WritingButton>
 						<Link to="/writing">
@@ -35,9 +56,7 @@ function Menubar({ menubarHandler }: GreetingProps) {
 				<MenuListWrap>
 					<ul>
 						<li>
-							<Link to="/blindboard">
-								<div>블라인드 게시판</div>
-							</Link>
+							<Link to="/blindboard">블라인드 게시판</Link>
 						</li>
 					</ul>
 				</MenuListWrap>

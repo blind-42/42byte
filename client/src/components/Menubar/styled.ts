@@ -3,67 +3,137 @@ import styled from 'styled-components';
 export const MenubarContainer = styled.div`
 	z-index: 1;
 	position: fixed;
-	top: 0;
+	bottom: 4.5vh;
 	left: 0;
+	padding: 3px;
 	display: flex;
 	flex-direction: column;
-	align-items: center;
-	background: #E5E5E5;
-	height: 100vh;
-	width: 70vw;
+	align-items: stretch;
+	background: #C4C4C4;
+	height: 70vh;
+	width: 34vh;
+	border-top: solid 2px #fff;
+	border-left: solid 2px #fff;
+	border-right: solid 2px #000;
+	border-bottom: solid 2px #000;
 	@media screen and (min-width: 768px) {
-		height: 100vh;
-		width: 14vw;
+		height: 80vh;
   }
-	box-shadow: 0px 0px 2px rgba(0, 0, 0, 0.12), 0px 10px 10px rgba(0, 0, 0, 0.24);
 `;
 
 export const ExitButton = styled.div`
-	width: 64vw;
 	display: flex;
 	align-items: flex-start;
 	justify-content: flex-end;
+	background: #518EDB;
 	cursor: pointer;
 	div {
-		background: none;
-		border: none;
-		font-size: 3rem;
-		margin: 0.3rem;
-		color: #929191;
+		background: #C4C4C4;
+		font-size: 2rem;
+		font-weight: 700;
+		width: 2rem;
+		height: 2rem;
+		text-align: center;
+		margin: 3px;
+		border-top: solid 2px #fff;
+		border-left: solid 2px #fff;
+		border-right: solid 2px #000;
+		border-bottom: solid 2px #000;
 	}
 	@media screen and (min-width: 768px) {
-		width: 13vw;
 		div {
-			font-size: 1.6rem;
-			margin: 0.3rem;
+			width: 1.2rem;
+			height: 1.2rem;
+			font-size: 1.2rem;
+		}
+	}
+`;
+
+export const UserProfileWrap = styled.div`
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	margin: 1rem 0;
+	border-bottom: solid 2px #929191;
+	@media screen and (min-width: 768px) {
+		margin: 0.5rem
+	}
+`;
+
+export const UserImg = styled.div`
+  display: flex;
+  align-items: center;
+	margin: 1.2rem 0;
+  img {
+    border-radius: 50%;
+    height: 6vh;
+		border: solid 1px #fff;
+  }
+	@media screen and (min-width: 768px) {
+		img {
+			height: 7vh;
+		}
+	}
+`;
+
+export const UserName = styled.div`
+  display: flex;
+  align-items: center;
+  font-size: 1.7rem;
+	font-weight: 700;
+	@media screen and (min-width: 768px) {
+		font-size: 1.1rem;
+	}
+`;
+
+export const UserMenu = styled.div`
+	display: flex;
+	margin: 0.8rem 0 1.2rem 0;
+	div {
+		margin: 0 1rem;
+		font-size: 1.3rem; 
+		cursor: pointer;
+	}
+	@media screen and (min-width: 768px) {
+		div {
+			margin: 0 0.5rem;
+			font-size: 1rem;
 		}
 	}
 `;
 
 export const UtilWrap = styled.div`
-	margin: 3rem 0;
+	margin: 1rem 2rem;
 	display: flex;
 	flex-direction: column;
-	align-items: center;
+	align-items: stretch;
+	@media screen and (min-width: 768px) {
+	}
 `;
 
 export const WritingButton = styled.div`
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	margin: 0.5rem 0;
 	input {
 		cursor: pointer;
-		height: 6vh;
-		width: 50vw;
-		margin: 0.5rem;
-		background: #0000AD;
-		font-weight: 700;
-		font-size: 2.6vh;
+		height: 3.5rem;
+		background: #518EDB;
+		border-top: solid 2px #fff;
+		border-left: solid 2px #fff;
+		border-right: solid 2px #000;
+		border-bottom: solid 2px #000;
+		font-weight: 600;
+		font-size: 1.7rem;
 		color: #fff;
+		padding: 0 2rem;
 	}
 	@media screen and (min-width: 768px) {
 		input {
-			height: 4.5vh;
-			width: 11vw;
-			margin: 1rem;
-			font-size: 2vh;
+			height: 2.4rem;
+			font-size: 1rem;
+			font-weight: 700;
 		}
 	}
 `;
@@ -72,48 +142,65 @@ export const Search = styled.div`
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
-	border: solid 1px black;
-	height: 4vh;
-	width: 50vw;
-	margin: 0.5rem;
+	border-top: solid 2px #000;
+	border-left: solid 2px #000;
+	border-right: solid 2px #fff;
+	border-bottom: solid 2px #fff;
+	height: 2.5rem;
+	margin: 0.5rem 0;
 	background: #fff;
 	.textInput {
-		font-size: 2vh;
+		font-size: 1.3rem;
 		display: flex;
 		padding-left: 0.2rem;
 		border: none;
 		height: 2.5vh;
-		width: 40vw;
 	}
 	.searchButton {
-		margin-top: -1px;
-		background: #0000AD;
+		cursor: pointer;
+		margin-right: -2px;
+		background: #518EDB;
+		border-top: solid 2px #fff;
+		border-left: solid 2px #fff;
+		border-right: solid 2px #000;
+		border-bottom: solid 2px #000;
 		color: #fff;
-		height: 4vh;
-		width: 4vh;
-		color: white;
+		height: 2.5rem;
+		width: 2.5rem;
 		div {
-			font-size: 2.5vh;
+			font-size: 1.5rem;
 			transform: rotate(100deg);
 		}
 	}
 	@media screen and (min-width: 768px) {
-		height: 3vh;
-		width: 11vw;
+		height: 1.7rem;
 		.textInput {
-			font-size: 1.5vh;
+			font-size: 0.8rem;
 			padding-left: 0.2rem;
-			width: 8vw;
 		}
 		.searchButton {
-			height: 3vh;
-			width: 3vh;
+			height: 1.7rem;
+			width: 1.7rem;
 			div {
-				font-size: 2vh; 
+				font-size: 1rem; 
 			}
 		}
 	}
 `;
 
 export const MenuListWrap = styled.div`
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	margin: 1rem 0;
+	li {
+		cursor: pointer;
+		font-size: 1.5rem;
+		font-weight: 500;
+	}
+	@media screen and (min-width: 768px) {
+		li {
+			font-size: 1rem;
+		}
+	}
 `;
