@@ -13,8 +13,7 @@ export const PageContainer = styled.div`
 	display: flex;
 	flex-direction: column;
 	align-items: stretch;
-	height: 30vh;
-	width: 80vw;
+	width: 35vh;
 	background: #C4C4C4;
 	border-top: solid 2px #fff;
 	border-left: solid 2px #fff;
@@ -22,8 +21,7 @@ export const PageContainer = styled.div`
 	border-bottom: solid 2px #000;
 	padding: 3px;
 	@media screen and (min-width: 768px) {
-		width: 50vh;
-		height: 32vh;
+		width: 45vh;
 	}
 `;
 
@@ -38,8 +36,11 @@ export const TopBar = styled.div`
 `;
 
 export const ContentContainer = styled.div`
-	margin: 2rem;
+	margin: 1.5rem;
 	text-align:center;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-evenly;
 `;
 
 export const ErrorImg = styled.div`
@@ -50,10 +51,13 @@ export const ErrorImg = styled.div`
 `;
 
 export const TextWrap = styled.div`
-	margin-top: 2rem;
+	margin-top: 1.5rem;
 	letter-spacing: 0.1rem;
 	line-height: 120%;
 	font-size: 1.8rem;
 	font-weight: 700;
 	color: #000;
+	@media screen and (min-width: 768px) {
+		font-size: 1.4rem;
+	}
 `;

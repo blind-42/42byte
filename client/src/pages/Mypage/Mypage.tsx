@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import Header from 'components/Header/Header';
 import Footer from 'components/Footer/Footer';
 import { AppContainer, PageContainer, TopBar, PageName, Squares } from '../../styles/styled'
@@ -14,7 +15,9 @@ function Mypage() {
 						<Squares>
 							<div>&#9866;</div>
 							<div>&#10064;</div>
-							<div>&times;</div>
+							<Link to='/'>
+								<div>&times;</div>
+							</Link>
 						</Squares>
 					</TopBar>
 					<ContentContainer>
