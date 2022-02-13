@@ -1,6 +1,13 @@
 import { PageNationWrap } from './styled'
 
-function PageNation() {
+type GreetingProps = {
+	pageData: object;
+}
+
+function PageNation({pageData} : GreetingProps) {
+
+	// console.log(pageData);
+
 	return (
 		<>
 		<PageNationWrap># PageNation #</PageNationWrap>
