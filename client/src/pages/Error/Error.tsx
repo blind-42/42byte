@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import { PageName, Squares } from 'styles/styled'
 import { AppContainer, PageContainer, TopBar, ContentContainer
 				, ErrorImg, TextWrap } from './styled'
@@ -13,7 +14,9 @@ function Error() {
 					<Squares>
 						<div>&#9866;</div>
 						<div>&#10064;</div>
-						<div>&times;</div>
+						<Link to='/'>
+							<div>&times;</div>
+						</Link>
 					</Squares>
 				</TopBar>
 				<ContentContainer>
