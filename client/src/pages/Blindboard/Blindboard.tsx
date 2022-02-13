@@ -1,43 +1,28 @@
 import { useState, useEffect, useRef } from 'react';
+import { Link } from 'react-router-dom';
 import Header from '../../components/Header/Header';
 import Footer from '../../components/Footer/Footer';
 import Postpreview from 'components/Postpreview/Postpreview';
 import PageNation from '../../components/PageNation/PageNation';
 import instance from 'utils/functions/axios';
-import { AppContainer, PageContainer, TopBar, PageName, Squares } from '../../styles/styled'
-import { PostContainer, Category, PostWrap } from './styled'
-//import { AppContainer, MainContainer, Title, TableWrap, Category, TableList } from './styled';
-
-export interface BoardData {
-  contents: ContentData[]
-  page: number
-  pages: number
-}
-
-export interface ContentData {
-  id: number
-  authorId: number
-  title: string
-  commentCnt: number
-  viewCnt: number
-  likeCnt: number
-  isNotice: boolean
-  blameCnt: number
-  createdDate: string
-  modifiedDate: string
-}
+import { AppContainer, PageContainer, TopBar, PageName, Squares } from 'styles/styled';
+import { PostContainer, Category, PostWrap } from './styled';
+import { BoardData, ContentData} from 'utils/functions/type';
 
 function Blindboard() {
-	const [postData, setPostData] = useState([]);
+
+	const [boardData, setBoardData] = useState({contents: [], page: 0, pages: 0});
+
 	useEffect(() => {
 		instance
 		.get('/board?boardId=1')
-		.then((res) => setPostData(res.data.contents))
+		.then((res) => { setBoardData(res.data) })
 		.catch((err) => console.log(err));
 	}, [])
 
-	const [page, setPage] = useState([]);
-
+	const postData = boardData.contents;
+	const pageData = {page: boardData.page, pages: boardData.pages};
+console.log(postData)
 	return (
 		<>
 			<AppContainer>
@@ -48,7 +33,9 @@ function Blindboard() {
 							<Squares>
 								<div>&#9866;</div>
 								<div>&#10064;</div>
-								<div>&times;</div>
+								<Link to='/'>
+									<div>&times;</div>
+								</Link>
 							</Squares>
 						</TopBar>
 					<PostContainer>
@@ -64,7 +51,7 @@ function Blindboard() {
 							})}
 						</PostWrap>
 					</PostContainer>
-					<PageNation />
+					<PageNation pageData={pageData}/>
 					<Footer />
 				</PageContainer>
 			</AppContainer>

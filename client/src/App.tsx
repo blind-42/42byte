@@ -8,8 +8,6 @@ import Mypage from './pages/Mypage/Mypage';
 import Notice from './pages/Notice/Notice';
 import Error from './pages/Error/Error';
 import Loading from './pages/Loading/Loading';
-import instance from 'utils/functions/axios';
-import { PostDB } from 'utils/functions/type';
 import { GlobalStyle } from './styles/global-style';
 
 function App() {
@@ -23,7 +21,7 @@ function App() {
           <Route path='/login' element={<Login />} />
           <Route path='/blindboard' element={<Blindboard />} />
           <Route path='/writing' element={<Writing />} />
-          <Route path='/detail' element={<Detail/>} />
+          <Route path='/detail' element={<Detail />} />
           <Route path='/mypage' element={<Mypage />} />
           <Route path='/notice' element={<Notice />} />
           <Route path='/error' element={<Error />} />

@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { ContentData } from	'pages/Blindboard/Blindboard'
+import { ContentData } from	'utils/functions/type';
 import { PreviewContainer } from './styled';
 
 type GreetingProps = {
@@ -11,7 +11,7 @@ function Postpreview({ content }: GreetingProps) {
 
 	return (
 		<>
-			<Link to='/detail' state={{content}} > 
+			<Link to='/detail' state={{id}}> 
 				<PreviewContainer>
 					<h3>{title}	({commentCnt})</h3>
 					<div>{viewCnt}</div>
