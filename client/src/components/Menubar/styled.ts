@@ -28,9 +28,12 @@ export const ExitButton = styled.div`
 	background: #518EDB;
 	cursor: pointer;
 	div {
+		display: flex;
+		justify-content: center;
+		align-items: center;
 		background: #C4C4C4;
-		font-size: 2rem;
-		font-weight: 700;
+		font-size: 1.5rem;
+		font-weight: 900;
 		width: 2rem;
 		height: 2rem;
 		text-align: center;
@@ -53,10 +56,10 @@ export const UserProfileWrap = styled.div`
 	display: flex;
 	flex-direction: column;
 	align-items: center;
-	margin: 1rem 0;
+	padding: 1rem 0;
 	border-bottom: solid 2px #929191;
 	@media screen and (min-width: 768px) {
-		margin: 0.5rem
+		padding: 0.5rem
 	}
 `;
 
@@ -88,7 +91,7 @@ export const UserName = styled.div`
 
 export const UserMenu = styled.div`
 	display: flex;
-	margin: 0.8rem 0 1.2rem 0;
+	margin: 0.8rem 0;
 	div {
 		margin: 0 1rem;
 		font-size: 1.3rem; 
@@ -103,10 +106,11 @@ export const UserMenu = styled.div`
 `;
 
 export const UtilWrap = styled.div`
-	margin: 1rem 2rem;
+	padding: 1rem 2rem;
 	display: flex;
 	flex-direction: column;
 	align-items: stretch;
+	border-top: solid 2px #fff;
 	@media screen and (min-width: 768px) {
 	}
 `;

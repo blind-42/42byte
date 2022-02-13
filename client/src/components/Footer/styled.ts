@@ -6,21 +6,23 @@ export const FooterWrap = styled.div`
 	justify-content: space-evenly;
 	align-items: center;
 	height: 15vh;
-	width: 100vw;
-	background: #E5E5E5;
+	background: #C4C4C4;
 	padding: 1rem;
+	@media screen and (min-width: 768px) {
+		padding: 1rem;
+	}
 `;
 
 export const List = styled.div`
 	display: flex;
 	justify-content: space-evenly;
-	span {
+	div {
 		margin: 0 1rem;
 		font-size: 1rem;
 		font-weight: 700;
 	}
 	@media screen and (min-width: 768px){
-		span {
+		div {
 			margin: 0 1.5rem;
 			font-size: 0.8rem;
 			font-weight: 700;

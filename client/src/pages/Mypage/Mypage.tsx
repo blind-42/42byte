@@ -1,51 +1,41 @@
-import { AppContainer, ContentContainer, ContentPreview, ContentWrap, MenuWrap, MypageContainer, TopBar } from './styled'
 import Header from 'components/Header/Header';
 import Footer from 'components/Footer/Footer';
+import { AppContainer, PageContainer, TopBar, PageName, Squares } from '../../styles/styled'
+import { ContentContainer, MenuWrap, MypageMenu, ContentWrap, Category, ContentPreview } from './styled'
 
 function Mypage() {
 	return (
 		<>
 			<AppContainer>
 				<Header />
-				<MypageContainer>
+				<PageContainer>
 					<TopBar>
-						<div className='decoration'>
-							<div className='visibleDot'></div>
-							<div className='visibleDot'></div>
-							<div className='visibleDot'></div>
-						</div>
-						<div className='header'>마이페이지</div>
-						<div className='decoration'>
-							<div></div>
-							<div></div>
-							<div></div>
-						</div>
+						<PageName>마이페이지</PageName>
+						<Squares>
+							<div>&#9866;</div>
+							<div>&#10064;</div>
+							<div>&times;</div>
+						</Squares>
 					</TopBar>
 					<ContentContainer>
 						<MenuWrap>
-							<div className='mypageMenu'>
-								<img src='' alt='img' />
-								<div>내가 쓴 글</div>
-							</div>
-							<div className='mypageMenu'>
-								<img src='' alt='img' />
-								<div>내가 쓴 댓글</div>
-							</div>
+							<div>내가 쓴 글</div>
+							<div>내가 쓴 댓글</div>
 						</MenuWrap>
 						<ContentWrap>
-							<div className='category'>
-								<div className='title'>제목</div>
+							<Category>
+								<div>제목</div>
 								<div>조회</div>
 								<div>추천</div>
 								<div>글쓴이</div>
 								<div>작성일</div>
-							</div>
+							</Category>
 							<ContentPreview>
 							</ContentPreview>
 						</ContentWrap>
 					</ContentContainer>
-				</MypageContainer>
-				<Footer />
+					<Footer />
+				</PageContainer>
 			</AppContainer>
 		</>
 	);
