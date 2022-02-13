@@ -40,6 +40,7 @@ export const TopBar = styled.div`
 
 export const PageName = styled.div`
 	color: #fff;
+	letter-spacing: 0.1rem;
 	font-size: 1.5rem;
 	font-weight: 600;
 	margin: 0 1rem;
