@@ -1,6 +1,6 @@
 import Header from 'components/Header/Header';
 import Footer from 'components/Footer/Footer';
-import { AppContainer, PageContainer, TopBar, PageName, Squares } from './styled'
+import { AppContainer, PageContainer, TopBar, PageName, Squares } from '../../styles/styled'
 import { ContentContainer, MenuWrap, MypageMenu, ContentWrap, Category, ContentPreview } from './styled'
 
 function Mypage() {
@@ -19,14 +19,8 @@ function Mypage() {
 					</TopBar>
 					<ContentContainer>
 						<MenuWrap>
-							{/* <MypageMenu>
-								<img src='' alt='img' /> */}
-								<div>내가 쓴 글</div>
-							{/* </MypageMenu>
-							<MypageMenu>
-								<img src='' alt='img' /> */}
-								<div>내가 쓴 댓글</div>
-							{/* </MypageMenu> */}
+							<div>내가 쓴 글</div>
+							<div>내가 쓴 댓글</div>
 						</MenuWrap>
 						<ContentWrap>
 							<Category>
