@@ -67,7 +67,7 @@ export const ContentWrap = styled.div`
 export const Category = styled.div`
 	height: 2rem;
 	display: grid;
-	grid-template-columns: 5fr 1fr 1fr 2fr 2fr;
+	grid-template-columns: 6fr 1fr 1fr 2fr;
 	justify-items: space-between;
 	border-bottom: solid 2px #929191;
 	div {
@@ -78,13 +78,13 @@ export const Category = styled.div`
 	@media screen and (min-width: 768px) {
 		height: 1.5rem;
 		div {
-			font-size: 0.9rem;
+			font-size: 0.8rem;
 		}
 	}
 `;
 
 export const ContentPreview = styled.div`
-	border-top: solid 2px #fff;
+	border-top: solid 1px #fff;
 	height: 82vh;
 	@media screen and (min-width: 768px) {
 		height: 50vh;

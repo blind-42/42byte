@@ -1,56 +1,45 @@
 import styled from 'styled-components';
 
-export const AppContainer = styled.div`
+export const PostContainer = styled.div`
+	background: #C4C4C4;
 	display: flex;
 	flex-direction: column;
-	justify-content: space-between;
-	height: 100vh;
-`;
-
-export const MainContainer = styled.div`
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-`;
-
-export const BoardNameWrap = styled.div`
-	display: inline-block;
-	font-weight: 700;
-	font-size: 1.2rem;
-	letter-spacing: 0.1rem;
-`;
-
-export const PostList = styled.div`
-	border: solid 1px black;
-	width: 100vw;
-	display: flex;
-	flex-direction: column;
-	margin: 1rem 0;
+	align-items: stretch;
+	border-top: solid 2px #000;
+	border-left: solid 2px #000;
+	border-right: solid 2px #fff;
+	border-bottom: solid 2px #fff;
+	padding: 3px;
+	height: 85vh;
 	@media screen and (min-width: 768px) {
-		height: 60vh;
-		width: 80vh;
 	}
 `;
 
 export const Category = styled.div`
-	display: flex;
-	justify-content: space-around;
-	align-items: center;
-	background: #E5E5E5;
-	height: 4vh;
-	border-bottom: 1px solid black;
+	height: 2rem;
+	display: grid;
+	grid-template-columns: 6fr 1fr 1fr 2fr;
+	justify-items: space-between;
+	border-bottom: solid 2px #929191;
 	div {
-		font-size: 1rem;
+		place-self: center center;
+		font-size: 1.2rem;
+		font-weight: 600;
 	}
-	.left {
-		flex: 5;
-		text-align: center;
+	@media screen and (min-width: 768px) {
+		height: 1.5rem;
+		div {
+			font-size: 0.8rem;
+		}
 	}
-	.rignt {
-		flex: 5;
-		display: flex;
-		justify-content: space-around;
-	}
+`;
+
+export const PostWrap = styled.div`
+	border-top: solid 1px #fff;
+	display: grid;
+	grid-template-rows: repeat(20, 1fr);
+	align-content: space-between;
+	align-items: center;
 `;
 
 // export const AppContainer = styled.div``;
