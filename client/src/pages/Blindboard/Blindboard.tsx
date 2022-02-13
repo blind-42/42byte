@@ -3,92 +3,73 @@ import Header from '../../components/Header/Header';
 import Footer from '../../components/Footer/Footer';
 import Postpreview from 'components/Postpreview/Postpreview';
 import PageNation from '../../components/PageNation/PageNation';
-import { PostDB } from 'utils/functions/type'
 import instance from 'utils/functions/axios';
-import { AppContainer, MainContainer, BoardNameWrap, PostList, Category } from './styled'
+import { AppContainer, PageContainer, TopBar, PageName, Squares } from '../../styles/styled'
+import { PostContainer, Category, PostWrap } from './styled'
 //import { AppContainer, MainContainer, Title, TableWrap, Category, TableList } from './styled';
+
+export interface BoardData {
+  contents: ContentData[]
+  page: number
+  pages: number
+}
+
+export interface ContentData {
+  id: number
+  authorId: number
+  title: string
+  commentCnt: number
+  viewCnt: number
+  likeCnt: number
+  isNotice: boolean
+  blameCnt: number
+  createdDate: string
+  modifiedDate: string
+}
 
 function Blindboard() {
 	const [postData, setPostData] = useState([]);
 	useEffect(() => {
 		instance
-		.get('/board/1')
-		.then((res) => setPostData(res.data.content))
+		.get('/board?boardId=1')
+		.then((res) => setPostData(res.data.contents))
 		.catch((err) => console.log(err));
 	}, [])
+
+	const [page, setPage] = useState([]);
 
 	return (
 		<>
 			<AppContainer>
-				<Header />
-				<MainContainer>
-					<BoardNameWrap>
-						<h2>ꉂꉂ ( ˆᴗˆ  ) 블라인드 게시판</h2>
-					</BoardNameWrap>
-					<PostList>
+					<Header />
+					<PageContainer>
+						<TopBar>
+							<PageName>ꉂꉂ ( ˆᴗˆ  ) 블라인드 게시판</PageName>
+							<Squares>
+								<div>&#9866;</div>
+								<div>&#10064;</div>
+								<div>&times;</div>
+							</Squares>
+						</TopBar>
+					<PostContainer>
 						<Category>
-							<div className='left'>
-								<div>제목</div>
-							</div>
-							<div className='rignt'>
-								<div>조회</div>
-								<div>추천</div>
-								<div>글쓴이</div>
-								<div>작성일</div>
-							</div>
+							<div>제목</div>
+							<div>조회</div>
+							<div>추천</div>
+							<div>작성일</div>
 						</Category>
-					{postData.map((el: PostDB, idx) => {
-						return (<Postpreview key={idx} postDB={el} />)
-					})}
-					</PostList>
+						<PostWrap>
+							{postData.map((el: ContentData, idx) => {
+								return (<Postpreview key={idx} content={el} />)
+							})}
+						</PostWrap>
+					</PostContainer>
 					<PageNation />
-				</MainContainer>
-				<Footer />
+					<Footer />
+				</PageContainer>
 			</AppContainer>
 		</>
 	);
-  // return (
-  //   <AppContainer></AppContainer>
-  //     <Header />
-	// 		<MainContainer>
-	// 			<Title>
-	// 				<div className='boardName'>ꉂꉂ ( ˆᴗˆ  ) 블라인드 게시판</div>
-	// 			</Title>
-	// 			<TableWrap>
-	// 				<Category>
-	// 					<div className='left'>
-	// 						<div className='title'>제목</div>
-	// 					</div>
-	// 					<div className='right'>
-	// 						<div className='view'>조회</div>
-	// 						<div className='thumsup'>추천</div>
-	// 						<div className='writer'>글쓴이</div>
-	// 						<div className='createdat'>작성일</div>
-	// 					</div>
-	// 				</Category>
-	// 				<TableList>
-	// 					{dummy.map((list) => {
-	// 						return (
-	// 							<Link to="/post" state={{ data: list}} style={{ color: 'inherit', textDecoration: 'inherit'}}>
-	// 								<Postpreview key={list.uuid} 
-	// 														uuid={list.uuid} 
-	// 														title={list.title} 
-	// 														nickmane={list.nickname} 
-	// 														createdAt={list.createdAt} 
-	// 														comment={list.comment} 
-	// 														view={list.view} 
-	// 														thumsup={list.thumsup} 
-	// 														content={list.content} />
-	// 							</Link>
-	// 						)
-	// 					})}
-	// 				</TableList>
-	// 			</TableWrap>
-	// 			<PageNation />
-	// 		</MainContainer>
-  //       <Footer />
-  //   </AppContainer>
-  // );
 }
 
 export default Blindboard;

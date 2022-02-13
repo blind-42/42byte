@@ -27,7 +27,6 @@ function Mypage() {
 								<div>제목</div>
 								<div>조회</div>
 								<div>추천</div>
-								<div>글쓴이</div>
 								<div>작성일</div>
 							</Category>
 							<ContentPreview>
