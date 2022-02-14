@@ -18,7 +18,7 @@ export const PageContainer = styled.div`
 	background: #C4C4C4;
 	padding: 3px;
 	@media screen and (min-width: 768px) {
-		width: 50vh;
+		width: 90vh;
 		height: 90vh;
 		margin: 3vh 0;
 		border-top: solid 2px #fff;

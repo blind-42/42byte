@@ -69,8 +69,8 @@ function Mypage() {
 									return (<Postpreview key={idx} content={el} />)
 								})}
 							</ContentPreview>
+							<PageNation pageData={pageData}/>
 						</ContentWrap>
-						<PageNation pageData={pageData}/>
 					</ContentContainer>
 					<Footer />
 				</PageContainer>

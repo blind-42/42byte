@@ -24,16 +24,16 @@ export const MenuWrap = styled.div`
 export const PostMenu = styled.div<{state?: string;}>`
 	button {
 		background: ${(props) => props.state === 'post' ? '#D5D5D5' : 'none'};
-		border-top: ${(props) => props.state === 'post' ? 'solid 2px #000' : 'none'};
-		border-left: ${(props) => props.state === 'post' ? 'solid 2px #000' : 'none'};
-		border-right: ${(props) => props.state === 'post' ? 'solid 2px #fff' : 'none'};
-		border-bottom: ${(props) => props.state === 'post' ? 'solid 2px #fff' : 'none'};
+		border-top: solid 2px ${(props) => props.state === 'post' ? '#000' : '#C4C4C4'};
+		border-left: solid 2px ${(props) => props.state === 'post' ? '#000' : '#C4C4C4'};
+		border-right: solid 2px ${(props) => props.state === 'post' ? '#fff' : '#C4C4C4'};
+		border-bottom: solid 2px ${(props) => props.state === 'post' ? '#fff' : '#C4C4C4'};
 		font-size: 1.2rem;
 		padding: 0.2rem 1.2rem;
 	}
 	@media screen and (min-width: 768px) {
 		button {
-			font-size: 0.8rem;
+			font-size: 0.9rem;
 			padding: 0.1rem 1rem;
 		}
 	}
@@ -42,16 +42,16 @@ export const PostMenu = styled.div<{state?: string;}>`
 export const CommentMenu = styled.div<{state?: string;}>`
 	button {
 		background: ${(props) => props.state === 'comment' ? '#D5D5D5' : 'none'};
-		border-top: ${(props) => props.state === 'comment' ? 'solid 2px #000' : 'none'};
-		border-left: ${(props) => props.state === 'comment' ? 'solid 2px #000' : 'none'};
-		border-right: ${(props) => props.state === 'comment' ? 'solid 2px #fff' : 'none'};
-		border-bottom: ${(props) => props.state === 'comment' ? 'solid 2px #fff' : 'none'};
+		border-top: solid 2px ${(props) => props.state === 'comment' ? '#000' : '#C4C4C4'};
+		border-left: solid 2px ${(props) => props.state === 'comment' ? '#000' : '#C4C4C4'};
+		border-right: solid 2px ${(props) => props.state === 'comment' ? '#fff' : '#C4C4C4'};
+		border-bottom: solid 2px ${(props) => props.state === 'comment' ? '#fff' : '#C4C4C4'};
 		font-size: 1.2rem;
 		padding: 0.2rem 1.2rem;
 	}
 	@media screen and (min-width: 768px) {
 		button {
-			font-size: 0.8rem;
+			font-size: 0.9rem;
 			padding: 0.1rem 1rem;
 		}
 `;
@@ -67,7 +67,7 @@ export const ContentWrap = styled.div`
 	border-bottom: solid 2px #fff;
 	margin: 3px 0;
 	padding: 3px;
-	height: 85vh;
+	overflow-y: scroll;
 	@media screen and (min-width: 768px) {
 	}
 `;
@@ -86,7 +86,7 @@ export const Category = styled.div`
 	@media screen and (min-width: 768px) {
 		height: 1.5rem;
 		div {
-			font-size: 0.8rem;
+			font-size: 0.9rem;
 		}
 	}
 `;
@@ -94,7 +94,9 @@ export const Category = styled.div`
 export const ContentPreview = styled.div`
 	border-top: solid 1px #fff;
 	height: 82vh;
+	background: #D5D5D5;
+	border-bottom: solid 2px #929191;
 	@media screen and (min-width: 768px) {
-		height: 50vh;
+		height: 80vh;
 	}
 `;
