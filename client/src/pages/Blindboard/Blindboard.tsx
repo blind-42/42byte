@@ -6,7 +6,7 @@ import Postpreview from 'components/Postpreview/Postpreview';
 import PageNation from 'components/PageNation/PageNation';
 import instance from 'utils/functions/axios';
 import { AppContainer, PageContainer, TopBar, PageName, Squares } from 'styles/styled';
-import { PostContainer, Category, PostWrap } from './styled';
+import { PostContainer, Category, PostWrap, ContentWrap } from './styled';
 import { BoardData, ContentData} from 'utils/functions/type';
 
 function Blindboard() {
@@ -45,13 +45,15 @@ function Blindboard() {
 							<div>추천</div>
 							<div>작성일</div>
 						</Category>
+						<ContentWrap>
 						<PostWrap>
 							{postData.map((el: ContentData, idx) => {
 								return (<Postpreview key={idx} content={el} />)
 							})}
 						</PostWrap>
+						<PageNation pageData={pageData}/>
+						</ContentWrap>
 					</PostContainer>
-					<PageNation pageData={pageData}/>
 					<Footer />
 				</PageContainer>
 			</AppContainer>

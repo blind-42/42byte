@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 
 export const PostContainer = styled.div`
+	overflow-y: scroll;
 	background: #C4C4C4;
 	display: flex;
 	flex-direction: column;
@@ -11,8 +12,6 @@ export const PostContainer = styled.div`
 	border-bottom: solid 2px #fff;
 	padding: 3px;
 	height: 85vh;
-	@media screen and (min-width: 768px) {
-	}
 `;
 
 export const Category = styled.div`
@@ -29,15 +28,21 @@ export const Category = styled.div`
 	@media screen and (min-width: 768px) {
 		height: 1.5rem;
 		div {
-			font-size: 0.8rem;
+			font-size: 0.9rem;
 		}
 	}
 `;
 
 export const PostWrap = styled.div`
-	border-top: solid 1px #fff;
 	display: grid;
-	grid-template-rows: repeat(20, 1fr);
+	// grid-template-rows: repeat(20, 1fr);
 	align-content: space-between;
 	align-items: center;
+	background: #D5D5D5;
+	border-bottom: solid 2px #fff;
+`;
+
+export const ContentWrap = styled.div`
+	overflow-y: scroll;
+	border-top: solid 1px #fff;
 `;

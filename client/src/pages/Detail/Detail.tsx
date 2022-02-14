@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import instance from 'utils/functions/axios';
 import Header from 'components/Header/Header';
 import Footer from 'components/Footer/Footer';
@@ -14,13 +14,15 @@ function Detail() {
 	const [detailData, setDetailData] = useState<DetailData>({post: {}, comment: [{}]});
 	const [boxState, setBoxState] = useState<boolean>(false);
 	const [msg, setMsg] = useState<string>('');
+	
+	const history = useNavigate();
+	const currentUrl = window.location.href;
 
 	useEffect(() => {
 		instance
-		.get(`/post?boardId=1&postId=2`)
+		.get(`/post?boardId=1&postId=${currentUrl.split('detail?boardId=1&postId=')[1]}`)
 		.then((res) => { 
 			setDetailData(res.data)
-			console.log(res.data)
 		})
 		.catch((err) => console.log(err));
 	},[])

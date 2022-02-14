@@ -16,7 +16,7 @@ function Postpreview({ content }: GreetingProps) {
 
 	return (
 		<>
-			<Link to='/detail'> 
+			<Link to={`/detail?boardId=1&postId=${id}`}> 
 				<PreviewContainer>
 					<h3>{title}	({commentCnt})</h3>
 					<div>{viewCnt}</div>
