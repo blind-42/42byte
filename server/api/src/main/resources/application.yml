@@ -9,7 +9,7 @@ spring:
   # JPA 설정
     database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
     hibernate:
-      ddl-auto: create
+      ddl-auto: creates
     properties:
       hibernate:
         show_sql: true

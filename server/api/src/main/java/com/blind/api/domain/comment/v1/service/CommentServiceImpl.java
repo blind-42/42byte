@@ -1,12 +1,15 @@
 package com.blind.api.domain.comment.v1.service;
 
-import com.blind.api.domain.post.v2.domain.Post;
+import com.blind.api.domain.comment.v1.dto.CommentDTO;
+import com.blind.api.domain.comment.v1.dto.CommentResponseDTO;
 import com.blind.api.domain.post.v2.service.PostService;
 import com.blind.api.domain.comment.v1.domain.Comment;
 import com.blind.api.domain.comment.v1.repository.CommentRepository;
-import com.blind.api.domain.user.v2.domain.User;
 import com.blind.api.domain.user.v2.service.UserService;
+import com.blind.api.global.utils.HeaderUtil;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -21,16 +24,22 @@ public class CommentServiceImpl implements CommentService{
 
     @Override
     @Transactional
+    public Page<Comment> findCommentByAuthorId(Long userId, Pageable pageable) {
+        return commentRepository.findCommentByAuthorId(userId, pageable);
+    }
+
+    @Override
+    @Transactional
     public Comment update(Comment comment, String content) {
-            comment.setContent(content);
-            return comment;
+        comment.setContent(content);
+        return comment;
     }
 
     @Override
     @Transactional
     public void delete(Comment comment) {
-            comment.setIsDel(true);
-            comment.setContent(null);
+        comment.setIsDel(true);
+        comment.setContent(null);
     }
 
     @Override
@@ -80,5 +89,18 @@ public class CommentServiceImpl implements CommentService{
     @Transactional
     public void updateLike(Long id, Long add) {
         commentRepository.updateLike(id, add);
+    }
+
+    @Override
+    @Transactional
+    public CommentResponseDTO findCommentByIdIn(List<Long> ids, Pageable pageable) {
+        Page<Comment> savePageable = commentRepository.findCommentByIdIn(ids, pageable);
+        CommentResponseDTO dtoList = new CommentResponseDTO();
+        savePageable.stream().forEach( comment -> {
+            dtoList.getContents().add(CommentDTO.from(comment));
+        });
+        dtoList.setPage(savePageable.getPageable().getPageNumber());
+        dtoList.setPages(savePageable.getTotalPages());
+        return dtoList;
     }
 }
