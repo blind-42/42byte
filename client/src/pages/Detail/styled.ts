@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 export const PostContainer = styled.div`
-	background: #D5D5D5;
+	overflow-x: auto; 
 	display: flex;
 	flex-direction: column;
 	align-items: stretch;
@@ -9,57 +9,58 @@ export const PostContainer = styled.div`
 	border-left: solid 2px #000;
 	border-right: solid 2px #fff;
 	border-bottom: solid 2px #fff;
-	padding: 3px;
+	padding: 0.3rem;
 	height: 85vh;
-	@media screen and (min-width: 768px) {
-	}
+	background: #D5D5D5;
 `;
 
 export const DetailContainer = styled.div`
-	margin: 5px;
+	margin: 0.5rem;
 	word-spacing: 0.02rem;
 	line-height: 150%;
 `;
 
 export const Title = styled.div`
-	margin: 5px 0;
 	font-size: 1.5rem;
 	font-weight: 600;
 	color: #000;
+	@media screen and (min-width: 768px) {
+		font-size: 1.2rem;
+	}
 `;
 
 export const Specific = styled.div`
 	display: flex;
 	justify-content: space-between;
-	padding: 5px 0;
+	padding: 0.2rem 0;
 	border-bottom: solid 2px #929191;
 	font-size: 1.1rem;
 	@media screen and (min-width: 768px) {
-		font-size: 0.9rem;
+		font-size: 0.8rem;
 	}
 `;
 
 export const Info = styled.div`
 	display: flex;
 	div {
-		margin-right: 9px;
+		margin-right: 1rem;
 	}
 `;
 
 export const Modify = styled.div`
 	display: flex;
 	div {
-		margin-left: 9px;
+		margin-left: 1rem;
 	}
 `;
 
 export const ContentWrap = styled.div`
 	border-top: solid 1px #fff;
-	padding: 15px;
+	padding: 1.5rem;
 	font-size: 1.2rem;
 	color: #000;
 	@media screen and (min-width: 768px) {
-		font-size: 1rem;
+		font-size: 0.8rem;
 	}
 `;
 
@@ -70,67 +71,70 @@ export const LikeWrap = styled.div`
 `;
 
 export const LikesBox = styled.div<{boxState?: boolean;}>`
-
 	display: flex;
 	justify-content: center;
 	margin: 2rem 0;
 	border: solid 2px ${(props) => props.boxState ? 'red' : 'gray'};
-	padding: 1rem 1.5rem;
+	padding: 0.8rem 1rem;
 	width: 7rem;
 	font-size: 1.2rem;
 	font-weight: 700;
 	color: ${(props) => props.boxState ? 'red' : 'gray'};
 	div {
-		margin: 0 3px;
+		margin: 0 0.3rem;
 	}
 `;
 
 export const CommentContainer = styled.div`
 	border-top: solid 1px #fff;
-	padding: 8px 5px;
+	padding: 0.3rem ;
 `;
 
 export const CommentCount = styled.div`
 	margin: 10px 5px 0;
-	font-size: 1.3rem;
+	font-size: 1.2rem;
 	font-weight: 600;
 	color: black;
+	@media screen and (min-width: 768px) {
+		font-size: 0.9rem;
+	}
 `;
 
 
-export const CommentInput = styled(ContentWrap)`
-	display: flex;
-	flex-direction: column;
-	position:relative;
+export const CommentInput = styled.div`
+	display: grid;
+	grid-template-rows: 2f 1f;
 	margin: 5px 0;
 	border-top: solid 2px #000;
 	border-left: solid 2px #000;
 	border-right: solid 2px #fff;
 	border-bottom: solid 2px #fff;
+	padding: 0.3rem;
 	background: #fff;
-	height: 7rem;
 	textarea {
-		border:0 solid black;
-		margin: -1rem;
+		border:0 solid #000;
 		height: 4rem;
 		font-size: 1.2rem;
 	}
 	
-	button {
-		position: absolute;
-		bottom: 0.3rem;
-		right: 0.3rem;
-		height: 2rem;
-		width: 4rem;
-		background: black;
-		font-size: 1rem;
+	input {
+		place-self: end;
+		background: #518EDB;
+		border-top: solid 2px #fff;
+		border-left: solid 2px #fff;
+		border-right: solid 2px #000;
+		border-bottom: solid 2px #000;
+		padding: 0.3 1.3rem;
+		font-size: 1.2rem;
 		font-weight: 700;
 		letter-spacing: 0.2rem;
 		color: #fff;
 	}
 	@media screen and (min-width: 768px) {
 		textarea {
-			margin: -0.7rem;
+			font-size: 0.8rem;
+		}
+		input {
 			font-size: 1rem;
 		}
 	}

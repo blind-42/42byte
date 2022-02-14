@@ -1,4 +1,3 @@
-// import { useLocation } from 'react-router-dom';
 import { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import instance from 'utils/functions/axios';
@@ -18,21 +17,25 @@ function Detail() {
 
 	useEffect(() => {
 		instance
-		.get('/post?boardId=1&postId=2')
-		.then((res) => { setDetailData(res.data) })
+		.get(`/post?boardId=1&postId=2`)
+		.then((res) => { 
+			setDetailData(res.data)
+			console.log(res.data)
+		})
 		.catch((err) => console.log(err));
 	},[])
 
 	const postData: PostData= detailData.post;
 	const commentData: CommentData[]= detailData.comment;
-	console.log(detailData.comment);
+	const date = postData.createdDate;
+	const shortDate = date?.slice(0, 16).replace('T', ' ');
 
 	const boxcolorHandler = () => {
 		console.log(boxState);
 		setBoxState(!boxState);
 	}
 
-	const msgHandler = (e: any) => {
+	const msgHandler = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
 		setMsg(e.target.value);
 	}
 
@@ -58,7 +61,7 @@ function Detail() {
 							<Specific>
 								<Info>
 									<div>카뎃</div>
-									<div>{postData.createdDate?.slice(0.10)}</div>
+									<div>{shortDate}</div>
 									<div>조회 {postData.viewCnt}</div>
 								</Info>
 								<Modify>
@@ -79,7 +82,7 @@ function Detail() {
 								<CommentCount>댓글 {commentData.length}</CommentCount>
 								<CommentInput>
 									<textarea placeholder='댓글을 입력하세요.' onChange={msgHandler}></textarea> 
-									<button>등록</button>
+									<input type='button' value='등록' />
 								</CommentInput>
 								<CommentListWrap>
 									{commentData.map((el: CommentData, idx) => {
@@ -96,67 +99,5 @@ function Detail() {
 		</>
 	);
 }
-
-// function Detail() {
-// 	const [boxState, setBoxState] = useState<boolean>(false);
-// 	const [msg, setMsg] = useState<string>('');
-// 	const location = useLocation();
-// 	const propsDB: any = location.state
-// 	const { createdDate, modifiedDate, id, authorId, title, content, commentCnt, viewCnt, likeCnt, isNotice, blameCnt } = propsDB.content
-// 	const boxcolorHandler = () => {
-// 		console.log(boxState);
-// 		setBoxState(!boxState);
-// 	}
-
-	// const msgHandler = (e: any) => {
-	// 	setMsg(e.target.value);
-	// }
-//   return (
-// 		<AppContainer>
-// 			<Header />
-// 			<MainContainer>
-// 				<DetailWrap>
-// 					<Title>
-// 						<div>{title}</div>
-// 					</Title>
-// 					<Info>
-// 						<div className='left'>
-// 							<div>{authorId}</div>
-// 							<div>{createdDate.slice(0.10)}</div>
-// 							<div>조회 {viewCnt}</div>
-// 						</div>
-// 						<div className='right'>
-// 							<div>수정</div>
-// 							<div>삭제</div>
-// 						</div>
-// 					</Info>
-// 					<ContentWrap>
-// 						<div>{content}</div>
-// 					</ContentWrap>
-// 					<LikesWrap>
-// 						<LikesBox boxState={boxState} onClick={boxcolorHandler}>
-// 							<div className='likesIcon'>&#128077;</div>
-// 							<div className='likesCount'>{likeCnt}</div>
-// 						</LikesBox>
-// 					</LikesWrap>
-// 				</DetailWrap>
-				// <CommentContainer>
-				// 	<div className='commentCount'>댓글 {commentCnt}</div>
-				// 	<CommentInput>
-				// 		<textarea placeholder='댓글을 입력하세요.' onChange={msgHandler}></textarea> 
-				// 		<button>등록</button>
-				// 	</CommentInput>
-				// 	<CommentList>
-				// 		{/* 목업 */}
-				// 		<Comments />
-				// 		<Comments />
-				// 		<Comments />
-				// 	</CommentList>
-				// </CommentContainer>
-// 			</MainContainer>
-// 			<Footer />
-// 		</AppContainer>
-// 	);
-// }
 
 export default Detail;
