@@ -1,16 +1,34 @@
+
+import Pagination from 'react-js-pagination';
 import { PageNationWrap } from './styled'
 
 type GreetingProps = {
-	pageData: object;
+	pageData: pageType;
+}
+
+type pageType = {
+	page: number,
+	pages: number
 }
 
 function PageNation({pageData} : GreetingProps) {
-
-	// console.log(pageData);
+	const {page, pages} = pageData;
+	console.log(pageData.page);
 
 	return (
 		<>
-		<PageNationWrap># PageNation #</PageNationWrap>
+		<PageNationWrap>
+			{window.scrollTo(0, 0)}
+			<Pagination
+					activePage={pages}
+					itemsCountPerPage={24}
+					pageRangeDisplayed={5}
+					totalItemsCount={page}
+					prevPageText="<"
+					nextPageText=">"
+					onChange={()=>{console.log(page)}}
+				/>
+		</PageNationWrap>
 		</>
 	);
 }
