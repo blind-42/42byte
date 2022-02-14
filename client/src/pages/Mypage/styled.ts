@@ -15,38 +15,45 @@ export const MenuWrap = styled.div`
 	background: #C4C4C4;
 	display: flex;
 	align-items: center;
-	// justify-content: space-evenly;
-	// border-top: solid 2px #000;
-	// border-left: solid 2px #000;
-	// border-right: solid 2px #fff;
-	// border-bottom: solid 2px #fff;
-	margin: 0.5rem;
-	div {
+	margin: 3px 0;
+	@media screen and (min-width: 768px) {
+		margin: 0;
+	}
+`;
+
+export const PostMenu = styled.div<{state?: string;}>`
+	button {
+		background: ${(props) => props.state === 'post' ? '#D5D5D5' : 'none'};
+		border-top: ${(props) => props.state === 'post' ? 'solid 2px #000' : 'none'};
+		border-left: ${(props) => props.state === 'post' ? 'solid 2px #000' : 'none'};
+		border-right: ${(props) => props.state === 'post' ? 'solid 2px #fff' : 'none'};
+		border-bottom: ${(props) => props.state === 'post' ? 'solid 2px #fff' : 'none'};
 		font-size: 1.2rem;
-		margin: 0 1.2rem;
+		padding: 0.2rem 1.2rem;
 	}
 	@media screen and (min-width: 768px) {
-		div {
-			font-size: 0.9rem;
-			margin: 0 0.9rem;
+		button {
+			font-size: 0.8rem;
+			padding: 0.1rem 1rem;
 		}
 	}
 `;
 
-export const MypageMenu = styled.div`
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	justify-content: space-evenly;
-	// img {
-	// 	height: 5rem;
-	// 	width: 5rem;
-	// 	border: solid 1px black;
-	// }
-	div {
+export const CommentMenu = styled.div<{state?: string;}>`
+	button {
+		background: ${(props) => props.state === 'comment' ? '#D5D5D5' : 'none'};
+		border-top: ${(props) => props.state === 'comment' ? 'solid 2px #000' : 'none'};
+		border-left: ${(props) => props.state === 'comment' ? 'solid 2px #000' : 'none'};
+		border-right: ${(props) => props.state === 'comment' ? 'solid 2px #fff' : 'none'};
+		border-bottom: ${(props) => props.state === 'comment' ? 'solid 2px #fff' : 'none'};
 		font-size: 1.2rem;
-		font-weight: 700;
+		padding: 0.2rem 1.2rem;
 	}
+	@media screen and (min-width: 768px) {
+		button {
+			font-size: 0.8rem;
+			padding: 0.1rem 1rem;
+		}
 `;
 
 export const ContentWrap = styled.div`
@@ -58,6 +65,7 @@ export const ContentWrap = styled.div`
 	border-left: solid 2px #000;
 	border-right: solid 2px #fff;
 	border-bottom: solid 2px #fff;
+	margin: 3px 0;
 	padding: 3px;
 	height: 85vh;
 	@media screen and (min-width: 768px) {
