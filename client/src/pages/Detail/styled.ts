@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 export const PostContainer = styled.div`
-	overflow-x: auto; 
+	overflow-y: scroll; 
 	display: flex;
 	flex-direction: column;
 	align-items: stretch;
@@ -12,6 +12,7 @@ export const PostContainer = styled.div`
 	padding: 0.3rem;
 	height: 85vh;
 	background: #D5D5D5;
+
 `;
 
 export const DetailContainer = styled.div`
@@ -60,7 +61,7 @@ export const ContentWrap = styled.div`
 	font-size: 1.2rem;
 	color: #000;
 	@media screen and (min-width: 768px) {
-		font-size: 0.8rem;
+		font-size: 0.9rem;
 	}
 `;
 
@@ -75,13 +76,15 @@ export const LikesBox = styled.div<{boxState?: boolean;}>`
 	justify-content: center;
 	margin: 2rem 0;
 	border: solid 2px ${(props) => props.boxState ? 'red' : 'gray'};
-	padding: 0.8rem 1rem;
-	width: 7rem;
+	padding: 1rem 1.3rem;
 	font-size: 1.2rem;
 	font-weight: 700;
 	color: ${(props) => props.boxState ? 'red' : 'gray'};
 	div {
 		margin: 0 0.3rem;
+	}
+	@media screen and (min-width: 768px) {
+		padding: 0.7rem 1rem;
 	}
 `;
 
@@ -132,7 +135,7 @@ export const CommentInput = styled.div`
 	}
 	@media screen and (min-width: 768px) {
 		textarea {
-			font-size: 0.8rem;
+			font-size: 0.9rem;
 		}
 		input {
 			font-size: 1rem;

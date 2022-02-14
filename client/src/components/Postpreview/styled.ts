@@ -10,12 +10,13 @@ export const PreviewContainer = styled.div`
 	h3 {
 		margin: 0 0.8rem;
 		place-self: center start;
+		font-weight: 600;
 	}
 	div {
 		place-self: center center;
 	}
 	@media screen and (min-width: 768px) {
-		font-size: 0.8rem;
+		font-size: 0.9rem;
 		padding: 0.3rem 0;
 	}
 `;
