@@ -8,6 +8,11 @@ type GreetingProps = {
 
 function Postpreview({ content }: GreetingProps) {
 	const { id, authorId, title, commentCnt, viewCnt, likeCnt, isNotice, blameCnt, createdDate, modifiedDate } = content;
+	const fullday = new Date();
+	const year = `${fullday.getFullYear()}`;
+	const month = fullday.getMonth() + 1 < 10 ? `0${fullday.getMonth() + 1}` : `${fullday.getMonth() + 1}`;
+	const date = `${fullday.getDate()}`;
+	const today = year + '-' + month + '-' + date;
 
 	return (
 		<>
@@ -16,7 +21,9 @@ function Postpreview({ content }: GreetingProps) {
 					<h3>{title}	({commentCnt})</h3>
 					<div>{viewCnt}</div>
 					<div>{likeCnt}</div>
-					<div>{createdDate.slice(5, 10)}</div>
+					<div>{createdDate.slice(0, 10) === today
+						? createdDate.slice(2,10)
+						: createdDate.slice(11, 16)}</div>
 				</PreviewContainer>
 			</Link>
 		</>
