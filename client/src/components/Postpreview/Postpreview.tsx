@@ -11,7 +11,7 @@ function Postpreview({ content }: GreetingProps) {
 
 	return (
 		<>
-			<Link to='/detail' state={{id}}> 
+			<Link to='/detail'> 
 				<PreviewContainer>
 					<h3>{title}	({commentCnt})</h3>
 					<div>{viewCnt}</div>
