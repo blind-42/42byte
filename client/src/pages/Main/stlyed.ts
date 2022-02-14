@@ -6,6 +6,3 @@ export const AppContainer = styled.div`
 	height: 100vh;
 	background: #6BB8F0;
 `;
-
-export const MainContainer = styled.div`
-`;

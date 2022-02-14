@@ -1,108 +1,119 @@
 import styled from 'styled-components';
 
-export const AppContainer = styled.div`
+export const PostContainer = styled.div`
+	background: #D5D5D5;
 	display: flex;
 	flex-direction: column;
-`;
-
-export const MainContainer = styled.div`
-	display: flex;
-	height: 79vh;
-	flex-direction: column;
-	align-items: center;
-`;
-
-export const DetailWrap = styled.div`
-	margin-top: 2rem;
-	border: solid 2px black;
-	padding: 1rem;
-	width: 80vw;	
-	background: #ffff;
+	align-items: stretch;
+	border-top: solid 2px #000;
+	border-left: solid 2px #000;
+	border-right: solid 2px #fff;
+	border-bottom: solid 2px #fff;
+	padding: 3px;
+	height: 85vh;
 	@media screen and (min-width: 768px) {
-		width: 50vw;
-  }
+	}
+`;
+
+export const DetailContainer = styled.div`
+	margin: 5px;
+	word-spacing: 0.02rem;
+	line-height: 150%;
 `;
 
 export const Title = styled.div`
-	font-size: 1.3rem;
-	font-weight: 700;
+	margin: 5px 0;
+	font-size: 1.5rem;
+	font-weight: 600;
+	color: #000;
+`;
+
+export const Specific = styled.div`
+	display: flex;
+	justify-content: space-between;
+	padding: 5px 0;
+	border-bottom: solid 2px #929191;
+	font-size: 1.1rem;
+	@media screen and (min-width: 768px) {
+		font-size: 0.9rem;
+	}
 `;
 
 export const Info = styled.div`
 	display: flex;
-	margin-top: 0.7rem;
-	padding-bottom: 0.5rem;
-	border-bottom: solid 1px black;
-	font-size: 0.8rem;
-	font-weight: 700;
-	color: #929191;
-	justify-content: space-between;
-	.left {
-		display: flex;
-		div {
-			margin-right: 0.8rem;
-		}
+	div {
+		margin-right: 9px;
 	}
-	.right {
-		display: flex;
-		div {
-			margin-left: 0.8rem;
-		}
+`;
+
+export const Modify = styled.div`
+	display: flex;
+	div {
+		margin-left: 9px;
 	}
 `;
 
 export const ContentWrap = styled.div`
-	margin: 1.5rem 0.5rem 2rem 0.5rem;
-	word-spacing: 0.02rem;
-	line-height: 150%;
-	font-size: 1rem;
+	border-top: solid 1px #fff;
+	padding: 15px;
+	font-size: 1.2rem;
+	color: #000;
+	@media screen and (min-width: 768px) {
+		font-size: 1rem;
+	}
 `;
 
-export const LikesWrap = styled.div`
+export const LikeWrap = styled.div`
 	display: flex;
 	justify-content: center;
-	margin: 3rem 0 1rem 0;
+	border-bottom: solid 2px #929191;
 `;
 
 export const LikesBox = styled.div<{boxState?: boolean;}>`
-		display: flex;
-		justify-content: center;
-		border: solid 2px ${(props) => props.boxState ? 'red' : 'gray'};
-		padding: 0.5rem;
-		width: 5rem;
-		.likesIcon {
-			margin-right: 0.5rem;
-			font-size: 1.2rem;
-		}
-		.likesCount{
-			font-size: 1.2rem;
-			font-weight: 700;
-			color: ${(props) => props.boxState ? 'red' : 'gray'};;
-		}
+
+	display: flex;
+	justify-content: center;
+	margin: 2rem 0;
+	border: solid 2px ${(props) => props.boxState ? 'red' : 'gray'};
+	padding: 1rem 1.5rem;
+	width: 7rem;
+	font-size: 1.2rem;
+	font-weight: 700;
+	color: ${(props) => props.boxState ? 'red' : 'gray'};
+	div {
+		margin: 0 3px;
 	}
 `;
 
 export const CommentContainer = styled.div`
-	margin-top: 2rem;
-	.commentCount {
-		margin-left: 1rem;
-		font-size: 1.2rem;
-		font-weight: 700;
-		color: black;
-	}
+	border-top: solid 1px #fff;
+	padding: 8px 5px;
 `;
 
-export const CommentInput = styled(DetailWrap)`
+export const CommentCount = styled.div`
+	margin: 10px 5px 0;
+	font-size: 1.3rem;
+	font-weight: 600;
+	color: black;
+`;
+
+
+export const CommentInput = styled(ContentWrap)`
 	display: flex;
 	flex-direction: column;
 	position:relative;
-	margin: 0.5rem 0 1rem 0;
-	border: solid 2px gray;
+	margin: 5px 0;
+	border-top: solid 2px #000;
+	border-left: solid 2px #000;
+	border-right: solid 2px #fff;
+	border-bottom: solid 2px #fff;
+	background: #fff;
 	height: 7rem;
 	textarea {
 		border:0 solid black;
-		height: 3rem;
-		font-size: 1rem;
+		margin: -1rem;
+		height: 4rem;
+		font-size: 1.2rem;
 	}
 	
 	button {
@@ -115,10 +126,16 @@ export const CommentInput = styled(DetailWrap)`
 		font-size: 1rem;
 		font-weight: 700;
 		letter-spacing: 0.2rem;
-		color: white;
+		color: #fff;
+	}
+	@media screen and (min-width: 768px) {
+		textarea {
+			margin: -0.7rem;
+			font-size: 1rem;
+		}
 	}
 `;
 
-export const CommentList = styled.div`
+export const CommentListWrap = styled.div`
 	border-top: solid 1px #929191;
 `;

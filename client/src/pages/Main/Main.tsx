@@ -2,16 +2,13 @@
 import Header from '../../components/Header/Header';
 import Footer from '../../components/Footer/Footer';
 import Blindboard from 'pages/Blindboard/Blindboard';
-import { AppContainer, MainContainer } from './stlyed';
+import { AppContainer } from './stlyed';
 
 function Main() {
   return (
-    // <AppContainer>
-		// 	<Header />
-		// 	<MainContainer></MainContainer>
-		// 	<Footer />
-    // </AppContainer>
-		<Blindboard />
+    <AppContainer>
+			<Header />
+    </AppContainer>
   );
 }
 

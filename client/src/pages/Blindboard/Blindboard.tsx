@@ -1,9 +1,9 @@
 import { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
-import Header from '../../components/Header/Header';
-import Footer from '../../components/Footer/Footer';
+import Header from 'components/Header/Header';
+import Footer from 'components/Footer/Footer';
 import Postpreview from 'components/Postpreview/Postpreview';
-import PageNation from '../../components/PageNation/PageNation';
+import PageNation from 'components/PageNation/PageNation';
 import instance from 'utils/functions/axios';
 import { AppContainer, PageContainer, TopBar, PageName, Squares } from 'styles/styled';
 import { PostContainer, Category, PostWrap } from './styled';
@@ -22,7 +22,7 @@ function Blindboard() {
 
 	const postData = boardData.contents;
 	const pageData = {page: boardData.page, pages: boardData.pages};
-console.log(postData)
+
 	return (
 		<>
 			<AppContainer>

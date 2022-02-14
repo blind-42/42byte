@@ -1,22 +1,32 @@
-import { CommentWrap, CommentTop, Content } from './styled'
+import { CommentData } from 'utils/functions/type';
+import { CommentWrap, CommentTop, Info, Modify, Content, Line } from './styled'
 
-function Comments () {
+type GreetingProps = {
+	comment: CommentData
+}
+
+function Comments({comment}: GreetingProps) {
+	const { createdDate, modifiedDate, id, authorId, content, likeCnt, blameCnt, isAuthor, isDel } = comment;
+
 	return (
+		<>
 		<CommentWrap>
 			<CommentTop>
-				<div className='left'>
-					<div className='name'>카뎃2</div>
-					<div className='date'>2021-11-21 15:25</div>
-				</div>
-				<div className='right'>
+				<Info>
+					<h3>카뎃2</h3>
+					<div>{createdDate?.slice(5, 10)}</div>
+				</Info>
+				<Modify>
 					<div>수정</div>
 					<div>삭제</div>
-				</div>
+				</Modify>
 			</CommentTop>
 			<Content>
-				<div>댓글 내용입니다.</div>
+				<div>{content}</div>
 			</Content>
 		</CommentWrap>
+		<Line/>
+		</>
 	);
 }
 
