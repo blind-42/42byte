@@ -72,11 +72,13 @@ export const LikeWrap = styled.div`
 `;
 
 export const LikesBox = styled.div<{boxState?: boolean;}>`
+	cursor: pointer;
 	display: flex;
 	justify-content: center;
 	margin: 2rem 0;
 	border: solid 2px ${(props) => props.boxState ? 'red' : 'gray'};
-	padding: 1rem 1.3rem;
+	padding: 0.9rem 1.3rem;
+	width: 6rem;
 	font-size: 1.2rem;
 	font-weight: 700;
 	color: ${(props) => props.boxState ? 'red' : 'gray'};
@@ -85,6 +87,7 @@ export const LikesBox = styled.div<{boxState?: boolean;}>`
 	}
 	@media screen and (min-width: 768px) {
 		padding: 0.7rem 1rem;
+		width: 5.5rem;
 	}
 `;
 
