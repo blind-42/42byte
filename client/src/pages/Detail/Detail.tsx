@@ -8,24 +8,46 @@ import { DetailData, PostData, CommentData } from 'utils/functions/type';
 import { AppContainer, PageContainer, TopBar, PageName, Squares } from 'styles/styled';
 import { PostContainer, DetailContainer, Title, Specific, Info, Modify, ContentWrap, LikeWrap, LikesBox
 				, CommentContainer, CommentCount, CommentInput, CommentListWrap } from './styled';
+import axios from 'axios';
 
 function Detail() {
-
+	const mountedRef = useRef(true);
 	const [detailData, setDetailData] = useState<DetailData>({post: {}, comment: [{}]});
-	const [boxState, setBoxState] = useState<boolean>(false);
+	const [mylikeIds, setMylikeIds] = useState<number[]>([]);
+	const [boxState, setBoxState] = useState<boolean>(false); // false면 안되지...?
 	const [msg, setMsg] = useState<string>('');
 	
 	const history = useNavigate();
 	const currentUrl = window.location.href;
+	const urlId = currentUrl.split('detail?boardId=1&postId=')[1];
+
+	// useEffect(() => {
+	// 	axios
+	// 	.all([instance.get(`/post?boardId=1&postId=${urlId}`),
+	// 				instance.get(`/mypage/post/like`)])
+	// 	.then(axios.spread((res1, res2) => {
+	// 		setDetailData(res1.data);
+	// 		setMylikeIds(res2.data.contents.map((el: PostData) => el.id));
+	// 	}))
+	// 	.then(() => setBoxState(boxBoolean))
+	// 	.catch((err) => console.log(err));
+	// },[boxState, mylikeIds]) // 조회수 무한루프 한번에 핸들링 불가...?
 
 	useEffect(() => {
-		instance
-		.get(`/post?boardId=1&postId=${currentUrl.split('detail?boardId=1&postId=')[1]}`)
-		.then((res) => { 
-			setDetailData(res.data)
+		instance.get(`/post?boardId=1&postId=${urlId}`)
+		.then((res) => {
+			setDetailData(res.data);
 		})
 		.catch((err) => console.log(err));
-	},[])
+	},[boxState])
+
+	useEffect(() => {
+		instance.get(`/mypage/post/like`)
+		.then((res) => setMylikeIds(res.data.contents.map((el: PostData) => el.id)))
+		.then(() => setBoxState(() => mylikeIds.indexOf(Number(urlId)) !== -1 ))
+		.catch((err) => console.log(err));
+		return () => {mountedRef.current = false;};  // clean up function
+	},[mylikeIds, boxState])
 
 	const postData: PostData= detailData.post;
 	const commentData: CommentData[]= detailData.comment;
@@ -33,8 +55,10 @@ function Detail() {
 	const shortDate = date?.slice(0, 16).replace('T', ' ');
 
 	const boxcolorHandler = () => {
-		console.log(boxState);
-		setBoxState(!boxState);
+		instance
+		.post(`/post/like?postId=${urlId}`)
+		.then(() => setBoxState(!boxState))
+		.catch((err) => console.log(err));
 	}
 
 	const msgHandler = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -56,7 +80,6 @@ function Detail() {
 								</Link>
 							</Squares>
 						</TopBar>
-					{/* 만약 컴포넌트로 한다면 여기서부터 넣으면 됨! */}
 					<PostContainer>
 						<DetailContainer>
 							<Title>{postData.title}</Title>
