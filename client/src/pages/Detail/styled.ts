@@ -117,31 +117,42 @@ export const CommentInput = styled.div`
 	border-bottom: solid 2px #fff;
 	padding: 0.3rem;
 	background: #fff;
+	font-size: 1.2rem;
 	textarea {
+		resize: none;
 		border:0 solid #000;
 		height: 4rem;
-		font-size: 1.2rem;
 	}
-	
-	input {
-		place-self: end;
-		background: #518EDB;
-		border-top: solid 2px #fff;
-		border-left: solid 2px #fff;
-		border-right: solid 2px #000;
-		border-bottom: solid 2px #000;
-		padding: 0.3 1.3rem;
-		font-size: 1.2rem;
-		font-weight: 700;
-		letter-spacing: 0.2rem;
-		color: #fff;
-	}
+	div {
+		display: grid;
+		grid-template-columns: 1fr 1fr;
+		span {
+			place-self: center start;
+			color: #929191;
+		}
+		input {
+			place-self: end;
+			background: #518EDB;
+			border-top: solid 2px #fff;
+			border-left: solid 2px #fff;
+			border-right: solid 2px #000;
+			border-bottom: solid 2px #000;
+			padding: 0.3 1.3rem;
+			font-size: 1.2rem;
+			font-weight: 700;
+			letter-spacing: 0.2rem;
+			color: #fff;
+		}
+}
 	@media screen and (min-width: 768px) {
 		textarea {
 			font-size: 0.9rem;
 		}
-		input {
+		div {
 			font-size: 1rem;
+			input {
+			font-size: 1rem;
+		}
 		}
 	}
 `;

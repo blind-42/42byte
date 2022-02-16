@@ -8,30 +8,15 @@ import { DetailData, PostData, CommentData } from 'utils/functions/type';
 import { AppContainer, PageContainer, TopBar, PageName, Squares } from 'styles/styled';
 import { PostContainer, DetailContainer, Title, Specific, Info, Modify, ContentWrap, LikeWrap, LikesBox
 				, CommentContainer, CommentCount, CommentInput, CommentListWrap } from './styled';
-import axios from 'axios';
 
 function Detail() {
-	const mountedRef = useRef(true);
 	const [detailData, setDetailData] = useState<DetailData>({post: {}, comment: [{}]});
-	const [mylikeIds, setMylikeIds] = useState<number[]>([]);
-	const [boxState, setBoxState] = useState<boolean>(false); // false면 안되지...?
-	const [msg, setMsg] = useState<string>('');
+	const [boxState, setBoxState] = useState<boolean>(false);
+	const [comment, setComment] = useState<string>('');
 	
 	const history = useNavigate();
 	const currentUrl = window.location.href;
 	const urlId = currentUrl.split('detail?boardId=1&postId=')[1];
-
-	// useEffect(() => {
-	// 	axios
-	// 	.all([instance.get(`/post?boardId=1&postId=${urlId}`),
-	// 				instance.get(`/mypage/post/like`)])
-	// 	.then(axios.spread((res1, res2) => {
-	// 		setDetailData(res1.data);
-	// 		setMylikeIds(res2.data.contents.map((el: PostData) => el.id));
-	// 	}))
-	// 	.then(() => setBoxState(boxBoolean))
-	// 	.catch((err) => console.log(err));
-	// },[boxState, mylikeIds]) // 조회수 무한루프 한번에 핸들링 불가...?
 
 	useEffect(() => {
 		instance.get(`/post?boardId=1&postId=${urlId}`)
@@ -43,16 +28,15 @@ function Detail() {
 
 	useEffect(() => {
 		instance.get(`/mypage/post/like`)
-		.then((res) => setMylikeIds(res.data.contents.map((el: PostData) => el.id)))
-		.then(() => setBoxState(() => mylikeIds.indexOf(Number(urlId)) !== -1 ))
+		.then((res) => {
+			setBoxState(res.data.contents.map((el: PostData) => el.id).indexOf(Number(urlId)) !== -1)
+		})
 		.catch((err) => console.log(err));
-		return () => {mountedRef.current = false;};  // clean up function
-	},[mylikeIds, boxState])
+	},[])
 
-	const postData: PostData= detailData.post;
+	const { createdDate, modifiedDate, id, authorId, title, content, commentCnt, viewCnt, likeCnt, isNotice, blameCnt } = detailData.post
 	const commentData: CommentData[]= detailData.comment;
-	const date = postData.createdDate;
-	const shortDate = date?.slice(0, 16).replace('T', ' ');
+	const shortDate = createdDate?.slice(0, 16).replace('T', ' ');
 
 	const boxcolorHandler = () => {
 		instance
@@ -61,8 +45,24 @@ function Detail() {
 		.catch((err) => console.log(err));
 	}
 
-	const msgHandler = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-		setMsg(e.target.value);
+	const inputMsgHandler = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+		setComment(e.target.value);
+	}
+
+	const sendCommentHandler = () => {
+		instance
+		.post(`/comment?boardId=1&postId=${urlId}`, {content: comment})
+		.then(() => {
+			setComment('');
+			window.location.reload();
+		})
+		.catch((err) => console.log(err));
+	}
+
+	const modifiedHandler = () => {
+	}
+
+	const deleteHandler = () => {
 	}
 
 	return (
@@ -71,43 +71,46 @@ function Detail() {
 					<Header />
 					<PageContainer>
 						<TopBar>
-							<PageName>상세글 #{postData.id}</PageName>
+							<PageName>상세글 #{id}</PageName>
 							<Squares>
 								<div>&#9866;</div>
 								<div>&#10064;</div>
-								<Link to='/'>
+								<Link to='/blindboard'>
 									<div>&times;</div>
 								</Link>
 							</Squares>
 						</TopBar>
 					<PostContainer>
 						<DetailContainer>
-							<Title>{postData.title}</Title>
+							<Title>{title}</Title>
 							<Specific>
 								<Info>
 									<div>카뎃</div>
 									<div>{shortDate}</div>
-									<div>조회 {postData.viewCnt}</div>
+									<div>조회 {Number(viewCnt) + 1}</div>
 								</Info>
 								<Modify>
-									<div>수정</div>
-									<div>삭제</div>
+									<div onClick={modifiedHandler}>수정</div>
+									<div onClick={deleteHandler}>삭제</div>
 								</Modify>
 							</Specific>
 							<ContentWrap>
-								{postData.content}
+								{content}
 							</ContentWrap>
 							<LikeWrap>
 								<LikesBox boxState={boxState} onClick={boxcolorHandler}>
 									<div>&#128077;</div>
-									<div>{postData.likeCnt}</div>
+									<div>{likeCnt}</div>
 								</LikesBox>
 							</LikeWrap>
 							<CommentContainer>
 								<CommentCount>댓글 {commentData.length}</CommentCount>
 								<CommentInput>
-									<textarea placeholder='댓글을 입력하세요.' onChange={msgHandler}></textarea> 
-									<input type='button' value='등록' />
+									<textarea placeholder='댓글을 입력하세요.' onChange={inputMsgHandler} maxLength={300}></textarea>
+									<div>
+									<span>{comment.length} / 300</span>
+									<input type='button' value='등록' onClick={sendCommentHandler}/>
+									</div>
 								</CommentInput>
 								<CommentListWrap>
 									{commentData.map((el: CommentData, idx) => {
@@ -117,7 +120,6 @@ function Detail() {
 							</CommentContainer>
 						</DetailContainer>
 					</PostContainer>
-					{/* <PageNation pageData={pageData}/> */}
 					<Footer />
 				</PageContainer>
 			</AppContainer>
