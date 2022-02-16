@@ -2,7 +2,11 @@ package com.blind.api.domain.comment.v1.dto;
 
 import com.blind.api.domain.comment.v1.domain.Comment;
 import lombok.Builder;
+import lombok.Getter;
+import lombok.Setter;
 
+@Getter
+@Setter
 public class CommentDTO {
     private Long id;
     private Long boardId;

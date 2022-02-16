@@ -4,6 +4,8 @@ import com.blind.api.domain.board.v1.domain.Board;
 import com.blind.api.domain.board.v1.service.BoardService;
 import com.blind.api.domain.comment.v1.domain.Comment;
 import com.blind.api.domain.post.v2.domain.Post;
+import com.blind.api.domain.post.v2.dto.PostDTO;
+import com.blind.api.domain.post.v2.dto.PostResponseDTO;
 import com.blind.api.domain.post.v2.repository.PostRepository;
 import com.blind.api.domain.user.v2.domain.User;
 import com.blind.api.domain.user.v2.service.UserService;
@@ -83,5 +85,18 @@ public class PostServiceImpl implements PostService {
     @Transactional
     public void deletePost(Post post) {
         postRepository.deleteById(post.getId());
+    }
+
+    @Override
+    @Transactional
+    public PostResponseDTO findPostByIdIn(List<Long> ids, Pageable pageable) {
+        Page<Post> savePageable = postRepository.findPostByIdIn(ids, pageable);
+        PostResponseDTO dtoList = new PostResponseDTO();
+        savePageable.stream().forEach( post -> {
+            dtoList.getContents().add(PostDTO.from(post));
+        });
+        dtoList.setPage(savePageable.getPageable().getPageNumber());
+        dtoList.setPages(savePageable.getTotalPages());
+        return dtoList;
     }
 }
