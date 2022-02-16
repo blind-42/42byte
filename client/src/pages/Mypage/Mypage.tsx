@@ -4,8 +4,8 @@ import Header from 'components/Header/Header';
 import Footer from 'components/Footer/Footer';
 import PageNation from 'components/PageNation/PageNation';
 import Postpreview from 'components/Postpreview/Postpreview';
-import { AppContainer, PageContainer, TopBar, PageName, Squares } from '../../styles/styled'
-import { ContentContainer, MenuWrap, PostMenu, CommentMenu, PostContainer, Category, ContentWrap, PostWrap } from './styled'
+import { AppContainer, PageContainer, TopBar, PageName, Squares, Category } from '../../styles/styled'
+import { ContentContainer, MenuWrap, PostMenu, CommentMenu, PostContainer, ContentWrap, PostWrap } from './styled'
 import instance from 'utils/functions/axios';
 import { BoardData, ContentData} from 'utils/functions/type';
 
@@ -14,7 +14,7 @@ function Mypage() {
 	const [pageName, setPageName] = useState<string>('post');
 
 	const myPost = boardData.contents;
-	const pageData = {page: boardData.page, pages: boardData.pages};
+	// const pageData = {page: boardData.page, pages: boardData.pages};
 
 	const switchToComment = () => {
 		setPageName('comment');
@@ -71,7 +71,7 @@ function Mypage() {
 									})}
 								</PostWrap>
 							</ContentWrap>
-							<PageNation pageData={pageData}/>
+							{/* <PageNation pageData={pageData}/> */}
 						</PostContainer>
 					</ContentContainer>
 					<Footer />

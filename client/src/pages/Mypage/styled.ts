@@ -5,7 +5,6 @@ export const ContentContainer = styled.div`
 	flex-direction: column;
 	align-items: stretch;
 	background: #C4C4C4;
-	height: 85vh;
 	@media screen and (min-width: 768px) {
 	}
 `;
@@ -69,26 +68,7 @@ export const PostContainer = styled.div`
 	padding: 3px;
 	height: 75vh;
 	@media screen and (min-width: 768px) {
-		height: 72vh;
-	}
-`;
-
-export const Category = styled.div`
-	height: 2rem;
-	display: grid;
-	grid-template-columns: 6fr 1fr 1fr 2fr;
-	justify-items: space-between;
-	border-bottom: solid 2px #929191;
-	div {
-		place-self: center center;
-		font-size: 1.2rem;
-		font-weight: 600;
-	}
-	@media screen and (min-width: 768px) {
-		height: 1.5rem;
-		div {
-			font-size: 0.9rem;
-		}
+		height: 70vh;
 	}
 `;
 

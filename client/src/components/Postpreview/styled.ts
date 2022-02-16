@@ -6,7 +6,7 @@ export const PreviewContainer = styled.div`
 	justify-items: space-between;
 	border-bottom: solid 1px #929191;
 	font-size: 1.2rem;
-	padding: 0.5rem 0;
+	height: 2.5rem;
 	h3 {
 		margin: 0 0.8rem;
 		place-self: center start;
@@ -16,7 +16,7 @@ export const PreviewContainer = styled.div`
 		place-self: center center;
 	}
 	@media screen and (min-width: 768px) {
+		height: 2.5rem;
 		font-size: 0.9rem;
-		padding: 0.3rem 0;
 	}
 `;

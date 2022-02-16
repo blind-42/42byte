@@ -1,15 +1,22 @@
 import styled from 'styled-components';
 
+export const PageContainer = styled.div`
+	display: flex;
+	flex-direction: column;
+	jusfify-content: center;
+	align-items: center;
+`;
+
 export const PageNationWrap = styled.div`
 	.pagination {
     display: flex;
     justify-content: center;
-    margin: 1rem;
+    margin: 1rem 0;
 		background: #C4C4C4;
-		border-top: solid 2px #000;
-		border-left: solid 2px #000;
-		border-right: solid 2px #fff;
-		border-bottom: solid 2px #fff;
+		border-top: solid 1px #000;
+		border-left: solid 1px #000;
+		border-right: solid 1px #fff;
+		border-bottom: solid 1px #fff;
   }
   ul {
     list-style: none;
@@ -35,7 +42,7 @@ export const PageNationWrap = styled.div`
     text-decoration: none;
     color: #888888;
     font-size: 1rem;
-    font-weight: bold;
+    font-weight: 700;
     transition: all 0.5s;
   }
   ul.pagination li.active a {
@@ -43,7 +50,7 @@ export const PageNationWrap = styled.div`
   }
   ul.pagination li.active {
     background-color: #C4C4C4;
-    border: 1px solid var(--color-black);
+    // border: 1px solid var(--color-black);
   }
   ul.pagination li a:hover,
   ul.pagination li a.active {
@@ -54,4 +61,14 @@ export const PageNationWrap = styled.div`
     height: 30px;
     color: #337ab7;
   }
+	@media screen and (min-width: 768px) {
+		ul.pagination li {
+			width: 1.8rem;
+			height: 1.8rem;
+			font-size: 0.9rem;
+		}
+		ul.pagination li a {
+			font-size: 0.9rem;
+		}
+	}
 `;
