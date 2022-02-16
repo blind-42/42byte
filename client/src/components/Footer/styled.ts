@@ -5,10 +5,11 @@ export const FooterWrap = styled.div`
 	flex-direction: column;
 	justify-content: space-evenly;
 	align-items: center;
-	height: 15vh;
+	height: 7rem;
 	background: #C4C4C4;
 	padding: 1rem;
 	@media screen and (min-width: 768px) {
+		height: 5rem;
 		padding: 1rem;
 	}
 `;

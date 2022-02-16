@@ -4,7 +4,12 @@ export const PageNationWrap = styled.div`
 	.pagination {
     display: flex;
     justify-content: center;
-    margin: 1rem 0;
+    margin: 1rem;
+		background: #C4C4C4;
+		border-top: solid 2px #000;
+		border-left: solid 2px #000;
+		border-right: solid 2px #fff;
+		border-bottom: solid 2px #fff;
   }
   ul {
     list-style: none;
@@ -12,14 +17,18 @@ export const PageNationWrap = styled.div`
   }
   ul.pagination li {
     display: inline-block;
-    width: 40px;
-    height: 40px;
+    width: 2.3rem;
+    height: 2.3rem;
     border: 1px solid #d3d3d3;
     display: flex;
     justify-content: center;
     align-items: center;
     font-size: 1rem;
-    background-color: #fbfbfb;
+    background: #C4C4C4;
+		border-top: solid 2px #fff;
+		border-left: solid 2px #fff;
+		border-right: solid 2px #000;
+		border-bottom: solid 2px #000;
     transition: all 0.5s;
   }
   ul.pagination li a {
@@ -33,7 +42,7 @@ export const PageNationWrap = styled.div`
     color: var(--color-black);
   }
   ul.pagination li.active {
-    background-color: #ffffff;
+    background-color: #C4C4C4;
     border: 1px solid var(--color-black);
   }
   ul.pagination li a:hover,
