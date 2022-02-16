@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
+import { Viewer } from '@toast-ui/react-editor';
 import instance from 'utils/functions/axios';
 import Header from 'components/Header/Header';
 import Footer from 'components/Footer/Footer';
@@ -13,8 +14,8 @@ function Detail() {
 	const [detailData, setDetailData] = useState<DetailData>({post: {}, comment: [{}]});
 	const [boxState, setBoxState] = useState<boolean>(false);
 	const [comment, setComment] = useState<string>('');
+	const [test, setTest] = useState();
 	
-	const history = useNavigate();
 	const currentUrl = window.location.href;
 	const urlId = currentUrl.split('detail?boardId=1&postId=')[1];
 
@@ -63,6 +64,10 @@ function Detail() {
 	}
 
 	const deleteHandler = () => {
+		instance
+		.delete(`/post?postId=${id}`)
+		.then(() => {window.location.href = '/blindboard?page=1'})
+		.catch((err) => console.log(err));
 	}
 
 	return (
@@ -83,20 +88,20 @@ function Detail() {
 					<PostContainer>
 						<DetailContainer>
 							<Title>{title}</Title>
-							<Specific>
-								<Info>
-									<div>카뎃</div>
-									<div>{shortDate}</div>
-									<div>조회 {Number(viewCnt) + 1}</div>
-								</Info>
-								<Modify>
-									<div onClick={modifiedHandler}>수정</div>
-									<div onClick={deleteHandler}>삭제</div>
-								</Modify>
-							</Specific>
-							<ContentWrap>
-								{content}
-							</ContentWrap>
+								<Specific>
+									<Info>
+										<div>카뎃</div>
+										<div>{shortDate}</div>
+										<div>조회 {Number(viewCnt) + 1}</div>
+									</Info>
+									<Modify>
+										<div onClick={modifiedHandler}>수정</div>
+										<div onClick={deleteHandler}>삭제</div>
+									</Modify>
+								</Specific>
+							{content && <ContentWrap>
+								<Viewer initialValue={content}/>
+							</ContentWrap>}
 							<LikeWrap>
 								<LikesBox boxState={boxState} onClick={boxcolorHandler}>
 									<div>&#128077;</div>
@@ -108,8 +113,8 @@ function Detail() {
 								<CommentInput>
 									<textarea placeholder='댓글을 입력하세요.' onChange={inputMsgHandler} maxLength={300}></textarea>
 									<div>
-									<span>{comment.length} / 300</span>
-									<input type='button' value='등록' onClick={sendCommentHandler}/>
+										<span>{comment.length} / 300</span>
+										<input type='button' value='등록' onClick={sendCommentHandler}/>
 									</div>
 								</CommentInput>
 								<CommentListWrap>
