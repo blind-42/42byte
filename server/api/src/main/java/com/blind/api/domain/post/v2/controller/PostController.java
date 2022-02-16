@@ -13,6 +13,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.data.web.SortDefault;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -32,7 +33,10 @@ public class PostController {
     /* 게시판 조회 */
     @RequestMapping(value="/board", method = RequestMethod.GET)
     public PostResponseDTO findAllPost(@RequestParam("boardId") Long boardId,
-                                       @PageableDefault(size = 10, sort = "isNotice", direction = Sort.Direction.DESC) Pageable pageable) {
+                                       @PageableDefault(size = 24)
+                                       @SortDefault.SortDefaults({
+                                               @SortDefault(sort = "isNotice", direction = Sort.Direction.DESC),
+                                               @SortDefault(sort = "id", direction = Sort.Direction.DESC)})Pageable pageable) {
         PostResponseDTO dtoList = new PostResponseDTO();
         Page<Post> postList = postService.findAllByBoardId(boardId, pageable);
         postList.stream().forEach( post -> {
@@ -46,7 +50,10 @@ public class PostController {
     /*전체 게시판 게시글 검색*/
     @RequestMapping(value="/board/search", method = RequestMethod.GET)
     public PostResponseDTO searchPost(@RequestParam("keyword") String keyword,
-                                 @PageableDefault(size = 10, sort = "id", direction = Sort.Direction.DESC) Pageable pageable){
+                                      @PageableDefault(size = 24)
+                                      @SortDefault.SortDefaults({
+                                              @SortDefault(sort = "isNotice", direction = Sort.Direction.DESC),
+                                              @SortDefault(sort = "id", direction = Sort.Direction.DESC)}) Pageable pageable){
         PostResponseDTO dtoList = new PostResponseDTO();
         Page<Post> postList = postService.search(keyword, pageable);
         postList.stream().forEach( post -> {
@@ -60,7 +67,7 @@ public class PostController {
     /*게시글 생성*/
     @RequestMapping(value="/post", method = RequestMethod.POST)
     public Object createPost(@RequestParam("boardId") Long boardId,
-                             @RequestParam Map<String, String> body,
+                             @RequestBody Map<String, String> body,
                              HttpServletRequest request){
         return postService.save(boardId, body.get("title"), body.get("content"), HeaderUtil.getAccessToken(request));
     }
@@ -77,7 +84,7 @@ public class PostController {
 
     /*게시글 수정*/
     @RequestMapping(value={"/post"}, method = RequestMethod.PUT)
-    public void updatePost(@RequestParam("postId") Long postId, @RequestParam Map<String, String> map, HttpServletRequest request){
+    public void updatePost(@RequestParam("postId") Long postId, @RequestBody Map<String, String> map, HttpServletRequest request){
         Post post = postService.findById(postId).orElseThrow(RuntimeException::new);
         if (userService.compareUser(post.getAuthorId(), HeaderUtil.getAccessToken(request)) != true)
             return ;
@@ -98,7 +105,7 @@ public class PostController {
     /*마이페이지 (내가 쓴 글)*/
     @RequestMapping(value={"/mypage/post"}, method = RequestMethod.GET)
     public PostResponseDTO findPostByUserId (HttpServletRequest request,
-                                        @PageableDefault(size = 10, sort = "id", direction = Sort.Direction.DESC) Pageable pageable){
+                                        @PageableDefault(size = 24, sort = "id", direction = Sort.Direction.DESC) Pageable pageable){
         String accessToken = HeaderUtil.getAccessToken(request);
         Long userId = userService.findByAccessToken(accessToken).orElseThrow().getId();
         PostResponseDTO dtoList = new PostResponseDTO();

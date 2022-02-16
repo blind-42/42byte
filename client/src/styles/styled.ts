@@ -13,7 +13,7 @@ export const PageContainer = styled.div`
 	flex-direction: column;
 	// justify-content: space-between;
 	align-items: stretch;
-	height: 108vh;
+	height: 95vh;
 	width: 100vw;
 	background: #C4C4C4;
 	padding: 3px;

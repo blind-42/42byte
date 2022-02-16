@@ -14,6 +14,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.PostConstruct;
+import java.util.Map;
 
 @RestController
 @AllArgsConstructor
@@ -27,8 +28,21 @@ public class BoardController {
     @ApiImplicitParams({
             @ApiImplicitParam(name = "name", value = "게시판 이름", required = true)
     })
-    public Board createPost(@RequestParam String name) {
-        return boardService.save(name);
+    public Board createPost(@RequestBody Map<String,String> body) {
+        return boardService.save(body.get("name"));
     }
 
+    @PostConstruct
+    public void initiallize() {
+        Token token = new Token();
+        token.setAccessToken("access");
+        token.setRefreshToken("refresh");
+        token.setHashId("hashId");
+        testTokenRepository.save(token);
+
+        User user = new User();
+        user.setHashId("hashId");
+        user.setRoleType(RoleType.USER);
+        testUserRepository.save(user);
+    }
 }

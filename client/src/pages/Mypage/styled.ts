@@ -5,9 +5,8 @@ export const ContentContainer = styled.div`
 	flex-direction: column;
 	align-items: stretch;
 	background: #C4C4C4;
-	height: 90vh;
+	height: 85vh;
 	@media screen and (min-width: 768px) {
-		height: 70vh;
 	}
 `;
 
@@ -56,7 +55,8 @@ export const CommentMenu = styled.div<{state?: string;}>`
 		}
 `;
 
-export const ContentWrap = styled.div`
+export const PostContainer = styled.div`
+	overflow-y: scroll;
 	background: #C4C4C4;
 	display: flex;
 	flex-direction: column;
@@ -67,8 +67,9 @@ export const ContentWrap = styled.div`
 	border-bottom: solid 2px #fff;
 	margin: 3px 0;
 	padding: 3px;
-	overflow-y: scroll;
+	height: 75vh;
 	@media screen and (min-width: 768px) {
+		height: 72vh;
 	}
 `;
 
@@ -91,12 +92,13 @@ export const Category = styled.div`
 	}
 `;
 
-export const ContentPreview = styled.div`
+export const ContentWrap = styled.div`
 	border-top: solid 1px #fff;
-	height: 82vh;
 	background: #D5D5D5;
-	border-bottom: solid 2px #929191;
-	@media screen and (min-width: 768px) {
-		height: 80vh;
-	}
 `;
+
+export const PostWrap = styled.div`
+	border-bottom: solid 2px #fff;
+`;
+
+

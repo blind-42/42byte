@@ -2,6 +2,7 @@ package com.blind.api.domain.post.v2.service;
 
 import com.blind.api.domain.comment.v1.domain.Comment;
 import com.blind.api.domain.post.v2.domain.Post;
+import com.blind.api.domain.post.v2.dto.PostResponseDTO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -18,4 +19,5 @@ public interface PostService {
     void updateView(Long postId);
     void updatePost(Post post, String title, String content);
     void deletePost(Post post);
+    public PostResponseDTO findPostByIdIn(List<Long> ids, Pageable pageable);
 }

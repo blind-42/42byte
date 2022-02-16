@@ -8,6 +8,8 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.data.repository.query.Param;
 
+import java.util.List;
+
 public interface PostRepository extends PagingAndSortingRepository<Post, Long> {
     Page<Post> findAllByBoardId(Long boardId, Pageable pageable);
     Page<Post> findAllByAuthorId(Long authorId, Pageable pageable);
@@ -25,4 +27,5 @@ public interface PostRepository extends PagingAndSortingRepository<Post, Long> {
     @Query("update Post p set p.likeCnt = p.likeCnt + :add where p.id = :id")
     void updateLike(@Param("id") Long id, @Param("add") Long add);
 
+    Page<Post> findPostByIdIn(List<Long> ids, Pageable pageable);
 }

@@ -12,7 +12,7 @@ export const HeaderContainer = styled.div`
 	border-top: solid 2px #fff;
 	border-left: solid 2px #fff;
 	@media screen and (min-width: 768px){
-		height: 5vh;
+		height: 4.5vh;
 		padding: 3px;
 	}
 `;
