@@ -109,7 +109,7 @@ export const UtilWrap = styled.div`
 	padding: 1rem 2rem;
 	display: flex;
 	flex-direction: column;
-	align-items: stretch;
+	align-items: center;
 	border-top: solid 2px #fff;
 	@media screen and (min-width: 768px) {
 	}
@@ -178,7 +178,7 @@ export const Search = styled.div`
 	@media screen and (min-width: 768px) {
 		height: 1.7rem;
 		.textInput {
-			font-size: 0.8rem;
+			font-size: 0.9rem;
 			padding-left: 0.2rem;
 		}
 		.searchButton {

@@ -1,34 +1,46 @@
 
 import Pagination from 'react-js-pagination';
-import { PageNationWrap } from './styled'
+import { PageContainer, PageNationWrap } from './styled'
 
-type GreetingProps = {
-	pageData: pageType;
+// type GreetingProps = {
+// 	pageData: pageType;
+// }
+
+// type pageType = {
+// 	page: number,
+// 	pages: number
+// }
+
+interface GreetingProps {
+  curPage: number;
+  totalPages: number;
+  pageChangeHandler: (page: number) => void;
 }
 
-type pageType = {
-	page: number,
-	pages: number
-}
-
-function PageNation({pageData} : GreetingProps) {
-	const {page, pages} = pageData;
-	console.log(pageData.page);
+function PageNation({
+  curPage,
+  totalPages,
+  pageChangeHandler,
+}: GreetingProps) {
+	// const {page, pages} = pageData;
+	// console.log(pageData.page);
 
 	return (
 		<>
-		<PageNationWrap>
-			{window.scrollTo(0, 0)}
-			<Pagination
-					activePage={pages}
-					itemsCountPerPage={24}
-					pageRangeDisplayed={5}
-					totalItemsCount={page}
-					prevPageText="<"
-					nextPageText=">"
-					onChange={()=>{console.log(page)}}
-				/>
-		</PageNationWrap>
+			<PageContainer>
+				<PageNationWrap>
+					{window.scrollTo(0, 0)}
+					<Pagination
+							activePage={curPage}
+							itemsCountPerPage={24}
+							pageRangeDisplayed={5}
+							totalItemsCount={totalPages}
+							prevPageText="<"
+							nextPageText=">"
+							onChange={pageChangeHandler}
+						/>
+				</PageNationWrap>
+			</PageContainer>
 		</>
 	);
 }
