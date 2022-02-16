@@ -10,6 +10,7 @@ instance.interceptors.request.use(
 
     config.headers = {
       'Content-Type' : 'application/json',
+			'Authorization' : 'Bearer access',
     }
 
     return config;
