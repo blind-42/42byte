@@ -33,16 +33,11 @@ export const Category = styled.div`
 	}
 `;
 
-export const PostWrap = styled.div`
-	display: grid;
-	// grid-template-rows: repeat(20, 1fr);
-	align-content: space-between;
-	align-items: center;
+export const ContentWrap = styled.div`
+	border-top: solid 1px #fff;
 	background: #D5D5D5;
-	border-bottom: solid 2px #fff;
 `;
 
-export const ContentWrap = styled.div`
-	overflow-y: scroll;
-	border-top: solid 1px #fff;
+export const PostWrap = styled.div`
+	border-bottom: solid 2px #fff;
 `;

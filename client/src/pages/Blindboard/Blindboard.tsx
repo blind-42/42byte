@@ -46,13 +46,13 @@ function Blindboard() {
 							<div>작성일</div>
 						</Category>
 						<ContentWrap>
-						<PostWrap>
-							{postData.map((el: ContentData, idx) => {
-								return (<Postpreview key={idx} content={el} />)
-							})}
-						</PostWrap>
-						<PageNation pageData={pageData}/>
+							<PostWrap>
+								{postData.map((el: ContentData, idx) => {
+									return (<Postpreview key={idx} content={el} />)
+								})}
+							</PostWrap>
 						</ContentWrap>
+						<PageNation pageData={pageData}/>
 					</PostContainer>
 					<Footer />
 				</PageContainer>
