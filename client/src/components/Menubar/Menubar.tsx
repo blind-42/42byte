@@ -56,7 +56,7 @@ function Menubar({ menubarHandler }: GreetingProps) {
 				<MenuListWrap>
 					<ul>
 						<li>
-							<Link to="/blindboard">블라인드 게시판</Link>
+							<a href="/blindboard?page=1">블라인드 게시판</a>
 						</li>
 					</ul>
 				</MenuListWrap>
