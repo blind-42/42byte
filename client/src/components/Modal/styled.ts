@@ -58,16 +58,20 @@ export const TextWrap = styled.div`
 export const Buttons = styled.div`
 	display: flex;
 	justify-content: space-evenly;
-		input {
-		background: #518EDB;
-		border-top: solid 2px #fff;
-		border-left: solid 2px #fff;
-		border-right: solid 2px #000;
-		border-bottom: solid 2px #000;
-		padding: 0.5rem 1.3rem;
-		font-size: 1.2rem;
-		font-weight: 700;
-		letter-spacing: 0.2rem;
-		color: #fff;
+	margin: 0 2rem;
+	input {
+	background: #518EDB;
+	border-top: solid 2px #fff;
+	border-left: solid 2px #fff;
+	border-right: solid 2px #000;
+	border-bottom: solid 2px #000;
+	padding: 0.5rem 1.3rem;
+	font-size: 1.2rem;
+	font-weight: 700;
+	letter-spacing: 0.2rem;
+	color: #fff;
 	}
+	.cancel {
+			background: #929191;
+		}
 `;
