@@ -12,7 +12,33 @@ import { PostContainer, DetailContainer, Title, Specific, Info, Modify, ContentW
 				, CommentContainer, CommentCount, CommentInput, CommentListWrap } from './styled';
 
 function Detail() {
-	const [detailData, setDetailData] = useState<DetailData>({post: {}, comment: [{}]});
+	const [detailData, setDetailData] = useState<DetailData>(
+		{post: {
+			createdDate : "",
+			modifiedDate: "",
+			id: 0,
+			authorId: 0,
+			title: "",
+			content: "",
+			commentCnt: 0,
+			viewCnt: 0,
+			likeCnt: 0,
+			isNotice: false,
+			blameCnt: 0
+		}, 
+		comment: [{     
+		createdDate: "",
+		modifiedDate: "",
+		id: 0,
+		authorId: 0,
+		content: "",
+		likeCnt: 0,
+		blameCnt: 0,
+		isAuthor: false,
+		isDel: false
+		}]
+}
+);
 	const [boxState, setBoxState] = useState<boolean>(false);
 	const [comment, setComment] = useState<string>('');
 	const [clickModal, setClickModal] = useState<boolean>(false);
@@ -39,6 +65,7 @@ function Detail() {
 	const { createdDate, modifiedDate, id, authorId, title, content, commentCnt, viewCnt, likeCnt, isNotice, blameCnt } = detailData.post
 	const commentData: CommentData[]= detailData.comment;
 	const shortDate = createdDate?.slice(0, 16).replace('T', ' ');
+	const commentsUserList = Array.from(new Set(commentData.map((el:CommentData) => el.authorId))).filter(el => el !== authorId)
 
 	const inputMsgHandler = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
 		setComment(e.target.value);
@@ -127,7 +154,7 @@ function Detail() {
 								</CommentInput>
 								<CommentListWrap>
 									{commentData.map((el: CommentData, idx) => {
-										return (<Comments key={idx} comment={el}/>)
+										return (<Comments key={idx} comment={el} commentsUserList={commentsUserList}/>)
 									})}
 								</CommentListWrap>
 							</CommentContainer>
