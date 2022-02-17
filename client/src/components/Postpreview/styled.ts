@@ -11,6 +11,11 @@ export const PreviewContainer = styled.div`
 		margin: 0 0.8rem;
 		place-self: center start;
 		font-weight: 600;
+		span {
+			margin-left: 0.5rem;
+			color: red;
+			letter-spacing: 0.05rem;
+		}
 	}
 	div {
 		place-self: center center;

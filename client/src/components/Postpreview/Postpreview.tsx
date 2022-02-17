@@ -3,11 +3,11 @@ import { ContentData } from	'utils/functions/type';
 import { PreviewContainer } from './styled';
 
 type GreetingProps = {
-	content: ContentData;
+	postData: ContentData;
 }
 
-function Postpreview({ content }: GreetingProps) {
-	const { id, authorId, title, commentCnt, viewCnt, likeCnt, isNotice, blameCnt, createdDate, modifiedDate } = content;
+function PostPreview({ postData }: GreetingProps) {
+	const { id, authorId, title, commentCnt, viewCnt, likeCnt, isNotice, blameCnt, createdDate, modifiedDate } = postData;
 	const fullday = new Date();
 	const year = `${fullday.getFullYear()}`;
 	const month = fullday.getMonth() + 1 < 10 ? `0${fullday.getMonth() + 1}` : `${fullday.getMonth() + 1}`;
@@ -18,7 +18,7 @@ function Postpreview({ content }: GreetingProps) {
 		<>
 			<Link to={`/detail?boardId=1&postId=${id}`}> 
 				<PreviewContainer>
-					<h3>{title}	({commentCnt})</h3>
+					<h3>{title} <span>[{commentCnt}]</span></h3>
 					<div>{viewCnt}</div>
 					<div>{likeCnt}</div>
 					<div>{createdDate.slice(0, 10) === today
@@ -30,4 +30,4 @@ function Postpreview({ content }: GreetingProps) {
 	);
 }
 
-export default Postpreview;
+export default PostPreview;
