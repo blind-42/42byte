@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import { PageName, Squares } from 'styles/styled'
 import { AppContainer, PageContainer, TopBar, ContentContainer
-				, SeoulImg, TextWrap, ButtonWrap } from './styled'
+				, SeoulImg, TextWrap, LoginButtonWrap } from './styled'
 
 function Login() {
 
@@ -30,9 +30,11 @@ function Login() {
 								계정이 존재하는 지 확인해주세요.
 							</div>
 						</TextWrap>
-						<ButtonWrap>
-							<button>로그인</button>
-						</ButtonWrap>
+						<LoginButtonWrap>
+							<a href='http://211.253.31.22:8080/oauth2/authorization/42'>
+								<button>로그인</button>
+							</a>
+						</LoginButtonWrap>
 					</ContentContainer>
 				</PageContainer>
 			</AppContainer>
