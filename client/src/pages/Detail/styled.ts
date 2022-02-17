@@ -25,6 +25,7 @@ export const Title = styled.div`
 	font-size: 1.5rem;
 	font-weight: 600;
 	color: #000;
+	padding: 0 0.3rem;
 	@media screen and (min-width: 768px) {
 		font-size: 1.2rem;
 	}
@@ -33,7 +34,7 @@ export const Title = styled.div`
 export const Specific = styled.div`
 	display: flex;
 	justify-content: space-between;
-	padding: 0.2rem 0;
+	padding: 0.3rem;
 	border-bottom: solid 2px #929191;
 	font-size: 1.1rem;
 	@media screen and (min-width: 768px) {
@@ -74,26 +75,31 @@ export const LikeWrap = styled.div`
 export const LikesBox = styled.div<{boxState?: boolean;}>`
 	cursor: pointer;
 	display: flex;
-	justify-content: center;
+	justify-content: space-evenly;
+	align-items: center;
 	margin: 2rem 0;
 	border: solid 2px ${(props) => props.boxState ? 'red' : 'gray'};
-	padding: 0.9rem 1.3rem;
 	width: 6rem;
+	height: 3.5rem;
 	font-size: 1.2rem;
 	font-weight: 700;
 	color: ${(props) => props.boxState ? 'red' : 'gray'};
-	div {
-		margin: 0 0.3rem;
+	div:nth-child(1) {
+		font-size: 2rem;
 	}
 	@media screen and (min-width: 768px) {
-		padding: 0.7rem 1rem;
-		width: 5.5rem;
+		width: 5rem;
+		height: 3rem;
+		font-size: 1rem;
+		div:nth-child(1) {
+			font-size: 1.5rem;
+		}
 	}
 `;
 
 export const CommentContainer = styled.div`
 	border-top: solid 1px #fff;
-	padding: 0.3rem ;
+	padding: 0.3rem;
 `;
 
 export const CommentCount = styled.div`
@@ -119,19 +125,21 @@ export const CommentInput = styled.div`
 	background: #fff;
 	font-size: 1.2rem;
 	textarea {
+		margin: 0.2rem 0;
 		resize: none;
-		border:0 solid #000;
+		border: none;
 		height: 4rem;
 	}
 	div {
-		display: grid;
-		grid-template-columns: 1fr 1fr;
+		display: flex;
+		justify-content: space-between;
+		align-items: flex-end;
 		span {
-			place-self: center start;
+			font-size: 1rem;
 			color: #929191;
+			padding: 0 2px;
 		}
 		input {
-			place-self: end;
 			background: #518EDB;
 			border-top: solid 2px #fff;
 			border-left: solid 2px #fff;
@@ -150,9 +158,12 @@ export const CommentInput = styled.div`
 		}
 		div {
 			font-size: 1rem;
+			span {
+				font-size: 0.8rem;
+			}
 			input {
-			font-size: 1rem;
-		}
+				font-size: 1rem;
+			}
 		}
 	}
 `;
