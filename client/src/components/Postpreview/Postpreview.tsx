@@ -22,8 +22,8 @@ function Postpreview({ content }: GreetingProps) {
 					<div>{viewCnt}</div>
 					<div>{likeCnt}</div>
 					<div>{createdDate.slice(0, 10) === today
-						? createdDate.slice(2,10)
-						: createdDate.slice(11, 16)}</div>
+						? createdDate.slice(11, 16)
+						: createdDate.slice(2,10)}</div>
 				</PreviewContainer>
 			</Link>
 		</>
