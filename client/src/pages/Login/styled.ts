@@ -63,9 +63,10 @@ export const TextWrap = styled.div`
 	}
 `;
 
-export const ButtonWrap = styled.div`
+export const LoginButtonWrap = styled.div`
 	margin: 1.5rem;
 	button {
+		cursor: pointer;
 		padding: 1rem 3rem;
 		background: #518EDB;
 		color: #fff;

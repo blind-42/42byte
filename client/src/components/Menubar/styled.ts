@@ -56,17 +56,14 @@ export const UserProfileWrap = styled.div`
 	display: flex;
 	flex-direction: column;
 	align-items: center;
-	padding: 1rem 0;
+	padding: 2rem 0;
 	border-bottom: solid 2px #929191;
-	@media screen and (min-width: 768px) {
-		padding: 0.5rem
-	}
 `;
 
 export const UserImg = styled.div`
   display: flex;
   align-items: center;
-	margin: 1.2rem 0;
+	margin-bottom: 1.2rem;
   img {
     border-radius: 50%;
     height: 6vh;
@@ -91,7 +88,7 @@ export const UserName = styled.div`
 
 export const UserMenu = styled.div`
 	display: flex;
-	margin: 0.8rem 0;
+	margin-top: 0.8rem;
 	div {
 		margin: 0 1rem;
 		font-size: 1.3rem; 

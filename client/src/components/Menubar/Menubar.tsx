@@ -1,5 +1,8 @@
-import  { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { useRecoilState } from 'recoil';
 import { Link } from 'react-router-dom';
+import { LoggedinState } from 'States/LoginState';
+import instance from 'utils/functions/axios';
 import { MenubarContainer, ExitButton, UserProfileWrap, UserImg, UserName, UserMenu, UtilWrap, WritingButton, Search, MenuListWrap } from './styled';
 
 type GreetingProps = {
@@ -7,11 +10,29 @@ type GreetingProps = {
 }
 
 function Menubar({ menubarHandler }: GreetingProps) {
-	// const [exit, setExit] = useState(false);
-	// const exitButtonHandler = () => {
-	// 	setExit(!exit);
-	// }
+	const [isLoggedIn, setIsLoggedIn] = useRecoilState(LoggedinState);
 
+	const logoutHandler = () => {
+    // instance
+    //   .get('/user', { headers: { Authorization: `Bearer ${localStorage.getItem('4242-token')}` || '' } } )
+    //   .then(() => {
+				localStorage.removeItem('4242-token');
+				setIsLoggedIn(false);
+				window.location.href = '/';
+      // })
+      // .catch((err) => {
+			// 	console.log(err);
+        // if (err.response.status === 401) {
+        //   alert('로그인이 만료되었습니다. 다시 로그인해주세요.');
+        //   localStorage.removeItem('4242-token');
+        //   setIsLoggedIn(false);
+        //   window.location.assign('/');
+        // }
+				// else 
+				// 	window.location.assign('/error');
+      // });
+  };
+	
   return (
 		<>
 			<MenubarContainer>
@@ -23,22 +44,23 @@ function Menubar({ menubarHandler }: GreetingProps) {
 						<img src='/images/egg.png' alt='pfimg' />
 					</UserImg>
 					<UserName>
-						{/* {isLogedIn
-						?  */}
-						<div>
+						{isLoggedIn
+						? <div>
 								<strong>카뎃</strong>
 							</div>
-						{/* :	<Link to='/login'>로그인</Link>
-						} */}
+						:	<Link to='/login'>로그인</Link>
+						}
 					</UserName>
-					<UserMenu>
-						<Link to='/mypage'>
-							<div>마이페이지</div>
-						</Link>
-						<Link to='/' /*onClick={logOutHandler}*/>
-							<div>로그아웃</div>
-						</Link>
-					</UserMenu>
+					{isLoggedIn &&
+						<UserMenu>
+							<Link to='/mypage'>
+								<div>마이페이지</div>
+							</Link>
+							<Link to='/' onClick={logoutHandler}>
+								<div>로그아웃</div>
+							</Link>
+						</UserMenu>
+					}
 				</UserProfileWrap>
 				<UtilWrap>
 					<WritingButton>

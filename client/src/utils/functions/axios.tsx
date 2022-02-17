@@ -10,7 +10,7 @@ instance.interceptors.request.use(
 
     config.headers = {
       'Content-Type' : 'application/json',
-			'Authorization' : 'Bearer access',
+			'Authorization' : `Bearer ${localStorage.getItem('4242-token')}`,
     }
 
     return config;
