@@ -12,26 +12,45 @@ import { BoardData, ContentData} from 'utils/functions/type';
 function Mypage() {
 	const [boardData, setBoardData] = useState({contents: [], page: 0, pages: 0});
 	const [pageName, setPageName] = useState<string>('post');
-
+	const {page, pages} = boardData;
 	const myPost = boardData.contents;
-	// const pageData = {page: boardData.page, pages: boardData.pages};
+	const currentUrl = window.location.href;
+	const urlId = currentUrl.split('page=')[1];
 
 	const switchToComment = () => {
 		setPageName('comment');
-		console.log(pageName);
+		instance
+		.get('/mypage/comment?page=1')
+		.then((res) => {
+			setBoardData(res.data);
+		})
+		.catch((err) => {
+			window.location.href = '/error';
+		})
 	}
 
 	const switchToPost = () => {
 		setPageName('post');
-		console.log(pageName);
+		instance
+		.get('/mypage/post?page=1')
+		.then((res) => {
+			setBoardData(res.data);
+		})
+		.catch((err) => {
+			window.location.href = '/error';
+		})
 	}
 
 	useEffect(() => {
 		instance
-		.get('/board?boardId=1')
+		.get(`/mypage/post?page=${urlId}`)
 		.then((res) => { setBoardData(res.data) })
 		.catch((err) => console.log(err));
 	}, [])
+
+	const pageChangeHandler = (page: number) => {
+		window.location.href = `/mypage/${pageName}?page=${page}`
+  };
 
 	return (
 		<>
@@ -71,7 +90,11 @@ function Mypage() {
 									})}
 								</PostWrap>
 							</ContentWrap>
-							{/* <PageNation pageData={pageData}/> */}
+							<PageNation 
+								curPage={page}
+								totalPages={pages}
+								pageChangeHandler={pageChangeHandler}
+							/>
 						</PostContainer>
 					</ContentContainer>
 					<Footer />
