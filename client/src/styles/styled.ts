@@ -3,9 +3,9 @@ import styled from 'styled-components';
 export const AppContainer = styled.div`
 	display: flex;
 	flex-direction: column;
-	justify-content: space-between;
 	align-items: center;
 	background: #6BB8F0;
+	height: 100vh;
 `;
 
 export const PageContainer = styled.div`
@@ -20,7 +20,7 @@ export const PageContainer = styled.div`
 	@media screen and (min-width: 768px) {
 		width: 90vh;
 		height: 90vh;
-		margin: 3vh 0;
+		margin: 2.5vh 0;
 		border-top: solid 2px #fff;
 		border-left: solid 2px #fff;
 		border-right: solid 2px #000;
