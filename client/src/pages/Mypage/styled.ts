@@ -72,6 +72,24 @@ export const PostContainer = styled.div`
 	}
 `;
 
+export const Category = styled.div<{state?: string;}>`
+	display: grid;
+	grid-template-columns: ${(props) => props.state === 'post' ? '6fr 1fr 1fr 2fr' : '1fr'};
+	border-bottom: solid 2px #929191;
+	div {
+		padding: 0.6rem 0;
+		height: 2rem;
+		place-self: center center;
+		font-size: 1.2rem;
+		font-weight: 600;
+	}
+	@media screen and (min-width: 768px) {
+		div {
+			font-size: 0.9rem;
+		}
+	}
+`;
+
 export const ContentWrap = styled.div`
 	border-top: solid 1px #fff;
 	background: #D5D5D5;
