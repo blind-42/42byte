@@ -5,6 +5,7 @@ import instance from 'utils/functions/axios';
 import Header from 'components/Header/Header';
 import Footer from 'components/Footer/Footer';
 import Comments from 'components/Comments/Comments';
+import DeleteModal from 'components/Modal/DeleteModal';
 import { DetailData, PostData, CommentData } from 'utils/functions/type';
 import { AppContainer, PageContainer, TopBar, PageName, Squares } from 'styles/styled';
 import { PostContainer, DetailContainer, Title, Specific, Info, Modify, ContentWrap, LikeWrap, LikesBox
@@ -14,7 +15,7 @@ function Detail() {
 	const [detailData, setDetailData] = useState<DetailData>({post: {}, comment: [{}]});
 	const [boxState, setBoxState] = useState<boolean>(false);
 	const [comment, setComment] = useState<string>('');
-	const [test, setTest] = useState();
+	const [clickModal, setClickModal] = useState<boolean>(false);
 	
 	const currentUrl = window.location.href;
 	const urlId = currentUrl.split('detail?boardId=1&postId=')[1];
@@ -39,15 +40,19 @@ function Detail() {
 	const commentData: CommentData[]= detailData.comment;
 	const shortDate = createdDate?.slice(0, 16).replace('T', ' ');
 
+	const inputMsgHandler = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+		setComment(e.target.value);
+	}
+
+	const clickModalHandler = () => {
+		setClickModal(!clickModal);
+	}
+
 	const boxcolorHandler = () => {
 		instance
 		.post(`/post/like?postId=${urlId}`)
 		.then(() => setBoxState(!boxState))
 		.catch((err) => console.log(err));
-	}
-
-	const inputMsgHandler = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-		setComment(e.target.value);
 	}
 
 	const sendCommentHandler = () => {
@@ -73,6 +78,9 @@ function Detail() {
 	return (
 		<>
 		<AppContainer>
+			{clickModal && (
+        <DeleteModal clickModalHandler={clickModalHandler} deleteHandler={deleteHandler}/>
+      )}
 					<Header />
 					<PageContainer>
 						<TopBar>
@@ -96,7 +104,7 @@ function Detail() {
 									</Info>
 									<Modify>
 										<div onClick={modifiedHandler}>수정</div>
-										<div onClick={deleteHandler}>삭제</div>
+										<div onClick={clickModalHandler}>삭제</div>
 									</Modify>
 								</Specific>
 							{content && <ContentWrap>
