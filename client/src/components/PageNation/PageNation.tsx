@@ -32,7 +32,7 @@ function PageNation({
 					{window.scrollTo(0, 0)}
 					<Pagination
 							activePage={curPage}
-							itemsCountPerPage={24}
+							itemsCountPerPage={1}
 							pageRangeDisplayed={5}
 							totalItemsCount={totalPages}
 							prevPageText="<"
