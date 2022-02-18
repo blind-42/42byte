@@ -33,7 +33,6 @@ public class PostController {
     /* 게시판 조회 */
     @RequestMapping(value="/board", method = RequestMethod.GET)
     public PostResponseDTO findAllPost(@RequestParam("boardId") Long boardId,
-                                       @PageableDefault(size = 24)
                                        @SortDefault.SortDefaults({
                                                @SortDefault(sort = "isNotice", direction = Sort.Direction.DESC),
                                                @SortDefault(sort = "id", direction = Sort.Direction.DESC)})Pageable pageable) {
@@ -98,23 +97,16 @@ public class PostController {
         if (userService.compareUser(post.getAuthorId(), HeaderUtil.getAccessToken(request)) != true)
             return ;
         likeService.deleteByPost(post);
-        postService.deletePost(post);
         commentService.deleteCommentByPostId(postId);
+        postService.deletePost(post);
     }
 
     /*마이페이지 (내가 쓴 글)*/
     @RequestMapping(value={"/mypage/post"}, method = RequestMethod.GET)
     public PostResponseDTO findPostByUserId (HttpServletRequest request,
-                                        @PageableDefault(size = 24, sort = "id", direction = Sort.Direction.DESC) Pageable pageable){
+                                        @PageableDefault(sort = "id", direction = Sort.Direction.DESC) Pageable pageable){
         String accessToken = HeaderUtil.getAccessToken(request);
         Long userId = userService.findByAccessToken(accessToken).orElseThrow().getId();
-        PostResponseDTO dtoList = new PostResponseDTO();
-        Page<Post> postList = postService.findAllByAuthorId(userId, pageable);
-        postList.stream().forEach( post -> {
-            dtoList.getContents().add(PostDTO.from(post));
-        });
-        dtoList.setPage(postList.getPageable().getPageNumber());
-        dtoList.setPages(postList.getTotalPages());
-        return dtoList;
+        return postService.findPostByIdIn(userId, pageable);
     }
 }

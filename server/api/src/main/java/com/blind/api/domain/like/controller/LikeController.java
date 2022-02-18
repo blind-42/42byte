@@ -34,7 +34,6 @@ public class LikeController {
 
     @RequestMapping(value = {"mypage/post/like"}, method=RequestMethod.GET)
     public PostResponseDTO myPostLike(HttpServletRequest request,
-                                      @PageableDefault(size = 24)
                                       @SortDefault.SortDefaults({
                                               @SortDefault(sort = "post.isNotice", direction = Sort.Direction.DESC),
                                               @SortDefault(sort = "post.id", direction = Sort.Direction.DESC)}) Pageable pageable){

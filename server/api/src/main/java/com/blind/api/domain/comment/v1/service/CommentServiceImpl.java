@@ -1,6 +1,7 @@
 package com.blind.api.domain.comment.v1.service;
 
 import com.blind.api.domain.comment.v1.dto.CommentDTO;
+import com.blind.api.domain.comment.v1.dto.CommentMyDTO;
 import com.blind.api.domain.comment.v1.dto.CommentResponseDTO;
 import com.blind.api.domain.post.v2.service.PostService;
 import com.blind.api.domain.comment.v1.domain.Comment;
@@ -68,7 +69,7 @@ public class CommentServiceImpl implements CommentService{
 
         Comment comment = Comment.builder()
                 .boardId(boardId)
-                .postId(postId)
+                .post(postService.findById(postId).orElseThrow(RuntimeException::new))
                 .authorId(commentAuthorId)
                 .content(content)
                 .isAuthor(isAuthor)
@@ -93,14 +94,21 @@ public class CommentServiceImpl implements CommentService{
 
     @Override
     @Transactional
-    public CommentResponseDTO findCommentByIdIn(List<Long> ids, Pageable pageable) {
-        Page<Comment> savePageable = commentRepository.findCommentByIdIn(ids, pageable);
+    public CommentResponseDTO findCommentByIdIn(Long userId, Pageable pageable) {
+        Page<Comment> savePageable = findCommentByAuthorId(userId, pageable);
         CommentResponseDTO dtoList = new CommentResponseDTO();
         savePageable.stream().forEach( comment -> {
-            dtoList.getContents().add(CommentDTO.from(comment));
+            dtoList.getContents().add(CommentMyDTO.from(comment));
         });
         dtoList.setPage(savePageable.getPageable().getPageNumber());
         dtoList.setPages(savePageable.getTotalPages());
         return dtoList;
     }
+
+    @Override
+    @Transactional
+    public Comment findCommentById(Long id) {
+        return commentRepository.findCommentById(id);
+    }
+
 }

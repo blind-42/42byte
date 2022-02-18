@@ -54,7 +54,7 @@ public class LikeServiceImpl implements LikeService{
         if (checkCommentLike(comment, user) == false) {
             commentLikeRepository.save(new CommentLike(comment, post, user));
             commentService.updateLike(comment.getId(), 1L);
-            comment.setPostId(postId);
+            comment.setPost(postService.findById(postId).orElseThrow(RuntimeException::new));
         } else {
             commentLikeRepository.deleteByCommentAndUser(comment, user);
             commentService.updateLike(comment.getId(), -1L);

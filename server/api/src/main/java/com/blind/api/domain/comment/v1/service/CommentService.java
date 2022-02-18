@@ -23,5 +23,7 @@ public interface CommentService {
 
     public void updateLike(Long id, Long add);
 
-    public CommentResponseDTO findCommentByIdIn(List<Long> ids, Pageable pageable);
+    public CommentResponseDTO findCommentByIdIn(Long userId, Pageable pageable);
+
+    Comment findCommentById(Long id);
 }
