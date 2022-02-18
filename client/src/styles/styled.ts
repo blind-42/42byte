@@ -79,7 +79,7 @@ export const Squares = styled.div`
 
 export const Category = styled.div`
 	display: grid;
-	grid-template-columns: 6fr 1fr 1fr 2fr;
+	grid-template-columns: 1.2fr 6fr 1fr 1fr 2fr;
 	border-bottom: solid 2px #929191;
 	div {
 		padding: 0.6rem 0;
