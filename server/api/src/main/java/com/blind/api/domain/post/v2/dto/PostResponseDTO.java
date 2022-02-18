@@ -1,24 +1,20 @@
 package com.blind.api.domain.post.v2.dto;
 
-import com.blind.api.domain.board.v1.domain.Board;
-import com.blind.api.domain.post.v2.domain.Post;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
 @Getter
 @Setter
-public class PostResponseDTO {
-    private List<PostDTO> contents;
+public class PostResponseDTO<T> {
+    private List<T> contents;
     private int page;
     private int pages;
 
     public PostResponseDTO(){
-        this.contents = new ArrayList<PostDTO>();
+        this.contents = new ArrayList<T>();
         this.page = 0;
         this.pages = 0;
     }

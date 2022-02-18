@@ -12,12 +12,12 @@ import java.time.LocalDateTime;
 @Getter
 public class PostDTO {
     private Long id;
-    private Long authorId;
     private String title;
     private Long commentCnt;
     private Long viewCnt;
     private Long likeCnt;
     private Boolean isNotice;
+    private Boolean isAuthor;
     private Long blameCnt;
     private LocalDateTime createdDate;
     private LocalDateTime modifiedDate;
@@ -25,7 +25,6 @@ public class PostDTO {
     public static PostDTO from(Post post) {
         return PostDTO.builder()
                 .id(post.getId())
-                .authorId(post.getAuthorId())
                 .title(post.getTitle())
                 .viewCnt(post.getViewCnt())
                 .blameCnt(post.getBlameCnt())
@@ -38,9 +37,8 @@ public class PostDTO {
     }
 
     @Builder
-    private PostDTO(Long id, Long authorId, String title, Long commentCnt, Long viewCnt, Long likeCnt, Boolean isNotice, Long blameCnt, LocalDateTime createdDate, LocalDateTime modifiedDate) {
+    private PostDTO(Long id, String title, Long commentCnt, Long viewCnt, Long likeCnt, Boolean isNotice, Long blameCnt, LocalDateTime createdDate, LocalDateTime modifiedDate) {
         this.id = id;
-        this.authorId = authorId;
         this.title = title;
         this.commentCnt = commentCnt;
         this.viewCnt = viewCnt;

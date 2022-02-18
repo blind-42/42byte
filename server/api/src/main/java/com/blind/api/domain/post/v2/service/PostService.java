@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface PostService {
-    public Page<Post> findAllByBoardId(Long boardId, Pageable pageable);
+    public PostResponseDTO findAllByBoardId(Long boardId, Pageable pageable);
     public Optional<Post> findById(Long postId);
     public Page<Post> findAllByAuthorId(Long authorId, Pageable pageable);
     public Post save(Long boardId, String title, String content, String accessToken);

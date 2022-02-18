@@ -83,7 +83,8 @@ public class CommentServiceImpl implements CommentService{
     @Override
     @Transactional
     public List<Comment> findAllComment(Long boardId, Long postId) {
-        return commentRepository.findAllByBoardIdAndPostId(boardId, postId);
+        List<Comment> commentList = commentRepository.findAllByBoardIdAndPostId(boardId, postId);
+        return commentList;
     }
 
     @Override

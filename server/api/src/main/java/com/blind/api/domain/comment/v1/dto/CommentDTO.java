@@ -17,6 +17,7 @@ public class CommentDTO {
     private Long blameCnt;
     private Boolean isAuthor;
     private Boolean isDel;
+    private Boolean isUsers;
 
     public static CommentDTO from(Comment comment) {
         return CommentDTO.builder()

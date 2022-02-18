@@ -1,34 +1,35 @@
 package com.blind.api.domain.post.v2.dto;
 
 
-import com.blind.api.domain.board.v1.domain.Board;
+import com.blind.api.domain.comment.v1.dto.CommentDTO;
 import com.blind.api.domain.post.v2.domain.Post;
 import lombok.*;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @Setter
-public class PostDetailDTO {
+public class PostDetailDTO<T> {
     private Long id;
-    private Long authorId;
     private String title;
     private String content;
     private Long commentCnt;
     private Long viewCnt;
     private Long likeCnt;
     private Boolean isNotice;
+    private Boolean isUsers;
     private Long blameCnt;
+    private List<T> comments;
     private LocalDateTime createdDate;
     private LocalDateTime modifiedDate;
 
     public static PostDetailDTO from(Post post) {
         return PostDetailDTO.builder()
                 .id(post.getId())
-                .authorId(post.getAuthorId())
                 .title(post.getTitle())
                 .content(post.getContent())
-                .board(post.getBoard())
                 .viewCnt(post.getViewCnt())
                 .blameCnt(post.getBlameCnt())
                 .likeCnt(post.getLikeCnt())
@@ -40,9 +41,8 @@ public class PostDetailDTO {
     }
 
     @Builder
-    private PostDetailDTO(Long id, Long authorId, String title, String content, Long commentCnt, Long viewCnt, Long likeCnt, Boolean isNotice, Long blameCnt, LocalDateTime createdDate, LocalDateTime modifiedDate, Board board) {
+    private PostDetailDTO(Long id, String title, String content, Long commentCnt, Long viewCnt, Long likeCnt, Boolean isNotice, Long blameCnt, LocalDateTime createdDate, LocalDateTime modifiedDate) {
         this.id = id;
-        this.authorId = authorId;
         this.title = title;
         this.content = content;
         this.commentCnt = commentCnt;
@@ -50,6 +50,7 @@ public class PostDetailDTO {
         this.likeCnt = likeCnt;
         this.isNotice = isNotice;
         this.blameCnt = blameCnt;
+        this.comments = new ArrayList<T>();
         this.createdDate = createdDate;
         this.modifiedDate = modifiedDate;
     }

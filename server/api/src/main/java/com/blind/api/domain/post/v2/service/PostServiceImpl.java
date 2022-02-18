@@ -2,7 +2,6 @@ package com.blind.api.domain.post.v2.service;
 
 import com.blind.api.domain.board.v1.domain.Board;
 import com.blind.api.domain.board.v1.service.BoardService;
-import com.blind.api.domain.comment.v1.domain.Comment;
 import com.blind.api.domain.post.v2.domain.Post;
 import com.blind.api.domain.post.v2.dto.PostDTO;
 import com.blind.api.domain.post.v2.dto.PostResponseDTO;
@@ -27,8 +26,16 @@ public class PostServiceImpl implements PostService {
 
     @Override
     @Transactional
-    public Page<Post> findAllByBoardId(Long boardId, Pageable pageable) {
-        return postRepository.findAllByBoardId(boardId, pageable);
+    public PostResponseDTO findAllByBoardId(Long boardId, Pageable pageable) {
+        Page<Post> postList = postRepository.findAllByBoardId(boardId, pageable);
+
+        PostResponseDTO dtoList = new PostResponseDTO();
+        postList.stream().forEach( post -> {
+            dtoList.getContents().add(PostDTO.from(post));
+        });
+        dtoList.setPage(postList.getPageable().getPageNumber());
+        dtoList.setPages(postList.getTotalPages());
+        return dtoList;
     }
     @Override
     @Transactional

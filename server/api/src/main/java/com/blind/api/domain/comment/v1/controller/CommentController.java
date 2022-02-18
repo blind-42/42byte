@@ -31,7 +31,7 @@ public class CommentController {
 
     @RequestMapping(value={"/comment"}, method=RequestMethod.POST)
     public void saveComment(@RequestParam("boardId") Long boardId, @RequestParam("postId") Long postId, @RequestBody Map<String,Object> body, HttpServletRequest request){
-        Comment comment = commentService.save(boardId, postId, (String)body.get("content"), HeaderUtil.getAccessToken(request));
+        commentService.save(boardId, postId, (String)body.get("content"), HeaderUtil.getAccessToken(request));
         postService.updateComment(postId, 1L);
     }
 
@@ -54,7 +54,6 @@ public class CommentController {
 
     @RequestMapping(value={"/mypage/comment"}, method = RequestMethod.GET)
     public CommentResponseDTO findCommentByUserId (HttpServletRequest request,
-                                                   @PageableDefault(size = 24)
                                                    @SortDefault.SortDefaults({
                                                            @SortDefault(sort = "id", direction = Sort.Direction.DESC)}) Pageable pageable){
         String accessToken = HeaderUtil.getAccessToken(request);
