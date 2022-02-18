@@ -103,6 +103,7 @@ function Mypage() {
 						<PostContainer>
 							{pageName === 'post'
 								?	<Category state={pageName}>
+										<div></div>
 										<div>제목</div>
 										<div>조회</div>
 										<div>추천</div>

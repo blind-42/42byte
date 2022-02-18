@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import { ContentData } from	'utils/functions/type';
-import { PreviewContainer } from './styled';
+import { PreviewContainer, NoticeMark } from './styled';
 
 type GreetingProps = {
 	postData: ContentData;
@@ -17,8 +17,15 @@ function PostPreview({ postData }: GreetingProps) {
 	return (
 		<>
 			<Link to={`/detail?boardId=1&postId=${id}`}> 
-				<PreviewContainer>
-					<h3>{title} <span>[{commentCnt}]</span></h3>
+				<PreviewContainer state={isNotice}>
+					{isNotice
+						? <NoticeMark>공지</NoticeMark>
+						: <div>{id}</div>
+					}
+					<div>
+						<h3>{title}</h3>
+						<div>[{commentCnt}]</div>
+					</div>
 					<div>{viewCnt}</div>
 					<div>{likeCnt}</div>
 					<div>{createdDate.slice(0, 10) === today

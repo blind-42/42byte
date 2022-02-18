@@ -74,7 +74,7 @@ export const PostContainer = styled.div`
 
 export const Category = styled.div<{state?: string;}>`
 	display: grid;
-	grid-template-columns: ${(props) => props.state === 'post' ? '6fr 1fr 1fr 2fr' : '1fr'};
+	grid-template-columns: ${(props) => props.state === 'post' ? '1.2fr 6fr 1fr 1fr 2fr' : '1fr'};
 	border-bottom: solid 2px #929191;
 	div {
 		padding: 0.6rem 0;
