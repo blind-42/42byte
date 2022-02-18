@@ -4,11 +4,10 @@ export const PreviewContainer = styled.div<{state?: boolean;}>`
 	display: grid;
 	grid-template-columns: 1.2fr 6fr 1fr 1fr 2fr;
 	justify-items: space-between;
-	// border: ${(props) => props.state === true ? 'solid 1px #518EDB' : 'none'};
 	border-bottom: solid 1px #929191;
 	font-size: 1.2rem;
 	height: 2.5rem;
-	// background: ${(props) => props.state === true ? '#FFC5C6' : 'none'};
+	background: ${(props) => props.state === true ? '#E1DBCB' : 'none'};
 	div {
 		place-self: center center;
 	}
@@ -17,12 +16,13 @@ export const PreviewContainer = styled.div<{state?: boolean;}>`
 		display: flex;
 		align-items: center;
 		h3 {
-			font-weight: ${(props) => props.state === true ? '700' : '600'};
+			font-weight: ${(props) => props.state === true ? '800' : '500'};
+			color: ${(props) => props.state === true ? '#BF2D2D' : '#000'};
 			margin-left: 0.8rem;
 		}
 		div:last-child {
 			margin: 0 0.5rem;
-			color: red;
+			color: #BF2D2D;
 			letter-spacing: 0.05rem;
 			font-weight: ${(props) => props.state === true ? '700' : '600'};
 		}
@@ -34,7 +34,14 @@ export const PreviewContainer = styled.div<{state?: boolean;}>`
 `;
 
 export const NoticeMark = styled.div`
-	border: solid 1px red;
 	font-size: 0.8rem;
-	padding: 0.2rem 0.5rem;
+	font-weight: 600;
+	background: #BF2D2D;
+	color: #fff;
+	padding: 0.3rem 0.6rem;
+	letter-spacing: 0.05rem;
+	@media screen and (min-width: 768px) {
+		font-size: 0.7rem;
+		padding: 0.3rem 0.5rem;
+	}
 `;
