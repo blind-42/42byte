@@ -150,13 +150,13 @@ export const Search = styled.div`
 	height: 2.5rem;
 	margin: 0.5rem 0;
 	background: #fff;
-	.textInput {
+	input {
 		font-size: 1.3rem;
 		display: flex;
 		padding-left: 0.2rem;
 		border: none;
 	}
-	.searchButton {
+	button {
 		cursor: pointer;
 		margin-right: -2px;
 		background: #518EDB;
@@ -174,11 +174,11 @@ export const Search = styled.div`
 	}
 	@media screen and (min-width: 768px) {
 		height: 1.7rem;
-		.textInput {
+		input {
 			font-size: 0.9rem;
 			padding-left: 0.2rem;
 		}
-		.searchButton {
+		button {
 			height: 1.7rem;
 			width: 1.7rem;
 			div {

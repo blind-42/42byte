@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { LoggedinState } from 'States/LoginState';
 import instance from 'utils/functions/axios';
 import { MenubarContainer, ExitButton, UserProfileWrap, UserImg, UserName, UserMenu, UtilWrap, WritingButton, Search, MenuListWrap } from './styled';
+import LoginModal from 'components/Modal/LoginModal';
 
 type GreetingProps = {
 	menubarHandler: () => void;
@@ -11,30 +12,23 @@ type GreetingProps = {
 
 function Menubar({ menubarHandler }: GreetingProps) {
 	const [isLoggedIn, setIsLoggedIn] = useRecoilState(LoggedinState);
+	const [openLoginModal, setOpenLoginModal] = useState<boolean>(false);
 
 	const logoutHandler = () => {
-    // instance
-    //   .get('/user', { headers: { Authorization: `Bearer ${localStorage.getItem('4242-token')}` || '' } } )
-    //   .then(() => {
-				localStorage.removeItem('4242-token');
-				setIsLoggedIn(false);
-				window.location.href = '/';
-      // })
-      // .catch((err) => {
-			// 	console.log(err);
-        // if (err.response.status === 401) {
-        //   alert('로그인이 만료되었습니다. 다시 로그인해주세요.');
-        //   localStorage.removeItem('4242-token');
-        //   setIsLoggedIn(false);
-        //   window.location.assign('/');
-        // }
-				// else 
-				// 	window.location.assign('/error');
-      // });
+		localStorage.removeItem('4242-token');
+		setIsLoggedIn(false);
+		window.location.href = '/';
+  };
+
+	const openLoginModalHandler = () => {
+    setOpenLoginModal(!openLoginModal);
   };
 	
   return (
 		<>
+		{openLoginModal && (
+        <LoginModal openLoginModalHandler={openLoginModalHandler}/>
+      )}
 			<MenubarContainer>
 				<ExitButton onClick={menubarHandler}>
 					<div>&times;</div>
@@ -64,16 +58,27 @@ function Menubar({ menubarHandler }: GreetingProps) {
 				</UserProfileWrap>
 				<UtilWrap>
 					<WritingButton>
-						<Link to="/writing">
+					{isLoggedIn 
+					? <Link to="/writing">
 							<input type="button" value="새 글 쓰기" />
 						</Link>
+					: <input type="button" value="새 글 쓰기" onClick={openLoginModalHandler}/>
+					}
 					</WritingButton>
-					<Search>
-						<input type="text" className='textInput' placeholder='검색어를 입력하세요'/>
-						<button className='searchButton'>
-							<div>&#9740;</div>
-						</button>
-					</Search>
+					{isLoggedIn
+					? <Search>
+							<input type="text" placeholder='검색어를 입력하세요'/>
+							<button>
+								<div>&#9740;</div>
+							</button>
+						</Search>
+					: <Search onClick={openLoginModalHandler}>
+							<input type="text" placeholder='검색어를 입력하세요'/>
+							<button>
+								<div>&#9740;</div>
+							</button>
+						</Search>
+					}
 				</UtilWrap>
 				<MenuListWrap>
 					<ul>
