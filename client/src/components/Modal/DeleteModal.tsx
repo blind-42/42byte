@@ -28,8 +28,8 @@ function DeleteModal({ clickModalHandler, deleteHandler }: Props) {
 				<TextWrap>정말 삭제하시겠습니까?</TextWrap>
 				<Buttons>
 					{/* 클릭시 삭제 구현 */}
-					<input type="button" value="삭제" />
-					<input type="button" className='cancel' onClick={deleteHandler} value="취소" />
+					<input type="button" value="삭제" onClick={deleteHandler}  />
+					<input type="button" className='cancel'onClick={clickModalHandler} value="취소" />
 				</Buttons>
 			</ContentContainer>
 		</ModalContainer>
