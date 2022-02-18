@@ -38,7 +38,7 @@ public class Comment extends BaseTimeEntity {
     private Long authorId;
 
     @NotNull
-    @Column(name="content")
+    @Column(name = "content", columnDefinition = "TEXT(65535)")
     private String content;
 
     @Column(name = "like_count", columnDefinition = "Integer default 0", updatable = false)

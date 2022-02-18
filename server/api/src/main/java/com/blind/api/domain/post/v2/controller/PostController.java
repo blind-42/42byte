@@ -1,9 +1,11 @@
 package com.blind.api.domain.post.v2.controller;
 
+import com.blind.api.domain.comment.v1.dto.CommentDTO;
 import com.blind.api.domain.comment.v1.service.CommentService;
 import com.blind.api.domain.like.service.LikeService;
 import com.blind.api.domain.post.v2.domain.Post;
 import com.blind.api.domain.post.v2.dto.PostDTO;
+import com.blind.api.domain.post.v2.dto.PostDetailDTO;
 import com.blind.api.domain.post.v2.dto.PostResponseDTO;
 import com.blind.api.domain.post.v2.service.PostService;
 import com.blind.api.domain.user.v2.service.UserService;
@@ -14,12 +16,11 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.data.web.SortDefault;
+import org.springframework.security.core.parameters.P;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Stream;
 
 @RestController
@@ -36,14 +37,7 @@ public class PostController {
                                        @SortDefault.SortDefaults({
                                                @SortDefault(sort = "isNotice", direction = Sort.Direction.DESC),
                                                @SortDefault(sort = "id", direction = Sort.Direction.DESC)})Pageable pageable) {
-        PostResponseDTO dtoList = new PostResponseDTO();
-        Page<Post> postList = postService.findAllByBoardId(boardId, pageable);
-        postList.stream().forEach( post -> {
-            dtoList.getContents().add(PostDTO.from(post));
-        });
-        dtoList.setPage(postList.getPageable().getPageNumber());
-        dtoList.setPages(postList.getTotalPages());
-        return dtoList;
+        return postService.findAllByBoardId(boardId, pageable);
     }
 
     /*전체 게시판 게시글 검색*/
@@ -73,12 +67,22 @@ public class PostController {
 
     /*게시글 상세조회 페이지*/
     @RequestMapping(value={"/post"}, method = RequestMethod.GET)
-    public Map<String, Object> findPostDetailByPostId (@RequestParam("boardId") Long boardId, @RequestParam("postId") Long postId){
-        Map<String, Object> Map = new HashMap<>();
-        Map.put("post", postService.findById(postId).orElseThrow(RuntimeException::new));
-        Map.put("comment", commentService.findAllComment(boardId, postId));
+    public PostDetailDTO findPostDetailByPostId (@RequestParam("boardId") Long boardId, @RequestParam("postId") Long postId, HttpServletRequest request){
+        Post post = postService.findById(postId).orElseThrow(RuntimeException::new);
+        Long userId = userService.findByAccessToken(HeaderUtil.getAccessToken(request))
+                .orElseThrow(RuntimeException::new)
+                .getId();
+        PostDetailDTO<CommentDTO> postDetailDTO = PostDetailDTO.from(post);
+        postDetailDTO.setIsUsers(userId == post.getAuthorId());
+        Optional.ofNullable(commentService.findAllComment(boardId, postId)).orElseGet(Collections::emptyList).stream().forEach(
+                (comment -> {
+                    CommentDTO commentDTO = CommentDTO.from(comment);
+                    commentDTO.setIsUsers(userId == comment.getAuthorId());
+                    postDetailDTO.getComments().add(commentDTO);
+                })
+        );
         postService.updateView(postId);
-        return Map;
+        return postDetailDTO;
     }
 
     /*게시글 수정*/

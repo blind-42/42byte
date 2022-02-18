@@ -9,7 +9,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.DynamicInsert;
-import org.hibernate.annotations.DynamicUpdate;
 import org.springframework.util.Assert;
 
 import javax.persistence.*;
@@ -34,7 +33,7 @@ public class Post extends BaseTimeEntity {
     private String title;
 
     @NotNull
-    @Column(name = "content")
+    @Column(name = "content", columnDefinition = "TEXT(65535)")
     private String content;
 
     @Column(name = "comment_count", columnDefinition = "Integer default 0", updatable = false)
