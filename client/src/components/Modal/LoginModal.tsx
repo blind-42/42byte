@@ -3,18 +3,21 @@ import { PageName, Squares, TopBar } from 'styles/styled'
 import { ModalBackdrop, ModalContainer, ContentContainer
 				, LoginImg, TextWrap, Buttons } from './styled'
 
-function LoginModal() {
+type Props = {
+	openLoginModalHandler: () => void
+}
+
+function LoginModal({openLoginModalHandler}: Props) {
   return (
 	<>
-	<ModalBackdrop>
-		<ModalContainer>
+	<ModalBackdrop onClick={openLoginModalHandler}>
+		<ModalContainer onClick={(e) => e.stopPropagation()}>
 			<TopBar>
 				<PageName></PageName>
 				<Squares>
 					<div>&#9866;</div>
 					<div>&#10064;</div>
-					{/* 클릭시 모달 없어지는 액션 상태 바꿔주기*/}
-					<div>&times;</div>
+					<div onClick={openLoginModalHandler}>&times;</div>
 				</Squares>
 			</TopBar>
 			<ContentContainer>
