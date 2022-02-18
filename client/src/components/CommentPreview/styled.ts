@@ -35,7 +35,7 @@ export const OriginalPost = styled.div`
 	color: #737272;
 	div {
 		margin-left: 0.5rem;
-		color: red;
+		color: #BF2D2D;
 		letter-spacing: 0.05rem;
 	}
 	@media screen and (min-width: 768px) {
