@@ -52,6 +52,9 @@ export const Modify = styled.div`
 export const Content = styled.div`
 	font-size: 1.2rem;
 	color: #000;
+	.isDel {
+		color: #929191;
+	}
 	@media screen and (min-width: 768px) {
 		font-size: 0.8rem;
 }

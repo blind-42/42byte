@@ -42,6 +42,9 @@ function Detail() {
 	const [boxState, setBoxState] = useState<boolean>(false);
 	const [comment, setComment] = useState<string>('');
 	const [clickModal, setClickModal] = useState<boolean>(false);
+	const [CmmtDelId, setCmmtDelId] = useState(0);
+	const [postAuthorId, setPostAuthorId] = useState(-1);
+	const [commentAuthorId, setCommentAuthorId] = useState(-1);
 	
 	const currentUrl = window.location.href;
 	const urlId = currentUrl.split('detail?boardId=1&postId=')[1];
@@ -62,6 +65,22 @@ function Detail() {
 		.catch((err) => console.log(err));
 	},[])
 
+	useEffect(() => {
+		instance.get(`/mypage/post`)
+		.then((res) => {
+			setPostAuthorId(res.data.contents[0].authorId)
+		})
+		.catch(() => setPostAuthorId(-1))
+	}, [])
+
+	useEffect(() => {
+		instance.get(`/mypage/comment`)
+		.then((res) => {
+			setCommentAuthorId(res.data.contents[0].authorId)
+		})
+		.catch(() => setCommentAuthorId(-1))
+	}, [])
+	
 	const { createdDate, modifiedDate, id, authorId, title, content, commentCnt, viewCnt, likeCnt, isNotice, blameCnt } = detailData.post
 	const commentData: CommentData[]= detailData.comment;
 	const shortDate = createdDate?.slice(0, 16).replace('T', ' ');
@@ -73,6 +92,10 @@ function Detail() {
 
 	const clickModalHandler = () => {
 		setClickModal(!clickModal);
+	}
+
+	const clickCmmtDelHandler = (id:number) => {
+		setCmmtDelId(id);
 	}
 
 	const boxcolorHandler = () => {
@@ -96,17 +119,27 @@ function Detail() {
 	}
 
 	const deleteHandler = () => {
+		if (CmmtDelId) {
 		instance
-		.delete(`/post?postId=${id}`)
-		.then(() => {window.location.href = '/blindboard?page=1'})
+		.delete(`/comment?commentId=${CmmtDelId}`)
+		.then(() => {window.location.href = `/detail?boardId=1&postId=${urlId}`})
 		.catch((err) => console.log(err));
+		}
+		else {
+			instance
+			.delete(`/post?postId=${id}`)
+			.then(() => {window.location.href = '/blindboard?page=1'})
+			.catch((err) => console.log(err));
+		}
 	}
+
 
 	return (
 		<>
 		<AppContainer>
 			{clickModal && (
-        <DeleteModal clickModalHandler={clickModalHandler} deleteHandler={deleteHandler}/>
+        <DeleteModal clickModalHandler={clickModalHandler}
+											deleteHandler={deleteHandler}/>
       )}
 					<Header />
 					<PageContainer>
@@ -129,10 +162,10 @@ function Detail() {
 										<div>{shortDate}</div>
 										<div>조회 {Number(viewCnt) + 1}</div>
 									</Info>
-									<Modify>
+									{(postAuthorId === authorId) &&<Modify>
 										<div onClick={modifiedHandler}>수정</div>
 										<div onClick={clickModalHandler}>삭제</div>
-									</Modify>
+									</Modify>}
 								</Specific>
 							{content && <ContentWrap>
 								<Viewer initialValue={content}/>
@@ -154,7 +187,11 @@ function Detail() {
 								</CommentInput>
 								<CommentListWrap>
 									{commentData.map((el: CommentData, idx) => {
-										return (<Comments key={idx} comment={el} commentsUserList={commentsUserList}/>)
+										return (<Comments key={idx} comment={el}
+																								commentsUserList={commentsUserList}
+																								commentAuthorId={commentAuthorId} 
+																								clickModalHandler={clickModalHandler}
+																								clickCmmtDelHandler={clickCmmtDelHandler}/>)
 									})}
 								</CommentListWrap>
 							</CommentContainer>
