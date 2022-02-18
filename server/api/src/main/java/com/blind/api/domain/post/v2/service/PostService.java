@@ -19,5 +19,6 @@ public interface PostService {
     void updateView(Long postId);
     void updatePost(Post post, String title, String content);
     void deletePost(Post post);
-    public PostResponseDTO findPostByIdIn(List<Long> ids, Pageable pageable);
+    public PostResponseDTO findPostByIdIn(Long userId, Pageable pageable);
+    public void updateComment(Long id, Long add);
 }

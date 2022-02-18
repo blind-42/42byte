@@ -27,5 +27,7 @@ public interface PostRepository extends PagingAndSortingRepository<Post, Long> {
     @Query("update Post p set p.likeCnt = p.likeCnt + :add where p.id = :id")
     void updateLike(@Param("id") Long id, @Param("add") Long add);
 
-    Page<Post> findPostByIdIn(List<Long> ids, Pageable pageable);
+    @Modifying
+    @Query("update Post p set p.commentCnt = p.commentCnt + :add where p.id = :id")
+    void updateComment(@Param("id") Long id, @Param("add") Long add);
 }

@@ -19,6 +19,5 @@ public interface CommentRepository extends JpaRepository<Comment, Long> {
     @Modifying
     @Query("update Comment p set p.likeCnt = p.likeCnt + :add where p.id = :id")
     void updateLike(@Param("id") Long id, @Param("add") Long add);
-
-    Page<Comment> findCommentByIdIn(List<Long> ids, Pageable pageable);
+    Comment findCommentById(Long id);
 }

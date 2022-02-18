@@ -9,7 +9,7 @@ spring:
   # JPA 설정
     database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
     hibernate:
-      ddl-auto: creates
+      ddl-auto: create
     properties:
       hibernate:
         show_sql: true
@@ -18,15 +18,22 @@ spring:
     logging:
       level:
         org.hibernate.SQL: debug
+
+  # pageable
+  data:
+    web:
+      pageable:
+        default-page-size: 24
+        one-indexed-parameters: true
   # Security OAuth
   security:
     oauth2.client:
         registration:
           42:
-            #client-id: "aa9c83987ce3e0dc4b79cc7c2d9c80147ec532ec4ce6cb5df032338272d54df5"
-            #client-secret: "abaefa17bb4af72ff5dbdcf2fb39c1353d0dc3f9bcc61d6daec8e6939eebe7ca"
-            client-id: "7b753e06873caf84820ba1f794ea93de33f2472495ff0e5a060bfcbcd2163ba8"
-            client-secret: "48f245c07bfaf5f470a3002e282f8a2fda269b0469079950bdf3a24069a18990"
+            client-id: "aa9c83987ce3e0dc4b79cc7c2d9c80147ec532ec4ce6cb5df032338272d54df5"
+            client-secret: "abaefa17bb4af72ff5dbdcf2fb39c1353d0dc3f9bcc61d6daec8e6939eebe7ca"
+            #client-id: "7b753e06873caf84820ba1f794ea93de33f2472495ff0e5a060bfcbcd2163ba8"
+            #client-secret: "48f245c07bfaf5f470a3002e282f8a2fda269b0469079950bdf3a24069a18990"
             redirect-uri: "{baseUrl}/{action}/oauth2/code/{registrationId}"
             authorization-grant-type: authorization_code
             scope: public

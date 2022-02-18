@@ -22,6 +22,10 @@ public class PostResponseDTO {
         this.page = 0;
         this.pages = 0;
     }
+
+    public void setPage(int page){
+        this.page = page + 1;
+    }
 //    @Builder
 //    private PostResponseDTO(Long id, Long authorId, String title, Long commentCnt, Long viewCnt, Long likeCnt, Boolean isNotice, Long blameCnt, LocalDateTime createdDate, LocalDateTime modifiedDate) {
 //        this.postDto.id = id;

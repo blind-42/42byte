@@ -7,6 +7,7 @@ import com.blind.api.domain.comment.v1.repository.CommentRepository;
 import com.blind.api.domain.comment.v1.service.CommentService;
 import com.blind.api.domain.post.v2.domain.Post;
 import com.blind.api.domain.post.v2.repository.PostRepository;
+import com.blind.api.domain.post.v2.service.PostService;
 import com.blind.api.domain.user.v2.service.UserService;
 import com.blind.api.global.utils.HeaderUtil;
 import lombok.AllArgsConstructor;
@@ -24,13 +25,14 @@ import java.util.Map;
 @AllArgsConstructor
 public class CommentController {
     private final CommentService commentService;
+    private final PostService postService;
     private final CommentRepository commentRepository;
     private final UserService userService;
 
     @RequestMapping(value={"/comment"}, method=RequestMethod.POST)
     public void saveComment(@RequestParam("boardId") Long boardId, @RequestParam("postId") Long postId, @RequestBody Map<String,Object> body, HttpServletRequest request){
         Comment comment = commentService.save(boardId, postId, (String)body.get("content"), HeaderUtil.getAccessToken(request));
-
+        postService.updateComment(postId, 1L);
     }
 
     @RequestMapping(value={"/comment"}, method = RequestMethod.PUT)
@@ -47,6 +49,7 @@ public class CommentController {
         if (userService.compareUser(comment.getAuthorId(), HeaderUtil.getAccessToken(request)) != true)
             return ;
         commentService.delete(comment);
+        postService.updateComment(commentService.findCommentById(commentId).getPost().getId(), -1L);
     }
 
     @RequestMapping(value={"/mypage/comment"}, method = RequestMethod.GET)
@@ -56,13 +59,6 @@ public class CommentController {
                                                            @SortDefault(sort = "id", direction = Sort.Direction.DESC)}) Pageable pageable){
         String accessToken = HeaderUtil.getAccessToken(request);
         Long userId = userService.findByAccessToken(accessToken).orElseThrow().getId();
-        CommentResponseDTO dtoList = new CommentResponseDTO();
-        Page<Comment> commentList = commentService.findCommentByAuthorId(userId, pageable);
-        commentList.stream().forEach( comment -> {
-            dtoList.getContents().add(CommentDTO.from(comment));
-        });
-        dtoList.setPage(commentList.getPageable().getPageNumber());
-        dtoList.setPages(commentList.getTotalPages());
-        return dtoList;
+        return commentService.findCommentByIdIn(userId, pageable);
     }
 }

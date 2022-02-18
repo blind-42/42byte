@@ -1,5 +1,6 @@
 package com.blind.api.domain.comment.v1.domain;
 
+import com.blind.api.domain.post.v2.domain.Post;
 import com.blind.api.global.entity.BaseTimeEntity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.sun.istack.NotNull;
@@ -28,10 +29,9 @@ public class Comment extends BaseTimeEntity {
     @Column(name = "board_id")
     private Long boardId;
 
-    @JsonIgnore
-    @NotNull
-    @Column(name = "post_id")
-    private Long postId;
+    @ManyToOne
+    @JoinColumn(name = "post_id")
+    private Post post;
 
     @NotNull
     @Column(name="author_id")
@@ -54,14 +54,14 @@ public class Comment extends BaseTimeEntity {
     private Boolean isDel;
 
     @Builder
-    public Comment(Long boardId, Long postId, Long authorId, String content, Boolean isAuthor) {
+    public Comment(Long boardId, Post post, Long authorId, String content, Boolean isAuthor) {
         Assert.notNull(boardId,"boardId must not be Null");
-        Assert.notNull(postId,"postId must not be Null");
+        Assert.notNull(post,"postId must not be Null");
         Assert.notNull(authorId,"authorId must not be Null");
         Assert.hasText(content,"content must not be empty");
 
         this.boardId = boardId;
-        this.postId = postId;
+        this.post = post;
         this.authorId = authorId;
         this.content = content;
         this.isAuthor = isAuthor;

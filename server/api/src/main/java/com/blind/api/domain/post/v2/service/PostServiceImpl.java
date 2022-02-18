@@ -89,8 +89,8 @@ public class PostServiceImpl implements PostService {
 
     @Override
     @Transactional
-    public PostResponseDTO findPostByIdIn(List<Long> ids, Pageable pageable) {
-        Page<Post> savePageable = postRepository.findPostByIdIn(ids, pageable);
+    public PostResponseDTO findPostByIdIn(Long userId, Pageable pageable) {
+        Page<Post> savePageable = findAllByAuthorId(userId, pageable);
         PostResponseDTO dtoList = new PostResponseDTO();
         savePageable.stream().forEach( post -> {
             dtoList.getContents().add(PostDTO.from(post));
@@ -98,5 +98,11 @@ public class PostServiceImpl implements PostService {
         dtoList.setPage(savePageable.getPageable().getPageNumber());
         dtoList.setPages(savePageable.getTotalPages());
         return dtoList;
+    }
+
+    @Override
+    @Transactional
+    public void updateComment(Long id, Long add) {
+        postRepository.updateComment(id, add);
     }
 }
