@@ -22,6 +22,7 @@ export interface CommentData {
   postId: number
   authorId: number
   content: string
+	commentCnt: number
   likeCnt: number
   blameCnt: number
   isAuthor: boolean

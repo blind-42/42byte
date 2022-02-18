@@ -28,7 +28,7 @@ export const CommentWrap = styled.div`
 	}
 `;
 
-export const PostTitle = styled.div`
+export const OriginalPost = styled.div`
 	display: flex;
 	font-size: 1.3rem;
 	font-weight: 600;
