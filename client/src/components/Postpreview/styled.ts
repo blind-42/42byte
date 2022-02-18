@@ -7,7 +7,7 @@ export const PreviewContainer = styled.div<{state?: boolean;}>`
 	border-bottom: solid 1px #929191;
 	font-size: 1.2rem;
 	height: 2.5rem;
-	background: ${(props) => props.state === true ? '#E1DBCB' : 'none'};
+	background: ${(props) => props.state === true ? '#DEDEDE' : 'none'};
 	div {
 		place-self: center center;
 	}
