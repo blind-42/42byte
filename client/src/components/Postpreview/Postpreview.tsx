@@ -7,7 +7,7 @@ type GreetingProps = {
 }
 
 function PostPreview({ postData }: GreetingProps) {
-	const { id, authorId, title, commentCnt, viewCnt, likeCnt, isNotice, blameCnt, createdDate, modifiedDate } = postData;
+	const { id, title, commentCnt, viewCnt, likeCnt, isNotice, blameCnt, createdDate, modifiedDate } = postData;
 	const fullday = new Date();
 	const year = `${fullday.getFullYear()}`;
 	const month = fullday.getMonth() + 1 < 10 ? `0${fullday.getMonth() + 1}` : `${fullday.getMonth() + 1}`;

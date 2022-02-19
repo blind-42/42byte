@@ -14,28 +14,31 @@ import { PostContainer, DetailContainer, Title, Specific, Info, Modify, ContentW
 function Detail() {
 	const [detailData, setDetailData] = useState<DetailData>(
 		{post: {
-			createdDate : "",
-			modifiedDate: "",
 			id: 0,
-			authorId: 0,
 			title: "",
 			content: "",
 			commentCnt: 0,
 			viewCnt: 0,
 			likeCnt: 0,
+			isUsers: false,
 			isNotice: false,
-			blameCnt: 0
+			blameCnt: 0,
+			createdDate : "",
+			modifiedDate: "",
 		}, 
-		comment: [{     
-		createdDate: "",
-		modifiedDate: "",
-		id: 0,
-		authorId: 0,
-		content: "",
-		likeCnt: 0,
-		blameCnt: 0,
-		isAuthor: false,
-		isDel: false
+		comment: [{
+			boardId: 0,
+			postId: 0,  
+			id: 0,
+			authorId: 0,
+			content: "",
+			likeCnt: 0,
+			blameCnt: 0,
+			isUsers: false,
+			isAuthor: false,
+			isDel: false,
+			createdDate: "",
+			modifiedDate: "",
 		}]
 }
 );
@@ -43,8 +46,6 @@ function Detail() {
 	const [comment, setComment] = useState<string>('');
 	const [clickModal, setClickModal] = useState<boolean>(false);
 	const [CmmtDelId, setCmmtDelId] = useState(0);
-	const [postAuthorId, setPostAuthorId] = useState(-1);
-	const [commentAuthorId, setCommentAuthorId] = useState(-1);
 	
 	const currentUrl = window.location.href;
 	const urlId = currentUrl.split('detail?boardId=1&postId=')[1];
@@ -64,27 +65,11 @@ function Detail() {
 		})
 		.catch((err) => console.log(err));
 	},[])
-
-	useEffect(() => {
-		instance.get(`/mypage/post`)
-		.then((res) => {
-			setPostAuthorId(res.data.contents[0].authorId)
-		})
-		.catch(() => setPostAuthorId(-1))
-	}, [])
-
-	useEffect(() => {
-		instance.get(`/mypage/comment`)
-		.then((res) => {
-			setCommentAuthorId(res.data.contents[0].authorId)
-		})
-		.catch(() => setCommentAuthorId(-1))
-	}, [])
 	
-	const { createdDate, modifiedDate, id, authorId, title, content, commentCnt, viewCnt, likeCnt, isNotice, blameCnt } = detailData.post
+	const { id, title, content, commentCnt, viewCnt, likeCnt, isUsers, isNotice, blameCnt, createdDate, modifiedDate } = detailData.post
 	const commentData: CommentData[]= detailData.comment;
 	const shortDate = createdDate?.slice(0, 16).replace('T', ' ');
-	const commentsUserList = Array.from(new Set(commentData.map((el:CommentData) => el.authorId))).filter(el => el !== authorId)
+	const commentsUserList = Array.from(new Set(commentData.filter((el:CommentData) => !el.isAuthor).map((el:CommentData) => el.authorId)));
 
 	const inputMsgHandler = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
 		setComment(e.target.value);
@@ -94,7 +79,7 @@ function Detail() {
 		setClickModal(!clickModal);
 	}
 
-	const clickCmmtDelHandler = (id:number) => {
+	const clickCmmtDelIdHandler = (id:number) => {
 		setCmmtDelId(id);
 	}
 
@@ -162,7 +147,7 @@ function Detail() {
 										<div>{shortDate}</div>
 										<div>조회 {Number(viewCnt) + 1}</div>
 									</Info>
-									{(postAuthorId === authorId) &&<Modify>
+									{isUsers &&<Modify>
 										<div onClick={modifiedHandler}>수정</div>
 										<div onClick={clickModalHandler}>삭제</div>
 									</Modify>}
@@ -189,9 +174,8 @@ function Detail() {
 									{commentData.map((el: CommentData, idx) => {
 										return (<Comments key={idx} comment={el}
 																								commentsUserList={commentsUserList}
-																								commentAuthorId={commentAuthorId} 
 																								clickModalHandler={clickModalHandler}
-																								clickCmmtDelHandler={clickCmmtDelHandler}/>)
+																								clickCmmtDelIdHandler={clickCmmtDelIdHandler}/>)
 									})}
 								</CommentListWrap>
 							</CommentContainer>
