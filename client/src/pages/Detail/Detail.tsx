@@ -79,7 +79,7 @@ function Detail() {
 		setClickModal(!clickModal);
 	}
 
-	const clickCmmtDelHandler = (id:number) => {
+	const clickCmmtDelIdHandler = (id:number) => {
 		setCmmtDelId(id);
 	}
 
@@ -175,7 +175,7 @@ function Detail() {
 										return (<Comments key={idx} comment={el}
 																								commentsUserList={commentsUserList}
 																								clickModalHandler={clickModalHandler}
-																								clickCmmtDelHandler={clickCmmtDelHandler}/>)
+																								clickCmmtDelIdHandler={clickCmmtDelIdHandler}/>)
 									})}
 								</CommentListWrap>
 							</CommentContainer>
