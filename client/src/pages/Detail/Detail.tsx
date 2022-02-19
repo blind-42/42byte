@@ -46,8 +46,6 @@ function Detail() {
 	const [comment, setComment] = useState<string>('');
 	const [clickModal, setClickModal] = useState<boolean>(false);
 	const [CmmtDelId, setCmmtDelId] = useState(0);
-	const [postAuthorId, setPostAuthorId] = useState(-1);
-	const [commentAuthorId, setCommentAuthorId] = useState(-1);
 	
 	const currentUrl = window.location.href;
 	const urlId = currentUrl.split('detail?boardId=1&postId=')[1];
@@ -67,27 +65,11 @@ function Detail() {
 		})
 		.catch((err) => console.log(err));
 	},[])
-
-	useEffect(() => {
-		instance.get(`/mypage/post`)
-		.then((res) => {
-			setPostAuthorId(res.data.contents[0].authorId)
-		})
-		.catch(() => setPostAuthorId(-1))
-	}, [])
-
-	useEffect(() => {
-		instance.get(`/mypage/comment`)
-		.then((res) => {
-			setCommentAuthorId(res.data.contents[0].authorId)
-		})
-		.catch(() => setCommentAuthorId(-1))
-	}, [])
 	
 	const { id, title, content, commentCnt, viewCnt, likeCnt, isUsers, isNotice, blameCnt, createdDate, modifiedDate } = detailData.post
 	const commentData: CommentData[]= detailData.comment;
 	const shortDate = createdDate?.slice(0, 16).replace('T', ' ');
-	const commentsUserList = Array.from(new Set(commentData.map((el:CommentData) => el.authorId))).filter(el => el !== authorId)
+	const commentsUserList = Array.from(new Set(commentData.filter((el:CommentData) => !el.isAuthor).map((el:CommentData) => el.authorId)));
 
 	const inputMsgHandler = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
 		setComment(e.target.value);
@@ -165,7 +147,7 @@ function Detail() {
 										<div>{shortDate}</div>
 										<div>조회 {Number(viewCnt) + 1}</div>
 									</Info>
-									{(postAuthorId === authorId) &&<Modify>
+									{isUsers &&<Modify>
 										<div onClick={modifiedHandler}>수정</div>
 										<div onClick={clickModalHandler}>삭제</div>
 									</Modify>}
@@ -192,7 +174,6 @@ function Detail() {
 									{commentData.map((el: CommentData, idx) => {
 										return (<Comments key={idx} comment={el}
 																								commentsUserList={commentsUserList}
-																								commentAuthorId={commentAuthorId} 
 																								clickModalHandler={clickModalHandler}
 																								clickCmmtDelHandler={clickCmmtDelHandler}/>)
 									})}
