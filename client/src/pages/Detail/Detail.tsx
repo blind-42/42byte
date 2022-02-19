@@ -24,7 +24,7 @@ function Detail() {
 			isNotice: false,
 			blameCnt: 0,
 			createdDate : "",
-			modifiedDate: "",
+			modifiedDate: ""
 		}, 
 		comment: [{
 			boardId: 0,
@@ -40,13 +40,10 @@ function Detail() {
 			createdDate: "",
 			modifiedDate: "",
 		}]
-}
-);
+	});
 	const [boxState, setBoxState] = useState<boolean>(false);
 	const [comment, setComment] = useState<string>('');
-	const [clickModal, setClickModal] = useState<boolean>(false);
-	const [CmmtDelId, setCmmtDelId] = useState(0);
-	
+	const [openPostDelModal, setOpenPostDelModal] = useState<boolean>(false);
 	const currentUrl = window.location.href;
 	const urlId = currentUrl.split('detail?boardId=1&postId=')[1];
 
@@ -71,16 +68,12 @@ function Detail() {
 	const shortDate = createdDate?.slice(0, 16).replace('T', ' ');
 	const commentsUserList = Array.from(new Set(commentData.filter((el:CommentData) => !el.isAuthor).map((el:CommentData) => el.authorId)));
 
-	const inputMsgHandler = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+	const inputCmmtHandler = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
 		setComment(e.target.value);
 	}
 
-	const clickModalHandler = () => {
-		setClickModal(!clickModal);
-	}
-
-	const clickCmmtDelIdHandler = (id:number) => {
-		setCmmtDelId(id);
+	const clickPostDelModalHandler = () => {
+		setOpenPostDelModal(!openPostDelModal);
 	}
 
 	const boxcolorHandler = () => {
@@ -90,7 +83,7 @@ function Detail() {
 		.catch((err) => console.log(err));
 	}
 
-	const sendCommentHandler = () => {
+	const sendCmmtHandler = () => {
 		instance
 		.post(`/comment?boardId=1&postId=${urlId}`, {content: comment})
 		.then(() => {
@@ -103,29 +96,20 @@ function Detail() {
 	const modifiedHandler = () => {
 	}
 
-	const deleteHandler = () => {
-		if (CmmtDelId) {
+	const deletePostHandler = () => {
 		instance
-		.delete(`/comment?commentId=${CmmtDelId}`)
-		.then(() => {window.location.href = `/detail?boardId=1&postId=${urlId}`})
+		.delete(`/post?postId=${id}`)
+		.then(() => {window.location.href = '/blindboard?page=1'})
 		.catch((err) => console.log(err));
-		}
-		else {
-			instance
-			.delete(`/post?postId=${id}`)
-			.then(() => {window.location.href = '/blindboard?page=1'})
-			.catch((err) => console.log(err));
-		}
 	}
 
 
 	return (
 		<>
 		<AppContainer>
-			{clickModal && (
-        <DeleteModal clickModalHandler={clickModalHandler}
-											deleteHandler={deleteHandler}/>
-      )}
+			{openPostDelModal && (
+        <DeleteModal clickModalHandler={clickPostDelModalHandler}
+											deleteHandler={deletePostHandler}/>)}
 					<Header />
 					<PageContainer>
 						<TopBar>
@@ -149,7 +133,7 @@ function Detail() {
 									</Info>
 									{isUsers &&<Modify>
 										<div onClick={modifiedHandler}>수정</div>
-										<div onClick={clickModalHandler}>삭제</div>
+										<div onClick={clickPostDelModalHandler}>삭제</div>
 									</Modify>}
 								</Specific>
 							{content && <ContentWrap>
@@ -162,20 +146,18 @@ function Detail() {
 								</LikesBox>
 							</LikeWrap>
 							<CommentContainer>
-								<CommentCount>댓글 {commentData.length}</CommentCount>
+								<CommentCount>댓글 {commentCnt}</CommentCount>
 								<CommentInput>
-									<textarea placeholder='댓글을 입력하세요.' onChange={inputMsgHandler} maxLength={300}></textarea>
+									<textarea placeholder='댓글을 입력하세요.' onChange={inputCmmtHandler} maxLength={300}></textarea>
 									<div>
 										<span>{comment.length} / 300</span>
-										<input type='button' value='등록' onClick={sendCommentHandler}/>
+										<input type='button' value='등록' onClick={sendCmmtHandler}/>
 									</div>
 								</CommentInput>
 								<CommentListWrap>
 									{commentData.map((el: CommentData, idx) => {
 										return (<Comments key={idx} comment={el}
-																								commentsUserList={commentsUserList}
-																								clickModalHandler={clickModalHandler}
-																								clickCmmtDelIdHandler={clickCmmtDelIdHandler}/>)
+																								commentsUserList={commentsUserList} />)
 									})}
 								</CommentListWrap>
 							</CommentContainer>
