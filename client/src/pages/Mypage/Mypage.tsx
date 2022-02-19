@@ -120,7 +120,7 @@ function Mypage() {
 											return (<PostPreview key={idx} postData={el} />)
 										})
 										:	commentBoardData.contents.map((el: CommentData, idx) => {
-											return (<CommentPreview key={idx} commentData={el} />)
+											return (el.content && <CommentPreview key={idx} commentData={el} />)
 										})
 									}
 								</PostWrap>
