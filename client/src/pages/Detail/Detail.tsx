@@ -14,28 +14,31 @@ import { PostContainer, DetailContainer, Title, Specific, Info, Modify, ContentW
 function Detail() {
 	const [detailData, setDetailData] = useState<DetailData>(
 		{post: {
-			createdDate : "",
-			modifiedDate: "",
 			id: 0,
-			authorId: 0,
 			title: "",
 			content: "",
 			commentCnt: 0,
 			viewCnt: 0,
 			likeCnt: 0,
+			isUsers: false,
 			isNotice: false,
-			blameCnt: 0
+			blameCnt: 0,
+			createdDate : "",
+			modifiedDate: "",
 		}, 
-		comment: [{     
-		createdDate: "",
-		modifiedDate: "",
-		id: 0,
-		authorId: 0,
-		content: "",
-		likeCnt: 0,
-		blameCnt: 0,
-		isAuthor: false,
-		isDel: false
+		comment: [{
+			boardId: 0,
+			postId: 0,  
+			id: 0,
+			authorId: 0,
+			content: "",
+			likeCnt: 0,
+			blameCnt: 0,
+			isUsers: false,
+			isAuthor: false,
+			isDel: false,
+			createdDate: "",
+			modifiedDate: "",
 		}]
 }
 );
@@ -81,7 +84,7 @@ function Detail() {
 		.catch(() => setCommentAuthorId(-1))
 	}, [])
 	
-	const { createdDate, modifiedDate, id, authorId, title, content, commentCnt, viewCnt, likeCnt, isNotice, blameCnt } = detailData.post
+	const { id, title, content, commentCnt, viewCnt, likeCnt, isUsers, isNotice, blameCnt, createdDate, modifiedDate } = detailData.post
 	const commentData: CommentData[]= detailData.comment;
 	const shortDate = createdDate?.slice(0, 16).replace('T', ' ');
 	const commentsUserList = Array.from(new Set(commentData.map((el:CommentData) => el.authorId))).filter(el => el !== authorId)
