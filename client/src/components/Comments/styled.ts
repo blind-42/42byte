@@ -65,6 +65,32 @@ export const Content = styled.div`
 		font-size: 0.8rem;
 }
 `;
+
+export const LikesBox = styled.div<{boxState?: boolean;}>`
+	cursor: pointer;
+	display: flex;
+	justify-content: space-evenly;
+	align-items: center;
+	margin-left: auto;
+	border: solid 1.5px ${(props) => props.boxState ? 'red' : 'gray'};
+	width: 3rem;
+	height: 2rem;
+	font-size: 0.4rem;
+	font-weight: 600;
+	color: ${(props) => props.boxState ? 'red' : 'gray'};
+	div:nth-child(1) {
+		font-size: 0.4rem;
+	}
+	@media screen and (min-width: 768px) {
+		width: 2.5rem;
+		height: 1.5rem;
+		font-size: 0.8rem;
+		div:nth-child(1) {
+			font-size: 0.8rem;
+		}
+	}
+`;
+
 export const GLine = styled.div`
 	border-bottom: solid 1px #929191;
 `;
