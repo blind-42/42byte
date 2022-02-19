@@ -67,22 +67,25 @@ public class PostController {
 
     /*게시글 상세조회 페이지*/
     @RequestMapping(value={"/post"}, method = RequestMethod.GET)
-    public PostDetailDTO findPostDetailByPostId (@RequestParam("boardId") Long boardId, @RequestParam("postId") Long postId, HttpServletRequest request){
+    public Map<String, Object> findPostDetailByPostId (@RequestParam("boardId") Long boardId, @RequestParam("postId") Long postId, HttpServletRequest request){
+        String accessToken = HeaderUtil.getAccessToken(request);
+
         Post post = postService.findById(postId).orElseThrow(RuntimeException::new);
-        Long userId = userService.findByAccessToken(HeaderUtil.getAccessToken(request))
-                .orElseThrow(RuntimeException::new)
-                .getId();
-        PostDetailDTO<CommentDTO> postDetailDTO = PostDetailDTO.from(post);
-        postDetailDTO.setIsUsers(userId == post.getAuthorId());
+        PostDetailDTO postDetailDTO = PostDetailDTO.from(post);
+        postDetailDTO.setIsUsers(userService.compareUser(post.getAuthorId(), accessToken));
+        List<CommentDTO> commentDTOList = new ArrayList<CommentDTO>();
         Optional.ofNullable(commentService.findAllComment(boardId, postId)).orElseGet(Collections::emptyList).stream().forEach(
                 (comment -> {
                     CommentDTO commentDTO = CommentDTO.from(comment);
-                    commentDTO.setIsUsers(userId == comment.getAuthorId());
-                    postDetailDTO.getComments().add(commentDTO);
+                    commentDTO.setIsUsers(userService.compareUser(comment.getAuthorId(), accessToken));
+                    commentDTOList.add(commentDTO);
                 })
         );
         postService.updateView(postId);
-        return postDetailDTO;
+        Map<String, Object> map = new HashMap<>();
+        map.put("post", postDetailDTO);
+        map.put("comment", commentDTOList);
+        return map;
     }
 
     /*게시글 수정*/

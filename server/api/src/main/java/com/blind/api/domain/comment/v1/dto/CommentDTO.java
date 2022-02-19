@@ -5,6 +5,8 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.time.LocalDateTime;
+
 @Getter
 @Setter
 public class CommentDTO {
@@ -18,6 +20,8 @@ public class CommentDTO {
     private Boolean isAuthor;
     private Boolean isDel;
     private Boolean isUsers;
+    private LocalDateTime createdDate;
+    private LocalDateTime modifiedDate;
 
     public static CommentDTO from(Comment comment) {
         return CommentDTO.builder()
@@ -30,11 +34,13 @@ public class CommentDTO {
                 .blameCnt(comment.getBlameCnt())
                 .isAuthor(comment.getIsAuthor())
                 .isDel(comment.getIsDel())
+                .createdDate(comment.getCreatedDate())
+                .modifiedDate(comment.getModifiedDate())
                 .build();
     }
 
     @Builder
-    private CommentDTO(Long id, Long boardId, Long postId, Long authorId, String content, Long likeCnt, Long blameCnt, Boolean isAuthor, Boolean isDel) {
+    private CommentDTO(Long id, Long boardId, Long postId, Long authorId, String content, Long likeCnt, Long blameCnt, Boolean isAuthor, Boolean isDel, LocalDateTime createdDate, LocalDateTime modifiedDate) {
         this.id = id;
         this.boardId = boardId;
         this.postId = postId;
@@ -44,5 +50,7 @@ public class CommentDTO {
         this.blameCnt = blameCnt;
         this.isAuthor = isAuthor;
         this.isDel = isDel;
+        this.createdDate = createdDate;
+        this.modifiedDate = modifiedDate;
     }
 }
