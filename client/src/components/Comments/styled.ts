@@ -2,11 +2,17 @@ import styled from 'styled-components';
 
 
 export const CommentWrap = styled.div`
-	border-bottom: solid 1px #929191;
 	padding: 1rem 0.5rem;
 	@media screen and (min-width: 768px) {
 		padding: 0.5rem;
 	}
+`;
+
+export const ModifyCommentWrap = styled.div`
+	margin: 0.5rem;
+	border: solid 2px #518EDB;
+	padding: 1rem;
+	background: #C4C4C4;
 `;
 
 export const CommentTop = styled.div`
@@ -59,8 +65,11 @@ export const Content = styled.div`
 		font-size: 0.8rem;
 }
 `;
+export const GLine = styled.div`
+	border-bottom: solid 1px #929191;
+`;
 
-export const Line = styled.div`
+export const FLine = styled.div`
 	border-top: solid 1px #fff;
 `;
 
