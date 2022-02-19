@@ -29,7 +29,7 @@ public class PostServiceImpl implements PostService {
     public PostResponseDTO findAllByBoardId(Long boardId, Pageable pageable) {
         Page<Post> postList = postRepository.findAllByBoardId(boardId, pageable);
 
-        PostResponseDTO dtoList = new PostResponseDTO();
+        PostResponseDTO<PostDTO> dtoList = new PostResponseDTO();
         postList.stream().forEach( post -> {
             dtoList.getContents().add(PostDTO.from(post));
         });

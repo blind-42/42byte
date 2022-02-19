@@ -17,7 +17,6 @@ public class PostDTO {
     private Long viewCnt;
     private Long likeCnt;
     private Boolean isNotice;
-    private Boolean isAuthor;
     private Long blameCnt;
     private LocalDateTime createdDate;
     private LocalDateTime modifiedDate;

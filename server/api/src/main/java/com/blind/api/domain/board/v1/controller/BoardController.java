@@ -32,6 +32,7 @@ public class BoardController {
         return boardService.save(body.get("name"));
     }
 
+
     @PostConstruct
     public void initiallize() {
         Token token = new Token();

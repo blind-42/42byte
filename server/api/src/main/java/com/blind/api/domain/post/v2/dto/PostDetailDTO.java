@@ -11,7 +11,7 @@ import java.util.List;
 
 @Getter
 @Setter
-public class PostDetailDTO<T> {
+public class PostDetailDTO {
     private Long id;
     private String title;
     private String content;
@@ -21,7 +21,6 @@ public class PostDetailDTO<T> {
     private Boolean isNotice;
     private Boolean isUsers;
     private Long blameCnt;
-    private List<T> comments;
     private LocalDateTime createdDate;
     private LocalDateTime modifiedDate;
 
@@ -50,7 +49,6 @@ public class PostDetailDTO<T> {
         this.likeCnt = likeCnt;
         this.isNotice = isNotice;
         this.blameCnt = blameCnt;
-        this.comments = new ArrayList<T>();
         this.createdDate = createdDate;
         this.modifiedDate = modifiedDate;
     }
