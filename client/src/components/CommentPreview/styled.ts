@@ -5,7 +5,7 @@ export const CommentPreviewContainer = styled.div`
 	flex-direction: column;
 	justify-content: space-evenly;
 	border-bottom: solid 1px #929191;
-	padding: 0.5rem 0.8rem;
+	padding: 0.5rem 1.5rem;
 	height: 5.5rem;
 	@media screen and (min-width: 768px) {
 		height: 4.2rem;
