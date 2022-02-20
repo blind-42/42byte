@@ -9,6 +9,7 @@ import { AppContainer, PageContainer, TopBar, PageName, Squares } from '../../st
 import { ContentContainer, MenuWrap, PostMenu, CommentMenu, PostContainer, Category, ContentWrap, PostWrap } from './styled'
 import instance from 'utils/functions/axios';
 import { BoardData, ContentData} from 'utils/functions/type';
+import { useNavigate } from "react-router-dom";
 
 export interface CommentBoardData {
   contents: CommentData[]
@@ -36,44 +37,47 @@ function Mypage() {
 	const [postBoardData, setPostBoardData] = useState({contents: [], page: 0, pages: 0});
 	const [commentBoardData, setCommentBoardData] = useState({contents: [], page: 0, pages: 0});
 	const [pageName, setPageName] = useState<string>('post');
-	const {page, pages} = postBoardData;
+	const [currentPageNumber, setCurrentPageNumber] = useState({page: 1, pages: 1})
 	const currentUrl = window.location.href;
 	const urlId = currentUrl.split('page=')[1];
+	const navigate = useNavigate();
+	
 
 	const switchToComment = () => {
-		setPageName('comment');
-		instance
-		.get('/mypage/comment?page=1')
-		.then((res) => {
-			setCommentBoardData(res.data);
-		})
-		.catch((err) => {
-			console.log(err);
-			// window.location.href = '/error';
-		})
+		setPageName('comment')
+		navigate('/mypage?=comment&page=1')
 	}
 
 	const switchToPost = () => {
-		setPageName('post');
-		instance
-		.get('/mypage/post?page=1')
-		.then((res) => {
-			setPostBoardData(res.data);
-		})
-		.catch((err) => {
-			window.location.href = '/error';
-		})
+		setPageName('post')
+		navigate('/mypage?=post&page=1')
 	}
 
 	useEffect(() => {
-		instance
-		.get(`/mypage/post?page=${urlId}`)
-		.then((res) => { setPostBoardData(res.data) })
-		.catch((err) => console.log(err));
-	}, [])
+		const currentPageName = window.location.search.split('&')[0].slice(2)
+		setPageName(currentPageName)
+		if (currentPageName === "post") {
+			instance
+			.get(`/mypage/${currentPageName}?page=${urlId}`)
+			.then((res) => {
+				setCurrentPageNumber({page: res.data.page, pages: res.data.pages})
+				setPostBoardData(res.data)
+			})
+			.catch((err) => { window.location.href = '/error'; });
+		}
+		else {
+			instance
+			.get(`/mypage/comment?page=${urlId}`)
+			.then((res) => {
+				setCurrentPageNumber({page: res.data.page, pages: res.data.pages})
+				setCommentBoardData(res.data);
+			})
+			.catch((err) => { window.location.href = '/error'; })
+		}
+	}, [window.location.href])
 
 	const pageChangeHandler = (page: number) => {
-		window.location.href = `/mypage/${pageName}?page=${page}`
+		navigate(`/mypage?=${pageName}&page=${page}`)
   };
 
 	return (
@@ -126,8 +130,8 @@ function Mypage() {
 								</PostWrap>
 							</ContentWrap>
 							<PageNation 
-								curPage={page}
-								totalPages={pages}
+								curPage={currentPageNumber.page}
+								totalPages={currentPageNumber.pages}
 								pageChangeHandler={pageChangeHandler}
 							/>
 						</PostContainer>

@@ -14,16 +14,17 @@ function Blindboard() {
 	const {page, pages} = boardData
 	const currentUrl = window.location.href;
 	const urlId = currentUrl.split('blindboard?page=')[1];
+	const navigate = useNavigate();
 
 	useEffect(() => {
 		instance
 		.get(`/board?boardId=1&page=${urlId}`)
 		.then((res) => {setBoardData(res.data)})
 		.catch((err) => console.log(err));
-	}, [])
+	}, [window.location.href])
 
 	const pageChangeHandler = (page: number) => {
-		window.location.href = `/blindboard?page=${page}`
+		navigate(`/blindboard?page=${page}`)
   };
 
 	return (
