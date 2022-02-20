@@ -47,7 +47,7 @@ function Menubar({ menubarHandler }: GreetingProps) {
 					</UserName>
 					{isLoggedIn &&
 						<UserMenu>
-							<Link to='/mypage'>
+							<Link to='/mypage?=post&page=1'>
 								<div>마이페이지</div>
 							</Link>
 							<Link to='/' onClick={logoutHandler}>
@@ -83,7 +83,7 @@ function Menubar({ menubarHandler }: GreetingProps) {
 				<MenuListWrap>
 					<ul>
 						<li>
-							<a href="/blindboard?page=1">블라인드 게시판</a>
+							<Link to="/blindboard?page=1">블라인드 게시판</Link>
 						</li>
 					</ul>
 				</MenuListWrap>

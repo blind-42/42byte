@@ -9,6 +9,7 @@ export const PageContainer = styled.div`
 
 export const PageNationWrap = styled.div`
 	.pagination {
+		cursor: pointer;
     display: flex;
     justify-content: center;
     margin: 1rem 0;
