@@ -15,9 +15,6 @@ export const PostContainer = styled.div`
   //   }
   // }
 	background: #C4C4C4;
-	display: flex;
-	flex-direction: column;
-	align-items: stretch;
 	border-top: solid 2px #000;
 	border-left: solid 2px #000;
 	border-right: solid 2px #fff;
