@@ -36,8 +36,8 @@ public class CommentController {
     }
 
     @RequestMapping(value={"/comment"}, method = RequestMethod.PUT)
-    public void updateComment(@RequestParam Map<String,String> query, @RequestParam("commentId") Long commentId, HttpServletRequest request){
-        Comment comment = commentRepository.findById(commentId).orElseThrow(RuntimeException::new);
+    public void updateComment(@RequestBody Map<String,String> query, @RequestParam("commentId") Long commentId, HttpServletRequest request){
+        Comment comment = commentService.findCommentById(commentId);
         if (userService.compareUser(comment.getAuthorId(), HeaderUtil.getAccessToken(request)) != true)
             return ;
         commentService.update(comment, query.get("content"));

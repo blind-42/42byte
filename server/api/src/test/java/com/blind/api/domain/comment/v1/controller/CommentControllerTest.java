@@ -121,7 +121,7 @@ class CommentControllerTest {
         boardService.save(board);
         Post post = postService.save(board.getId(), "title", "content", token.getAccessToken());
         Comment comment = commentService.save(board.getId(), post.getId(), "내용", token.getAccessToken());
-        mockMvc.perform(put("/comment").contentType(MediaType.APPLICATION_JSON)
+        mockMvc.perform(patch("/comment").contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(body))
                         .param("commentId", String.valueOf(comment.getId()))
                         .header("Authorization", "Bearer access"))
@@ -173,8 +173,8 @@ class CommentControllerTest {
         Board board = new Board("name");
         boardService.save(board);
         Post post = postService.save(board.getId(), "title", "content", token.getAccessToken());
-        commentService.save(board.getId(), post.getId(), "내용1", token.getAccessToken());
-        commentService.save(board.getId(), post.getId(), "내용2", token.getAccessToken());
+        Comment comment = commentService.save(board.getId(), post.getId(), "내용1", token.getAccessToken());
+        commentService.update(comment, "변경내용");
         commentService.save(board.getId(), post.getId(), "내용3", token.getAccessToken());
         commentService.save(board.getId(), post.getId(), "내용4", token.getAccessToken());
         commentService.save(board.getId(), post.getId(), "내용5", token.getAccessToken());
