@@ -8,6 +8,7 @@ import com.blind.api.domain.post.v2.dto.PostDTO;
 import com.blind.api.domain.post.v2.dto.PostDetailDTO;
 import com.blind.api.domain.post.v2.dto.PostResponseDTO;
 import com.blind.api.domain.post.v2.service.PostService;
+import com.blind.api.domain.user.v2.domain.User;
 import com.blind.api.domain.user.v2.service.UserService;
 import com.blind.api.global.utils.HeaderUtil;
 import lombok.AllArgsConstructor;
@@ -69,15 +70,22 @@ public class PostController {
     @RequestMapping(value={"/post"}, method = RequestMethod.GET)
     public Map<String, Object> findPostDetailByPostId (@RequestParam("boardId") Long boardId, @RequestParam("postId") Long postId, HttpServletRequest request){
         String accessToken = HeaderUtil.getAccessToken(request);
-
         Post post = postService.findById(postId).orElseThrow(RuntimeException::new);
         PostDetailDTO postDetailDTO = PostDetailDTO.from(post);
         postDetailDTO.setIsUsers(userService.compareUser(post.getAuthorId(), accessToken));
+        if (likeService.checkPostLike(post, userService.findByAccessToken(accessToken).orElseThrow(RuntimeException::new)) == false)
+           postDetailDTO.setIsLiked(false);
+       else
+           postDetailDTO.setIsLiked(true);
         List<CommentDTO> commentDTOList = new ArrayList<CommentDTO>();
         Optional.ofNullable(commentService.findAllComment(boardId, postId)).orElseGet(Collections::emptyList).stream().forEach(
                 (comment -> {
                     CommentDTO commentDTO = CommentDTO.from(comment);
                     commentDTO.setIsUsers(userService.compareUser(comment.getAuthorId(), accessToken));
+                    if (likeService.checkCommentLike(comment, userService.findByAccessToken(accessToken).orElseThrow(RuntimeException::new)) == false)
+                        commentDTO.setIsLiked(false);
+                    else
+                        commentDTO.setIsLiked(true);
                     commentDTOList.add(commentDTO);
                 })
         );

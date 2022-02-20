@@ -61,14 +61,18 @@ public class LikeServiceImpl implements LikeService{
         }
     }
 
-    private boolean checkPostLike(Post post, User user) {
+    @Override
+    @Transactional
+    public boolean checkPostLike(Post post, User user) {
         if(postLikeRepository.findByPostAndUser(post, user) != null)
             return true;
         else
             return false;
     }
 
-    private boolean checkCommentLike(Comment comment, User user) {
+    @Override
+    @Transactional
+    public boolean checkCommentLike(Comment comment, User user) {
         if(commentLikeRepository.findByCommentAndUser(comment, user) != null)
             return true;
         else

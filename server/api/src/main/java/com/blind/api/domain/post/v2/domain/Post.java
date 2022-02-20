@@ -51,6 +51,7 @@ public class Post extends BaseTimeEntity {
     @Column(name = "blame_count", columnDefinition = "Integer default 0", updatable = false)
     private Long blameCnt;
 
+
     @ManyToOne
     @JsonIgnore
     @JoinColumn(name = "board_id")

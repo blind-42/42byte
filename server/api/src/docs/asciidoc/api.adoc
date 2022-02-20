@@ -1,0 +1,291 @@
+= RESTful Notes API Guide
+:doctype: book
+:icons: font
+:source-highlighter: highlightjs
+:toc: left
+:toclevels: 4
+:sectlinks:
+
+[[overview]]
+= Overview
+
+[[overview-http-verbs]]
+== HTTP verbs
+
+RESTful notes tries to adhere as closely as possible to standard HTTP and REST conventions in its
+use of HTTP verbs.
+
+|===
+| Verb | Usage
+
+| `GET`
+| Used to retrieve a resource
+
+| `POST`
+| Used to create a new resource
+
+| `PATCH`
+| Used to update an existing resource, including partial updates
+
+| `DELETE`
+| Used to delete an existing resource
+|===
+
+RESTful notes tries to adhere as closely as possible to standard HTTP and REST conventions in its
+use of HTTP status codes.
+
+|===
+| Status code | Usage
+
+| `200 OK`
+| The request completed successfully
+
+| `201 Created`
+| A new resource has been created successfully. The resource's URI is available from the response's
+`Location` header
+
+| `204 No Content`
+| An update to an existing resource has been applied successfully
+
+| `400 Bad Request`
+| The request was malformed. The response body will include an error providing further information
+
+| `404 Not Found`
+| The requested resource did not exist
+|===
+
+== 게시판 생성
+
+=== curl-request
+include::{snippets}/create-board/curl-request.adoc[]
+
+=== http-request
+include::{snippets}/create-board/http-request.adoc[]
+
+=== http-response
+include::{snippets}/create-board/http-response.adoc[]
+
+=== response-body
+include::{snippets}/create-board/response-body.adoc[]
+
+=== request-body
+include::{snippets}/create-board/request-body.adoc[]
+
+=== request-fields
+include::{snippets}/create-board/request-fields.adoc[]
+
+== 게시판 조회
+=== curl-request
+include::{snippets}/find-all-posts/curl-request.adoc[]
+
+=== http-request
+include::{snippets}/find-all-posts/http-request.adoc[]
+
+=== http-response
+include::{snippets}/find-all-posts/http-response.adoc[]
+
+=== response-body
+include::{snippets}/find-all-posts/response-body.adoc[]
+
+
+== 게시글 작성
+=== curl-request
+include::{snippets}/post-save/curl-request.adoc[]
+
+=== http-request
+include::{snippets}/post-save/http-request.adoc[]
+
+=== http-response
+include::{snippets}/post-save/http-response.adoc[]
+
+=== request-body
+include::{snippets}/post-save/request-body.adoc[]
+
+
+== 게시글 조회
+=== curl-request
+include::{snippets}/post-detail/curl-request.adoc[]
+
+=== http-request
+include::{snippets}/post-detail/http-request.adoc[]
+
+=== http-response
+include::{snippets}/post-detail/http-response.adoc[]
+
+=== response-body
+include::{snippets}/post-detail/response-body.adoc[]
+
+
+== 게시글 수정
+=== curl-request
+include::{snippets}/post-update/curl-request.adoc[]
+
+=== http-request
+include::{snippets}/post-update/http-request.adoc[]
+
+=== http-response
+include::{snippets}/post-update/http-response.adoc[]
+
+=== request-body
+include::{snippets}/post-update/request-body.adoc[]
+
+
+== 게시글 검색
+=== curl-request
+include::{snippets}/search-posts/curl-request.adoc[]
+
+=== http-request
+include::{snippets}/search-posts/http-request.adoc[]
+
+=== http-response
+include::{snippets}/search-posts/http-response.adoc[]
+
+=== response-body
+include::{snippets}/search-posts/response-body.adoc[]
+
+== 댓글 작성
+=== curl-request
+include::{snippets}/comment-save/curl-request.adoc[]
+
+=== http-request
+include::{snippets}/comment-save/http-request.adoc[]
+
+=== http-response
+include::{snippets}/comment-save/http-response.adoc[]
+
+=== request-body
+include::{snippets}/comment-save/request-body.adoc[]
+
+=== response-body
+include::{snippets}/comment-save/response-body.adoc[]
+
+== 댓글 수정
+=== curl-request
+include::{snippets}/comment-update/curl-request.adoc[]
+
+=== http-request
+include::{snippets}/comment-update/http-request.adoc[]
+
+=== http-response
+include::{snippets}/comment-update/http-response.adoc[]
+
+=== request-body
+include::{snippets}/comment-update/request-body.adoc[]
+
+=== response-body
+include::{snippets}/comment-update/response-body.adoc[]
+
+== 댓글 삭제
+=== curl-request
+include::{snippets}/comment-delete/curl-request.adoc[]
+
+=== http-request
+include::{snippets}/comment-delete/http-request.adoc[]
+
+=== http-response
+include::{snippets}/comment-delete/http-response.adoc[]
+
+=== request-body
+include::{snippets}/comment-delete/request-body.adoc[]
+
+=== response-body
+include::{snippets}/comment-delete/response-body.adoc[]
+
+== 내가 쓴 게시글
+=== curl-request
+include::{snippets}/comment-mypage/curl-request.adoc[]
+
+=== http-request
+include::{snippets}/comment-mypage/http-request.adoc[]
+
+=== http-response
+include::{snippets}/comment-mypage/http-response.adoc[]
+
+=== request-body
+include::{snippets}/comment-mypage/request-body.adoc[]
+
+=== response-body
+include::{snippets}/comment-mypage/response-body.adoc[]
+
+
+== 게시글 좋아요
+=== curl-request
+include::{snippets}/like-post/curl-request.adoc[]
+
+=== http-request
+include::{snippets}/like-post/http-request.adoc[]
+
+=== http-response
+include::{snippets}/like-post/http-response.adoc[]
+
+=== request-body
+include::{snippets}/like-post/request-body.adoc[]
+
+=== response-body
+include::{snippets}/like-post/response-body.adoc[]
+
+== 댓글 좋아요
+=== curl-request
+include::{snippets}/like-comment/curl-request.adoc[]
+
+=== http-request
+include::{snippets}/like-comment/http-request.adoc[]
+
+=== http-response
+include::{snippets}/like-comment/http-response.adoc[]
+
+=== request-body
+include::{snippets}/like-comment/request-body.adoc[]
+
+=== response-body
+include::{snippets}/like-comment/response-body.adoc[]
+
+== 좋아요 한 게시글 조회
+=== curl-request
+include::{snippets}/mypage-post-like/curl-request.adoc[]
+
+=== http-request
+include::{snippets}/mypage-post-like/http-request.adoc[]
+
+=== http-response
+include::{snippets}/mypage-post-like/http-response.adoc[]
+
+=== request-body
+include::{snippets}/mypage-post-like/request-body.adoc[]
+
+=== response-body
+include::{snippets}/mypage-post-like/response-body.adoc[]
+
+
+== 좋아요 한 댓글 조회
+=== curl-request
+include::{snippets}/mypage-comment-like/curl-request.adoc[]
+
+=== http-request
+include::{snippets}/mypage-comment-like/http-request.adoc[]
+
+=== http-response
+include::{snippets}/mypage-comment-like/http-response.adoc[]
+
+=== request-body
+include::{snippets}/mypage-comment-like/request-body.adoc[]
+
+=== response-body
+include::{snippets}/mypage-comment-like/response-body.adoc[]
+
+
+== 유저 정보 조회
+=== curl-request
+include::{snippets}/mypage/curl-request.adoc[]
+
+=== http-request
+include::{snippets}/mypage/http-request.adoc[]
+
+=== http-response
+include::{snippets}/mypage/http-response.adoc[]
+
+=== request-body
+include::{snippets}/mypage/request-body.adoc[]
+
+=== response-body
+include::{snippets}/mypage/response-body.adoc[]
