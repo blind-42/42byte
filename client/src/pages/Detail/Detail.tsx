@@ -9,7 +9,7 @@ import DeleteModal from 'components/Modal/DeleteModal';
 import { DetailData, PostData, CommentData } from 'utils/functions/type';
 import { AppContainer, PageContainer, TopBar, PageName, Squares } from 'styles/styled';
 import { PostContainer, DetailContainer, Title, Specific, Info, Modify, ContentWrap, LikeWrap, LikesBox
-				, CommentContainer, CommentCount, CommentInput, CommentListWrap } from './styled';
+				, CommentContainer, CommentCount, CommentInput, CommentListWrap, FLine } from './styled';
 
 function Detail() {
 	const [detailData, setDetailData] = useState<DetailData>(
@@ -154,6 +154,7 @@ function Detail() {
 										<input type='button' value='등록' onClick={sendCmmtHandler}/>
 									</div>
 								</CommentInput>
+								<FLine />
 								<CommentListWrap>
 									{commentData.map((el: CommentData, idx) => {
 										return (<Comments key={idx} comment={el}

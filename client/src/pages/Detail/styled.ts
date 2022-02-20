@@ -168,6 +168,10 @@ export const CommentInput = styled.div`
 	}
 `;
 
-export const CommentListWrap = styled.div`
+export const FLine = styled.div`
 	border-top: solid 1px #929191;
+`;
+
+export const CommentListWrap = styled.div`
+	border-top: solid 1px #fff;
 `;
