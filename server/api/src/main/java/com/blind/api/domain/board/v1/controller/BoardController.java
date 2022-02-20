@@ -33,7 +33,7 @@ public class BoardController {
     }
 
 
-    @PostConstruct
+/*    @PostConstruct
     public void initiallize() {
         Token token = new Token();
         token.setAccessToken("access");
@@ -45,5 +45,5 @@ public class BoardController {
         user.setHashId("hashId");
         user.setRoleType(RoleType.USER);
         testUserRepository.save(user);
-    }
+    }*/
 }

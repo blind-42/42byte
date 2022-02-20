@@ -23,6 +23,7 @@ public class CommentMyDTO {
     private Long blameCnt;
     private Boolean isAuthor;
     private Boolean isDel;
+    private Boolean isLiked;
     private LocalDateTime createdDate;
     private LocalDateTime modifiedDate;
 
@@ -45,7 +46,7 @@ public class CommentMyDTO {
     }
 
     @Builder
-    private CommentMyDTO(Long id, Long boardId, Long postId, String title, Long authorId, String content, Long commentCnt, Long likeCnt, Long blameCnt, Boolean isAuthor, Boolean isDel, LocalDateTime createdDate, LocalDateTime modifiedDate) {
+    private CommentMyDTO(Long id, Long boardId, Long postId, String title, Long authorId, String content, Long commentCnt, Long likeCnt, Long blameCnt, Boolean isAuthor, Boolean isDel, Boolean isLiked, LocalDateTime createdDate, LocalDateTime modifiedDate) {
         this.id = id;
         this.boardId = boardId;
         this.postId = postId;
@@ -57,6 +58,7 @@ public class CommentMyDTO {
         this.isAuthor = isAuthor;
         this.isDel = isDel;
         this.commentCnt = commentCnt;
+        this.isLiked = isLiked;
         this.modifiedDate = modifiedDate;
         this.createdDate = createdDate;
     }

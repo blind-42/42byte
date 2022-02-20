@@ -21,6 +21,7 @@ public class PostDetailDTO {
     private Boolean isNotice;
     private Boolean isUsers;
     private Long blameCnt;
+    private Boolean isLiked;
     private LocalDateTime createdDate;
     private LocalDateTime modifiedDate;
 
@@ -40,7 +41,7 @@ public class PostDetailDTO {
     }
 
     @Builder
-    private PostDetailDTO(Long id, String title, String content, Long commentCnt, Long viewCnt, Long likeCnt, Boolean isNotice, Long blameCnt, LocalDateTime createdDate, LocalDateTime modifiedDate) {
+    private PostDetailDTO(Long id, String title, String content, Long commentCnt, Long viewCnt, Long likeCnt, Boolean isNotice, Long blameCnt, Boolean isLiked, LocalDateTime createdDate, LocalDateTime modifiedDate) {
         this.id = id;
         this.title = title;
         this.content = content;
@@ -49,6 +50,7 @@ public class PostDetailDTO {
         this.likeCnt = likeCnt;
         this.isNotice = isNotice;
         this.blameCnt = blameCnt;
+        this.isLiked = isLiked;
         this.createdDate = createdDate;
         this.modifiedDate = modifiedDate;
     }

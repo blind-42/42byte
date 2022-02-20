@@ -1,13 +1,34 @@
 plugins {
 	id 'org.springframework.boot' version '2.6.2'
 	id 'io.spring.dependency-management' version '1.0.11.RELEASE'
-	id 'java'
+	id 'org.asciidoctor.jvm.convert' version '3.3.2'
 	id 'war'
 }
 
 group = 'com.42.blind'
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '11'
+
+
+ext {
+	snippetsDir = file('build/generated-snippets')
+}
+
+test {
+	outputs.dir snippetsDir
+}
+
+asciidoctor {
+	inputs.dir snippetsDir
+	dependsOn test
+}
+
+bootJar {
+	dependsOn asciidoctor
+	from ("build/docs/asciidoc/html5") {
+		into 'static/docs'
+	}
+}
 
 /* War 생성 - BootWar*/
 bootWar {
@@ -65,8 +86,6 @@ dependencies {
 	//thymeleaf
 	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
 	implementation 'nz.net.ultraq.thymeleaf:thymeleaf-layout-dialect'
-}
 
-test {
-	useJUnitPlatform()
+	testImplementation 'org.springframework.restdocs:spring-restdocs-mockmvc'
 }
