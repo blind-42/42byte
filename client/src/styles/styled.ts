@@ -81,16 +81,14 @@ export const Category = styled.div`
 	display: grid;
 	grid-template-columns: 1.2fr 6fr 1fr 1fr 2fr;
 	border-bottom: solid 2px #929191;
+	font-size: 1.2rem;
+	font-weight: 600;
+	height: 2.5rem;
 	div {
-		padding: 0.6rem 0;
-		height: 2rem;
 		place-self: center center;
-		font-size: 1.2rem;
-		font-weight: 600;
 	}
 	@media screen and (min-width: 768px) {
-		div {
-			font-size: 0.9rem;
-		}
+		font-size: 0.9rem;
+		height: 2.2rem;
 	}
 `;

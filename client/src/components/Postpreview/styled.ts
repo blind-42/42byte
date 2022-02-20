@@ -5,7 +5,7 @@ export const PreviewContainer = styled.div<{state?: boolean;}>`
 	grid-template-columns: 1.2fr 6fr 1fr 1fr 2fr;
 	justify-items: space-between;
 	border-bottom: solid 1px #929191;
-	font-size: 1.2rem;
+	font-size: 1.1rem;
 	height: 2.5rem;
 	background: ${(props) => props.state === true ? '#DEDEDE' : 'none'};
 	div {
@@ -28,7 +28,7 @@ export const PreviewContainer = styled.div<{state?: boolean;}>`
 		}
 	}
 	@media screen and (min-width: 768px) {
-		height: 2.5rem;
+		height: 2.3rem;
 		font-size: 0.9rem;
 	}
 `;
