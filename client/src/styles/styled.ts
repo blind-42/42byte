@@ -44,6 +44,10 @@ export const PageName = styled.div`
 	font-size: 1.5rem;
 	font-weight: 600;
 	margin: 0 1rem;
+	display: flex;
+	div {
+		color: #fff
+	}
 	@media screen and (min-width: 768px) {
 		font-size: 1rem;
 	}
