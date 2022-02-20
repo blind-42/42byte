@@ -22,7 +22,7 @@ function Main() {
   useEffect(() => {
     const currentURL = window.location.search
     if (currentURL.includes('token')) {
-      navigate('/')
+      navigate('')
     }
   }, [window.location.href])
 

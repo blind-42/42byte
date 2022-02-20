@@ -40,6 +40,7 @@ export const UploadButton = styled.div`
 	display: flex;
 	justify-content: flex-end;
 	button {
+		cursor: pointer;
 		background: #518EDB;
 		color: #fff;
 		font-size: 1.2rem;

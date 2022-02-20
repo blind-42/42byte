@@ -10,6 +10,7 @@ import { DetailData, PostData, CommentData } from 'utils/functions/type';
 import { AppContainer, PageContainer, TopBar, PageName, Squares } from 'styles/styled';
 import { PostContainer, DetailContainer, Title, Specific, Info, Modify, ContentWrap, LikeWrap, LikesBox
 				, CommentContainer, CommentCount, CommentInput, CommentListWrap, FLine } from './styled';
+import PostEditor from 'components/PostEdit/PostEditor';
 
 function Detail() {
 	const [detailData, setDetailData] = useState<DetailData>(
@@ -44,6 +45,7 @@ function Detail() {
 	const [boxState, setBoxState] = useState<boolean>(false);
 	const [comment, setComment] = useState<string>('');
 	const [openPostDelModal, setOpenPostDelModal] = useState<boolean>(false);
+  const [isEdit, setIsEdit] = useState(false)
 	const currentUrl = window.location.href;
 	const urlId = currentUrl.split('detail?boardId=1&postId=')[1];
 
@@ -94,6 +96,7 @@ function Detail() {
 	}
 
 	const modifiedHandler = () => {
+    setIsEdit(true)
 	}
 
 	const deletePostHandler = () => {
@@ -103,38 +106,54 @@ function Detail() {
 		.catch((err) => console.log(err));
 	}
 
+  const uploadHandler = () => {
+		instance
+		.post('/post?boardId=1', { title: title, content: content })
+		.then((res) => {window.location.href=`/detail?boardId=1&postId=${res.data.id}`})
+		.catch((err) => console.log(err));
+	}
+
+
 
 	return (
 		<>
-		<AppContainer>
-			{openPostDelModal && (
-        <DeleteModal clickModalHandler={clickPostDelModalHandler}
-											deleteHandler={deletePostHandler}/>)}
-					<Header />
-					<PageContainer>
-						<TopBar>
-							<PageName>상세글 #{id}</PageName>
-							<Squares>
-								<div>&#9866;</div>
-								<div>&#10064;</div>
-								<Link to='/blindboard'>
-									<div>&times;</div>
-								</Link>
-							</Squares>
-						</TopBar>
+			<AppContainer>
+				{openPostDelModal && (
+					<DeleteModal clickModalHandler={clickPostDelModalHandler} 
+						deleteHandler={deletePostHandler}/>)}
+				<Header />
+				<PageContainer>
+					<TopBar>
+						<PageName>
+							<Link to='/blindboard'>
+								<div>블라인드 게시판 </div>
+							</Link>
+							<div> &#10095; {title}</div>
+						</PageName>
+						<Squares>
+							<div>&#9866;</div>
+							<div>&#10064;</div>
+							<Link to='/blindboard'>
+								<div>&times;</div>
+							</Link>
+						</Squares>
+					</TopBar>
 					<PostContainer>
-						<DetailContainer>
+					{isEdit ?
+            <PostEditor detailData={detailData}/> :
+            <DetailContainer>
 							<Title>{title}</Title>
 								<Specific>
 									<Info>
 										<div>카뎃</div>
-										<div>{shortDate}</div>
+										<div>{shortDate} 수정됨</div>
 										<div>조회 {Number(viewCnt) + 1}</div>
 									</Info>
-									{isUsers &&<Modify>
-										<div onClick={modifiedHandler}>수정</div>
-										<div onClick={clickPostDelModalHandler}>삭제</div>
-									</Modify>}
+									{isUsers &&
+                    <Modify>
+                      <div onClick={modifiedHandler}>수정</div>
+                      <div onClick={clickPostDelModalHandler}>삭제</div>
+                    </Modify>}
 								</Specific>
 							{content && <ContentWrap>
 								<Viewer initialValue={content}/>
@@ -162,7 +181,7 @@ function Detail() {
 									})}
 								</CommentListWrap>
 							</CommentContainer>
-						</DetailContainer>
+						</DetailContainer>}
 					</PostContainer>
 					<Footer />
 				</PageContainer>
