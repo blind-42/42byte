@@ -8,7 +8,7 @@ import Comments from 'components/Comments/Comments';
 import DeleteModal from 'components/Modal/DeleteModal';
 import { DetailData, PostData, CommentData } from 'utils/functions/type';
 import { GrLike } from "react-icons/gr";
-import { AppContainer, PageContainer, TopBar, PageName, Squares } from 'styles/styled';
+import { AppContainer, PageContainer, TopBar, PageName, Squares, ContentFooterWrap } from 'styles/styled';
 import { PostContainer, DetailContainer, Title, Specific, Info, Modify, ContentWrap, LikeWrap, LikesBox
 				, CommentContainer, CommentCount, CommentInput, CommentListWrap, FLine } from './styled';
 import PostEditor from 'components/PostEdit/PostEditor';
@@ -131,52 +131,54 @@ function Detail() {
 							</Link>
 						</Squares>
 					</TopBar>
-					<PostContainer>
-					{isEdit ?
-            <PostEditor detailData={detailData}/> :
-            <DetailContainer>
-							<Title>{title}</Title>
-								<Specific>
-									<Info>
-										<div>카뎃</div>
-										<div>{shortDate} {(createdDate !== modifiedDate) && '수정됨'}</div>
-										<div>조회 {Number(viewCnt) + 1}</div>
-									</Info>
-									{isUsers &&
-                    <Modify>
-                      <div onClick={modifiedHandler}>수정</div>
-                      <div onClick={clickPostDelModalHandler}>삭제</div>
-                    </Modify>}
-								</Specific>
-							{content && <ContentWrap>
-								<Viewer initialValue={content}/>
-							</ContentWrap>}
-							<LikeWrap>
-								<LikesBox boxState={boxState} onClick={boxcolorHandler}>
-									<div><GrLike /></div>
-									<div>{likeCnt}</div>
-								</LikesBox>
-							</LikeWrap>
-							<CommentContainer>
-								<CommentCount>댓글 {commentCnt}</CommentCount>
-								<CommentInput>
-									<textarea placeholder='댓글을 입력하세요.' onChange={inputCmmtHandler} maxLength={300}></textarea>
-									<div>
-										<span>{comment.length} / 300</span>
-										<input type='button' value='등록' onClick={sendCmmtHandler}/>
-									</div>
-								</CommentInput>
-								<FLine />
-								<CommentListWrap>
-									{commentData.map((el: CommentData, idx) => {
-										return (<Comments key={idx} comment={el}
-																								commentsUserList={commentsUserList} />)
-									})}
-								</CommentListWrap>
-							</CommentContainer>
-						</DetailContainer>}
-					</PostContainer>
-					<Footer />
+					<ContentFooterWrap>
+						<PostContainer>
+						{isEdit ?
+							<PostEditor detailData={detailData}/> :
+							<DetailContainer>
+								<Title>{title}</Title>
+									<Specific>
+										<Info>
+											<div>카뎃</div>
+											<div>{shortDate} {(createdDate !== modifiedDate) && '수정됨'}</div>
+											<div>조회 {Number(viewCnt) + 1}</div>
+										</Info>
+										{isUsers &&
+											<Modify>
+												<div onClick={modifiedHandler}>수정</div>
+												<div onClick={clickPostDelModalHandler}>삭제</div>
+											</Modify>}
+									</Specific>
+								{content && <ContentWrap>
+									<Viewer initialValue={content}/>
+								</ContentWrap>}
+								<LikeWrap>
+									<LikesBox boxState={boxState} onClick={boxcolorHandler}>
+										<div><GrLike /></div>
+										<div>{likeCnt}</div>
+									</LikesBox>
+								</LikeWrap>
+								<CommentContainer>
+									<CommentCount>댓글 {commentCnt}</CommentCount>
+									<CommentInput>
+										<textarea placeholder='댓글을 입력하세요.' onChange={inputCmmtHandler} maxLength={300}></textarea>
+										<div>
+											<span>{comment.length} / 300</span>
+											<input type='button' value='등록' onClick={sendCmmtHandler}/>
+										</div>
+									</CommentInput>
+									<FLine />
+									<CommentListWrap>
+										{commentData.map((el: CommentData, idx) => {
+											return (<Comments key={idx} comment={el}
+																									commentsUserList={commentsUserList} />)
+										})}
+									</CommentListWrap>
+								</CommentContainer>
+							</DetailContainer>}
+						</PostContainer>
+						<Footer />
+					</ContentFooterWrap>
 				</PageContainer>
 			</AppContainer>
 		</>

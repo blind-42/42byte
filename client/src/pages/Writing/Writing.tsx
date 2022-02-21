@@ -5,7 +5,7 @@ import '@toast-ui/editor/dist/toastui-editor.css';
 import Header from 'components/Header/Header';
 import Footer from 'components/Footer/Footer';
 import PostEditor from 'components/PostEdit/PostEditor';
-import { AppContainer, PageContainer, TopBar, PageName, Squares } from 'styles/styled';
+import { AppContainer, PageContainer, TopBar, PageName, Squares, ContentFooterWrap } from 'styles/styled';
 
 
 function Writing() {
@@ -24,8 +24,10 @@ function Writing() {
 							</Link>
 						</Squares>
 					</TopBar>
-					<PostEditor/>
-					<Footer />
+					<ContentFooterWrap>
+						<PostEditor/>
+						<Footer />
+					</ContentFooterWrap>
 				</PageContainer>
 			</AppContainer>
 		</>

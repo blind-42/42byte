@@ -5,7 +5,7 @@ import Footer from 'components/Footer/Footer';
 import PostPreview from 'components/Postpreview/Postpreview';
 import PageNation from 'components/PageNation/PageNation';
 import instance from 'utils/functions/axios';
-import { AppContainer, PageContainer, TopBar, PageName, Squares, Category } from 'styles/styled';
+import { AppContainer, PageContainer, TopBar, PageName, Squares, ContentFooterWrap, Category } from 'styles/styled';
 import { PostContainer, PostWrap, ContentWrap } from './styled';
 import { BoardData, ContentData} from 'utils/functions/type';
 
@@ -42,28 +42,30 @@ function Blindboard() {
 							</Link>
 						</Squares>
 					</TopBar>
-					<PostContainer>
-						<Category>
-							<div></div>
-							<div>제목</div>
-							<div>조회</div>
-							<div>추천</div>
-							<div>작성일</div>
-						</Category>
-						<ContentWrap>
-							<PostWrap>
-								{boardData.contents.map((el: ContentData, idx) => {
-									return (<PostPreview key={idx} postData={el} />)
-								})}
-							</PostWrap>
-						</ContentWrap>
-						<PageNation
-							curPage={page}
-							totalPages={pages}
-							pageChangeHandler={pageChangeHandler}
-						/>
-					</PostContainer>
-					<Footer />
+					<ContentFooterWrap>
+						<PostContainer>
+							<Category>
+								<div></div>
+								<div>제목</div>
+								<div>조회</div>
+								<div>추천</div>
+								<div>작성일</div>
+							</Category>
+							<ContentWrap>
+								<PostWrap>
+									{boardData.contents.map((el: ContentData, idx) => {
+										return (<PostPreview key={idx} postData={el} />)
+									})}
+								</PostWrap>
+							</ContentWrap>
+							<PageNation
+								curPage={page}
+								totalPages={pages}
+								pageChangeHandler={pageChangeHandler}
+							/>
+						</PostContainer>
+						<Footer />
+					</ContentFooterWrap>
 				</PageContainer>
 			</AppContainer>
 		</>
