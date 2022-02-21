@@ -50,6 +50,7 @@ export const Info = styled.div`
 `;
 
 export const Modify = styled.div`
+	cursor: pointer;
 	display: flex;
 	div {
 		margin-left: 1rem;
@@ -78,14 +79,18 @@ export const LikesBox = styled.div<{boxState?: boolean;}>`
 	justify-content: space-evenly;
 	align-items: center;
 	margin: 2rem 0;
-	border: solid 2px ${(props) => props.boxState ? 'red' : 'gray'};
+	border: solid 2px #518EDB;
 	width: 6rem;
 	height: 3.5rem;
 	font-size: 1.2rem;
 	font-weight: 700;
-	color: ${(props) => props.boxState ? 'red' : 'gray'};
+	color: ${(props) => props.boxState ? '#fff' : '#518EDB'};
+	background: ${(props) => props.boxState && '#518EDB' };
+	svg path {
+    stroke: ${(props) => props.boxState ? '#fff' : '#518EDB'};
+	}
 	div:nth-child(1) {
-		font-size: 2rem;
+		font-size: 1.8rem;
 	}
 	@media screen and (min-width: 768px) {
 		width: 5rem;
@@ -140,12 +145,13 @@ export const CommentInput = styled.div`
 			padding: 0 2px;
 		}
 		input {
+			cursor: pointer;
 			background: #518EDB;
 			border-top: solid 2px #fff;
 			border-left: solid 2px #fff;
 			border-right: solid 2px #000;
 			border-bottom: solid 2px #000;
-			padding: 0.3 1.3rem;
+			padding: 0.2rem 0.8rem;
 			font-size: 1.2rem;
 			font-weight: 700;
 			letter-spacing: 0.2rem;

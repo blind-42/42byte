@@ -2,6 +2,8 @@ import { useState, useEffect } from 'react';
 import instance from 'utils/functions/axios';
 import DeleteModal from 'components/Modal/DeleteModal';
 import { CommentData } from 'utils/functions/type';
+import { timeForToday } from 'utils/functions/functions';
+import { GrLike } from "react-icons/gr";
 import { CommentWrap, ModifyCommentWrap, CommentTop, Info, Modify, Content, 
 				LikesBox, GLine, FLine } from './styled'
 import { CommentInput } from 'pages/Detail/styled'
@@ -12,19 +14,12 @@ type GreetingProps = {
 }
 
 function Comments({comment, commentsUserList}: GreetingProps) {
-	const { boardId, postId, id, authorId, content, likeCnt, blameCnt, isUsers, isAuthor, isDel, createdDate, modifiedDate } = comment;
-	const [boxState, setBoxState] = useState<boolean>(false);
+	const { boardId, postId, id, authorId, content, likeCnt, blameCnt, isUsers, isAuthor, isLiked, isDel, createdDate, modifiedDate } = comment;
+	const [boxState, setBoxState] = useState<boolean>(isLiked);
 	const [openCmmtDelModal, setOpenCmmtDelModal] = useState<boolean>(false);
 	const [modifyState, setModifyState] = useState<boolean>(false);
 	const [modifyCmmt, setModifyCmmt] = useState<string>(content);
-
-	useEffect(() => {
-		instance.get(`/mypage/comment/like`)
-		.then((res) => {
-			setBoxState(res.data.contents.map((el: CommentData) => el.id).indexOf(Number(id)) !== -1)
-		})
-		.catch((err) => console.log(err));
-	},[])
+	console.log(comment)
 
 	const clickCmmtDelModalHandler = () => {
 		setOpenCmmtDelModal(!openCmmtDelModal);
@@ -42,7 +37,7 @@ function Comments({comment, commentsUserList}: GreetingProps) {
 		instance
 		.post(`/comment/like?postId=${postId}&commentId=${id}`)
 		.then(() => setBoxState(!boxState))
-		.then(() => window.location.reload())
+		.then(() =>window.location.href = `/detail?boardId=${boardId}&postId=${postId}`)
 		.catch((err) => console.log(err));
 	}
 	
@@ -55,7 +50,7 @@ function Comments({comment, commentsUserList}: GreetingProps) {
 
 	const sendModifyCmmtHandler = () => {
 		instance
-		.put(`/comment?commentId=${id}`)
+		.put(`/comment?commentId=${id}`, {content: modifyCmmt})
 		.then(() => {window.location.href = `/detail?boardId=${boardId}&postId=${postId}`})
 		.catch((err) => console.log(err));
 	}
@@ -93,7 +88,7 @@ function Comments({comment, commentsUserList}: GreetingProps) {
 						{isAuthor ? <h3>작성자</h3>
 							: isUsers ? <h3><u>카뎃 {commentsUserList.indexOf(authorId)+1}</u></h3>
 							: <h3>카뎃 {commentsUserList.indexOf(authorId)+1}</h3>}
-						<div>{createdDate?.slice(5, 10)}</div>
+						<div>{timeForToday(createdDate)} {(createdDate !== modifiedDate) && '수정됨'}</div>
 					</Info>
 					{(isUsers && !isDel) && <Modify>
 						<div onClick={modifyHandler}>수정</div>
@@ -105,7 +100,7 @@ function Comments({comment, commentsUserList}: GreetingProps) {
 								: <div>{content}</div>}
 				</Content>
 					{!isUsers && <LikesBox boxState={boxState} onClick={boxcolorHandler}>
-						<div>&#128077;</div>
+						<div><GrLike /></div>
 						<div>{likeCnt}</div>
 					</LikesBox>}
 			</CommentWrap>

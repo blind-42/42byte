@@ -43,6 +43,7 @@ export const Info = styled.div`
 `;
 
 export const Modify = styled.div`
+	cursor: pointer;
 	display: flex;
 	div {
 		margin-left: 1rem;
@@ -72,21 +73,26 @@ export const LikesBox = styled.div<{boxState?: boolean;}>`
 	justify-content: space-evenly;
 	align-items: center;
 	margin-left: auto;
-	border: solid 1.5px ${(props) => props.boxState ? 'red' : 'gray'};
-	width: 3rem;
-	height: 2rem;
+	border: solid 1.5px #518EDB;
+	width: 3.2rem;
+	height: 2.1rem;
 	font-size: 0.4rem;
 	font-weight: 600;
-	color: ${(props) => props.boxState ? 'red' : 'gray'};
+	color: ${(props) => props.boxState ? '#fff' : '#518EDB'};
+	background: ${(props) => props.boxState && '#518EDB'};
+	svg path {
+    stroke: ${(props) => props.boxState ? '#fff' : '#518EDB'};
+	}
 	div:nth-child(1) {
-		font-size: 0.4rem;
+		margin-top: 0.1rem;
+		font-size: 0.9rem;
 	}
 	@media screen and (min-width: 768px) {
-		width: 2.5rem;
-		height: 1.5rem;
+		width: 2.7rem;
+		height: 1.6rem;
 		font-size: 0.8rem;
 		div:nth-child(1) {
-			font-size: 0.8rem;
+			font-size: 0.7rem;
 		}
 	}
 `;
