@@ -10,9 +10,7 @@ export const PostContainer = styled.div`
 	border-right: solid 2px #fff;
 	border-bottom: solid 2px #fff;
 	padding: 0.3rem;
-	height: 85vh;
 	background: #D5D5D5;
-
 `;
 
 export const DetailContainer = styled.div`
@@ -26,9 +24,12 @@ export const Title = styled.div`
 	font-weight: 600;
 	color: #000;
 	padding: 0 0.3rem;
-	@media screen and (min-width: 768px) {
+	${({theme}) => theme.media.tablet`
 		font-size: 1.2rem;
-	}
+	`}
+	${({theme}) => theme.media.desktop`
+		font-size: 1.2rem;
+	`}
 `;
 
 export const Specific = styled.div`
@@ -37,9 +38,12 @@ export const Specific = styled.div`
 	padding: 0.3rem;
 	border-bottom: solid 2px #929191;
 	font-size: 1.1rem;
-	@media screen and (min-width: 768px) {
+	${({theme}) => theme.media.tablet`
 		font-size: 0.8rem;
-	}
+	`}
+	${({theme}) => theme.media.desktop`
+		font-size: 0.8rem;
+	`}
 `;
 
 export const Info = styled.div`
@@ -62,9 +66,12 @@ export const ContentWrap = styled.div`
 	padding: 1.5rem;
 	font-size: 1.2rem;
 	color: #000;
-	@media screen and (min-width: 768px) {
+	${({theme}) => theme.media.tablet`
 		font-size: 0.9rem;
-	}
+	`}
+	${({theme}) => theme.media.desktop`
+		font-size: 0.9rem;
+	`}
 `;
 
 export const LikeWrap = styled.div`
@@ -92,14 +99,22 @@ export const LikesBox = styled.div<{boxState?: boolean;}>`
 	div:nth-child(1) {
 		font-size: 1.8rem;
 	}
-	@media screen and (min-width: 768px) {
+	${({theme}) => theme.media.tablet`
 		width: 5rem;
 		height: 3rem;
 		font-size: 1rem;
 		div:nth-child(1) {
 			font-size: 1.5rem;
 		}
-	}
+	`}
+	${({theme}) => theme.media.desktop`
+		width: 5rem;
+		height: 3rem;
+		font-size: 1rem;
+		div:nth-child(1) {
+			font-size: 1.5rem;
+		}
+	`}
 `;
 
 export const CommentContainer = styled.div`
@@ -112,9 +127,12 @@ export const CommentCount = styled.div`
 	font-size: 1.2rem;
 	font-weight: 600;
 	color: black;
-	@media screen and (min-width: 768px) {
+	${({theme}) => theme.media.tablet`
 		font-size: 0.9rem;
-	}
+	`}
+	${({theme}) => theme.media.desktop`
+		font-size: 0.9rem;
+	`}
 `;
 
 
@@ -157,8 +175,8 @@ export const CommentInput = styled.div`
 			letter-spacing: 0.2rem;
 			color: #fff;
 		}
-}
-	@media screen and (min-width: 768px) {
+	}
+	${({theme}) => theme.media.tablet`
 		textarea {
 			font-size: 0.9rem;
 		}
@@ -171,7 +189,21 @@ export const CommentInput = styled.div`
 				font-size: 1rem;
 			}
 		}
-	}
+	`}
+	${({theme}) => theme.media.desktop`
+		textarea {
+			font-size: 0.9rem;
+		}
+		div {
+			font-size: 1rem;
+			span {
+				font-size: 0.8rem;
+			}
+			input {
+				font-size: 1rem;
+			}
+		}
+	`}
 `;
 
 export const FLine = styled.div`

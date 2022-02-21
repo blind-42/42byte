@@ -9,6 +9,7 @@ export const CommentPreviewContainer = styled.div`
 	height: 5.5rem;
 	@media screen and (min-width: 768px) {
 		height: 4.2rem;
+	}
 `;
 
 export const CommentWrap = styled.div`

@@ -1,5 +1,16 @@
 import styled from 'styled-components';
 
+export const EditorContainer = styled.div`
+	display: grid;
+	grid-template-rows: 3rem auto;
+	${({theme}) => theme.media.tablet`
+		grid-template-rows: 2rem auto;
+	`}
+	${({theme}) => theme.media.desktop`
+		grid-template-rows: 2rem auto;
+	`}
+`;
+
 export const TitleUploadWrap = styled.div`
 	display: flex;
 	justify-content: space-between;
@@ -18,22 +29,20 @@ export const Title = styled.div`
 		border-bottom: solid 2px #fff;
 		padding: 0 1rem;
 	}
-	@media screen and (min-width: 768px) {
+	${({theme}) => theme.media.tablet`
 		input {
 			font-size: 0.9rem;
 			height: 2rem;
 			width: 30rem;
 		}
-	}
-`;
-
-export const EditorWrap = styled.div`
-	border-top: solid 2px #000;
-	border-left: solid 2px #000;
-	border-right: solid 2px #fff;
-	border-bottom: solid 2px #fff;
-	background: #D5D5D5;
-	overflow-y: scroll;
+	`}
+	${({theme}) => theme.media.desktop`
+		input {
+			font-size: 0.9rem;
+			height: 2rem;
+			width: 30rem;
+		}
+	`}
 `;
 
 export const UploadButton = styled.div`
@@ -53,11 +62,28 @@ export const UploadButton = styled.div`
 		border-right: solid 2px #000;
 		border-bottom: solid 2px #000;
 	}
-	@media screen and (min-width: 768px){
+	${({theme}) => theme.media.tablet`
 		button {
 			font-size: 0.9rem;
 			height: 2rem;
 			width: 4rem;
 		}
-	}
+	`}
+	${({theme}) => theme.media.desktop`
+		button {
+			font-size: 0.9rem;
+			height: 2rem;
+			width: 4rem;
+		}
+	`}
+`;
+
+export const EditorWrap = styled.div`
+	border-top: solid 2px #000;
+	border-left: solid 2px #000;
+	border-right: solid 2px #fff;
+	border-bottom: solid 2px #fff;
+	background: #D5D5D5;
+	overflow-y: scroll;
+	height: 
 `;

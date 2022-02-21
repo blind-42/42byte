@@ -5,8 +5,8 @@ import Footer from 'components/Footer/Footer';
 import PageNation from 'components/PageNation/PageNation';
 import PostPreview from 'components/Postpreview/Postpreview';
 import CommentPreview from 'components/CommentPreview/CommentPreview';
-import { AppContainer, PageContainer, TopBar, PageName, Squares } from '../../styles/styled'
-import { ContentContainer, MenuWrap, PostMenu, CommentMenu, PostContainer, Category, ContentWrap, PostWrap } from './styled'
+import { AppContainer, PageContainer, TopBar, PageName, Squares, ContentFooterWrap } from '../../styles/styled'
+import { MenuWrap, PostMenu, CommentMenu, MenuPostWrap, PostContainer, Category, ContentWrap, PostWrap } from './styled'
 import instance from 'utils/functions/axios';
 import { BoardData, ContentData} from 'utils/functions/type';
 import { useNavigate } from "react-router-dom";
@@ -95,48 +95,50 @@ function Mypage() {
 							</Link>
 						</Squares>
 					</TopBar>
-					<ContentContainer>
-						<MenuWrap>
-							<PostMenu state={pageName}>
-								<button onClick={switchToPost}>내가 쓴 글</button>
-							</PostMenu>
-							<CommentMenu state={pageName}>
-								<button onClick={switchToComment}>내가 쓴 댓글</button>
-							</CommentMenu>
-						</MenuWrap>
-						<PostContainer>
-							{pageName === 'post'
-								?	<Category state={pageName}>
-										<div></div>
-										<div>제목</div>
-										<div>조회</div>
-										<div>추천</div>
-										<div>작성일</div>
-									</Category>
-								: <Category state={pageName}>
-										<div>댓글</div>
-									</Category>
-								}
-								<ContentWrap>
-								<PostWrap>
-									{pageName === 'post'
-										?	postBoardData.contents.map((el: ContentData, idx) => {
-											return (<PostPreview key={idx} postData={el} />)
-										})
-										:	commentBoardData.contents.map((el: CommentData, idx) => {
-											return (el.content && <CommentPreview key={idx} commentData={el} />)
-										})
+					<ContentFooterWrap>
+						<MenuPostWrap>
+							<MenuWrap>
+								<PostMenu state={pageName}>
+									<button onClick={switchToPost}>내가 쓴 글</button>
+								</PostMenu>
+								<CommentMenu state={pageName}>
+									<button onClick={switchToComment}>내가 쓴 댓글</button>
+								</CommentMenu>
+							</MenuWrap>
+							<PostContainer>
+								{pageName === 'post'
+									?	<Category state={pageName}>
+											<div></div>
+											<div>제목</div>
+											<div>조회</div>
+											<div>추천</div>
+											<div>작성일</div>
+										</Category>
+									: <Category state={pageName}>
+											<div>댓글</div>
+										</Category>
 									}
-								</PostWrap>
-							</ContentWrap>
-							<PageNation 
-								curPage={currentPageNumber.page}
-								totalPages={currentPageNumber.pages}
-								pageChangeHandler={pageChangeHandler}
-							/>
-						</PostContainer>
-					</ContentContainer>
-					<Footer />
+									<ContentWrap>
+									<PostWrap>
+										{pageName === 'post'
+											?	postBoardData.contents.map((el: ContentData, idx) => {
+												return (<PostPreview key={idx} postData={el} />)
+											})
+											:	commentBoardData.contents.map((el: CommentData, idx) => {
+												return (el.content && <CommentPreview key={idx} commentData={el} />)
+											})
+										}
+									</PostWrap>
+								</ContentWrap>
+								<PageNation 
+									curPage={currentPageNumber.page}
+									totalPages={currentPageNumber.pages}
+									pageChangeHandler={pageChangeHandler}
+								/>
+							</PostContainer>
+						</MenuPostWrap>
+						<Footer />
+					</ContentFooterWrap>
 				</PageContainer>
 			</AppContainer>
 		</>

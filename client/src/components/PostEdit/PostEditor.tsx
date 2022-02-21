@@ -2,7 +2,7 @@ import { useState, useRef, useEffect } from 'react'
 import { Editor } from '@toast-ui/react-editor';
 import instance from 'utils/functions/axios';
 import { DetailData, PostData, CommentData } from 'utils/functions/type';
-import { TitleUploadWrap, EditorWrap, Title, UploadButton } from './styled'
+import { EditorContainer, TitleUploadWrap, EditorWrap, Title, UploadButton } from './styled'
 
 type PostDataType = {
   detailData? : DetailData
@@ -46,6 +46,7 @@ export default function PostEditor({detailData}: PostDataType) {
 	}
   return (
 		<>
+			<EditorContainer>
 			<TitleUploadWrap>
 				<Title>
 					<input onChange={titleHandler} type="text" placeholder='제목을 입력해 주세요.' value={title}/>
@@ -58,14 +59,15 @@ export default function PostEditor({detailData}: PostDataType) {
 				<Editor
 					initialValue={content}
 					previewStyle="tab"
-					height="80vh"
+					height="70vh"
 					initialEditType="markdown"
-					useCommandShortcut={true} 
+					useCommandShortcut={true}
 					// hooks={{addImageBlobHook: }}
 					onChange={contentHandler}
 					ref={editorRef}
 				/>
 			</EditorWrap>
+			</EditorContainer>
     </>
   )
 }
