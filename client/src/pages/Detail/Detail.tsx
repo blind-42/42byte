@@ -7,6 +7,7 @@ import Footer from 'components/Footer/Footer';
 import Comments from 'components/Comments/Comments';
 import DeleteModal from 'components/Modal/DeleteModal';
 import { DetailData, PostData, CommentData } from 'utils/functions/type';
+import { GrLike } from "react-icons/gr";
 import { AppContainer, PageContainer, TopBar, PageName, Squares } from 'styles/styled';
 import { PostContainer, DetailContainer, Title, Specific, Info, Modify, ContentWrap, LikeWrap, LikesBox
 				, CommentContainer, CommentCount, CommentInput, CommentListWrap, FLine } from './styled';
@@ -37,6 +38,7 @@ function Detail() {
 			blameCnt: 0,
 			isUsers: false,
 			isAuthor: false,
+			isLiked: false,
 			isDel: false,
 			createdDate: "",
 			modifiedDate: "",
@@ -106,15 +108,6 @@ function Detail() {
 		.catch((err) => console.log(err));
 	}
 
-  const uploadHandler = () => {
-		instance
-		.post('/post?boardId=1', { title: title, content: content })
-		.then((res) => {window.location.href=`/detail?boardId=1&postId=${res.data.id}`})
-		.catch((err) => console.log(err));
-	}
-
-
-
 	return (
 		<>
 			<AppContainer>
@@ -126,9 +119,9 @@ function Detail() {
 					<TopBar>
 						<PageName>
 							<Link to='/blindboard'>
-								<div>블라인드 게시판 </div>
+								<div>블라인드 게시판</div>
 							</Link>
-							<div> &#10095; {title}</div>
+							<div>&nbsp;&#10095; #{id}</div>
 						</PageName>
 						<Squares>
 							<div>&#9866;</div>
@@ -146,7 +139,7 @@ function Detail() {
 								<Specific>
 									<Info>
 										<div>카뎃</div>
-										<div>{shortDate} 수정됨</div>
+										<div>{shortDate} {(createdDate !== modifiedDate) && '수정됨'}</div>
 										<div>조회 {Number(viewCnt) + 1}</div>
 									</Info>
 									{isUsers &&
@@ -160,7 +153,7 @@ function Detail() {
 							</ContentWrap>}
 							<LikeWrap>
 								<LikesBox boxState={boxState} onClick={boxcolorHandler}>
-									<div>&#128077;</div>
+									<div><GrLike /></div>
 									<div>{likeCnt}</div>
 								</LikesBox>
 							</LikeWrap>
