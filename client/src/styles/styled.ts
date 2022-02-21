@@ -34,12 +34,12 @@ export const PageContainer = styled.div`
 	`}
 `;
 
-export const TopBar = styled.div`
+export const TopBar = styled.div<{err?: boolean;}>`
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
-	background: #518EDB;
 	margin-bottom: 3px;
+	background: ${(props) => props.err ? '#BF2D2D' : '#518EDB'};
 `;
 
 export const PageName = styled.div`
@@ -78,6 +78,7 @@ export const Squares = styled.div`
 		border-left: solid 2px #fff;
 		border-right: solid 2px #000;
 		border-bottom: solid 2px #000;
+		padding-bottom: 3px;
 	}
 	${({theme}) => theme.media.tablet`
 		div {
@@ -125,4 +126,66 @@ export const ContentFooterWrap = styled.div`
 	${({theme}) => theme.media.desktop`
 		grid-template-rows: 77vh 8vh;
 	`}
+`;
+
+// Error, Loading Page
+export const AlertContainer = styled.div`
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: 100vh;
+	width: 100vw;
+	background: #000;
+`;
+
+export const  AlertPageWrap = styled.div`
+	display: flex;
+	flex-direction: column;
+	align-items: stretch;
+	width: 23rem;
+	background: #C4C4C4;
+	border-top: solid 2px #fff;
+	border-left: solid 2px #fff;
+	border-right: solid 2px #000;
+	border-bottom: solid 2px #000;
+	padding: 3px;
+`;
+
+export const AlertPageName = styled.div`
+	color: #fff;
+	letter-spacing: 0.1rem; 
+	font-size: 1.2rem;
+	font-weight: 700;
+	margin: 0 1rem;
+	display: flex;
+	font-family: 'Press Start 2P', cursive;
+	div {
+		color: #fff
+	}
+	${({theme}) => theme.media.tablet`
+		font-size: 0.9rem;
+	`}
+	${({theme}) => theme.media.desktop`
+		font-size: 0.9rem;
+	`}
+`;
+
+export const AlertContentWrap = styled.div`
+	margin: 1.5rem;
+	text-align:center;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-evenly;
+`;
+
+export const AlertTextWrap = styled.div`
+	margin-top: 1.2rem;
+	line-height: 150%;
+	font-size: 0.8;
+	font-weight: 700;
+	color: #000;
+	font-family: 'Press Start 2P', cursive;
+	@media screen and (min-width: 768px) {
+		font-size: 1.1rem;
+	}
 `;
