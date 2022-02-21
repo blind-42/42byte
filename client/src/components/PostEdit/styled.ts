@@ -2,18 +2,20 @@ import styled from 'styled-components';
 
 export const EditorContainer = styled.div`
 	display: grid;
-	grid-template-rows: 3rem auto;
+	grid-template-rows: 3.5rem auto;
 	${({theme}) => theme.media.tablet`
-		grid-template-rows: 2rem auto;
+		grid-template-rows: 2.5rem auto;
 	`}
 	${({theme}) => theme.media.desktop`
-		grid-template-rows: 2rem auto;
+		grid-template-rows: 2.5rem auto;
 	`}
 `;
 
 export const TitleUploadWrap = styled.div`
+	align-self: center;
 	display: flex;
 	justify-content: space-between;
+	margin-bottom: 3px;
 `;
 
 export const Title = styled.div`
@@ -22,7 +24,6 @@ export const Title = styled.div`
 		background: #D5D5D5;
 		height: 3rem;
 		width: 20rem;
-		margin: 3px 3px 6px 0;
 		border-top: solid 2px #000;
 		border-left: solid 2px #000;
 		border-right: solid 2px #fff;
@@ -56,7 +57,6 @@ export const UploadButton = styled.div`
 		font-weight: 700;
 		height: 3rem;
 		width: 5rem;
-		margin: 3px 3px 6px 3px;
 		border-top: solid 2px #fff;
 		border-left: solid 2px #fff;
 		border-right: solid 2px #000;
