@@ -48,6 +48,7 @@ function Detail() {
 	const [comment, setComment] = useState<string>('');
 	const [openPostDelModal, setOpenPostDelModal] = useState<boolean>(false);
   const [isEdit, setIsEdit] = useState(false)
+  const [reRender, setReRender] = useState(false)
 	const currentUrl = window.location.href;
 	const urlId = currentUrl.split('detail?boardId=1&postId=')[1];
 
@@ -55,9 +56,10 @@ function Detail() {
 		instance.get(`/post?boardId=1&postId=${urlId}`)
 		.then((res) => {
 			setDetailData(res.data);
+      setCommentData(res.data.comment)
 		})
 		.catch((err) => console.log(err));
-	},[boxState])
+	},[boxState, reRender])
 
 	useEffect(() => {
 		instance.get(`/mypage/post/like`)
@@ -68,7 +70,8 @@ function Detail() {
 	},[])
 	
 	const { id, title, content, commentCnt, viewCnt, likeCnt, isUsers, isNotice, blameCnt, createdDate, modifiedDate } = detailData.post
-	const commentData: CommentData[]= detailData.comment;
+	// const commentData: CommentData[]= detailData.comment;
+  const [commentData, setCommentData] = useState([])
 	const shortDate = createdDate?.slice(0, 16).replace('T', ' ');
 	const commentsUserList = Array.from(new Set(commentData.filter((el:CommentData) => !el.isAuthor).map((el:CommentData) => el.authorId)));
 
@@ -92,7 +95,8 @@ function Detail() {
 		.post(`/comment?boardId=1&postId=${urlId}`, {content: comment})
 		.then(() => {
 			setComment('');
-			window.location.reload();
+			// window.location.reload();
+      setReRender(!reRender)
 		})
 		.catch((err) => console.log(err));
 	}
@@ -107,6 +111,8 @@ function Detail() {
 		.then(() => {window.location.href = '/blindboard?page=1'})
 		.catch((err) => console.log(err));
 	}
+
+
 
 	return (
 		<>
@@ -161,7 +167,7 @@ function Detail() {
 								<CommentContainer>
 									<CommentCount>댓글 {commentCnt}</CommentCount>
 									<CommentInput>
-										<textarea placeholder='댓글을 입력하세요.' onChange={inputCmmtHandler} maxLength={300}></textarea>
+										<textarea placeholder='댓글을 입력하세요.' onChange={inputCmmtHandler} maxLength={300} value={comment}></textarea>
 										<div>
 											<span>{comment.length} / 300</span>
 											<input type='button' value='등록' onClick={sendCmmtHandler}/>
@@ -169,8 +175,8 @@ function Detail() {
 									</CommentInput>
 									<FLine />
 									<CommentListWrap>
-										{commentData.map((el: CommentData, idx) => {
-											return (<Comments key={idx} comment={el}
+										{commentData.map((el: CommentData) => {
+											return (<Comments key={el.id} comment={el} setReRender={setReRender}
 																									commentsUserList={commentsUserList} />)
 										})}
 									</CommentListWrap>
