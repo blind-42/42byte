@@ -7,22 +7,20 @@ import { GrLike } from "react-icons/gr";
 import { CommentWrap, ModifyCommentWrap, CommentTop, Info, Modify, Content, 
 				LikesBox, GLine, FLine } from './styled'
 import { CommentInput } from 'pages/Detail/styled'
+import React from 'react';
 
 type GreetingProps = {
 	comment: CommentData
 	commentsUserList: number[]
+  setReRender: React.Dispatch<React.SetStateAction<boolean>>
 }
 
-function Comments({comment, commentsUserList}: GreetingProps) {
+function Comments({comment, commentsUserList, setReRender}: GreetingProps) {
 	const { boardId, postId, id, authorId, content, likeCnt, blameCnt, isUsers, isAuthor, isLiked, isDel, createdDate, modifiedDate } = comment;
-	const [boxState, setBoxState] = useState<boolean>(false);
+	const [boxState, setBoxState] = useState<boolean>(isLiked);
 	const [openCmmtDelModal, setOpenCmmtDelModal] = useState<boolean>(false);
 	const [modifyState, setModifyState] = useState<boolean>(false);
 	const [modifyCmmt, setModifyCmmt] = useState<string>(content);
-
-  useEffect(() => {
-    setBoxState(isLiked)
-  }, [comment])
 
 	const clickCmmtDelModalHandler = () => {
 		setOpenCmmtDelModal(!openCmmtDelModal);
@@ -39,22 +37,30 @@ function Comments({comment, commentsUserList}: GreetingProps) {
 	const boxcolorHandler = () => {
 		instance
 		.post(`/comment/like?postId=${postId}&commentId=${id}`)
-		.then(() => setBoxState(!boxState))
-		.then(() =>window.location.href = `/detail?boardId=${boardId}&postId=${postId}`)
+		.then(() => {
+      setBoxState(!boxState)
+      setReRender(prev => !prev)
+    })
 		.catch((err) => console.log(err));
 	}
 	
 	const deleteCmmtHandler = () => {
 		instance
 		.delete(`/comment?commentId=${id}`)
-		.then(() => {window.location.href = `/detail?boardId=${boardId}&postId=${postId}`})
+    .then(() => {
+      setOpenCmmtDelModal(!openCmmtDelModal);
+      setReRender(prev => !prev)
+    })
 		.catch((err) => console.log(err));
 	}
 
 	const sendModifyCmmtHandler = () => {
 		instance
 		.put(`/comment?commentId=${id}`, {content: modifyCmmt})
-		.then(() => {window.location.href = `/detail?boardId=${boardId}&postId=${postId}`})
+    .then(() => {
+      setModifyState(!modifyState);
+      setReRender(prev => !prev)
+    })
 		.catch((err) => console.log(err));
 	}
 
