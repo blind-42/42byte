@@ -58,6 +58,7 @@ function Detail() {
 		.then((res) => {
 			setDetailData(res.data);
       setCommentData(res.data.comment)
+      setCommentsUserList(Array.from(new Set(res.data.comment.filter((el:CommentData) => !el.isAuthor).map((el:CommentData) => el.authorId))))
 		})
 		.catch((err) => console.log(err));
 	},[boxState, reRender])
@@ -73,11 +74,12 @@ function Detail() {
 	const { id, title, content, commentCnt, viewCnt, likeCnt, isUsers, isNotice, blameCnt, createdDate, modifiedDate } = detailData.post
   const [commentData, setCommentData] = useState([])
 	const shortDate = createdDate?.slice(0, 16).replace('T', ' ');
-	const commentsUserList = Array.from(new Set(commentData.filter((el:CommentData) => !el.isAuthor).map((el:CommentData) => el.authorId)));
+  const [commentsUserList, setCommentsUserList] = useState([-1])
+
 
 	const inputCmmtHandler = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
 		setComment(e.target.value);
-	}
+  }
 
 	const clickPostDelModalHandler = () => {
 		setOpenPostDelModal(!openPostDelModal);
