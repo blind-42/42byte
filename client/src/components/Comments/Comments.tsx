@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import instance from 'utils/functions/axios';
 import DeleteModal from 'components/Modal/DeleteModal';
 import { CommentData } from 'utils/functions/type';
@@ -21,6 +21,7 @@ function Comments({comment, commentsUserList, setReRender}: GreetingProps) {
 	const [openCmmtDelModal, setOpenCmmtDelModal] = useState<boolean>(false);
 	const [modifyState, setModifyState] = useState<boolean>(false);
 	const [modifyCmmt, setModifyCmmt] = useState<string>(content);
+
 
 	const clickCmmtDelModalHandler = () => {
 		setOpenCmmtDelModal(!openCmmtDelModal);
@@ -120,4 +121,4 @@ function Comments({comment, commentsUserList, setReRender}: GreetingProps) {
 	);
 }
 
-export default Comments
+export default React.memo(Comments)
