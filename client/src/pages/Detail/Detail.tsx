@@ -51,6 +51,7 @@ function Detail() {
   const [reRender, setReRender] = useState(false)
 	const currentUrl = window.location.href;
 	const urlId = currentUrl.split('detail?boardId=1&postId=')[1];
+  const scrollRef = useRef<any>(null)
 
 	useEffect(() => {
 		instance.get(`/post?boardId=1&postId=${urlId}`)
@@ -70,7 +71,6 @@ function Detail() {
 	},[])
 	
 	const { id, title, content, commentCnt, viewCnt, likeCnt, isUsers, isNotice, blameCnt, createdDate, modifiedDate } = detailData.post
-	// const commentData: CommentData[]= detailData.comment;
   const [commentData, setCommentData] = useState([])
 	const shortDate = createdDate?.slice(0, 16).replace('T', ' ');
 	const commentsUserList = Array.from(new Set(commentData.filter((el:CommentData) => !el.isAuthor).map((el:CommentData) => el.authorId)));
@@ -95,8 +95,8 @@ function Detail() {
 		.post(`/comment?boardId=1&postId=${urlId}`, {content: comment})
 		.then(() => {
 			setComment('');
-			// window.location.reload();
       setReRender(!reRender)
+      setTimeout(() => scrollRef.current.scrollIntoView({behavior: "smooth", block: "end", inline: "nearest"}), 550)
 		})
 		.catch((err) => console.log(err));
 	}
@@ -111,6 +111,7 @@ function Detail() {
 		.then(() => {window.location.href = '/blindboard?page=1'})
 		.catch((err) => console.log(err));
 	}
+
 
 
 
@@ -182,6 +183,7 @@ function Detail() {
 									</CommentListWrap>
 								</CommentContainer>
 							</DetailContainer>}
+              <div ref={scrollRef}/>
 						</PostContainer>
 						<Footer />
 					</ContentFooterWrap>
