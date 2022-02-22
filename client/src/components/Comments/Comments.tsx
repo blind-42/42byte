@@ -15,11 +15,14 @@ type GreetingProps = {
 
 function Comments({comment, commentsUserList}: GreetingProps) {
 	const { boardId, postId, id, authorId, content, likeCnt, blameCnt, isUsers, isAuthor, isLiked, isDel, createdDate, modifiedDate } = comment;
-	const [boxState, setBoxState] = useState<boolean>(isLiked);
+	const [boxState, setBoxState] = useState<boolean>(false);
 	const [openCmmtDelModal, setOpenCmmtDelModal] = useState<boolean>(false);
 	const [modifyState, setModifyState] = useState<boolean>(false);
 	const [modifyCmmt, setModifyCmmt] = useState<string>(content);
-	console.log(comment)
+
+  useEffect(() => {
+    setBoxState(isLiked)
+  }, [comment])
 
 	const clickCmmtDelModalHandler = () => {
 		setOpenCmmtDelModal(!openCmmtDelModal);
