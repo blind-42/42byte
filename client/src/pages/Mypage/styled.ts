@@ -1,22 +1,20 @@
 import styled from 'styled-components';
 
-export const ContentContainer = styled.div`
-	display: flex;
-	flex-direction: column;
-	align-items: stretch;
-	background: #C4C4C4;
-	@media screen and (min-width: 768px) {
-	}
+export const MenuPostWrap = styled.div`
+	display: grid;
+	grid-template-rows: 2.5rem auto;
+	${({theme}) => theme.media.tablet`
+		grid-template-rows: 1.8rem auto;
+	`}
+	${({theme}) => theme.media.desktop`
+		grid-template-rows: 1.8rem auto;
+	`}
 `;
 
 export const MenuWrap = styled.div`
 	background: #C4C4C4;
 	display: flex;
 	align-items: center;
-	margin: 3px 0;
-	@media screen and (min-width: 768px) {
-		margin: 0;
-	}
 `;
 
 export const PostMenu = styled.div<{state?: string;}>`
@@ -27,14 +25,23 @@ export const PostMenu = styled.div<{state?: string;}>`
 		border-right: solid 2px ${(props) => props.state === 'post' ? '#fff' : '#C4C4C4'};
 		border-bottom: solid 2px ${(props) => props.state === 'post' ? '#fff' : '#C4C4C4'};
 		font-size: 1.2rem;
-		padding: 0.2rem 1.2rem;
+		width: 8rem;
+		height: 2.3rem;
 	}
-	@media screen and (min-width: 768px) {
+	${({theme}) => theme.media.tablet`
 		button {
 			font-size: 0.9rem;
-			padding: 0.1rem 1rem;
+			width: 6rem;
+			height: 1.6rem;
 		}
-	}
+	`}
+	${({theme}) => theme.media.desktop`
+		button {
+			font-size: 0.9rem;
+			width: 6rem;
+			height: 1.6rem;
+		}
+	`}
 `;
 
 export const CommentMenu = styled.div<{state?: string;}>`
@@ -45,31 +52,35 @@ export const CommentMenu = styled.div<{state?: string;}>`
 		border-right: solid 2px ${(props) => props.state === 'comment' ? '#fff' : '#C4C4C4'};
 		border-bottom: solid 2px ${(props) => props.state === 'comment' ? '#fff' : '#C4C4C4'};
 		font-size: 1.2rem;
-		padding: 0.2rem 1.2rem;
+		width: 8rem;
+		height: 2.3rem;
 	}
-	@media screen and (min-width: 768px) {
+	${({theme}) => theme.media.tablet`
 		button {
 			font-size: 0.9rem;
-			padding: 0.1rem 1rem;
+			width: 6rem;
+			height: 1.6rem;
 		}
+	`}
+	${({theme}) => theme.media.desktop`
+		button {
+			font-size: 0.9rem;
+			width: 6rem;
+			height: 1.6rem;
+		}
+	`}
 `;
+
 
 export const PostContainer = styled.div`
 	overflow-y: scroll;
 	background: #C4C4C4;
-	display: flex;
-	flex-direction: column;
-	align-items: stretch;
 	border-top: solid 2px #000;
 	border-left: solid 2px #000;
 	border-right: solid 2px #fff;
 	border-bottom: solid 2px #fff;
 	margin: 3px 0;
 	padding: 3px;
-	height: 75vh;
-	@media screen and (min-width: 768px) {
-		height: 70vh;
-	}
 `;
 
 export const Category = styled.div<{state?: string;}>`
@@ -82,10 +93,14 @@ export const Category = styled.div<{state?: string;}>`
 	div {
 		place-self: center center;
 	}
-	@media screen and (min-width: 768px) {
+	${({theme}) => theme.media.tablet`
 		font-size: 0.9rem;
 		height: 2.2rem;
-	}
+	`}
+	${({theme}) => theme.media.desktop`
+		font-size: 0.9rem;
+		height: 2.2rem;
+	`}
 `;
 
 export const ContentWrap = styled.div`

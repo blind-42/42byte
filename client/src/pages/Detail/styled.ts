@@ -10,9 +10,7 @@ export const PostContainer = styled.div`
 	border-right: solid 2px #fff;
 	border-bottom: solid 2px #fff;
 	padding: 0.3rem;
-	height: 85vh;
 	background: #D5D5D5;
-
 `;
 
 export const DetailContainer = styled.div`
@@ -26,9 +24,12 @@ export const Title = styled.div`
 	font-weight: 600;
 	color: #000;
 	padding: 0 0.3rem;
-	@media screen and (min-width: 768px) {
+	${({theme}) => theme.media.tablet`
 		font-size: 1.2rem;
-	}
+	`}
+	${({theme}) => theme.media.desktop`
+		font-size: 1.2rem;
+	`}
 `;
 
 export const Specific = styled.div`
@@ -37,9 +38,12 @@ export const Specific = styled.div`
 	padding: 0.3rem;
 	border-bottom: solid 2px #929191;
 	font-size: 1.1rem;
-	@media screen and (min-width: 768px) {
+	${({theme}) => theme.media.tablet`
 		font-size: 0.8rem;
-	}
+	`}
+	${({theme}) => theme.media.desktop`
+		font-size: 0.8rem;
+	`}
 `;
 
 export const Info = styled.div`
@@ -50,6 +54,7 @@ export const Info = styled.div`
 `;
 
 export const Modify = styled.div`
+	cursor: pointer;
 	display: flex;
 	div {
 		margin-left: 1rem;
@@ -61,9 +66,12 @@ export const ContentWrap = styled.div`
 	padding: 1.5rem;
 	font-size: 1.2rem;
 	color: #000;
-	@media screen and (min-width: 768px) {
+	${({theme}) => theme.media.tablet`
 		font-size: 0.9rem;
-	}
+	`}
+	${({theme}) => theme.media.desktop`
+		font-size: 0.9rem;
+	`}
 `;
 
 export const LikeWrap = styled.div`
@@ -78,23 +86,35 @@ export const LikesBox = styled.div<{boxState?: boolean;}>`
 	justify-content: space-evenly;
 	align-items: center;
 	margin: 2rem 0;
-	border: solid 2px ${(props) => props.boxState ? 'red' : 'gray'};
+	border: solid 2px #518EDB;
 	width: 6rem;
 	height: 3.5rem;
 	font-size: 1.2rem;
 	font-weight: 700;
-	color: ${(props) => props.boxState ? 'red' : 'gray'};
-	div:nth-child(1) {
-		font-size: 2rem;
+	color: ${(props) => props.boxState ? '#fff' : '#518EDB'};
+	background: ${(props) => props.boxState && '#518EDB' };
+	svg path {
+    stroke: ${(props) => props.boxState ? '#fff' : '#518EDB'};
 	}
-	@media screen and (min-width: 768px) {
+	div:nth-child(1) {
+		font-size: 1.8rem;
+	}
+	${({theme}) => theme.media.tablet`
 		width: 5rem;
 		height: 3rem;
 		font-size: 1rem;
 		div:nth-child(1) {
 			font-size: 1.5rem;
 		}
-	}
+	`}
+	${({theme}) => theme.media.desktop`
+		width: 5rem;
+		height: 3rem;
+		font-size: 1rem;
+		div:nth-child(1) {
+			font-size: 1.5rem;
+		}
+	`}
 `;
 
 export const CommentContainer = styled.div`
@@ -107,9 +127,12 @@ export const CommentCount = styled.div`
 	font-size: 1.2rem;
 	font-weight: 600;
 	color: black;
-	@media screen and (min-width: 768px) {
+	${({theme}) => theme.media.tablet`
 		font-size: 0.9rem;
-	}
+	`}
+	${({theme}) => theme.media.desktop`
+		font-size: 0.9rem;
+	`}
 `;
 
 
@@ -140,19 +163,20 @@ export const CommentInput = styled.div`
 			padding: 0 2px;
 		}
 		input {
+			cursor: pointer;
 			background: #518EDB;
 			border-top: solid 2px #fff;
 			border-left: solid 2px #fff;
 			border-right: solid 2px #000;
 			border-bottom: solid 2px #000;
-			padding: 0.3 1.3rem;
+			padding: 0.2rem 0.8rem;
 			font-size: 1.2rem;
 			font-weight: 700;
 			letter-spacing: 0.2rem;
 			color: #fff;
 		}
-}
-	@media screen and (min-width: 768px) {
+	}
+	${({theme}) => theme.media.tablet`
 		textarea {
 			font-size: 0.9rem;
 		}
@@ -165,7 +189,21 @@ export const CommentInput = styled.div`
 				font-size: 1rem;
 			}
 		}
-	}
+	`}
+	${({theme}) => theme.media.desktop`
+		textarea {
+			font-size: 0.9rem;
+		}
+		div {
+			font-size: 1rem;
+			span {
+				font-size: 0.8rem;
+			}
+			input {
+				font-size: 1rem;
+			}
+		}
+	`}
 `;
 
 export const FLine = styled.div`

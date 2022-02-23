@@ -18,16 +18,13 @@ export const ModalContainer = styled.div`
 	display: flex;
 	flex-direction: column;
 	align-items: stretch;
-	width: 35vh;
+	width: 23rem;
 	background: #C4C4C4;
 	border-top: solid 2px #fff;
 	border-left: solid 2px #fff;
 	border-right: solid 2px #000;
 	border-bottom: solid 2px #000;
 	padding: 3px;
-	@media screen and (min-width: 768px) {
-		width: 45vh;
-	}
 `;
 
 export const ContentContainer = styled.div`
@@ -50,9 +47,12 @@ export const TextWrap = styled.div`
 	font-size: 1.3rem;
 	font-weight: 600;
 	color: #000;
-	@media screen and (min-width: 768px) {
+	${({theme}) => theme.media.tablet`
 		font-size: 1.2rem;
-	}
+	`}
+	${({theme}) => theme.media.desktop`
+		font-size: 1.2rem;
+	`}
 `;
 
 export const Buttons = styled.div`

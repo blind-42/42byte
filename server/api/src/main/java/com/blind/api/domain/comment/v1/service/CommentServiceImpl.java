@@ -28,7 +28,7 @@ public class CommentServiceImpl implements CommentService{
 
     @Override
     @Transactional
-    public Comment update(Comment comment, String content) {
+    public void update(Comment comment, String content) {
         comment.setContent(content);
         commentRepository.saveAndFlush(comment);
         return comment;

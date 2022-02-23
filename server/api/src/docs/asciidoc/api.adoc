@@ -143,6 +143,19 @@ include::{snippets}/search-posts/http-response.adoc[]
 === response-body
 include::{snippets}/search-posts/response-body.adoc[]
 
+== 내가 쓴 게시글
+=== curl-request
+include::{snippets}/post-mypage/curl-request.adoc[]
+
+=== http-request
+include::{snippets}/post-mypage/http-request.adoc[]
+
+=== http-response
+include::{snippets}/post-mypage/http-response.adoc[]
+
+=== response-body
+include::{snippets}/post-mypage/response-body.adoc[]
+
 == 댓글 작성
 === curl-request
 include::{snippets}/comment-save/curl-request.adoc[]
@@ -191,7 +204,7 @@ include::{snippets}/comment-delete/request-body.adoc[]
 === response-body
 include::{snippets}/comment-delete/response-body.adoc[]
 
-== 내가 쓴 게시글
+== 내가 쓴 댓글
 === curl-request
 include::{snippets}/comment-mypage/curl-request.adoc[]
 

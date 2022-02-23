@@ -1,30 +1,27 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import instance from 'utils/functions/axios';
 import DeleteModal from 'components/Modal/DeleteModal';
 import { CommentData } from 'utils/functions/type';
+import { timeForToday } from 'utils/functions/functions';
+import { GrLike } from "react-icons/gr";
 import { CommentWrap, ModifyCommentWrap, CommentTop, Info, Modify, Content, 
 				LikesBox, GLine, FLine } from './styled'
 import { CommentInput } from 'pages/Detail/styled'
+import React from 'react';
 
 type GreetingProps = {
 	comment: CommentData
 	commentsUserList: number[]
+  setReRender: React.Dispatch<React.SetStateAction<boolean>>
 }
 
-function Comments({comment, commentsUserList}: GreetingProps) {
-	const { boardId, postId, id, authorId, content, likeCnt, blameCnt, isUsers, isAuthor, isDel, createdDate, modifiedDate } = comment;
-	const [boxState, setBoxState] = useState<boolean>(false);
+function Comments({comment, commentsUserList, setReRender}: GreetingProps) {
+	const { boardId, postId, id, authorId, content, likeCnt, blameCnt, isUsers, isAuthor, isLiked, isDel, createdDate, modifiedDate } = comment;
+	const [boxState, setBoxState] = useState<boolean>(isLiked);
 	const [openCmmtDelModal, setOpenCmmtDelModal] = useState<boolean>(false);
 	const [modifyState, setModifyState] = useState<boolean>(false);
 	const [modifyCmmt, setModifyCmmt] = useState<string>(content);
 
-	useEffect(() => {
-		instance.get(`/mypage/comment/like`)
-		.then((res) => {
-			setBoxState(res.data.contents.map((el: CommentData) => el.id).indexOf(Number(id)) !== -1)
-		})
-		.catch((err) => console.log(err));
-	},[])
 
 	const clickCmmtDelModalHandler = () => {
 		setOpenCmmtDelModal(!openCmmtDelModal);
@@ -41,22 +38,30 @@ function Comments({comment, commentsUserList}: GreetingProps) {
 	const boxcolorHandler = () => {
 		instance
 		.post(`/comment/like?postId=${postId}&commentId=${id}`)
-		.then(() => setBoxState(!boxState))
-		.then(() => window.location.reload())
+		.then(() => {
+      setBoxState(!boxState)
+      setReRender(prev => !prev)
+    })
 		.catch((err) => console.log(err));
 	}
 	
 	const deleteCmmtHandler = () => {
 		instance
 		.delete(`/comment?commentId=${id}`)
-		.then(() => {window.location.href = `/detail?boardId=${boardId}&postId=${postId}`})
+    .then(() => {
+      setOpenCmmtDelModal(!openCmmtDelModal);
+      setReRender(prev => !prev)
+    })
 		.catch((err) => console.log(err));
 	}
 
 	const sendModifyCmmtHandler = () => {
 		instance
-		.put(`/comment?commentId=${id}`)
-		.then(() => {window.location.href = `/detail?boardId=${boardId}&postId=${postId}`})
+		.put(`/comment?commentId=${id}`, {content: modifyCmmt})
+    .then(() => {
+      setModifyState(!modifyState);
+      setReRender(prev => !prev)
+    })
 		.catch((err) => console.log(err));
 	}
 
@@ -93,7 +98,7 @@ function Comments({comment, commentsUserList}: GreetingProps) {
 						{isAuthor ? <h3>작성자</h3>
 							: isUsers ? <h3><u>카뎃 {commentsUserList.indexOf(authorId)+1}</u></h3>
 							: <h3>카뎃 {commentsUserList.indexOf(authorId)+1}</h3>}
-						<div>{createdDate?.slice(5, 10)}</div>
+						<div>{timeForToday(createdDate)} {(createdDate !== modifiedDate) && '수정됨'}</div>
 					</Info>
 					{(isUsers && !isDel) && <Modify>
 						<div onClick={modifyHandler}>수정</div>
@@ -104,10 +109,10 @@ function Comments({comment, commentsUserList}: GreetingProps) {
 					{isDel? <div className='isDel'>&#9986; 삭제된 댓글 입니다.</div> 
 								: <div>{content}</div>}
 				</Content>
-					{!isUsers && <LikesBox boxState={boxState} onClick={boxcolorHandler}>
-						<div>&#128077;</div>
+					<LikesBox boxState={boxState} onClick={boxcolorHandler}>
+						<div><GrLike /></div>
 						<div>{likeCnt}</div>
-					</LikesBox>}
+					</LikesBox>
 			</CommentWrap>
 			}
 			<GLine/>
@@ -116,4 +121,4 @@ function Comments({comment, commentsUserList}: GreetingProps) {
 	);
 }
 
-export default Comments
+export default React.memo(Comments)

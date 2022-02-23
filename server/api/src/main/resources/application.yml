@@ -1,14 +1,14 @@
 spring:
   # 데이터 소스 설정
   datasource:
+#    url: jdbc:mysql://localhost:3306/TEST?serverTimezone=Asia/Seoul&characterEncoding=UTF-8
+#    driverClassName: com.mysql.cj.jdbc.Driver
+#    username: root
+#    password: blind42blind42
     url: jdbc:mysql://172.27.0.52:3306/TEST?serverTimezone=Asia/Seoul&characterEncoding=UTF-8
     driverClassName: com.mysql.cj.jdbc.Driver
     username: root
     password: Blind$242
-#    url: jdbc:mysql://172.27.0.52:3306/TEST?serverTimezone=Asia/Seoul&characterEncoding=UTF-8
-#    driverClassName: com.mysql.cj.jdbc.Driver
-#    username: root
-#    password: Blind$242
 
   jpa:
   # JPA 설정

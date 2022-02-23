@@ -1,4 +1,5 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { QueryClient, QueryClientProvider } from 'react-query'
 import { RecoilRoot } from 'recoil';
 import Main from './pages/Main/Main';
 import Login from './pages/Login/Login';
@@ -11,10 +12,13 @@ import Error from './pages/Error/Error';
 import Loading from './pages/Loading/Loading';
 import { GlobalStyle } from './styles/global-style';
 
+const queryClient = new QueryClient();
+
 function App() {
 
   return (
     <>
+		<QueryClientProvider client={queryClient}>
 			<RecoilRoot>
 				<GlobalStyle />
 					<Router>
@@ -31,6 +35,7 @@ function App() {
 						</Routes>
 					</Router>
 			</RecoilRoot>
+			</QueryClientProvider>
     </>
   );
 }
