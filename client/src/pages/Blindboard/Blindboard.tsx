@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
+import { useQuery } from 'react-query';
 import { Link, useNavigate } from 'react-router-dom';
 import Header from 'components/Header/Header';
 import Footer from 'components/Footer/Footer';
@@ -8,6 +9,8 @@ import instance from 'utils/functions/axios';
 import { AppContainer, PageContainer, TopBar, PageName, Squares, ContentFooterWrap, Category } from 'styles/styled';
 import { PostContainer, PostWrap, ContentWrap } from './styled';
 import { BoardData, ContentData} from 'utils/functions/type';
+import Loading from 'pages/Loading/Loading';
+import Error from 'pages/Error/Error';
 
 function Blindboard() {
 	const [boardData, setBoardData] = useState({contents: [], page: 0, pages: 0});
@@ -16,16 +19,24 @@ function Blindboard() {
 	const urlId = currentUrl.split('blindboard?page=')[1];
 	const navigate = useNavigate();
 
-	useEffect(() => {
-		instance
-		.get(`/board?boardId=1&page=${urlId}`)
-		.then((res) => {setBoardData(res.data)})
-		.catch((err) => console.log(err));
-	}, [window.location.href])
+	const { isLoading, error, data } = useQuery(['blindboard_key'], 
+																			() => {instance.get(`/board?boardId=1&page=${urlId}`).then((res) => {setBoardData(res.data);})},
+																			{retry: 0});
+
+	// useEffect(() => {
+	// 	instance
+	// 	.get(`/board?boardId=1&page=${urlId}`)
+	// 	.then((res) => {setBoardData(res.data)})
+	// 	.catch((err) => console.log(err));
+	// }, [window.location.href])
 
 	const pageChangeHandler = (page: number) => {
 		navigate(`/blindboard?page=${page}`)
   };
+
+	if (isLoading) return <Loading />
+
+	if (error) return <Error />
 
 	return (
 		<>
