@@ -30,6 +30,13 @@ bootJar {
 	}
 }
 
+/* War 생성 오류로 인한 설정값 추가
+* Unable to find a single main class from the following candidates [com.blind.api.ApiApplication, com.blind.api.ApiApplication 4, com.blind.api.ApiApplication 3, com.blind.api.ApiApplication 2]
+* */
+springBoot {
+	mainClass = "com.blind.api.ApiApplication"
+}
+
 /* War 생성 - BootWar*/
 bootWar {
 	archivesBaseName = 'api'

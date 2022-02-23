@@ -2,13 +2,11 @@ package com.blind.api.domain.board.v1.service;
 
 import com.blind.api.domain.board.v1.domain.Board;
 import com.blind.api.domain.board.v1.repository.BoardRepository;
-import com.blind.api.global.exception.ApiException;
-import com.blind.api.global.exception.entity.ExceptionCode;
+import com.blind.api.global.exception.BusinessException;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.util.Optional;
 
 @Service
 @AllArgsConstructor
@@ -24,12 +22,12 @@ public class BoardServiceImpl implements BoardService{
     @Override
     @Transactional
     public Board findById(Long boardId) {
-        return boardRepository.findById(boardId).orElseThrow(RuntimeException::new);
+        return boardRepository.findById(boardId).orElseThrow(() -> new BusinessException("{board.notfound}"));
     }
 
     @Override
     @Transactional
     public Board findByName(String name) {
-        return boardRepository.findBoardByName(name).orElseThrow(RuntimeException::new);
+        return boardRepository.findBoardByName(name).orElseThrow(() -> new BusinessException("{board.notfound}"));
     }
 }

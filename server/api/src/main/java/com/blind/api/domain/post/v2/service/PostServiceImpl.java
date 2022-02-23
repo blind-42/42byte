@@ -8,6 +8,7 @@ import com.blind.api.domain.post.v2.dto.PostResponseDTO;
 import com.blind.api.domain.post.v2.repository.PostRepository;
 import com.blind.api.domain.user.v2.domain.User;
 import com.blind.api.domain.user.v2.service.UserService;
+import com.blind.api.global.exception.BusinessException;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -42,7 +43,7 @@ public class PostServiceImpl implements PostService {
     @Override
     @Transactional
     public Post findById(Long postId){
-        return postRepository.findById(postId).orElseThrow(RuntimeException::new);
+        return postRepository.findById(postId).orElseThrow(() -> new BusinessException("{post.notfound}"));
     }
 
     @Override

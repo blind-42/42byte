@@ -1,76 +1,90 @@
 package com.blind.api.global.exception.handler;
 
-import com.blind.api.global.exception.entity.ExceptionEntity;
-import com.blind.api.global.exception.entity.ExceptionCode;
+import com.blind.api.global.exception.BusinessException;
+import com.blind.api.global.exception.entity.ExceptionReponse;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.MessageSource;
-import org.springframework.core.annotation.Order;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.BindingResult;
-import org.springframework.validation.FieldError;
+import org.springframework.validation.BindException;
+import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.validation.Configuration;
+import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
 import java.util.Locale;
-import java.util.NoSuchElementException;
-import java.util.Set;
 
 @Slf4j
 @RestControllerAdvice
 @AllArgsConstructor
 public class ControllerExceptionAdvice {
     private final MessageSource messageSource;
-    //@ExceptionHandler(RuntimeException.class)
-    public ResponseEntity<ExceptionEntity> exceptionHandler(HttpServletRequest request, RuntimeException e) {
-        if (e instanceof NoSuchElementException)
-            return ResponseEntity.status(400).body(ExceptionEntity.builder()
-                    .code(ExceptionCode.ENTITY_NOT_FOUND.getCode())
-                    .message(ExceptionCode.ENTITY_NOT_FOUND.getMessage()).build());
-              /*  .status(e.getError().getStatus())
-                .body(ApiExceptionEntity.builder()
-                        .errorCode(e.getError().getCode())
-                        .errorMessage(e.getError().getMessage())
-                        .build());*/
-        log.info(e.getMessage());
-        return null;
-    }
-
-    @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ResponseEntity<ExceptionEntity> exceptionHandler(MethodArgumentNotValidException ex) {
-        BindingResult bindingResult = ex.getBindingResult();
-        String message = bindingResult.getFieldError().getDefaultMessage();
-        log.info(message);
-        return getResponseEntity(message);
-    }
 
     @ExceptionHandler(ConstraintViolationException.class)
-    public ResponseEntity<ExceptionEntity> exceptionHandler(ConstraintViolationException ex) {
-        Set<ConstraintViolation<?>> constraintViolations = ex.getConstraintViolations();
-
+    public ResponseEntity<ExceptionReponse> constraintViolationExceptionHandle(ConstraintViolationException ex) {
+        log.info("ConstraintViolationException", ex);
         for (ConstraintViolation<?> violation : ex.getConstraintViolations()) {
             String message = messageSource.getMessage(filter(violation.getMessage()), null, Locale.KOREA);
-            return getResponseEntity(message);
+            ExceptionReponse response = ExceptionReponse.from("E0001", message);
+            return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
         }
         return null;
     }
 
-    private ResponseEntity<ExceptionEntity> getResponseEntity(String message){
-        return ResponseEntity.status(400).body(ExceptionEntity.builder()
-                .code(ExceptionCode.ENTITY_NOT_FOUND.getCode())
-                .message(message)
-                .build());
+    /**
+     * enum type 일치하지 않아 binding 못할 경우 발생
+     * 주로 @RequestParam enum으로 binding 못했을 경우 발생
+     */
+    @ExceptionHandler(MethodArgumentTypeMismatchException.class)
+    protected ResponseEntity<ExceptionReponse> methodArgumentTypeMismatchExceptionHandle(MethodArgumentTypeMismatchException ex) {
+        log.error("MethodArgumentTypeMismatchException", ex);
+        ExceptionReponse response = ExceptionReponse.from("E0001", "잘못된 요청입니다");
+        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+    }
+
+    /**
+     *  javax.validation.Valid or @Validated 으로 binding error 발생시 발생한다.
+     *  HttpMessageConverter 에서 등록한 HttpMessageConverter binding 못할경우 발생
+     *  주로 @RequestBody, @RequestPart 어노테이션에서 발생
+     */
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    protected ResponseEntity<ExceptionReponse> methodArgumentNotValidExceptionHandle(MethodArgumentNotValidException ex) {
+        log.info("MethodArgumentNotValidException", ex);
+        ExceptionReponse response = ExceptionReponse.from("E0001", ex);
+        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+    }
+
+    /**
+     * 지원하지 않은 HTTP method 호출 할 경우 발생
+     */
+    @ExceptionHandler(HttpRequestMethodNotSupportedException.class)
+    protected ResponseEntity<ExceptionReponse> httpRequestMethodNotSupportedExceptionHandle(HttpRequestMethodNotSupportedException ex) {
+        log.error("HttpRequestMethodNotSupportedException", ex);
+        ExceptionReponse response = ExceptionReponse.from("405");
+        return new ResponseEntity<>(response, HttpStatus.METHOD_NOT_ALLOWED);
+    }
+
+    @ExceptionHandler(BindException.class)
+    protected ResponseEntity<ExceptionReponse> bindExceptionHandle(BindException ex) {
+        log.error("BindException", ex);
+        ExceptionReponse response = ExceptionReponse.from("E0001", ex.getBindingResult());
+        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(BusinessException.class)
+    protected ResponseEntity<ExceptionReponse> httpRequestMethodNotSupportedExceptionHandle(BusinessException ex) {
+        log.error("BusinessException", ex);
+        String message = messageSource.getMessage(filter(ex.getMessage()), null, Locale.KOREA);
+        ExceptionReponse response = ExceptionReponse.from("E0001", message);
+        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
     }
 
     private String filter(String message){
         message = message.replace("{", "");
         message = message.replace("}", "");
         return message;
-
     }
 }
