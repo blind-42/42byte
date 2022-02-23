@@ -1,13 +1,13 @@
 package com.blind.api.domain.comment.v1.service;
 
-import com.blind.api.domain.comment.v1.dto.CommentDTO;
 import com.blind.api.domain.comment.v1.dto.CommentMyDTO;
 import com.blind.api.domain.comment.v1.dto.CommentResponseDTO;
+import com.blind.api.domain.post.v2.domain.Post;
 import com.blind.api.domain.post.v2.service.PostService;
 import com.blind.api.domain.comment.v1.domain.Comment;
 import com.blind.api.domain.comment.v1.repository.CommentRepository;
+import com.blind.api.domain.user.v2.domain.User;
 import com.blind.api.domain.user.v2.service.UserService;
-import com.blind.api.global.utils.HeaderUtil;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -19,9 +19,7 @@ import java.util.List;
 @Service
 @AllArgsConstructor
 public class CommentServiceImpl implements CommentService{
-    private final PostService postService;
     private final CommentRepository commentRepository;
-    private final UserService userService;
 
     @Override
     @Transactional
@@ -33,6 +31,7 @@ public class CommentServiceImpl implements CommentService{
     @Transactional
     public Comment update(Comment comment, String content) {
         comment.setContent(content);
+        commentRepository.saveAndFlush(comment);
         return comment;
     }
 
@@ -52,25 +51,14 @@ public class CommentServiceImpl implements CommentService{
     /* 댓글 저장 */
     @Override
     @Transactional
-    public Comment save(Long boardId, Long postId, String content, String token) {
-        if (token == null) throw new RuntimeException();
-
-        Long postAuthorId = postService.findById(postId)
-                .orElseThrow(RuntimeException::new)
-                .getAuthorId();
-        Long commentAuthorId = userService.findByAccessToken(token)
-                .orElseThrow(RuntimeException::new)
-                .getId();
-
+    public Comment save(Long boardId, Post post, User user, String content) {
         /* 게시글 작성자와 댓글 작성자 비교 */
-        Boolean isAuthor = false;
-        if (postAuthorId.equals(commentAuthorId))
-            isAuthor= true;
+        boolean isAuthor = post.getAuthorId().equals(user.getId()) ? true : false;
 
         Comment comment = Comment.builder()
                 .boardId(boardId)
-                .post(postService.findById(postId).orElseThrow(RuntimeException::new))
-                .authorId(commentAuthorId)
+                .post(post)
+                .authorId(user.getId())
                 .content(content)
                 .isAuthor(isAuthor)
                 .build();

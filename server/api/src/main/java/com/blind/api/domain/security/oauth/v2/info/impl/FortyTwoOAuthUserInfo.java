@@ -8,7 +8,6 @@ import java.nio.charset.StandardCharsets;
 import java.util.Map;
 
 public class FortyTwoOAuthUserInfo extends OAuthUserInfo {
-
     public FortyTwoOAuthUserInfo(Map<String, Object> attributes) {
         super(attributes);
     }

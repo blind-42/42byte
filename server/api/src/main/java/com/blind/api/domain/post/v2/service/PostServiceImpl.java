@@ -14,15 +14,12 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.util.List;
 import java.util.Optional;
 
 @Service
 @AllArgsConstructor
 public class PostServiceImpl implements PostService {
     private final PostRepository postRepository;
-    private final BoardService boardService;
-    private final UserService userService;
 
     @Override
     @Transactional
@@ -44,17 +41,13 @@ public class PostServiceImpl implements PostService {
     }
     @Override
     @Transactional
-    public Optional<Post> findById(Long postId){
-        return postRepository.findById(postId);
+    public Post findById(Long postId){
+        return postRepository.findById(postId).orElseThrow(RuntimeException::new);
     }
 
     @Override
     @Transactional
-    public Post save(Long boardId, String title, String content, String accessToken){
-        Board board = boardService.findById(boardId)
-                .orElseThrow(RuntimeException::new);
-        User user = userService.findByAccessToken(accessToken)
-                .orElseThrow(RuntimeException::new);
+    public Post save(Board board, User user, String title, String content){
         Post post = Post.builder()
                 .board(board)
                 .title(title)
@@ -69,6 +62,7 @@ public class PostServiceImpl implements PostService {
     public Page<Post> search(String keyword, Pageable pageable) {
         return postRepository.findPostsWithKeyword(keyword, pageable);
     }
+
     @Override
     @Transactional
     public void updateLike(Long id, Long add) {

@@ -1,5 +1,6 @@
 package com.blind.api.domain.user.v2.controller;
 
+import com.blind.api.domain.security.jwt.v1.service.TokenService;
 import com.blind.api.domain.user.v2.service.UserService;
 import com.blind.api.global.utils.HeaderUtil;
 import lombok.AllArgsConstructor;
@@ -14,10 +15,10 @@ import javax.servlet.http.HttpServletRequest;
 @AllArgsConstructor
 public class UserController {
     private final UserService userService;
+    private final TokenService tokenService;
 
     @RequestMapping(value={"/user"}, method= RequestMethod.GET)
-    public Object getUserInfo(HttpServletRequest request) {
-        User user = userService.findByAccessToken(HeaderUtil.getAccessToken(request)).orElseThrow(null);
-        return user;
+    public User getUserInfo(HttpServletRequest request) {
+        return tokenService.findUserByAccessToken(HeaderUtil.getAccessToken(request));
     }
 }

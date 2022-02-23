@@ -24,9 +24,9 @@ public class Token {
     @GeneratedValue (strategy = GenerationType.IDENTITY)
     private Long refreshTokenSeq;
 
-    @Column(name = "hash_id", unique = true)
-    @NotNull
-    private String hashId;
+    @OneToOne
+    @JoinColumn(name = "hash_id")
+    private User user;
 
     @Column(name = "refresh_token", length = 256)
     @NotNull
@@ -37,11 +37,11 @@ public class Token {
     private String accessToken;
 
     public Token(
-            @NotNull String hashId,
+            @NotNull User user,
             @NotNull String refreshToken,
             @NotNull String accessToken
     ) {
-        this.hashId = hashId;
+        this.user = user;
         this.refreshToken = refreshToken;
         this.accessToken = accessToken;
     }
