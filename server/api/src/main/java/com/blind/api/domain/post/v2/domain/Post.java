@@ -59,11 +59,6 @@ public class Post extends BaseTimeEntity {
 
     @Builder
     public Post(Board board, String title, String content, Long authorId) {
-        Assert.notNull(board,"author_id must not be Null");
-        Assert.hasText(title,"title must not be empty");
-        Assert.hasText(content,"content must not be empty");
-        Assert.notNull(authorId,"author_id must not be Null");
-
         this.board = board;
         this.title = title;
         this.content = content;

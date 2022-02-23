@@ -10,6 +10,7 @@ import com.blind.api.domain.security.oauth.v2.config.properties.AppProperties;
 import com.blind.api.domain.security.oauth.v2.token.AuthToken;
 import com.blind.api.domain.security.oauth.v2.token.AuthTokenProvider;
 import com.blind.api.domain.user.v2.domain.RoleType;
+import com.blind.api.domain.user.v2.service.UserService;
 import com.blind.api.global.utils.CookieUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
@@ -35,6 +36,7 @@ public class OAuthAuthenticationSuccessHandler extends SimpleUrlAuthenticationSu
     private final String REDIRECT_URI_PARAM_COOKIE_NAME = "redirect_uri";
     private final String REFRESH_TOKEN = "refresh_token";
     private final AuthTokenProvider tokenProvider;
+    private final UserService userService;
     private final AppProperties appProperties;
     private final UserRefreshTokenRepository userRefreshTokenRepository;
     private final OAuthAuthorizationRequestBasedOnCookieRepository authorizationRequestRepository;
@@ -85,11 +87,11 @@ public class OAuthAuthenticationSuccessHandler extends SimpleUrlAuthenticationSu
         );
 
         // DB 저장
-        Token userRefreshToken = userRefreshTokenRepository.findByHashId(userInfo.getHashId());
+        Token userRefreshToken = userRefreshTokenRepository.findByUser(userService.findByHashId(userInfo.getHashId()));
         if (userRefreshToken != null) {
             userRefreshToken.setRefreshToken(refreshToken.getToken());
         } else {
-            userRefreshToken = new Token(userInfo.getHashId(), refreshToken.getToken(), accessToken.getToken());
+            userRefreshToken = new Token(userService.findByHashId(userInfo.getHashId()), refreshToken.getToken(), accessToken.getToken());
             userRefreshTokenRepository.saveAndFlush(userRefreshToken);
         }
 

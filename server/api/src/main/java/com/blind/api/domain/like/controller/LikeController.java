@@ -2,16 +2,19 @@ package com.blind.api.domain.like.controller;
 
 import com.blind.api.domain.comment.v1.domain.Comment;
 import com.blind.api.domain.comment.v1.dto.CommentResponseDTO;
+import com.blind.api.domain.comment.v1.service.CommentService;
 import com.blind.api.domain.like.service.LikeService;
+import com.blind.api.domain.post.v2.domain.Post;
 import com.blind.api.domain.post.v2.dto.PostResponseDTO;
+import com.blind.api.domain.post.v2.service.PostService;
+import com.blind.api.domain.security.jwt.v1.service.TokenService;
 import com.blind.api.domain.user.v2.domain.User;
-import com.blind.api.domain.user.v2.service.UserService;
 import com.blind.api.global.utils.HeaderUtil;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
-import org.springframework.data.web.PageableDefault;
 import org.springframework.data.web.SortDefault;
+import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -20,16 +23,22 @@ import javax.servlet.http.HttpServletRequest;
 @AllArgsConstructor
 public class LikeController {
     private final LikeService likeService;
-    private final UserService userService;
+    private final TokenService tokenService;
+    private final PostService postService;
+    private final CommentService commentService;
 
     @RequestMapping(value = {"/post/like"}, method=RequestMethod.POST)
     public void postLike(@RequestParam("postId") Long postId, HttpServletRequest request){
-        likeService.PostLike(postId, HeaderUtil.getAccessToken(request));
+        Post post = postService.findById(postId);
+        User user = tokenService.findUserByAccessToken(HeaderUtil.getAccessToken(request));
+        likeService.PostLike(post, user);
     }
 
     @RequestMapping(value = {"/comment/like"}, method=RequestMethod.POST)
     public void commentLike(@RequestParam("postId") Long postId, @RequestParam("commentId") Long commentId, HttpServletRequest request){
-        likeService.CommentLike(postId, commentId, HeaderUtil.getAccessToken(request));
+        Comment comment = commentService.findCommentById(commentId);
+        User user = tokenService.findUserByAccessToken(HeaderUtil.getAccessToken(request));
+        likeService.CommentLike(comment.getPost(), comment, user);
     }
 
     @RequestMapping(value = {"mypage/post/like"}, method=RequestMethod.GET)
@@ -37,17 +46,16 @@ public class LikeController {
                                       @SortDefault.SortDefaults({
                                               @SortDefault(sort = "post.isNotice", direction = Sort.Direction.DESC),
                                               @SortDefault(sort = "post.id", direction = Sort.Direction.DESC)}) Pageable pageable){
-        User user = userService.findByAccessToken(HeaderUtil.getAccessToken(request)).orElseThrow(RuntimeException::new);
-        return likeService.findLikePostByUserId(user.getId(), pageable);
+        Long userId = tokenService.findUserByAccessToken(HeaderUtil.getAccessToken(request)).getId();
+        return likeService.findLikePostByUserId(userId, pageable);
     }
 
     @RequestMapping(value = {"mypage/comment/like"}, method=RequestMethod.GET)
     public CommentResponseDTO myCommentLike(HttpServletRequest request,
-                                            @PageableDefault(size = 24)
                                             @SortDefault.SortDefaults({
                                                     @SortDefault(sort = "post.isNotice", direction = Sort.Direction.DESC),
                                                     @SortDefault(sort = "post.id", direction = Sort.Direction.DESC)}) Pageable pageable){
-        User user = userService.findByAccessToken(HeaderUtil.getAccessToken(request)).orElseThrow(RuntimeException::new);
+        User user = tokenService.findUserByAccessToken(HeaderUtil.getAccessToken(request));
         return likeService.findLikeCommentByUserId(user.getId(), pageable);
     }
 }

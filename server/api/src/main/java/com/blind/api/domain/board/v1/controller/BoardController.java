@@ -7,14 +7,11 @@ import com.blind.api.domain.security.oauth.v2.repository.UserRefreshTokenReposit
 import com.blind.api.domain.user.v2.domain.RoleType;
 import com.blind.api.domain.user.v2.domain.User;
 import com.blind.api.domain.user.v2.repository.UserRepository;
-import io.swagger.annotations.ApiImplicitParam;
-import io.swagger.annotations.ApiImplicitParams;
-import io.swagger.annotations.ApiOperation;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.PostConstruct;
-import java.util.Map;
+import java.util.HashMap;
 
 @RestController
 @AllArgsConstructor
@@ -24,26 +21,22 @@ public class BoardController {
     private final UserRepository testUserRepository;
 
     @RequestMapping(value="/board", method = RequestMethod.POST)
-    @ApiOperation(value = "게시판 생성", notes = "게시판을 생성하는 API입니다.")
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "name", value = "게시판 이름", required = true)
-    })
-    public Board createPost(@RequestBody Map<String,String> body) {
-        return boardService.save(body.get("name"));
+    public Board createPost(@RequestBody HashMap<String, String> map) {
+        return boardService.save(map.get("name"));
     }
 
 
-/*    @PostConstruct
+    @PostConstruct
     public void initiallize() {
-        Token token = new Token();
-        token.setAccessToken("access");
-        token.setRefreshToken("refresh");
-        token.setHashId("hashId");
-        testTokenRepository.save(token);
-
         User user = new User();
         user.setHashId("hashId");
         user.setRoleType(RoleType.USER);
         testUserRepository.save(user);
-    }*/
+
+        Token token = new Token();
+        token.setAccessToken("access");
+        token.setRefreshToken("refresh");
+        token.setUser(user);
+        testTokenRepository.save(token);
+    }
 }

@@ -1,11 +1,15 @@
 package com.blind.api.domain.user.v2.controller;
 
 import com.blind.api.common.RestDocsConfiguration;
+import com.blind.api.domain.board.v1.domain.Board;
 import com.blind.api.domain.security.jwt.v1.domain.Token;
+import com.blind.api.domain.security.jwt.v1.repository.TokenRepository;
 import com.blind.api.domain.security.oauth.v2.repository.UserRefreshTokenRepository;
 import com.blind.api.domain.user.v2.domain.RoleType;
 import com.blind.api.domain.user.v2.domain.User;
 import com.blind.api.domain.user.v2.repository.UserRepository;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,19 +43,34 @@ class UserControllerTest {
     @Mock
     private UserRepository testUserRepository;
 
+    @Autowired
+    @Mock
+    private TokenRepository tokenRepository;
+
+    private User user;
+    private Token token;
+    @BeforeEach
+    void init(){
+        user = testUserRepository.findByHashId("hashId").orElseGet(()->null);
+        if (user == null) {
+            user = new User();
+            user.setHashId("hashId");
+            user.setRoleType(RoleType.USER);
+            testUserRepository.save(user);
+        }
+        token = tokenRepository.findByAccessToken("access").orElseGet(()-> null);
+        if (token == null) {
+            token = new Token();
+            token.setAccessToken("access");
+            token.setRefreshToken("refresh");
+            token.setUser(user);
+            testTokenRepository.save(token);
+        }
+    }
+
     @Test
     @Transactional
     void getUserInfo() throws Exception{
-        Token token = new Token();
-        token.setAccessToken("access");
-        token.setRefreshToken("refresh");
-        token.setHashId("hashId");
-        testTokenRepository.save(token);
-
-        User user = new User();
-        user.setHashId("hashId");
-        user.setRoleType(RoleType.USER);
-        testUserRepository.save(user);
         mockMvc.perform(get("/user")
                 .header("Authorization", "Bearer access"))
                 .andExpect(status().isOk())

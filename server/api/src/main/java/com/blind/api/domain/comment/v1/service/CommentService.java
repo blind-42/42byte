@@ -3,13 +3,14 @@ package com.blind.api.domain.comment.v1.service;
 import com.blind.api.domain.comment.v1.domain.Comment;
 import com.blind.api.domain.comment.v1.dto.CommentResponseDTO;
 import com.blind.api.domain.post.v2.domain.Post;
+import com.blind.api.domain.user.v2.domain.User;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 
 public interface CommentService {
-    Comment save(Long boardId, Long postId, String content, String token);
+    Comment save(Long boardId, Post post, User user, String content);
 
     void update(Comment comment, String content);
 

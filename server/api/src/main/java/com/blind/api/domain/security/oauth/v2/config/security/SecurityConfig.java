@@ -12,6 +12,7 @@ import com.blind.api.domain.security.oauth.v2.repository.UserRefreshTokenReposit
 import com.blind.api.domain.security.oauth.v2.service.CustomOAuth2UserService;
 import com.blind.api.domain.security.oauth.v2.service.CustomUserDetailsService;
 import com.blind.api.domain.security.oauth.v2.token.AuthTokenProvider;
+import com.blind.api.domain.user.v2.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -30,7 +31,6 @@ import java.util.Arrays;
 @Configuration
 @RequiredArgsConstructor
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
-
     private final CorsProperties corsProperties;
     private final AppProperties appProperties;
     private final AuthTokenProvider tokenProvider;
@@ -38,7 +38,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private final CustomOAuth2UserService oAuth2UserService;
     private final TokenAccessDeniedHandler tokenAccessDeniedHandler;
     private final UserRefreshTokenRepository userRefreshTokenRepository;
-
+    private final UserService userService;
     /*
      * UserDetailsService 설정
      * */
@@ -121,6 +121,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     public OAuthAuthenticationSuccessHandler oAuth2AuthenticationSuccessHandler() {
         return new OAuthAuthenticationSuccessHandler(
                 tokenProvider,
+                userService,
                 appProperties,
                 userRefreshTokenRepository,
                 oAuth2AuthorizationRequestBasedOnCookieRepository()

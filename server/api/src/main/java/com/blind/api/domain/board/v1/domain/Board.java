@@ -9,6 +9,9 @@ import lombok.NoArgsConstructor;
 import org.springframework.util.Assert;
 
 import javax.persistence.*;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Size;
 
 @Entity
 @Getter
@@ -19,14 +22,14 @@ public class Board extends BaseTimeEntity {
     @Column(name="id")
     Long id;
 
-    @NotNull
+
     @Column(name="name")
     @ApiModelProperty(example = "Blind")
+    @Size(min = 2, max = 255, message = "{invalid.request}")
     String name;
 
     @Builder
     public Board(String name){
-        Assert.hasText(name,"board_name must not be empty");
         this.name = name;
     }
 }
