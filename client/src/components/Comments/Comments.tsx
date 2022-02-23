@@ -109,10 +109,10 @@ function Comments({comment, commentsUserList, setReRender}: GreetingProps) {
 					{isDel? <div className='isDel'>&#9986; 삭제된 댓글 입니다.</div> 
 								: <div>{content}</div>}
 				</Content>
-					{!isUsers && <LikesBox boxState={boxState} onClick={boxcolorHandler}>
+					<LikesBox boxState={boxState} onClick={boxcolorHandler}>
 						<div><GrLike /></div>
 						<div>{likeCnt}</div>
-					</LikesBox>}
+					</LikesBox>
 			</CommentWrap>
 			}
 			<GLine/>
