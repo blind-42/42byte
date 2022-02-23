@@ -1,16 +1,15 @@
 import { Link } from 'react-router-dom';
-import { PageName, Squares } from 'styles/styled'
-import { AppContainer, PageContainer, TopBar, ContentContainer
-				, ErrorImg, TextWrap } from './styled'
-
+import { AlertContainer, AlertPageWrap, TopBar, AlertPageName, Squares
+				, AlertContentWrap, AlertTextWrap } from 'styles/styled'
+import { ErrorImg } from './styled'
 
 function Error() {
   return (
 		<>
-		<AppContainer>
-			<PageContainer>
-				<TopBar>
-					<PageName>Error!</PageName>
+		<AlertContainer>
+			<AlertPageWrap>
+				<TopBar err={true}>
+					<AlertPageName>Error!</AlertPageName>
 					<Squares>
 						<div>&#9866;</div>
 						<div>&#10064;</div>
@@ -19,17 +18,17 @@ function Error() {
 						</Link>
 					</Squares>
 				</TopBar>
-				<ContentContainer>
+				<AlertContentWrap>
 					<ErrorImg>
 						<img src="/images/fire_저작권_임시.png" alt='Errorimg' />
 					</ErrorImg>
-					<TextWrap>
+					<AlertTextWrap>
 						404<br />
 						Failed To Load.
-					</TextWrap>
-				</ContentContainer>
-			</PageContainer>
-		</AppContainer>
+					</AlertTextWrap>
+				</AlertContentWrap>
+			</AlertPageWrap>
+		</AlertContainer>
 		</>
 	);
 }

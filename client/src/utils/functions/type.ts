@@ -46,6 +46,7 @@ export interface CommentData {
   blameCnt: number
 	isUsers: boolean
   isAuthor: boolean
+	isLiked : boolean
   isDel: boolean
 	createdDate: string
   modifiedDate: string

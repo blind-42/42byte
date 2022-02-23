@@ -12,7 +12,7 @@ import java.util.List;
 public interface CommentService {
     Comment save(Long boardId, Post post, User user, String content);
 
-    Comment update(Comment comment, String content);
+    void update(Comment comment, String content);
 
     List<Comment> findAllComment(Long boardId, Long postId);
 
@@ -27,4 +27,5 @@ public interface CommentService {
     public CommentResponseDTO findCommentByIdIn(Long userId, Pageable pageable);
 
     Comment findCommentById(Long id);
+
 }

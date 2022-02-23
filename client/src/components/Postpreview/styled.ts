@@ -27,10 +27,14 @@ export const PreviewContainer = styled.div<{state?: boolean;}>`
 			font-weight: ${(props) => props.state === true ? '700' : '600'};
 		}
 	}
-	@media screen and (min-width: 768px) {
+	${({theme}) => theme.media.tablet`
 		height: 2.3rem;
 		font-size: 0.9rem;
-	}
+	`}
+	${({theme}) => theme.media.desktop`
+		height: 2.3rem;
+		font-size: 0.9rem;
+	`}
 `;
 
 export const NoticeMark = styled.div`
@@ -40,8 +44,12 @@ export const NoticeMark = styled.div`
 	color: #fff;
 	padding: 0.3rem 0.6rem;
 	letter-spacing: 0.05rem;
-	@media screen and (min-width: 768px) {
+	${({theme}) => theme.media.tablet`
 		font-size: 0.7rem;
 		padding: 0.3rem 0.5rem;
-	}
+	`}
+	${({theme}) => theme.media.desktop`
+		font-size: 0.7rem;
+		padding: 0.3rem 0.5rem;
+	`}
 `;
