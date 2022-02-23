@@ -3,6 +3,7 @@ package com.blind.api.domain.user.v2.service;
 import com.blind.api.domain.user.v2.domain.User;
 import com.blind.api.domain.user.v2.repository.UserRepository;
 
+import com.blind.api.global.exception.BusinessException;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
@@ -20,6 +21,6 @@ public class UserService {
 
     @Transactional
     public User findByHashId(String hashId){
-        return userRepository.findByHashId(hashId).orElseThrow(RuntimeException::new);
+        return userRepository.findByHashId(hashId).orElseThrow(() -> new BusinessException("{user.notfound}"));
     }
 }

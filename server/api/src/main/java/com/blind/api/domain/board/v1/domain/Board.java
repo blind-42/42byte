@@ -25,7 +25,6 @@ public class Board extends BaseTimeEntity {
 
     @Column(name="name")
     @ApiModelProperty(example = "Blind")
-    @Size(min = 2, max = 255, message = "{invalid.request}")
     String name;
 
     @Builder

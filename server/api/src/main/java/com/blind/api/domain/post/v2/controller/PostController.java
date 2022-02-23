@@ -32,7 +32,7 @@ public interface PostController {
                                         @SortDefault(sort = "isNotice", direction = Sort.Direction.DESC),
                                         @SortDefault(sort = "id", direction = Sort.Direction.DESC)}) Pageable pageable);
 
-    PostResponseDTO searchPost(@RequestParam("keyword") @Length (min = 1, max= 3, message = "{invalid.request}") String keyword,
+    PostResponseDTO searchPost(@RequestParam("keyword") @Length (min = 1, max= 255, message = "{invalid.request}") String keyword,
                                @SortDefault.SortDefaults({
                                        @SortDefault(sort = "isNotice", direction = Sort.Direction.DESC),
                                        @SortDefault(sort = "id", direction = Sort.Direction.DESC)}) Pageable pageable);

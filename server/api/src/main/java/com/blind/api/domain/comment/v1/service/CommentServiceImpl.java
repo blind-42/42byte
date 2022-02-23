@@ -3,11 +3,10 @@ package com.blind.api.domain.comment.v1.service;
 import com.blind.api.domain.comment.v1.dto.CommentMyDTO;
 import com.blind.api.domain.comment.v1.dto.CommentResponseDTO;
 import com.blind.api.domain.post.v2.domain.Post;
-import com.blind.api.domain.post.v2.service.PostService;
 import com.blind.api.domain.comment.v1.domain.Comment;
 import com.blind.api.domain.comment.v1.repository.CommentRepository;
 import com.blind.api.domain.user.v2.domain.User;
-import com.blind.api.domain.user.v2.service.UserService;
+import com.blind.api.global.exception.BusinessException;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -97,7 +96,7 @@ public class CommentServiceImpl implements CommentService{
     @Override
     @Transactional
     public Comment findCommentById(Long id) {
-        return commentRepository.findCommentById(id);
+        return commentRepository.findCommentById(id).orElseThrow(()-> new BusinessException("{comment.notfound}"));
     }
 
 }
