@@ -5,7 +5,9 @@ import com.blind.api.domain.board.v1.dto.BoardRequestDTO;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import javax.validation.Valid;
+import java.util.List;
 
 public interface BoardController {
     Board createBoard(@RequestBody @Valid BoardRequestDTO requestDTO);
+    List<Board> findAllBoard();
 }

@@ -25,7 +25,7 @@ public class Token {
     private Long refreshTokenSeq;
 
     @OneToOne
-    @JoinColumn(name = "hash_id")
+    @JoinColumn(name = "hash_id", referencedColumnName = "hash_id")
     private User user;
 
     @Column(name = "refresh_token", length = 256)

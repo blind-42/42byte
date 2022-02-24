@@ -186,7 +186,7 @@ class PostControllerTest {
         param.add("boardId", String.valueOf(board.getId()));
         param.add("postId", String.valueOf(post.getId()));
         commentService.save(board.getId(), post, user,"comment");
-        likeService.PostLike(post, user);
+        likeService.PostLike(post, user, 0L);
         mockMvc.perform(get("/post")
                 .params(param)
                         .header("Authorization", "Bearer access"))
@@ -223,7 +223,7 @@ class PostControllerTest {
 
         Post post = postService.save(board, user, "title", "content");
         commentService.save(board.getId(), post, user,"comment");
-        likeService.PostLike(post, user);
+        likeService.PostLike(post, user, 1L);
         mockMvc.perform(delete("/post")
                 .param("postId", String.valueOf(post.getId()))
                 .header("Authorization", "Bearer access"))

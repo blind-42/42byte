@@ -151,7 +151,7 @@ class LikeControllerTest {
     @Transactional
     @DisplayName("내가 좋아요한 게시글")
     void myPostLike() throws Exception{
-        likeService.PostLike(post, user);
+        likeService.PostLike(post, user, 0L);
         mockMvc.perform(get("/mypage/post/like")
                 .header("Authorization", "Bearer access"))
                 .andExpect(status().isOk())
@@ -163,7 +163,7 @@ class LikeControllerTest {
     @Transactional
     @DisplayName("내가 좋아요한 댓글")
     void myCommentLike() throws Exception{
-        likeService.CommentLike(post, comment, user);
+        likeService.CommentLike(post, comment, user, 0L);
         mockMvc.perform(get("/mypage/comment/like")
                         .header("Authorization", "Bearer access"))
                 .andExpect(status().isOk())

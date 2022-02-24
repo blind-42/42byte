@@ -13,13 +13,10 @@ import com.blind.api.domain.post.v2.dto.PostResponseDTO;
 import com.blind.api.domain.post.v2.service.PostService;
 import com.blind.api.domain.security.jwt.v1.service.TokenService;
 import com.blind.api.domain.user.v2.domain.User;
-import com.blind.api.domain.user.v2.service.UserService;
 import com.blind.api.global.utils.HeaderUtil;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
-import org.springframework.data.web.SortDefault;
 import org.springframework.web.bind.annotation.*;
 import org.thymeleaf.util.StringUtils;
 

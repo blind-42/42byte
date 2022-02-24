@@ -11,8 +11,8 @@ import org.springframework.data.domain.Pageable;
 import java.util.List;
 
 public interface LikeService {
-    public void PostLike(Post post, User user);
-    public void CommentLike(Post post, Comment comment, User user);
+    public void PostLike(Post post, User user, Long num);
+    public void CommentLike(Post post, Comment comment, User user, Long num);
     public void deleteByPost(Post post);
     public PostResponseDTO findLikePostByUserId(Long userId, Pageable pageable);
     public CommentResponseDTO findLikeCommentByUserId(Long userId, Pageable pageable);

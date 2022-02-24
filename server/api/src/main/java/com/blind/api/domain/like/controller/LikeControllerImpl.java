@@ -31,14 +31,26 @@ public class LikeControllerImpl implements LikeController {
     public void postLike(Long postId, HttpServletRequest request){
         Post post = postService.findById(postId);
         User user = tokenService.findUserByAccessToken(HeaderUtil.getAccessToken(request));
-        likeService.PostLike(post, user);
+        if (likeService.checkPostLike(post, user) == false) {
+            likeService.PostLike(post, user, 0L);
+            postService.updateLike(post.getId(), 1L);
+        }
+        else{
+            likeService.PostLike(post, user, 1L);
+            postService.updateLike(post.getId(), -1L);
+        }
     }
 
     @RequestMapping(value = {"/comment/like"}, method=RequestMethod.POST)
     public void commentLike(Long postId, Long commentId, HttpServletRequest request){
         Comment comment = commentService.findCommentById(commentId);
         User user = tokenService.findUserByAccessToken(HeaderUtil.getAccessToken(request));
-        likeService.CommentLike(comment.getPost(), comment, user);
+        if (likeService.checkCommentLike(comment, user) == false) {
+            likeService.CommentLike(comment.getPost(), comment, user, 0L);
+            commentService.updateLike(comment.getId(), 1L);
+        } else {
+            commentService.updateLike(comment.getId(), -1L);
+        }
     }
 
     @RequestMapping(value = {"mypage/post/like"}, method=RequestMethod.GET)
