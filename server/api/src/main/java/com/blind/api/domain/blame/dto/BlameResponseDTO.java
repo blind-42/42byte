@@ -1,4 +1,4 @@
-package com.blind.api.domain.post.v2.dto;
+package com.blind.api.domain.blame.dto;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -8,12 +8,12 @@ import java.util.List;
 
 @Getter
 @Setter
-public class PostResponseDTO<T> {
+public class BlameResponseDTO<T> {
     private List<T> contents;
     private int page;
     private int pages;
 
-    public PostResponseDTO(){
+    public BlameResponseDTO(){
         this.contents = new ArrayList<T>();
         this.page = 0;
         this.pages = 0;
@@ -23,4 +23,3 @@ public class PostResponseDTO<T> {
         this.page = page + 1;
     }
 }
-

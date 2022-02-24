@@ -30,4 +30,8 @@ public interface PostRepository extends PagingAndSortingRepository<Post, Long> {
     @Modifying
     @Query("update Post p set p.commentCnt = p.commentCnt + :add where p.id = :id")
     void updateComment(@Param("id") Long id, @Param("add") Long add);
+
+    @Modifying
+    @Query("update Post p set p.blameCnt = p.blameCnt + 1L where p.id = :id")
+    void addBlameCnt(@Param("id") Long id);
 }

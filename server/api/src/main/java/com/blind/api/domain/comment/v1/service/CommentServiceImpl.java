@@ -10,6 +10,7 @@ import com.blind.api.global.exception.BusinessException;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -98,4 +99,9 @@ public class CommentServiceImpl implements CommentService{
         return commentRepository.findCommentById(id).orElseThrow(()-> new BusinessException("{comment.notfound}"));
     }
 
+    @Override
+    @Transactional
+    public void addBlameCnt(Long id) {
+        commentRepository.addBlameCnt(id);
+    }
 }
