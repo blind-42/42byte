@@ -25,51 +25,37 @@ import javax.transaction.Transactional;
 public class LikeServiceImpl implements LikeService{
     private final CommentLikeRepository commentLikeRepository;
     private final PostLikeRepository postLikeRepository;
-    private final UserService userService;
-    private final PostService postService;
-    private final CommentRepository commentService;
 
     @Override
     @Transactional
-    public void PostLike(Post post, User user) {
-        if (checkPostLike(post, user) == false) {
+    public void PostLike(Post post, User user, Long num) {
+        if (num == 0) {
             postLikeRepository.save(new PostLike(post, user));
-            postService.updateLike(post.getId(), 1L);
         } else {
             postLikeRepository.deleteByPostAndUser(post, user);
-            postService.updateLike(post.getId(), -1L);
         }
     }
 
     @Override
     @Transactional
-    public void CommentLike(Post post, Comment comment, User user) {
-        if (checkCommentLike(comment, user) == false) {
+    public void CommentLike(Post post, Comment comment, User user, Long num) {
+        if (num == 0) {
             commentLikeRepository.save(new CommentLike(comment, post, user));
-            commentService.updateLike(comment.getId(), 1L);
-            comment.setPost(postService.findById(post.getId()));
         } else {
             commentLikeRepository.deleteByCommentAndUser(comment, user);
-            commentService.updateLike(comment.getId(), -1L);
-        }
+      }
     }
 
     @Override
     @Transactional
     public boolean checkPostLike(Post post, User user) {
-        if(postLikeRepository.findByPostAndUser(post, user) != null)
-            return true;
-        else
-            return false;
+        return postLikeRepository.findByPostAndUser(post, user) != null ? true : false;
     }
 
     @Override
     @Transactional
     public boolean checkCommentLike(Comment comment, User user) {
-        if(commentLikeRepository.findByCommentAndUser(comment, user) != null)
-            return true;
-        else
-            return false;
+        return commentLikeRepository.findByCommentAndUser(comment, user) != null ? true : false;
     }
 
     @Override

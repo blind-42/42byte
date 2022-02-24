@@ -7,6 +7,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.List;
 
 @Service
 @AllArgsConstructor
@@ -29,5 +30,11 @@ public class BoardServiceImpl implements BoardService{
     @Transactional
     public Board findByName(String name) {
         return boardRepository.findBoardByName(name).orElseThrow(() -> new BusinessException("{board.notfound}"));
+    }
+
+    @Override
+    @Transactional
+    public List<Board> findAllBoard() {
+        return boardRepository.findAll();
     }
 }

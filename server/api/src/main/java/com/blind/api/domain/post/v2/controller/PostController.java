@@ -43,6 +43,4 @@ public interface PostController {
     Map<String, Object> findPostDetailByPostId (@RequestParam("boardId") @Positive (message = "{invalid.request}") Long boardId,
                                                 @RequestParam("postId") @Positive (message = "{invalid.request}") Long postId,
                                                 HttpServletRequest request);
-
-
 }

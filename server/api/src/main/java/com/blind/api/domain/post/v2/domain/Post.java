@@ -51,6 +51,9 @@ public class Post extends BaseTimeEntity {
     @Column(name = "blame_count", columnDefinition = "Integer default 0", updatable = false)
     private Long blameCnt;
 
+    @Column(name = "is_del", columnDefinition = "Integer default 0", updatable = false)
+    private int isDel;
+
 
     @ManyToOne
     @JsonIgnore

@@ -31,13 +31,12 @@ public class CommentServiceImpl implements CommentService{
     public void update(Comment comment, String content) {
         comment.setContent(content);
         commentRepository.saveAndFlush(comment);
-        return comment;
     }
 
     @Override
     @Transactional
     public void delete(Comment comment) {
-        comment.setIsDel(true);
+        comment.setIsDel(1);
         comment.setContent(null);
     }
 
