@@ -44,7 +44,7 @@ function Blindboard() {
 				<Header />
 				<PageContainer>
 					<TopBar>
-						<PageName>ꉂꉂ ( ˆᴗˆ  ) 블라인드 게시판</PageName>
+						<PageName>자유 게시판</PageName>
 						<Squares>
 							<div>&#9866;</div>
 							<div>&#10064;</div>

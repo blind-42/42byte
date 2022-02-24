@@ -31,6 +31,7 @@ export interface PostData {
   likeCnt: number
 	isUsers: boolean
   isNotice: boolean
+	isLiked: boolean
   blameCnt: number
 	createdDate: string
   modifiedDate: string

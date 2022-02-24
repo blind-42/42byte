@@ -22,7 +22,7 @@ function Comments({comment, commentsUserList, setReRender}: GreetingProps) {
 	const [modifyState, setModifyState] = useState<boolean>(false);
 	const [modifyCmmt, setModifyCmmt] = useState<string>(content);
 
-
+console.log(commentsUserList);
 	const clickCmmtDelModalHandler = () => {
 		setOpenCmmtDelModal(!openCmmtDelModal);
 	}

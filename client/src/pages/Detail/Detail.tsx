@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
+import { useQuery } from 'react-query';
 import { Link } from 'react-router-dom';
 import { Viewer } from '@toast-ui/react-editor';
 import instance from 'utils/functions/axios';
@@ -6,6 +7,8 @@ import Header from 'components/Header/Header';
 import Footer from 'components/Footer/Footer';
 import Comments from 'components/Comments/Comments';
 import DeleteModal from 'components/Modal/DeleteModal';
+import Loading from 'pages/Loading/Loading';
+import Error from 'pages/Error/Error';
 import { DetailData, PostData, CommentData } from 'utils/functions/type';
 import { GrLike } from "react-icons/gr";
 import { AppContainer, PageContainer, TopBar, PageName, Squares, ContentFooterWrap } from 'styles/styled';
@@ -24,6 +27,7 @@ function Detail() {
 			likeCnt: 0,
 			isUsers: false,
 			isNotice: false,
+			isLiked: false,
 			blameCnt: 0,
 			createdDate : "",
 			modifiedDate: ""
@@ -44,7 +48,8 @@ function Detail() {
 			modifiedDate: "",
 		}]
 	});
-	const [boxState, setBoxState] = useState<boolean>(false);
+	const { id, title, content, commentCnt, viewCnt, likeCnt, isUsers, isNotice, isLiked, blameCnt, createdDate, modifiedDate } = detailData.post
+	const [boxState, setBoxState] = useState<boolean>(isLiked);
 	const [comment, setComment] = useState<string>('');
 	const [openPostDelModal, setOpenPostDelModal] = useState<boolean>(false);
   const [isEdit, setIsEdit] = useState(false)
@@ -53,26 +58,24 @@ function Detail() {
 	const urlId = currentUrl.split('detail?boardId=1&postId=')[1];
   const scrollRef = useRef<any>(null)
 
-	useEffect(() => {
-		instance.get(`/post?boardId=1&postId=${urlId}`)
-		.then((res) => {
-			setDetailData(res.data);
-      setCommentData(res.data.comment)
-      setCommentsUserList(Array.from(new Set(res.data.comment.filter((el:CommentData) => !el.isAuthor).map((el:CommentData) => el.authorId))))
-		})
-		.catch((err) => console.log(err));
-	},[boxState, reRender])
+	const { isFetching, isLoading, error, data } = useQuery(['detail_key'], 
+																									() => {instance.get(`/post?boardId=1&postId=${urlId}`)
+																									.then((res) => {setDetailData(res.data);
+																																	setCommentData(res.data.comment);
+																																	setCommentsUserList(Array.from(new Set(res.data.comment.filter((el:CommentData) => !el.isAuthor).map((el:CommentData) => el.authorId))))
+																																})},{retry: 0});
 
-	useEffect(() => {
-		instance.get(`/mypage/post/like`)
-		.then((res) => {
-			setBoxState(res.data.contents.map((el: PostData) => el.id).indexOf(Number(urlId)) !== -1)
-		})
-		.catch((err) => console.log(err));
-	},[])
+	// useEffect(() => {
+	// 	instance.get(`/post?boardId=1&postId=${urlId}`)
+	// 	.then((res) => {
+	// 		console.log(res.data)
+	// 		setDetailData(res.data);
+  //     setCommentData(res.data.comment)
+  //   })
+	// 	.catch((err) => console.log(err));
+	// },[boxState, reRender])
 	
-	const { id, title, content, commentCnt, viewCnt, likeCnt, isUsers, isNotice, blameCnt, createdDate, modifiedDate } = detailData.post
-  const [commentData, setCommentData] = useState([])
+	const [commentData, setCommentData] = useState([])
 	const shortDate = createdDate?.slice(0, 16).replace('T', ' ');
   const [commentsUserList, setCommentsUserList] = useState([-1])
 
@@ -114,21 +117,22 @@ function Detail() {
 		.catch((err) => console.log(err));
 	}
 
+	if (isFetching || isLoading) return <Loading />
 
-
+	if (error) return <Error />
 
 	return (
 		<>
 			<AppContainer>
 				{openPostDelModal && (
-					<DeleteModal clickModalHandler={clickPostDelModalHandler} 
-						deleteHandler={deletePostHandler}/>)}
+				<DeleteModal clickModalHandler={clickPostDelModalHandler} 
+											deleteHandler={deletePostHandler}/>)}
 				<Header />
 				<PageContainer>
 					<TopBar>
 						<PageName>
 							<Link to='/blindboard'>
-								<div>블라인드 게시판</div>
+								<div>자유 게시판</div>
 							</Link>
 							<div>&nbsp;&#10095; #{id}</div>
 						</PageName>
@@ -170,7 +174,7 @@ function Detail() {
 								<CommentContainer>
 									<CommentCount>댓글 {commentCnt}</CommentCount>
 									<CommentInput>
-										<textarea placeholder='댓글을 입력하세요.' onChange={inputCmmtHandler} maxLength={300} value={comment}></textarea>
+										<textarea placeholder='댓글을 입력하세요.' onChange={inputCmmtHandler} maxLength={300} value={comment} />
 										<div>
 											<span>{comment.length} / 300</span>
 											<input type='button' value='등록' onClick={sendCmmtHandler}/>
@@ -179,8 +183,9 @@ function Detail() {
 									<FLine />
 									<CommentListWrap>
 										{commentData.map((el: CommentData) => {
-											return (<Comments key={el.id} comment={el} setReRender={setReRender}
-																									commentsUserList={commentsUserList} />)
+											return (<Comments key={el.id} comment={el} 
+																										setReRender={setReRender}
+																										commentsUserList={commentsUserList} />)
 										})}
 									</CommentListWrap>
 								</CommentContainer>
