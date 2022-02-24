@@ -35,9 +35,6 @@ public class PostBlame {
 
     @Builder
     public PostBlame(Post post, User user, String reason) {
-        Assert.notNull(post, "postId must not be Null");
-        Assert.notNull(user, "user must not be Null");
-
         this.post = post;
         this.user = user;
         this.reason = reason;
