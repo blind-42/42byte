@@ -7,6 +7,7 @@ import com.blind.api.domain.post.v2.dto.PostResponseDTO;
 import com.blind.api.domain.user.v2.domain.User;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 import java.util.Optional;
@@ -23,4 +24,7 @@ public interface PostService {
     void deletePost(Post post);
     PostResponseDTO findPostByIdIn(Long userId, Pageable pageable);
     void updateComment(Long id, Long add);
+    void addBlameCnt(Long id);
+
+
 }

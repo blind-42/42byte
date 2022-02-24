@@ -107,4 +107,8 @@ public class PostServiceImpl implements PostService {
     public void updateComment(Long id, Long add) {
         postRepository.updateComment(id, add);
     }
+    public void addBlameCnt(Long id) {
+        postRepository.addBlameCnt(id);
+    }
+
 }

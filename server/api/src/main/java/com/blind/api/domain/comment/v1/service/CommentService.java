@@ -6,6 +6,7 @@ import com.blind.api.domain.post.v2.domain.Post;
 import com.blind.api.domain.user.v2.domain.User;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 
@@ -28,4 +29,5 @@ public interface CommentService {
 
     Comment findCommentById(Long id);
 
+    void addBlameCnt(Long id);
 }
