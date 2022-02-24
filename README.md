@@ -1,4 +1,4 @@
-# Blind42
+# 42Byte
 
 <div align=center><h1>📚? Front-End Stack</h1></div>
 
