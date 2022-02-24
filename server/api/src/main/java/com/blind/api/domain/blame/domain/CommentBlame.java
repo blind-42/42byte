@@ -35,10 +35,6 @@ public class CommentBlame {
 
     @Builder
     public CommentBlame(Comment comment, User user, String reason) {
-        Assert.notNull(comment, "commentId must not be Null");
-        Assert.notNull(user, "user must not be Null");
-        Assert.notNull(reason, "reason must not be Null");
-
         this.comment = comment;
         this.user = user;
         this.reason = reason;
