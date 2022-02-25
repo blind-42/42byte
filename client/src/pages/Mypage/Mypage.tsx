@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import { useEffect, useState } from 'react';
+import { useQuery } from 'react-query';
 import Header from 'components/Header/Header';
 import Footer from 'components/Footer/Footer';
 import PageNation from 'components/PageNation/PageNation';
@@ -8,30 +9,8 @@ import CommentPreview from 'components/CommentPreview/CommentPreview';
 import { AppContainer, PageContainer, TopBar, PageName, Squares, PostContainer, ContentFooterWrap } from '../../styles/styled'
 import { MenuWrap, PostMenu, CommentMenu, MenuPostWrap, Category, ContentWrap, PostWrap } from './styled'
 import instance from 'utils/functions/axios';
-import { BoardData, ContentData} from 'utils/functions/type';
+import { BoardData, ContentData, CommentPreData } from 'utils/functions/type';
 import { useNavigate } from "react-router-dom";
-
-export interface CommentBoardData {
-  contents: CommentData[]
-  page: number
-  pages: number
-}
-
-export interface CommentData {
-  id: number
-  boardId: number
-  postId: number
-  authorId: number
-  content: string
-	commentCnt: number
-  likeCnt: number
-  blameCnt: number
-  isAuthor: boolean
-  isDel: boolean
-	title: string
-  createdDate: string
-  modifiedDate: string
-}
 
 export default function Mypage() {
 	const [postBoardData, setPostBoardData] = useState({contents: [], page: 0, pages: 0});
@@ -53,28 +32,43 @@ export default function Mypage() {
 		navigate('/mypage?=post&page=1')
 	}
 
-	useEffect(() => {
-		const currentPageName = window.location.search.split('&')[0].slice(2)
-		setPageName(currentPageName)
-		if (currentPageName === "post") {
-			instance
-			.get(`/mypage/${currentPageName}?page=${urlId}`)
+
+	const currentPageName = window.location.search.split('&')[0].slice(2)
+	setPageName(currentPageName)
+///////////////////////////////////////////////////////////////////
+	const { isLoading, error, data  } = useQuery(['mypage_key', urlId, currentPageName], 
+		() => {
+			instance.get(`/mypage/${currentPageName}?page=${urlId}`)
 			.then((res) => {
-				setCurrentPageNumber({page: res.data.page, pages: res.data.pages})
-				setPostBoardData(res.data)
-			})
-			.catch((err) => { window.location.href = '/error'; });
-		}
-		else {
-			instance
-			.get(`/mypage/comment?page=${urlId}`)
-			.then((res) => {
-				setCurrentPageNumber({page: res.data.page, pages: res.data.pages})
-				setCommentBoardData(res.data);
-			})
-			.catch((err) => { window.location.href = '/error'; })
-		}
-	}, [window.location.href])
+				setCurrentPageNumber({page: res.data.page, pages: res.data.pages});
+				setPostBoardData(res.data);
+			})},
+			{ retry: 0,
+				keepPreviousData: true});
+
+
+	// useEffect(() => {
+	// 	const currentPageName = window.location.search.split('&')[0].slice(2)
+	// 	setPageName(currentPageName)
+	// 	if (currentPageName === "post") {
+	// 		instance
+	// 		.get(`/mypage/${currentPageName}?page=${urlId}`)
+	// 		.then((res) => {
+	// 			setCurrentPageNumber({page: res.data.page, pages: res.data.pages})
+	// 			setPostBoardData(res.data)
+	// 		})
+	// 		.catch((err) => { window.location.href = '/error'; });
+	// 	}
+	// 	else {
+	// 		instance
+	// 		.get(`/mypage/comment?page=${urlId}`)
+	// 		.then((res) => {
+	// 			setCurrentPageNumber({page: res.data.page, pages: res.data.pages})
+	// 			setCommentBoardData(res.data);
+	// 		})
+	// 		.catch((err) => { window.location.href = '/error'; })
+	// 	}
+	// }, [window.location.href])
 
 	const pageChangeHandler = (page: number) => {
 		navigate(`/mypage?=${pageName}&page=${page}`)
@@ -124,7 +118,7 @@ export default function Mypage() {
 											?	postBoardData.contents.map((el: ContentData, idx) => {
 												return (<PostPreview key={idx} postData={el} />)
 											})
-											:	commentBoardData.contents.map((el: CommentData, idx) => {
+											:	commentBoardData.contents.map((el: CommentPreData, idx) => {
 												return (el.content && <CommentPreview key={idx} commentData={el} />)
 											})
 										}

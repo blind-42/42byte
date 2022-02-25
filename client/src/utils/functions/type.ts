@@ -52,3 +52,19 @@ export interface CommentData {
 	createdDate: string
   modifiedDate: string
 }
+
+export interface CommentPreData {
+  id: number
+  boardId: number
+  postId: number
+  authorId: number
+  content: string
+	commentCnt: number
+  likeCnt: number
+  blameCnt: number
+  isAuthor: boolean
+  isDel: boolean
+	title: string
+  createdDate: string
+  modifiedDate: string
+}
