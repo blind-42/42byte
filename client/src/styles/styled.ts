@@ -46,6 +46,8 @@ export const PageName = styled.div`
 	font-size: 1.3rem;
 	font-weight: 550;
 	margin: 0 0.7rem;
+	display: flex;
+	align-items: center;
 	div {
 		color: #fff
 	}
