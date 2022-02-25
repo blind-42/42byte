@@ -20,16 +20,12 @@ export default function Blindboard() {
 	const urlId = currentUrl.split('blindboard?page=')[1];
 	const navigate = useNavigate();
 
-	const { isLoading, error, data } = useQuery(['blindboard_key'], 
-																			() => {instance.get(`/board?boardId=1&page=${urlId}`).then((res) => {setBoardData(res.data);})},
-																			{retry: 0});
-
-	// useEffect(() => {
-	// 	instance
-	// 	.get(`/board?boardId=1&page=${urlId}`)
-	// 	.then((res) => {setBoardData(res.data)})
-	// 	.catch((err) => console.log(err));
-	// }, [window.location.href])
+	const { isLoading, error, data  } = useQuery(['blindboard_key', urlId], 
+		() => {
+			instance.get(`/board?boardId=1&page=${urlId}`).then((res) => {setBoardData(res.data);})},
+			{
+				retry: 0,
+				keepPreviousData: true});
 
 	const pageChangeHandler = (page: number) => {
 		navigate(`/blindboard?page=${page}`)
