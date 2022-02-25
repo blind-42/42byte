@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
-import { useQuery } from 'react-query';
+import { useQuery,  useQueryClient, useMutation } from 'react-query';
 import { Link } from 'react-router-dom';
 import { Viewer } from '@toast-ui/react-editor';
 import instance from 'utils/functions/axios';
@@ -49,7 +49,7 @@ function Detail() {
 		}]
 	});
 	const { id, title, content, commentCnt, viewCnt, likeCnt, isUsers, isNotice, isLiked, blameCnt, createdDate, modifiedDate } = detailData.post
-	const [boxState, setBoxState] = useState<boolean>(isLiked);
+	const [boxState, setBoxState] = useState<boolean>(false);
 	const [comment, setComment] = useState<string>('');
 	const [openPostDelModal, setOpenPostDelModal] = useState<boolean>(false);
   const [isEdit, setIsEdit] = useState(false)
@@ -58,27 +58,36 @@ function Detail() {
 	const urlId = currentUrl.split('detail?boardId=1&postId=')[1];
   const scrollRef = useRef<any>(null)
 
-	const { isFetching, isLoading, error, data } = useQuery(['detail_key'], 
-																									() => {instance.get(`/post?boardId=1&postId=${urlId}`)
-																									.then((res) => {setDetailData(res.data);
-																																	setCommentData(res.data.comment);
-																																	setCommentsUserList(Array.from(new Set(res.data.comment.filter((el:CommentData) => !el.isAuthor).map((el:CommentData) => el.authorId))))
-																																})},{retry: 0});
+	const { isFetching, isLoading, error, data } = useQuery(['detail_key', urlId, boxState, reRender], 
+		() => {
+			instance
+			.get(`/post?boardId=1&postId=${urlId}`)
+			.then((res) => {
+				console.log(res.data)
+				setDetailData(res.data);
+				setCommentData(res.data.comment);
+				setBoxState(res.data.post.isLiked);
+				setCommentsUserList(Array.from(new Set(res.data.comment.filter((el:CommentData) => !el.isAuthor).map((el:CommentData) => el.authorId))))
+		})
+	},{
+		retry: 0, 
+		// refetchOnMount: "always",
+		// notifyOnChangeProps: ['data']
+		// keepPreviousData: true
+	}
+	);
 
-	// useEffect(() => {
-	// 	instance.get(`/post?boardId=1&postId=${urlId}`)
-	// 	.then((res) => {
-	// 		console.log(res.data)
-	// 		setDetailData(res.data);
-  //     setCommentData(res.data.comment)
-  //   })
-	// 	.catch((err) => console.log(err));
-	// },[boxState, reRender])
+	const mutationPost = useMutation(
+		({ path, data }: { path: string; data?: object }) => instance.post(path, data)
+		);
+	const mutationDelete = useMutation(
+		({ path }: { path: string; }) => instance.delete(path)
+		);
+	const queryClient = useQueryClient();
 	
-	const [commentData, setCommentData] = useState([])
+	const [commentData, setCommentData] = useState([]);
 	const shortDate = createdDate?.slice(0, 16).replace('T', ' ');
   const [commentsUserList, setCommentsUserList] = useState([-1])
-
 
 	const inputCmmtHandler = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
 		setComment(e.target.value);
@@ -89,32 +98,26 @@ function Detail() {
 	}
 
 	const boxcolorHandler = () => {
-		instance
-		.post(`/post/like?postId=${urlId}`)
-		.then(() => setBoxState(!boxState))
-		.catch((err) => console.log(err));
+		mutationPost.mutate({path: `/post/like?postId=${urlId}`, data: undefined});
+		setBoxState(!boxState);
 	}
 
 	const sendCmmtHandler = () => {
-		instance
-		.post(`/comment?boardId=1&postId=${urlId}`, {content: comment})
-		.then(() => {
-			setComment('');
-      setReRender(!reRender)
-      setTimeout(() => scrollRef.current.scrollIntoView({behavior: "smooth", block: "end", inline: "nearest"}), 550)
-		})
-		.catch((err) => console.log(err));
+		mutationPost.mutate({path: `/comment?boardId=1&postId=${urlId}`, data: {content: comment}});
+		queryClient.invalidateQueries(['detail_key', urlId]);
+		setComment('');
+		setReRender(!reRender);
+		setTimeout(() => scrollRef.current.scrollIntoView({behavior: "smooth", block: "end", inline: "nearest"}), 550);
 	}
 
 	const modifiedHandler = () => {
-    setIsEdit(true)
+    setIsEdit(true);
 	}
 
 	const deletePostHandler = () => {
-		instance
-		.delete(`/post?postId=${id}`)
-		.then(() => {window.location.href = '/blindboard?page=1'})
-		.catch((err) => console.log(err));
+		mutationDelete.mutate({path: `/post?postId=${id}`});
+		queryClient.invalidateQueries(['detail_key', urlId]);
+		window.location.href = '/blindboard?page=1'
 	}
 
 	if (isFetching || isLoading) return <Loading />

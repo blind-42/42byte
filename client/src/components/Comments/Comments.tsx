@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import React from 'react';
 import instance from 'utils/functions/axios';
 import DeleteModal from 'components/Modal/DeleteModal';
 import { CommentData } from 'utils/functions/type';
@@ -7,7 +8,6 @@ import { GrLike } from "react-icons/gr";
 import { CommentWrap, ModifyCommentWrap, CommentTop, Info, Modify, Content, 
 				LikesBox, GLine, FLine } from './styled'
 import { CommentInput } from 'pages/Detail/styled'
-import React from 'react';
 
 type GreetingProps = {
 	comment: CommentData
@@ -22,7 +22,6 @@ function Comments({comment, commentsUserList, setReRender}: GreetingProps) {
 	const [modifyState, setModifyState] = useState<boolean>(false);
 	const [modifyCmmt, setModifyCmmt] = useState<string>(content);
 
-console.log(commentsUserList);
 	const clickCmmtDelModalHandler = () => {
 		setOpenCmmtDelModal(!openCmmtDelModal);
 	}
