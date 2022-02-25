@@ -10,11 +10,12 @@ import Mypage from './pages/Mypage/Mypage';
 import Notice from './pages/Notice/Notice';
 import Error from './pages/Error/Error';
 import Loading from './pages/Loading/Loading';
+import Admin from 'pages/Admin/Admin';
 import { GlobalStyle } from './styles/global-style';
 
 const queryClient = new QueryClient();
 
-function App() {
+export default function App() {
 
   return (
     <>
@@ -32,6 +33,7 @@ function App() {
 							<Route path='/notice' element={<Notice />} />
 							<Route path='/error' element={<Error />} />
 							<Route path='/loading' element={<Loading />} />
+							<Route path='/admin' element={<Admin />} />
 						</Routes>
 					</Router>
 			</RecoilRoot>
@@ -39,5 +41,3 @@ function App() {
     </>
   );
 }
-
-export default App;
