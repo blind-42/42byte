@@ -6,6 +6,7 @@ import Footer from 'components/Footer/Footer';
 import PostPreview from 'components/Postpreview/Postpreview';
 import PageNation from 'components/PageNation/PageNation';
 import instance from 'utils/functions/axios';
+import { GoSearch } from "react-icons/go";
 import { AppContainer, PageContainer, TopBar, PageName, Squares, PostContainer, ContentFooterWrap, Category } from 'styles/styled';
 import { UtilPostWrap, UtilWrap, Search, WritingButton, PostWrap, ContentWrap } from './styled';
 import { BoardData, ContentData} from 'utils/functions/type';
@@ -59,7 +60,7 @@ export default function Blindboard() {
 								<Search>
 									<input type="text" placeholder='검색어를 입력하세요'/>
 									<button>
-										<div>&#9740;</div>
+										<div><GoSearch /></div>
 									</button>
 								</Search>
 								<WritingButton>
