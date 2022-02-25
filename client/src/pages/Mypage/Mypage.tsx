@@ -35,6 +35,7 @@ export default function Mypage() {
 					setCommentBoardData(res.data);
 			})},
 			{ retry: 0,
+				refetchOnWindowFocus: false,
 				keepPreviousData: true});
 
 	// useEffect(() => {

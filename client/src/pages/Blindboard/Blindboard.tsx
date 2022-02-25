@@ -19,14 +19,17 @@ export default function Blindboard() {
 	const currentUrl = window.location.href;
 	const urlId = currentUrl.split('blindboard?page=')[1];
 	const navigate = useNavigate();
+	// const scrollRef = useRef<any>(null)
 
 	const { isLoading, error, data  } = useQuery(['blindboard_key', urlId], 
 		() => {instance.get(`/board?boardId=1&page=${urlId}`).then((res) => {setBoardData(res.data);})},
 			{ retry: 0,
+				refetchOnWindowFocus: false,
 				keepPreviousData: true});
 
 	const pageChangeHandler = (page: number) => {
-		navigate(`/blindboard?page=${page}`)
+		navigate(`/blindboard?page=${page}`);
+		// setTimeout(() => scrollRef.current.scrollIntoView({behavior: "smooth", block: "end", inline: "nearest"}), 50);
   };
 
 	if (isLoading) return <Loading />
@@ -72,6 +75,7 @@ export default function Blindboard() {
 									<div>작성일</div>
 								</Category>
 								<ContentWrap>
+								{/* <div ref={scrollRef}/> */}
 									<PostWrap>
 										{boardData.contents.map((el: ContentData, idx) => {
 											return (<PostPreview key={idx} postData={el} />)
