@@ -6,6 +6,8 @@ import Footer from 'components/Footer/Footer';
 import PageNation from 'components/PageNation/PageNation';
 import PostPreview from 'components/Postpreview/Postpreview';
 import CommentPreview from 'components/CommentPreview/CommentPreview';
+import Loading from 'pages/Loading/Loading';
+import Error from 'pages/Error/Error';
 import { AppContainer, PageContainer, TopBar, PageName, Squares, PostContainer, ContentFooterWrap } from '../../styles/styled'
 import { MenuWrap, PostMenu, CommentMenu, MenuPostWrap, Category, ContentWrap, PostWrap } from './styled'
 import instance from 'utils/functions/axios';
@@ -20,32 +22,20 @@ export default function Mypage() {
 	const currentUrl = window.location.href;
 	const urlId = currentUrl.split('page=')[1];
 	const navigate = useNavigate();
-	
 
-	const switchToComment = () => {
-		setPageName('comment')
-		navigate('/mypage?=comment&page=1')
-	}
-
-	const switchToPost = () => {
-		setPageName('post')
-		navigate('/mypage?=post&page=1')
-	}
-
-
-	const currentPageName = window.location.search.split('&')[0].slice(2)
-	setPageName(currentPageName)
-///////////////////////////////////////////////////////////////////
-	const { isLoading, error, data  } = useQuery(['mypage_key', urlId, currentPageName], 
+	const { isLoading, error, data  } = useQuery(['mypage_key', urlId, pageName, navigate], 
 		() => {
-			instance.get(`/mypage/${currentPageName}?page=${urlId}`)
+			console.log(pageName)
+			instance.get(`/mypage/${pageName}?page=${urlId}`)
 			.then((res) => {
 				setCurrentPageNumber({page: res.data.page, pages: res.data.pages});
-				setPostBoardData(res.data);
+				if (pageName === "post")
+					setPostBoardData(res.data);
+				else
+					setCommentBoardData(res.data);
 			})},
 			{ retry: 0,
 				keepPreviousData: true});
-
 
 	// useEffect(() => {
 	// 	const currentPageName = window.location.search.split('&')[0].slice(2)
@@ -70,9 +60,23 @@ export default function Mypage() {
 	// 	}
 	// }, [window.location.href])
 
+	const switchToComment = () => {
+		setPageName('comment')
+		navigate('/mypage?=comment&page=1')
+	}
+
+	const switchToPost = () => {
+		setPageName('post')
+		navigate('/mypage?=post&page=1')
+	}
+	
 	const pageChangeHandler = (page: number) => {
 		navigate(`/mypage?=${pageName}&page=${page}`)
   };
+
+	if (isLoading) return <Loading />
+
+	if (error) return <Error />
 
 	return (
 		<>
