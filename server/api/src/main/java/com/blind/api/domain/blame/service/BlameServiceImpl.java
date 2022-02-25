@@ -4,16 +4,15 @@ import com.blind.api.domain.blame.domain.CommentBlame;
 import com.blind.api.domain.blame.domain.PostBlame;
 import com.blind.api.domain.blame.repository.CommentBlameRepository;
 import com.blind.api.domain.blame.repository.PostBlameRepository;
-import com.blind.api.domain.comment.v1.domain.Comment;
+import com.blind.api.domain.comment.domain.Comment;
 import com.blind.api.domain.post.v2.domain.Post;
 import com.blind.api.domain.user.v2.domain.User;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.util.List;
 
 @Service
 @AllArgsConstructor
@@ -53,13 +52,13 @@ public class BlameServiceImpl implements BlameService{
 
     @Override
     @Transactional
-    public List<PostBlame> findAllPost() {
-        return postBlameRepository.findAll();
+    public Page<PostBlame> findAllPost(Pageable pageable) {
+        return postBlameRepository.findAll(pageable);
     }
 
     @Override
     @Transactional
-    public List<CommentBlame> findAllComment() {
-        return commentBlameRepository.findAll();
+    public Page<CommentBlame> findAllComment(Pageable pageable) {
+        return commentBlameRepository.findAll(pageable);
     }
 }

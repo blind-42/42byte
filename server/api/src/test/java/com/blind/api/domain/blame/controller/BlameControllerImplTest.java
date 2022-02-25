@@ -4,10 +4,9 @@ import com.blind.api.common.RestDocsConfiguration;
 import com.blind.api.domain.blame.service.BlameService;
 import com.blind.api.domain.board.v1.domain.Board;
 import com.blind.api.domain.board.v1.repository.BoardRepository;
-import com.blind.api.domain.comment.v1.domain.Comment;
-import com.blind.api.domain.comment.v1.repository.CommentRepository;
-import com.blind.api.domain.comment.v1.service.CommentService;
-import com.blind.api.domain.like.service.LikeService;
+import com.blind.api.domain.comment.domain.Comment;
+import com.blind.api.domain.comment.repository.CommentRepository;
+import com.blind.api.domain.comment.service.CommentService;
 import com.blind.api.domain.post.v2.domain.Post;
 import com.blind.api.domain.post.v2.repository.PostRepository;
 import com.blind.api.domain.post.v2.service.PostService;
@@ -26,14 +25,10 @@ import org.springframework.boot.test.autoconfigure.restdocs.AutoConfigureRestDoc
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.Import;
-import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
 import javax.transaction.Transactional;
-import java.util.HashMap;
-import java.util.Map;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -111,7 +106,7 @@ class BlameControllerImplTest {
         }
         board = boardService.findBoardByName("board").orElseGet(()-> null);
         if (board == null) {
-            board = boardService.save(new Board("board"));
+            board = boardService.save(new Board(user, "board"));
         }
         post = postRepository.findById(1L).orElseGet(()-> null);
         if (post == null)

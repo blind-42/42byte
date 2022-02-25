@@ -1,9 +1,8 @@
 package com.blind.api.domain.like.service;
 
-import com.blind.api.domain.comment.v1.domain.Comment;
-import com.blind.api.domain.comment.v1.dto.CommentDTO;
-import com.blind.api.domain.comment.v1.dto.CommentResponseDTO;
-import com.blind.api.domain.comment.v1.repository.CommentRepository;
+import com.blind.api.domain.comment.domain.Comment;
+import com.blind.api.domain.comment.dto.CommentDTO;
+import com.blind.api.domain.comment.dto.CommentResponseDTO;
 import com.blind.api.domain.like.domain.CommentLike;
 import com.blind.api.domain.like.domain.PostLike;
 import com.blind.api.domain.like.repository.CommentLikeRepository;
@@ -11,9 +10,8 @@ import com.blind.api.domain.like.repository.PostLikeRepository;
 import com.blind.api.domain.post.v2.domain.Post;
 import com.blind.api.domain.post.v2.dto.PostDTO;
 import com.blind.api.domain.post.v2.dto.PostResponseDTO;
-import com.blind.api.domain.post.v2.service.PostService;
+import com.blind.api.domain.user.v2.domain.RoleType;
 import com.blind.api.domain.user.v2.domain.User;
-import com.blind.api.domain.user.v2.service.UserService;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -71,7 +69,7 @@ public class LikeServiceImpl implements LikeService{
         Page<PostLike> savePageable = postLikeRepository.findAllPostByUserId(userId, pageable);
         PostResponseDTO dto = new PostResponseDTO();
         savePageable.stream().forEach( postLike -> {
-            dto.getContents().add(PostDTO.from(postLike.getPost()));
+            dto.getContents().add(PostDTO.from(postLike.getPost(), RoleType.USER));
         });
         dto.setPage(savePageable.getPageable().getPageNumber());
         dto.setPages(savePageable.getTotalPages());

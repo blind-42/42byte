@@ -1,16 +1,15 @@
-package com.blind.api.domain.comment.v1.service;
+package com.blind.api.domain.comment.service;
 
-import com.blind.api.domain.comment.v1.dto.CommentMyDTO;
-import com.blind.api.domain.comment.v1.dto.CommentResponseDTO;
+import com.blind.api.domain.comment.dto.CommentMyDTO;
+import com.blind.api.domain.comment.dto.CommentResponseDTO;
 import com.blind.api.domain.post.v2.domain.Post;
-import com.blind.api.domain.comment.v1.domain.Comment;
-import com.blind.api.domain.comment.v1.repository.CommentRepository;
+import com.blind.api.domain.comment.domain.Comment;
+import com.blind.api.domain.comment.repository.CommentRepository;
 import com.blind.api.domain.user.v2.domain.User;
 import com.blind.api.global.exception.BusinessException;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -36,9 +35,14 @@ public class CommentServiceImpl implements CommentService{
 
     @Override
     @Transactional
-    public void delete(Comment comment) {
-        comment.setIsDel(1);
-        comment.setContent(null);
+    public void delete(Comment comment, Integer type) {
+        comment.setIsDel(type);
+    }
+
+    @Override
+    @Transactional
+    public void deleteComment(Comment comment) {
+        commentRepository.delete(comment);
     }
 
     @Override

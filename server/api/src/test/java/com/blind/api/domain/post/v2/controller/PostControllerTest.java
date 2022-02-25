@@ -4,7 +4,9 @@ import com.blind.api.common.RestDocsConfiguration;
 import com.blind.api.domain.board.v1.domain.Board;
 import com.blind.api.domain.board.v1.repository.BoardRepository;
 import com.blind.api.domain.board.v1.service.BoardService;
-import com.blind.api.domain.comment.v1.service.CommentService;
+import com.blind.api.domain.comment.domain.Comment;
+import com.blind.api.domain.comment.service.CommentService;
+import com.blind.api.domain.comment.service.ReCommentService;
 import com.blind.api.domain.like.service.LikeService;
 import com.blind.api.domain.post.v2.domain.Post;
 import com.blind.api.domain.post.v2.dto.PostDTO;
@@ -74,6 +76,10 @@ class PostControllerTest {
 
     @Autowired
     @Mock
+    private ReCommentService reCommentService;
+
+    @Autowired
+    @Mock
     private LikeService likeService;
 
     @Autowired
@@ -119,7 +125,7 @@ class PostControllerTest {
         }
         board = boardService.findBoardByName("board").orElseGet(()-> null);
         if (board == null) {
-            board = boardService.save(new Board("board"));
+            board = boardService.save(new Board(user, "board"));
         }
     }
 
@@ -133,7 +139,8 @@ class PostControllerTest {
         postService.save(board, user, "title", "content");
         postService.save(board, user, "title", "content");
         mockMvc.perform(get("/board")
-                .param("boardId", String.valueOf(board.getId())))
+                    .param("boardId", String.valueOf(board.getId()))
+                    .header("Authorization", "Bearer access"))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andDo(document("find-all-posts"))
@@ -153,7 +160,8 @@ class PostControllerTest {
         postService.save(board, user, "title", "content");
         postService.save(board, user, "title", "content");
         mockMvc.perform(get("/board/search")
-                        .param("keyword", keyword))
+                        .param("keyword", keyword)
+                        .header("Authorization", "Bearer access"))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andDo(document("search-posts"))
@@ -168,7 +176,7 @@ class PostControllerTest {
         body.put("title", "title");
         body.put("content", "content");
         mockMvc.perform(post("/post").contentType(MediaType.APPLICATION_JSON)
-                .param("boardId", "-1")
+                .param("boardId", String.valueOf(board.getId()))
                         .content(objectMapper.writeValueAsString(body))
                         .header("Authorization", "Bearer access"))
                 .andExpect(status().isOk())
@@ -185,7 +193,13 @@ class PostControllerTest {
         Post post = postService.save(board, user, "title", "content");
         param.add("boardId", String.valueOf(board.getId()));
         param.add("postId", String.valueOf(post.getId()));
-        commentService.save(board.getId(), post, user,"comment");
+        Comment targetCmmt = commentService.save(board.getId(), post, user,"comment");
+        Comment rootCmmt = targetCmmt;
+        while (rootCmmt.getRootCommentId() != null)
+            rootCmmt = commentService.findCommentById(rootCmmt.getRootCommentId());
+        Long userId = user.getId();
+        Long rootCmmtId = rootCmmt.getId();
+        reCommentService.save(targetCmmt, rootCmmtId, userId, "내용");
         likeService.PostLike(post, user, 0L);
         mockMvc.perform(get("/post")
                 .params(param)

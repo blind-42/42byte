@@ -3,9 +3,14 @@ package com.blind.api.domain.board.v1.controller;
 import com.blind.api.domain.board.v1.domain.Board;
 import com.blind.api.domain.board.v1.dto.BoardRequestDTO;
 import com.blind.api.domain.board.v1.service.BoardService;
+import com.blind.api.domain.security.jwt.v1.repository.TokenRepository;
+import com.blind.api.domain.security.jwt.v1.service.TokenService;
+import com.blind.api.domain.user.v2.domain.User;
+import com.blind.api.global.utils.HeaderUtil;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 
@@ -13,11 +18,13 @@ import java.util.List;
 @AllArgsConstructor
 public class BoardControllerImpl implements BoardController {
     private final BoardService boardService;
+    private final TokenService tokenService;
 
     @RequestMapping(value="/board", method = RequestMethod.POST)
-    public Board createBoard(BoardRequestDTO requestDTO) {
+    public Board createBoard(BoardRequestDTO requestDTO, HttpServletRequest request) {
         String name = requestDTO.getName().trim();
-        return boardService.save(name);
+        User user = tokenService.findUserByAccessToken(HeaderUtil.getAccessToken(request));
+        return boardService.save(user, name);
     }
 
     @RequestMapping(value="/board/list", method = RequestMethod.GET)

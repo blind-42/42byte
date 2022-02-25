@@ -1,14 +1,12 @@
 package com.blind.api.domain.like.service;
 
 
-import com.blind.api.domain.comment.v1.domain.Comment;
-import com.blind.api.domain.comment.v1.dto.CommentResponseDTO;
+import com.blind.api.domain.comment.domain.Comment;
+import com.blind.api.domain.comment.dto.CommentResponseDTO;
 import com.blind.api.domain.post.v2.domain.Post;
 import com.blind.api.domain.post.v2.dto.PostResponseDTO;
 import com.blind.api.domain.user.v2.domain.User;
 import org.springframework.data.domain.Pageable;
-
-import java.util.List;
 
 public interface LikeService {
     public void PostLike(Post post, User user, Long num);

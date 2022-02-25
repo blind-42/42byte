@@ -1,11 +1,13 @@
-package com.blind.api.domain.comment.v1.dto;
+package com.blind.api.domain.comment.dto;
 
-import com.blind.api.domain.comment.v1.domain.Comment;
+import com.blind.api.domain.comment.domain.Comment;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @Setter
@@ -18,9 +20,10 @@ public class CommentDTO {
     private Long likeCnt;
     private Long blameCnt;
     private Boolean isAuthor;
-    private int isDel;
+    private Integer isDel;
     private Boolean isUsers;
     private Boolean isLiked;
+    private List<ReCommentDTO> recomments;
     private LocalDateTime createdDate;
     private LocalDateTime modifiedDate;
 
@@ -41,7 +44,7 @@ public class CommentDTO {
     }
 
     @Builder
-    private CommentDTO(Long id, Long boardId, Long postId, Long authorId, String content, Long likeCnt, Long blameCnt, Boolean isAuthor, int isDel, Boolean isLiked, LocalDateTime createdDate, LocalDateTime modifiedDate) {
+    private CommentDTO(Long id, Long boardId, Long postId, Long authorId, String content, Long likeCnt, Long blameCnt, Boolean isAuthor, Integer isDel, Boolean isLiked, LocalDateTime createdDate, LocalDateTime modifiedDate) {
         this.id = id;
         this.boardId = boardId;
         this.postId = postId;
@@ -52,6 +55,7 @@ public class CommentDTO {
         this.isAuthor = isAuthor;
         this.isDel = isDel;
         this.isLiked = isLiked;
+        this.recomments = new ArrayList<>();
         this.createdDate = createdDate;
         this.modifiedDate = modifiedDate;
     }

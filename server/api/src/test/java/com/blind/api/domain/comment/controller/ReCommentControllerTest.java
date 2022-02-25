@@ -1,10 +1,11 @@
-package com.blind.api.domain.comment.v1.controller;
+package com.blind.api.domain.comment.controller;
 
 import com.blind.api.common.RestDocsConfiguration;
 import com.blind.api.domain.board.v1.domain.Board;
 import com.blind.api.domain.board.v1.repository.BoardRepository;
-import com.blind.api.domain.comment.v1.domain.Comment;
-import com.blind.api.domain.comment.v1.service.CommentService;
+import com.blind.api.domain.comment.domain.Comment;
+import com.blind.api.domain.comment.service.CommentService;
+import com.blind.api.domain.comment.service.ReCommentService;
 import com.blind.api.domain.post.v2.domain.Post;
 import com.blind.api.domain.post.v2.service.PostService;
 import com.blind.api.domain.security.jwt.v1.domain.Token;
@@ -42,7 +43,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureRestDocs
 @AutoConfigureMockMvc
 @Import(RestDocsConfiguration.class)
-class CommentControllerTest {
+class ReCommentControllerTest {
 
     @Autowired
     MockMvc mockMvc;
@@ -57,6 +58,10 @@ class CommentControllerTest {
     @Autowired
     @Mock
     private CommentService commentService;
+
+    @Autowired
+    @Mock
+    private ReCommentService reCommentService;
 
     @Autowired
     @Mock
@@ -102,73 +107,47 @@ class CommentControllerTest {
         }
         board = boardService.findBoardByName("board").orElseGet(()-> null);
         if (board == null)
-            board = boardService.save(new Board("board"));
+            board = boardService.save(new Board(user, "board"));
     }
 
     @Test
     @Transactional
-    @DisplayName("댓글 저장")
-    void saveComment() throws Exception{
+    @DisplayName("대댓글 저장")
+    void saveReComment() throws Exception{
+        Post post = postService.save(board, user,"title", "content");
+        Comment comment = commentService.save(board.getId(), post, user, "내용");
         MultiValueMap<String, String> param = new LinkedMultiValueMap<>();
+        param.add("commentId", String.valueOf(comment.getId()));
+
         Map<String, String> body = new HashMap<>();
         body.put("content", "내용");
-
-        Post post = postService.save(board, user,"title", "content");
-        param.add("boardId", String.valueOf(board.getId()));
-        param.add("postId", String.valueOf(post.getId()));
-        mockMvc.perform(post("/comment").contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(body))
-                .params(param)
-                .header("Authorization", "Bearer access"))
-                .andExpect(status().isOk())
-                .andDo(document("comment-save"))
-                ;
-    }
-
-    @Test
-    @Transactional
-    @DisplayName("댓글 수정")
-    void updateComment() throws Exception {
-        Map<String, String> body = new HashMap<>();
-        body.put("content", "수정된 내용");
-
-        Post post = postService.save(board, user ,"title", "content");
-        Comment comment = commentService.save(board.getId(), post, user, "내용");
-        mockMvc.perform(put("/comment").contentType(MediaType.APPLICATION_JSON)
+        mockMvc.perform(post("/recomment").contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(body))
-                        .param("commentId", String.valueOf(comment.getId()))
+                        .params(param)
                         .header("Authorization", "Bearer access"))
                 .andExpect(status().isOk())
-                .andDo(document("comment-update"))
+                .andDo(document("recomment-save"))
         ;
     }
 
     @Test
     @Transactional
-    @DisplayName("댓글 삭제")
-    void deleteComment() throws Exception{
-        Post post = postService.save(board, user ,"title", "content");
-        Comment comment = commentService.save(board.getId(), post, user, "내용");
-        mockMvc.perform(delete("/comment")
-                        .param("commentId", String.valueOf(comment.getId()))
-                        .header("Authorization", "Bearer access"))
-                .andExpect(status().isOk())
-                .andDo(document("comment-delete"))
-        ;
-    }
-
-    @Test
-    @Transactional
-    @DisplayName("내가 쓴 댓글 조회")
-    void findCommentByUserId() throws Exception{
+    @DisplayName("대댓글 저장")
+    void saveReReComment() throws Exception{
         Post post = postService.save(board, user,"title", "content");
-        for (int i = 0; i< 24; i++){
-            commentService.save(board.getId(), post,user, "내용1");
-        }
-        mockMvc.perform(get("/mypage/comment")
+        Comment comment = commentService.save(board.getId(), post, user, "내용");
+        Comment comment1 = reCommentService.save(comment, comment.getId(), user.getId(), "hi");
+        MultiValueMap<String, String> param = new LinkedMultiValueMap<>();
+        param.add("commentId", String.valueOf(comment1.getId()));
+
+        Map<String, String> body = new HashMap<>();
+        body.put("content", "내용");
+        mockMvc.perform(post("/recomment").contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(body))
+                        .params(param)
                         .header("Authorization", "Bearer access"))
                 .andExpect(status().isOk())
-                .andDo(document("comment-mypage"))
+                .andDo(document("rerecomment-save"))
         ;
     }
 }

@@ -10,20 +10,19 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
 import java.util.Map;
 
 public interface BlameController {
-    public void postBlame(@RequestParam("postId") @Positive(message = "{invalid.request}") Long postId, @RequestBody @Valid String reason, HttpServletRequest request);
-    public void commentBlame(@RequestParam("commentId") @Positive(message = "{invalid.request}") Long commentId, @RequestBody @Valid String reason, HttpServletRequest request);
+    public void postBlame(@RequestParam("postId") @Positive(message = "{invalid.request}") Long postId, @RequestBody @NotNull(message = "{invalid.request.NotNull}") String reason, HttpServletRequest request);
+    public void commentBlame(@RequestParam("commentId") @Positive(message = "{invalid.request}") Long commentId, @RequestBody @NotNull(message = "{invalid.request.NotNull}") String reason, HttpServletRequest request);
 
     BlameResponseDTO findAllPost(HttpServletRequest request,
                                  @SortDefault.SortDefaults({
-                                        @SortDefault(sort = "isNotice", direction = Sort.Direction.DESC),
                                         @SortDefault(sort = "id", direction = Sort.Direction.DESC)}) Pageable pageable);
 
     BlameResponseDTO findAllComment(HttpServletRequest request,
                                  @SortDefault.SortDefaults({
-                                         @SortDefault(sort = "isNotice", direction = Sort.Direction.DESC),
                                          @SortDefault(sort = "id", direction = Sort.Direction.DESC)}) Pageable pageable);
 }

@@ -1,5 +1,6 @@
 package com.blind.api.domain.user.v2.service;
 
+import com.blind.api.domain.user.v2.domain.RoleType;
 import com.blind.api.domain.user.v2.domain.User;
 import com.blind.api.domain.user.v2.repository.UserRepository;
 
@@ -15,12 +16,17 @@ public class UserService {
     private final UserRepository userRepository;
 
     @Transactional
-    public Optional<User> findById(String id){
-        return userRepository.findByHashId(id);
+    public User findById(Long userId){
+        return userRepository.findById(userId).orElseThrow(() -> new BusinessException("{invalid.request}"));
     }
 
     @Transactional
     public User findByHashId(String hashId){
         return userRepository.findByHashId(hashId).orElseThrow(() -> new BusinessException("{user.notfound}"));
+    }
+
+    @Transactional
+    public void setRoleType(User user, RoleType type){
+        user.setRoleType(type);
     }
 }

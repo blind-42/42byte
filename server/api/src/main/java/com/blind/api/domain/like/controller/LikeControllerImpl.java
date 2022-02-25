@@ -1,8 +1,8 @@
 package com.blind.api.domain.like.controller;
 
-import com.blind.api.domain.comment.v1.domain.Comment;
-import com.blind.api.domain.comment.v1.dto.CommentResponseDTO;
-import com.blind.api.domain.comment.v1.service.CommentService;
+import com.blind.api.domain.comment.domain.Comment;
+import com.blind.api.domain.comment.dto.CommentResponseDTO;
+import com.blind.api.domain.comment.service.CommentService;
 import com.blind.api.domain.like.service.LikeService;
 import com.blind.api.domain.post.v2.domain.Post;
 import com.blind.api.domain.post.v2.dto.PostResponseDTO;
