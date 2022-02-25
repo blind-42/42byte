@@ -16,13 +16,14 @@ public class PostDTO {
     private Long commentCnt;
     private Long viewCnt;
     private Long likeCnt;
-    private Boolean isNotice;
     private Long blameCnt;
-    private RoleType type;
+    private Boolean isNotice;
+    private Integer isDel;
+    private Integer type;
     private LocalDateTime createdDate;
     private LocalDateTime modifiedDate;
 
-    public static PostDTO from(Post post, RoleType type) {
+    public static PostDTO from(Post post, Integer type) {
         return PostDTO.builder()
                 .id(post.getId())
                 .title(post.getTitle())
@@ -31,6 +32,7 @@ public class PostDTO {
                 .likeCnt(post.getLikeCnt())
                 .commentCnt(post.getCommentCnt())
                 .isNotice(post.getIsNotice())
+                .isDel(post.getIsDel())
                 .type(type)
                 .createdDate(post.getCreatedDate())
                 .modifiedDate(post.getModifiedDate())
@@ -38,14 +40,15 @@ public class PostDTO {
     }
 
     @Builder
-    private PostDTO(Long id, String title, Long commentCnt, Long viewCnt, Long likeCnt, Boolean isNotice, Long blameCnt, RoleType type, LocalDateTime createdDate, LocalDateTime modifiedDate) {
+    private PostDTO(Long id, String title, Long commentCnt, Long viewCnt, Long likeCnt, Long blameCnt, Boolean isNotice, Integer isDel, Integer type, LocalDateTime createdDate, LocalDateTime modifiedDate) {
         this.id = id;
         this.title = title;
         this.commentCnt = commentCnt;
         this.viewCnt = viewCnt;
         this.likeCnt = likeCnt;
-        this.isNotice = isNotice;
         this.blameCnt = blameCnt;
+        this.isNotice = isNotice;
+        this.isDel = isDel;
         this.type = type;
         this.createdDate = createdDate;
         this.modifiedDate = modifiedDate;
