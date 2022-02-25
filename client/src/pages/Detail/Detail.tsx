@@ -67,15 +67,13 @@ function Detail() {
 				setDetailData(res.data);
 				setCommentData(res.data.comment);
 				setBoxState(res.data.post.isLiked);
-				setCommentsUserList(Array.from(new Set(res.data.comment.filter((el:CommentData) => !el.isAuthor).map((el:CommentData) => el.authorId))))
-		})
-	},{
-		retry: 0, 
-		// refetchOnMount: "always",
-		// notifyOnChangeProps: ['data']
-		// keepPreviousData: true
-	}
-	);
+				setCommentsUserList(Array.from(new Set(res.data.comment.filter((el:CommentData) => !el.isAuthor).map((el:CommentData) => el.authorId))))})},
+				{
+					retry: 0, 
+					// refetchOnMount: "always",
+					// notifyOnChangeProps: ['data'],
+					// keepPreviousData: true
+				});
 
 	const mutationPost = useMutation(
 		({ path, data }: { path: string; data?: object }) => instance.post(path, data)
