@@ -1,8 +1,8 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useRecoilState } from 'recoil';
 import { Link } from 'react-router-dom';
 import { LoggedinState } from 'States/LoginState';
-import instance from 'utils/functions/axios';
+import { GoSearch } from "react-icons/go";
 import { MenubarContainer, ExitButton, UserProfileWrap, UserImg, UserName, UserMenu, UtilWrap, WritingButton, Search, MenuListWrap } from './styled';
 import LoginModal from 'components/Modal/LoginModal';
 
@@ -10,7 +10,7 @@ type GreetingProps = {
 	menubarHandler: () => void;
 }
 
-function Menubar({ menubarHandler }: GreetingProps) {
+export default function Menubar({ menubarHandler }: GreetingProps) {
 	const [isLoggedIn, setIsLoggedIn] = useRecoilState(LoggedinState);
 	const [openLoginModal, setOpenLoginModal] = useState<boolean>(false);
 
@@ -60,16 +60,16 @@ function Menubar({ menubarHandler }: GreetingProps) {
 					<WritingButton>
 					{isLoggedIn 
 					? <Link to="/writing">
-							<input type="button" value="새 글 쓰기" />
+							<input type="button" value="새 글쓰기" />
 						</Link>
-					: <input type="button" value="새 글 쓰기" onClick={openLoginModalHandler}/>
+					: <input type="button" value="새 글쓰기" onClick={openLoginModalHandler}/>
 					}
 					</WritingButton>
 					{isLoggedIn
 					? <Search>
 							<input type="text" placeholder='검색어를 입력하세요'/>
 							<button>
-								<div>&#9740;</div>
+								<div><GoSearch /></div>
 							</button>
 						</Search>
 					: <Search onClick={openLoginModalHandler}>
@@ -91,5 +91,3 @@ function Menubar({ menubarHandler }: GreetingProps) {
 		</>
 	);
 }
-
-export default Menubar;

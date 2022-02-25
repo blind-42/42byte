@@ -71,18 +71,6 @@ export const CommentMenu = styled.div<{state?: string;}>`
 	`}
 `;
 
-
-export const PostContainer = styled.div`
-	overflow-y: scroll;
-	background: #C4C4C4;
-	border-top: solid 2px #000;
-	border-left: solid 2px #000;
-	border-right: solid 2px #fff;
-	border-bottom: solid 2px #fff;
-	margin: 3px 0;
-	padding: 3px;
-`;
-
 export const Category = styled.div<{state?: string;}>`
 	display: grid;
 	grid-template-columns: ${(props) => props.state === 'post' ? '1.2fr 6fr 1fr 1fr 2fr' : '1fr'};

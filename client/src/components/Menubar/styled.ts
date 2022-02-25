@@ -10,15 +10,20 @@ export const MenubarContainer = styled.div`
 	flex-direction: column;
 	align-items: stretch;
 	background: #C4C4C4;
-	height: 70vh;
-	width: 34vh;
+	height: 80vh;
+	width: 25rem;
 	border-top: solid 2px #fff;
 	border-left: solid 2px #fff;
 	border-right: solid 2px #000;
 	border-bottom: solid 2px #000;
-	@media screen and (min-width: 768px) {
-		height: 80vh;
-  }
+	${({theme}) => theme.media.tablet`
+		height: 70vh;
+		width: 21rem;
+  `}
+	${({theme}) => theme.media.desktop`
+		height: 75vh;
+		width: 17rem;
+	`}
 `;
 
 export const ExitButton = styled.div`
@@ -42,14 +47,22 @@ export const ExitButton = styled.div`
 		border-left: solid 2px #fff;
 		border-right: solid 2px #000;
 		border-bottom: solid 2px #000;
+		padding-bottom: 3px;
 	}
-	@media screen and (min-width: 768px) {
+	${({theme}) => theme.media.tablet`
 		div {
+			font-size: 1.2rem;
+			width: 1.5rem;
+			height: 1.5rem;
+		}
+	`}
+	${({theme}) => theme.media.desktop`
+		div {
+			font-size: 1rem;
 			width: 1.2rem;
 			height: 1.2rem;
-			font-size: 1.2rem;
 		}
-	}
+	`}
 `;
 
 export const UserProfileWrap = styled.div`
@@ -58,6 +71,12 @@ export const UserProfileWrap = styled.div`
 	align-items: center;
 	padding: 2rem 0;
 	border-bottom: solid 2px #929191;
+	${({theme}) => theme.media.tablet`
+		padding: 1.5rem 0;
+	`}
+	${({theme}) => theme.media.desktop`
+		padding: 1.2rem 0;
+	`}
 `;
 
 export const UserImg = styled.div`
@@ -66,24 +85,32 @@ export const UserImg = styled.div`
 	margin-bottom: 1.2rem;
   img {
     border-radius: 50%;
-    height: 6vh;
+    height: 4.2rem;
 		border: solid 1px #fff;
   }
-	@media screen and (min-width: 768px) {
+	${({theme}) => theme.media.tablet`
 		img {
-			height: 7vh;
+			height: 3.3rem;
 		}
-	}
+	`}
+	${({theme}) => theme.media.desktop`
+		img {
+			height: 3.3rem;
+		}
+	`}
 `;
 
 export const UserName = styled.div`
   display: flex;
   align-items: center;
-  font-size: 1.7rem;
+  font-size: 1.5rem;
 	font-weight: 700;
-	@media screen and (min-width: 768px) {
-		font-size: 1.1rem;
-	}
+	${({theme}) => theme.media.tablet`
+		font-size: 1.2rem;
+	`}
+	${({theme}) => theme.media.desktop`
+		font-size: 1rem;
+	`}
 `;
 
 export const UserMenu = styled.div`
@@ -94,22 +121,32 @@ export const UserMenu = styled.div`
 		font-size: 1.3rem; 
 		cursor: pointer;
 	}
-	@media screen and (min-width: 768px) {
+	${({theme}) => theme.media.tablet`
 		div {
 			margin: 0 0.5rem;
-			font-size: 1rem;
+			font-size: 1.1rem;
 		}
-	}
+	`}
+	${({theme}) => theme.media.desktop`
+		div {
+			margin: 0 0.5rem;
+			font-size: 0.9rem;
+		}
+	`}
 `;
 
 export const UtilWrap = styled.div`
-	padding: 1rem 2rem;
+	padding: 2rem 0;
 	display: flex;
 	flex-direction: column;
 	align-items: center;
 	border-top: solid 2px #fff;
-	@media screen and (min-width: 768px) {
-	}
+	${({theme}) => theme.media.tablet`
+		padding: 1.2rem 0;
+	`}
+	${({theme}) => theme.media.desktop`
+		padding: 1.2rem 0;
+	`}
 `;
 
 export const WritingButton = styled.div`
@@ -120,23 +157,32 @@ export const WritingButton = styled.div`
 	input {
 		cursor: pointer;
 		height: 3.5rem;
+		width: 11rem;
 		background: #518EDB;
 		border-top: solid 2px #fff;
 		border-left: solid 2px #fff;
 		border-right: solid 2px #000;
 		border-bottom: solid 2px #000;
 		font-weight: 600;
-		font-size: 1.7rem;
+		font-size: 1.5rem;
 		color: #fff;
-		padding: 0 2rem;
 	}
-	@media screen and (min-width: 768px) {
+	${({theme}) => theme.media.tablet`
+		input {
+			height: 2.8rem;
+			width: 9rem;
+			font-size: 1.2rem;
+			font-weight: 700;
+		}
+	`}
+	${({theme}) => theme.media.desktop`
 		input {
 			height: 2.4rem;
+			width: 8rem;
 			font-size: 1rem;
 			font-weight: 700;
 		}
-	}
+	`}
 `;
 
 export const Search = styled.div`
@@ -151,9 +197,10 @@ export const Search = styled.div`
 	margin: 0.5rem 0;
 	background: #fff;
 	input {
-		font-size: 1.3rem;
+		font-size: 1.2rem;
+		width: 14rem;
 		display: flex;
-		padding-left: 0.2rem;
+		padding-left: 0.3rem;
 		border: none;
 	}
 	button {
@@ -167,25 +214,45 @@ export const Search = styled.div`
 		color: #fff;
 		height: 2.5rem;
 		width: 2.5rem;
+		display: flex;
+		align-items: center;
+		justify-content: center;
 		div {
-			font-size: 1.5rem;
-			transform: rotate(100deg);
+			font-size: 1.3rem;
 		}
 	}
-	@media screen and (min-width: 768px) {
-		height: 1.7rem;
+	${({theme}) => theme.media.tablet`
+		height: 1.8rem;
+		margin: 0.3rem 0;
 		input {
-			font-size: 0.9rem;
-			padding-left: 0.2rem;
+			font-size: 1rem;
+			width: 11rem;
+			padding-left: 0.4rem;
+		}
+		button {
+			height: 1.8rem;
+			width: 1.8rem;
+			div {
+				font-size: 1.1rem; 
+			}
+		}
+	`}
+	${({theme}) => theme.media.desktop`
+		height: 1.7rem;
+		margin: 0.3rem 0;
+		input {
+			font-size: 0.8rem;
+			width: 10rem;
+			padding-left: 0.4rem;
 		}
 		button {
 			height: 1.7rem;
 			width: 1.7rem;
 			div {
-				font-size: 1rem; 
+				font-size: 0.9rem; 
 			}
 		}
-	}
+	`}
 `;
 
 export const MenuListWrap = styled.div`
@@ -195,12 +262,19 @@ export const MenuListWrap = styled.div`
 	margin: 1rem 0;
 	li {
 		cursor: pointer;
-		font-size: 1.5rem;
-		font-weight: 500;
+		font-size: 1.3rem;
+		font-weight: 400;
 	}
-	@media screen and (min-width: 768px) {
+	${({theme}) => theme.media.tablet`
+		margin: 1rem 0;
 		li {
-			font-size: 1rem;
+			font-size: 1.1rem;
 		}
-	}
+	`}
+	${({theme}) => theme.media.desktop`
+		margin: 0.7rem 0;
+		li {
+			font-size: 0.9rem;
+		}
+	`}
 `;
