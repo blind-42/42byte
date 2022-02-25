@@ -1,5 +1,6 @@
-import { useState } from 'react';
 import React from 'react';
+import { useState } from 'react';
+import { useQuery,  useQueryClient, useMutation } from 'react-query';
 import instance from 'utils/functions/axios';
 import DeleteModal from 'components/Modal/DeleteModal';
 import { CommentData } from 'utils/functions/type';
@@ -12,16 +13,26 @@ import { CommentInput } from 'pages/Detail/styled'
 type GreetingProps = {
 	comment: CommentData
 	commentsUserList: number[]
-  setReRender: React.Dispatch<React.SetStateAction<boolean>>
+  // setReRender: React.Dispatch<React.SetStateAction<boolean>>
 }
 
-function Comments({comment, commentsUserList, setReRender}: GreetingProps) {
+function Comments({comment, commentsUserList}: GreetingProps) {
 	const { boardId, postId, id, authorId, content, likeCnt, blameCnt, isUsers, isAuthor, isLiked, isDel, createdDate, modifiedDate } = comment;
 	const [boxState, setBoxState] = useState<boolean>(isLiked);
 	const [openCmmtDelModal, setOpenCmmtDelModal] = useState<boolean>(false);
 	const [modifyState, setModifyState] = useState<boolean>(false);
 	const [modifyCmmt, setModifyCmmt] = useState<string>(content);
 
+
+	const queryClient = useQueryClient();
+	const mutationPost = useMutation(
+		({ path, data }: { path: string; data?: object }) => instance.post(path, data));
+	const mutationDelete = useMutation(
+		({ path }: { path: string; }) => instance.delete(path));
+	const mutationPut = useMutation(
+		({ path, data }: { path: string; data?: object }) => instance.put(path, data));
+
+		
 	const clickCmmtDelModalHandler = () => {
 		setOpenCmmtDelModal(!openCmmtDelModal);
 	}
@@ -35,33 +46,30 @@ function Comments({comment, commentsUserList, setReRender}: GreetingProps) {
 	}
 
 	const boxcolorHandler = () => {
-		instance
-		.post(`/comment/like?postId=${postId}&commentId=${id}`)
-		.then(() => {
-      setBoxState(!boxState)
-      setReRender(prev => !prev)
-    })
-		.catch((err) => console.log(err));
+		mutationPost.mutate({path: `/comment/like?postId=${postId}&commentId=${id}`, data: undefined},
+		{ onSuccess: (data) => {
+				queryClient.invalidateQueries(['detail_key']);
+				setBoxState(!boxState);},
+			onError: (data) => {window.location.href = '/error';}
+		});
 	}
 	
 	const deleteCmmtHandler = () => {
-		instance
-		.delete(`/comment?commentId=${id}`)
-    .then(() => {
-      setOpenCmmtDelModal(!openCmmtDelModal);
-      setReRender(prev => !prev)
-    })
-		.catch((err) => console.log(err));
+		mutationDelete.mutate({path: `/comment?commentId=${id}`},
+		{ onSuccess: (data) => {
+				queryClient.invalidateQueries(['detail_key']);
+				setOpenCmmtDelModal(!openCmmtDelModal);},
+			onError: (data) => {window.location.href = '/error';}
+		});
 	}
 
 	const sendModifyCmmtHandler = () => {
-		instance
-		.put(`/comment?commentId=${id}`, {content: modifyCmmt})
-    .then(() => {
-      setModifyState(!modifyState);
-      setReRender(prev => !prev)
-    })
-		.catch((err) => console.log(err));
+		mutationPut.mutate({path: `/comment?commentId=${id}`, data: {content: modifyCmmt}},
+		{ onSuccess: (data) => {
+				queryClient.invalidateQueries(['detail_key']);
+				setModifyState(!modifyState);},
+			onError: (data) => {window.location.href = '/error';}
+		})
 	}
 
 	return (

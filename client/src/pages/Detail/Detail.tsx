@@ -7,6 +7,7 @@ import Header from 'components/Header/Header';
 import Footer from 'components/Footer/Footer';
 import Comments from 'components/Comments/Comments';
 import DeleteModal from 'components/Modal/DeleteModal';
+import PostEditor from 'components/PostEdit/PostEditor';
 import Loading from 'pages/Loading/Loading';
 import Error from 'pages/Error/Error';
 import { DetailData, PostData, CommentData } from 'utils/functions/type';
@@ -14,7 +15,6 @@ import { GrLike } from "react-icons/gr";
 import { AppContainer, PageContainer, TopBar, PageName, Squares, ContentFooterWrap } from 'styles/styled';
 import { PostContainer, DetailContainer, Title, Specific, Info, Modify, ContentWrap, LikeWrap, LikesBox
 				, CommentContainer, CommentCount, CommentInput, CommentListWrap, FLine } from './styled';
-import PostEditor from 'components/PostEdit/PostEditor';
 
 function Detail() {
 	const [detailData, setDetailData] = useState<DetailData>(
@@ -58,64 +58,65 @@ function Detail() {
 	const urlId = currentUrl.split('detail?boardId=1&postId=')[1];
   const scrollRef = useRef<any>(null)
 
+	
+	const mutationPost = useMutation(
+		({ path, data }: { path: string; data?: object }) => instance.post(path, data));
+	const mutationDelete = useMutation(
+		({ path }: { path: string; }) => instance.delete(path));
 	const { isFetching, isLoading, error, data } = useQuery(['detail_key', urlId, boxState, reRender], 
 		() => {
 			instance
 			.get(`/post?boardId=1&postId=${urlId}`)
 			.then((res) => {
-				console.log(res.data)
+				console.log('use')
 				setDetailData(res.data);
 				setCommentData(res.data.comment);
 				setBoxState(res.data.post.isLiked);
 				setCommentsUserList(Array.from(new Set(res.data.comment.filter((el:CommentData) => !el.isAuthor).map((el:CommentData) => el.authorId))))})},
-				{
-					retry: 0, 
-					// refetchOnMount: "always",
-					// notifyOnChangeProps: ['data'],
-					// keepPreviousData: true
+				{ retry: 0, 
+					refetchOnWindowFocus: false, // 다른 윈도우를 보고 와도 패치해오지 않음 (조회수 x)
+					keepPreviousData: true,
 				});
-
-	const mutationPost = useMutation(
-		({ path, data }: { path: string; data?: object }) => instance.post(path, data)
-		);
-	const mutationDelete = useMutation(
-		({ path }: { path: string; }) => instance.delete(path)
-		);
-	const queryClient = useQueryClient();
 	
 	const [commentData, setCommentData] = useState([]);
 	const shortDate = createdDate?.slice(0, 16).replace('T', ' ');
   const [commentsUserList, setCommentsUserList] = useState([-1])
 
+
+	const boxcolorHandler = () => {
+		mutationPost.mutate({path: `/post/like?postId=${urlId}`, data: undefined}, 
+		{ onSuccess: (data) => {setBoxState(!boxState);},
+			onError: (data) => {window.location.href = '/error';} 
+		});
+	}
+
+	const sendCmmtHandler = () => {
+		mutationPost.mutate({path: `/comment?boardId=1&postId=${urlId}`, data: {content: comment}},
+		{ onSuccess: (data) => {
+				setComment('');
+				setReRender(!reRender);
+				setTimeout(() => scrollRef.current.scrollIntoView({behavior: "smooth", block: "end", inline: "nearest"}), 550);},
+			onError: (data) => {window.location.href = '/error';}
+		});
+	}
+
+	const deletePostHandler = () => {
+		mutationDelete.mutate({path: `/post?postId=${id}`},
+		{ onSuccess: (data) => {
+				window.location.href = '/blindboard?page=1';},
+			onError: (data) => {window.location.href = '/error';}
+		});
+	}
+
 	const inputCmmtHandler = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
 		setComment(e.target.value);
   }
-
 	const clickPostDelModalHandler = () => {
 		setOpenPostDelModal(!openPostDelModal);
 	}
 
-	const boxcolorHandler = () => {
-		mutationPost.mutate({path: `/post/like?postId=${urlId}`, data: undefined});
-		setBoxState(!boxState);
-	}
-
-	const sendCmmtHandler = () => {
-		mutationPost.mutate({path: `/comment?boardId=1&postId=${urlId}`, data: {content: comment}});
-		queryClient.invalidateQueries(['detail_key', urlId]);
-		setComment('');
-		setReRender(!reRender);
-		setTimeout(() => scrollRef.current.scrollIntoView({behavior: "smooth", block: "end", inline: "nearest"}), 550);
-	}
-
 	const modifiedHandler = () => {
     setIsEdit(true);
-	}
-
-	const deletePostHandler = () => {
-		mutationDelete.mutate({path: `/post?postId=${id}`});
-		queryClient.invalidateQueries(['detail_key', urlId]);
-		window.location.href = '/blindboard?page=1'
 	}
 
 	if (isFetching || isLoading) return <Loading />
@@ -184,8 +185,8 @@ function Detail() {
 									<FLine />
 									<CommentListWrap>
 										{commentData.map((el: CommentData) => {
-											return (<Comments key={el.id} comment={el} 
-																										setReRender={setReRender}
+											return (<Comments key={el.id} comment={el}
+																										// setReRender={setReRender}
 																										commentsUserList={commentsUserList} />)
 										})}
 									</CommentListWrap>

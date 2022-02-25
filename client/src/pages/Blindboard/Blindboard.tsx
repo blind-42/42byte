@@ -5,13 +5,13 @@ import Header from 'components/Header/Header';
 import Footer from 'components/Footer/Footer';
 import PostPreview from 'components/Postpreview/Postpreview';
 import PageNation from 'components/PageNation/PageNation';
+import Loading from 'pages/Loading/Loading';
+import Error from 'pages/Error/Error';
 import instance from 'utils/functions/axios';
 import { GoSearch } from "react-icons/go";
 import { AppContainer, PageContainer, TopBar, PageName, Squares, PostContainer, ContentFooterWrap, Category } from 'styles/styled';
 import { UtilPostWrap, UtilWrap, Search, WritingButton, PostWrap, ContentWrap } from './styled';
 import { BoardData, ContentData} from 'utils/functions/type';
-import Loading from 'pages/Loading/Loading';
-import Error from 'pages/Error/Error';
 
 export default function Blindboard() {
 	const [boardData, setBoardData] = useState({contents: [], page: 0, pages: 0});
@@ -21,10 +21,8 @@ export default function Blindboard() {
 	const navigate = useNavigate();
 
 	const { isLoading, error, data  } = useQuery(['blindboard_key', urlId], 
-		() => {
-			instance.get(`/board?boardId=1&page=${urlId}`).then((res) => {setBoardData(res.data);})},
-			{
-				retry: 0,
+		() => {instance.get(`/board?boardId=1&page=${urlId}`).then((res) => {setBoardData(res.data);})},
+			{ retry: 0,
 				keepPreviousData: true});
 
 	const pageChangeHandler = (page: number) => {

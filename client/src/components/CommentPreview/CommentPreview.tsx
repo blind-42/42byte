@@ -1,10 +1,10 @@
 import { Link } from 'react-router-dom';
-import { CommentData } from 'pages/Mypage/Mypage';
+import { CommentPreData } from 'utils/functions/type';
 import { shortening, timeForToday } from 'utils/functions/functions';
 import { CommentPreviewContainer, CommentWrap, OriginalPost } from './styled';
 
 type GreetingProps = {
-	commentData: CommentData;
+	commentData: CommentPreData;
 }
 
 function CommentPreview({ commentData }: GreetingProps) {
