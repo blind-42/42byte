@@ -1,13 +1,11 @@
 package com.blind.api.domain.post.v2.dto;
 
 
-import com.blind.api.domain.comment.v1.dto.CommentDTO;
 import com.blind.api.domain.post.v2.domain.Post;
+import com.blind.api.domain.user.v2.domain.RoleType;
 import lombok.*;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 
 @Getter
 @Setter
@@ -22,10 +20,11 @@ public class PostDetailDTO {
     private Boolean isUsers;
     private Long blameCnt;
     private Boolean isLiked;
+    private RoleType type;
     private LocalDateTime createdDate;
     private LocalDateTime modifiedDate;
 
-    public static PostDetailDTO from(Post post) {
+    public static PostDetailDTO from(Post post, RoleType type) {
         return PostDetailDTO.builder()
                 .id(post.getId())
                 .title(post.getTitle())
@@ -35,13 +34,14 @@ public class PostDetailDTO {
                 .likeCnt(post.getLikeCnt())
                 .commentCnt(post.getCommentCnt())
                 .isNotice(post.getIsNotice())
+                .type(type)
                 .createdDate(post.getCreatedDate())
                 .modifiedDate(post.getModifiedDate())
                 .build();
     }
 
     @Builder
-    private PostDetailDTO(Long id, String title, String content, Long commentCnt, Long viewCnt, Long likeCnt, Boolean isNotice, Long blameCnt, Boolean isLiked, LocalDateTime createdDate, LocalDateTime modifiedDate) {
+    private PostDetailDTO(Long id, String title, String content, Long commentCnt, Long viewCnt, Long likeCnt, Boolean isNotice, Long blameCnt, Boolean isLiked, RoleType type, LocalDateTime createdDate, LocalDateTime modifiedDate) {
         this.id = id;
         this.title = title;
         this.content = content;
@@ -51,6 +51,7 @@ public class PostDetailDTO {
         this.isNotice = isNotice;
         this.blameCnt = blameCnt;
         this.isLiked = isLiked;
+        this.type = type;
         this.createdDate = createdDate;
         this.modifiedDate = modifiedDate;
     }

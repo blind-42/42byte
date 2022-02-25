@@ -1,7 +1,7 @@
-package com.blind.api.domain.comment.v1.service;
+package com.blind.api.domain.comment.service;
 
-import com.blind.api.domain.comment.v1.domain.Comment;
-import com.blind.api.domain.comment.v1.dto.CommentResponseDTO;
+import com.blind.api.domain.comment.domain.Comment;
+import com.blind.api.domain.comment.dto.CommentResponseDTO;
 import com.blind.api.domain.post.v2.domain.Post;
 import com.blind.api.domain.user.v2.domain.User;
 import org.springframework.data.domain.Page;
@@ -17,7 +17,9 @@ public interface CommentService {
 
     List<Comment> findAllComment(Long boardId, Long postId);
 
-    void delete(Comment comment);
+    void delete(Comment comment, Integer type);
+
+    void deleteComment(Comment comment);
 
     void deleteCommentByPostId(Long postId);
 

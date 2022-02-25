@@ -1,7 +1,7 @@
-package com.blind.api.domain.comment.v1.controller;
+package com.blind.api.domain.comment.controller;
 
-import com.blind.api.domain.comment.v1.dto.CommentRequestDTO;
-import com.blind.api.domain.comment.v1.dto.CommentResponseDTO;
+import com.blind.api.domain.comment.dto.CommentRequestDTO;
+import com.blind.api.domain.comment.dto.CommentResponseDTO;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.SortDefault;

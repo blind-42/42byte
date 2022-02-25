@@ -36,14 +36,6 @@ public class User extends BaseTimeEntity {
     @Enumerated(EnumType.STRING)
     private RoleType roleType;
 
-    /*
-    public User(
-            @NotNull @Size(max = 256) String userId,
-            @NotNull RoleType roleType
-    ) {
-        this.userId = userId;
-        this.roleType = roleType;
-    }*/
     public User(
             @NotNull String hashId,
             @NotNull RoleType roleType

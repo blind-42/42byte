@@ -1,12 +1,11 @@
 package com.blind.api.domain.blame.domain;
 
-import com.blind.api.domain.comment.v1.domain.Comment;
+import com.blind.api.domain.comment.domain.Comment;
 import com.blind.api.domain.user.v2.domain.User;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.springframework.util.Assert;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;

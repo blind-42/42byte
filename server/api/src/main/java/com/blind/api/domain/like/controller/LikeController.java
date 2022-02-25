@@ -1,6 +1,6 @@
 package com.blind.api.domain.like.controller;
 
-import com.blind.api.domain.comment.v1.dto.CommentResponseDTO;
+import com.blind.api.domain.comment.dto.CommentResponseDTO;
 import com.blind.api.domain.post.v2.dto.PostResponseDTO;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;

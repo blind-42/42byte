@@ -1,13 +1,12 @@
 package com.blind.api.domain.post.v2.service;
 
 import com.blind.api.domain.board.v1.domain.Board;
-import com.blind.api.domain.board.v1.service.BoardService;
 import com.blind.api.domain.post.v2.domain.Post;
 import com.blind.api.domain.post.v2.dto.PostDTO;
 import com.blind.api.domain.post.v2.dto.PostResponseDTO;
 import com.blind.api.domain.post.v2.repository.PostRepository;
+import com.blind.api.domain.user.v2.domain.RoleType;
 import com.blind.api.domain.user.v2.domain.User;
-import com.blind.api.domain.user.v2.service.UserService;
 import com.blind.api.global.exception.BusinessException;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -15,7 +14,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.util.Optional;
 
 @Service
 @AllArgsConstructor
@@ -24,16 +22,10 @@ public class PostServiceImpl implements PostService {
 
     @Override
     @Transactional
-    public PostResponseDTO findAllByBoardId(Long boardId, Pageable pageable) {
+    public Page<Post> findAllByBoardId(Long boardId, Pageable pageable) {
         Page<Post> postList = postRepository.findAllByBoardId(boardId, pageable);
 
-        PostResponseDTO<PostDTO> dtoList = new PostResponseDTO();
-        postList.stream().forEach( post -> {
-            dtoList.getContents().add(PostDTO.from(post));
-        });
-        dtoList.setPage(postList.getPageable().getPageNumber());
-        dtoList.setPages(postList.getTotalPages());
-        return dtoList;
+        return postList;
     }
     @Override
     @Transactional
@@ -91,15 +83,15 @@ public class PostServiceImpl implements PostService {
 
     @Override
     @Transactional
-    public PostResponseDTO findPostByIdIn(Long userId, Pageable pageable) {
-        Page<Post> savePageable = findAllByAuthorId(userId, pageable);
-        PostResponseDTO dtoList = new PostResponseDTO();
-        savePageable.stream().forEach( post -> {
-            dtoList.getContents().add(PostDTO.from(post));
-        });
-        dtoList.setPage(savePageable.getPageable().getPageNumber());
-        dtoList.setPages(savePageable.getTotalPages());
-        return dtoList;
+    public void delete(Post post, Integer type) {
+        post.setIsDel(type);
+    }
+
+    @Override
+    @Transactional
+    public Page<Post> findPostByIdIn(User user, Pageable pageable) {
+
+        return postRepository.findAllByAuthorId(user.getId(), pageable);
     }
 
     @Override
@@ -111,4 +103,15 @@ public class PostServiceImpl implements PostService {
         postRepository.addBlameCnt(id);
     }
 
+    @Override
+    @Transactional
+    public void setNotice(Post post) {
+        post.setIsNotice(true);
+    }
+
+    @Override
+    @Transactional
+    public void deleteNotice(Post post) {
+        post.setIsNotice(false);
+    }
 }

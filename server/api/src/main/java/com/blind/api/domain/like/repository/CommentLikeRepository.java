@@ -1,6 +1,6 @@
 package com.blind.api.domain.like.repository;
 
-import com.blind.api.domain.comment.v1.domain.Comment;
+import com.blind.api.domain.comment.domain.Comment;
 import com.blind.api.domain.like.domain.CommentLike;
 import com.blind.api.domain.user.v2.domain.User;
 import org.springframework.data.domain.Page;

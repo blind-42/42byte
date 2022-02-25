@@ -2,8 +2,8 @@ package com.blind.api.domain.post.v2.controller;
 
 import com.blind.api.domain.board.v1.domain.Board;
 import com.blind.api.domain.board.v1.service.BoardService;
-import com.blind.api.domain.comment.v1.dto.CommentDTO;
-import com.blind.api.domain.comment.v1.service.CommentService;
+import com.blind.api.domain.comment.dto.CommentDTO;
+import com.blind.api.domain.comment.service.CommentService;
 import com.blind.api.domain.like.service.LikeService;
 import com.blind.api.domain.post.v2.domain.Post;
 import com.blind.api.domain.post.v2.dto.PostDTO;
@@ -12,6 +12,7 @@ import com.blind.api.domain.post.v2.dto.PostRequestDTO;
 import com.blind.api.domain.post.v2.dto.PostResponseDTO;
 import com.blind.api.domain.post.v2.service.PostService;
 import com.blind.api.domain.security.jwt.v1.service.TokenService;
+import com.blind.api.domain.user.v2.domain.RoleType;
 import com.blind.api.domain.user.v2.domain.User;
 import com.blind.api.global.utils.HeaderUtil;
 import lombok.AllArgsConstructor;
@@ -34,17 +35,31 @@ public class PostControllerImpl implements PostController{
 
     /* 게시판 조회 */
     @RequestMapping(value="/board", method = RequestMethod.GET)
-    public PostResponseDTO findAllPost(Long boardId, Pageable pageable) {
-        return postService.findAllByBoardId(boardId, pageable);
+    public PostResponseDTO findAllPost(Long boardId, Pageable pageable, HttpServletRequest request) {
+        User user = tokenService.findUserByAccessToken(HeaderUtil.getAccessToken(request));
+        Page<Post> postList = postService.findAllByBoardId(boardId, pageable);
+        RoleType roleType = setRoleType(user, boardService.findById(boardId));
+
+        PostResponseDTO<PostDTO> dtoList = new PostResponseDTO();
+        postList.stream().forEach( post -> {
+            dtoList.getContents().add(PostDTO.from(post, roleType));
+        });
+        dtoList.setPage(postList.getPageable().getPageNumber());
+        dtoList.setPages(postList.getTotalPages());
+        return dtoList;
     }
 
     /*전체 게시판 게시글 검색*/
     @RequestMapping(value="/board/search", method = RequestMethod.GET)
-    public PostResponseDTO searchPost(String keyword, Pageable pageable){
+    public PostResponseDTO searchPost(String keyword, Pageable pageable, HttpServletRequest request){
         PostResponseDTO dtoList = new PostResponseDTO();
+        User user = tokenService.findUserByAccessToken(HeaderUtil.getAccessToken(request));
         Page<Post> postList = postService.search(keyword, pageable);
+
         postList.stream().forEach( post -> {
-            dtoList.getContents().add(PostDTO.from(post));
+            Board board = post.getBoard();
+            RoleType roleType = setRoleType(user, board);
+            dtoList.getContents().add(PostDTO.from(post, roleType));
         });
         dtoList.setPage(postList.getPageable().getPageNumber());
         dtoList.setPages(postList.getTotalPages());
@@ -64,7 +79,10 @@ public class PostControllerImpl implements PostController{
     public Map<String, Object> findPostDetailByPostId (Long boardId, Long postId, HttpServletRequest request){
         User user = tokenService.findUserByAccessToken(HeaderUtil.getAccessToken(request));
         Post post = postService.findById(postId);
-        PostDetailDTO postDetailDTO = PostDetailDTO.from(post);
+        Board board = post.getBoard();
+        RoleType roleType = setRoleType(user, board);
+
+        PostDetailDTO postDetailDTO = PostDetailDTO.from(post, roleType);
         postDetailDTO.setIsUsers(StringUtils.equals(post.getAuthorId(), user.getHashId()));
         postDetailDTO.setIsLiked(likeService.checkPostLike(post, user));
 
@@ -98,18 +116,37 @@ public class PostControllerImpl implements PostController{
     @RequestMapping(value={"/post"}, method = RequestMethod.DELETE)
     public void deletePost(Long postId, HttpServletRequest request){
         Post post = postService.findById(postId);
-        Long userId = tokenService.findUserByAccessToken(HeaderUtil.getAccessToken(request)).getId();
-        if (userId.equals(post.getAuthorId()) != true)
-            return ;
-        likeService.deleteByPost(post);
-        commentService.deleteCommentByPostId(postId);
-        postService.deletePost(post);
+        User user = tokenService.findUserByAccessToken(HeaderUtil.getAccessToken(request));
+        RoleType roleType = setRoleType(user, post.getBoard());
+        if (roleType == RoleType.USER && user.getId() != post.getAuthorId())
+            return;
+        else
+            postService.delete(post, roleType.getValue());
     }
 
     /*마이페이지 (내가 쓴 글)*/
     @RequestMapping(value={"/mypage/post"}, method = RequestMethod.GET)
     public PostResponseDTO findPostByUserId (Pageable pageable, HttpServletRequest request){
-        Long userId = tokenService.findUserByAccessToken(HeaderUtil.getAccessToken(request)).getId();
-        return postService.findPostByIdIn(userId, pageable);
+        User user = tokenService.findUserByAccessToken(HeaderUtil.getAccessToken(request));
+        Page<Post> savePageable = postService.findPostByIdIn(user, pageable);
+
+        PostResponseDTO dtoList = new PostResponseDTO();
+        savePageable.stream().forEach( post -> {
+            RoleType roleType = setRoleType(user, post.getBoard());
+            dtoList.getContents().add(PostDTO.from(post, roleType));
+        });
+        dtoList.setPage(savePageable.getPageable().getPageNumber());
+        dtoList.setPages(savePageable.getTotalPages());
+
+        return dtoList;
+    }
+
+    RoleType setRoleType(User user, Board board) {
+        if (user.getRoleType() == RoleType.ADMIN)
+            return  RoleType.ADMIN;
+        else if (board.getManager() == user)
+            return RoleType.MANAGER;
+        else
+            return RoleType.USER;
     }
 }

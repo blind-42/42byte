@@ -1,14 +1,11 @@
-package com.blind.api.domain.like.controller;
+package com.blind.api.domain.comment.controller;
 
 import com.blind.api.common.RestDocsConfiguration;
 import com.blind.api.domain.board.v1.domain.Board;
 import com.blind.api.domain.board.v1.repository.BoardRepository;
 import com.blind.api.domain.comment.domain.Comment;
-import com.blind.api.domain.comment.repository.CommentRepository;
 import com.blind.api.domain.comment.service.CommentService;
-import com.blind.api.domain.like.service.LikeService;
 import com.blind.api.domain.post.v2.domain.Post;
-import com.blind.api.domain.post.v2.repository.PostRepository;
 import com.blind.api.domain.post.v2.service.PostService;
 import com.blind.api.domain.security.jwt.v1.domain.Token;
 import com.blind.api.domain.security.jwt.v1.repository.TokenRepository;
@@ -26,22 +23,25 @@ import org.springframework.boot.test.autoconfigure.restdocs.AutoConfigureRestDoc
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.Import;
+import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 
 import javax.transaction.Transactional;
+import java.util.HashMap;
+import java.util.Map;
 
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest
 @AutoConfigureRestDocs
 @AutoConfigureMockMvc
 @Import(RestDocsConfiguration.class)
-class LikeControllerTest {
+class CommentControllerTest {
 
     @Autowired
     MockMvc mockMvc;
@@ -59,10 +59,16 @@ class LikeControllerTest {
 
     @Autowired
     @Mock
-    private BoardRepository boardService;
+    private UserRepository userRepository;
 
     @Autowired
-    private LikeService likeService;
+    @Mock
+    private TokenRepository tokenRepository;
+
+
+    @Autowired
+    @Mock
+    private BoardRepository boardService;
 
     @Autowired
     @Mock
@@ -72,27 +78,13 @@ class LikeControllerTest {
     @Mock
     private UserRepository testUserRepository;
 
-    @Autowired
-    @Mock
-    private TokenRepository tokenRepository;
-
-    @Autowired
-    @Mock
-    private PostRepository postRepository;
-
-    @Autowired
-    @Mock
-    private CommentRepository commentRepository;
-
     private Token token;
     private User user;
     private Board board;
-    private Post post;
-    private Comment comment;
 
     @BeforeEach
     void init() {
-        user = testUserRepository.findByHashId("hashId").orElseGet(()->null);
+        user = userRepository.findByHashId("hashId").orElseGet(()->null);
         if (user == null) {
             user = new User();
             user.setHashId("hashId");
@@ -110,61 +102,72 @@ class LikeControllerTest {
         board = boardService.findBoardByName("board").orElseGet(()-> null);
         if (board == null)
             board = boardService.save(new Board(user, "board"));
-        post = postRepository.findById(1L).orElseGet(()-> null);
-        if (post == null)
-            post = postService.save(board, user,"title", "content");
-        comment = commentRepository.findById(1L).orElseGet(()->null);
-        if (comment == null)
-            comment = commentService.save(board.getId(),post, user, "content");
     }
 
     @Test
     @Transactional
-    @DisplayName("게시글 좋아요")
-    void postLike() throws Exception {
-        mockMvc.perform(post("/post/like")
-                        .param("postId", String.valueOf(post.getId()))
-                .header("Authorization", "Bearer access"))
-                .andExpect(status().isOk())
-                .andDo(document("like-post"))
-        ;
-    }
-
-    @Test
-    @Transactional
-    @DisplayName("댓글 좋아요")
-    void commentLike() throws Exception{
+    @DisplayName("댓글 저장")
+    void saveComment() throws Exception{
         MultiValueMap<String, String> param = new LinkedMultiValueMap<>();
-        param.add("postId", String.valueOf(post.getId()));
-        param.add("commentId", String.valueOf(comment.getId()));
-        mockMvc.perform(post("/comment/like")
-                        .params(param)
-                        .header("Authorization", "Bearer access"))
-                .andExpect(status().isOk())
-                .andDo(document("like-comment"))
-        ;
-    }
+        Map<String, String> body = new HashMap<>();
+        body.put("content", "내용");
 
-    @Test
-    @Transactional
-    @DisplayName("내가 좋아요한 게시글")
-    void myPostLike() throws Exception{
-        likeService.PostLike(post, user, 0L);
-        mockMvc.perform(get("/mypage/post/like")
+        Post post = postService.save(board, user,"title", "content");
+        param.add("boardId", String.valueOf(board.getId()));
+        param.add("postId", String.valueOf(post.getId()));
+        mockMvc.perform(post("/comment").contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(body))
+                .params(param)
                 .header("Authorization", "Bearer access"))
                 .andExpect(status().isOk())
-                .andDo(document("mypage-post-like"))
+                .andDo(document("comment-save"))
                 ;
     }
 
     @Test
     @Transactional
-    @DisplayName("내가 좋아요한 댓글")
-    void myCommentLike() throws Exception{
-        likeService.CommentLike(post, comment, user, 0L);
-        mockMvc.perform(get("/mypage/comment/like")
+    @DisplayName("댓글 수정")
+    void updateComment() throws Exception {
+        Map<String, String> body = new HashMap<>();
+        body.put("content", "수정된 내용");
+
+        Post post = postService.save(board, user ,"title", "content");
+        Comment comment = commentService.save(board.getId(), post, user, "내용");
+        mockMvc.perform(put("/comment").contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(body))
+                        .param("commentId", String.valueOf(comment.getId()))
                         .header("Authorization", "Bearer access"))
                 .andExpect(status().isOk())
-                .andDo(document("mypage-comment-like"))
-        ;    }
+                .andDo(document("comment-update"))
+        ;
+    }
+
+    @Test
+    @Transactional
+    @DisplayName("댓글 삭제")
+    void deleteComment() throws Exception{
+        Post post = postService.save(board, user ,"title", "content");
+        Comment comment = commentService.save(board.getId(), post, user, "내용");
+        mockMvc.perform(delete("/comment")
+                        .param("commentId", String.valueOf(comment.getId()))
+                        .header("Authorization", "Bearer access"))
+                .andExpect(status().isOk())
+                .andDo(document("comment-delete"))
+        ;
+    }
+
+    @Test
+    @Transactional
+    @DisplayName("내가 쓴 댓글 조회")
+    void findCommentByUserId() throws Exception{
+        Post post = postService.save(board, user,"title", "content");
+        for (int i = 0; i< 24; i++){
+            commentService.save(board.getId(), post,user, "내용1");
+        }
+        mockMvc.perform(get("/mypage/comment")
+                        .header("Authorization", "Bearer access"))
+                .andExpect(status().isOk())
+                .andDo(document("comment-mypage"))
+        ;
+    }
 }

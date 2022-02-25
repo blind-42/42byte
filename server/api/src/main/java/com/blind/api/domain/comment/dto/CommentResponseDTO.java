@@ -1,4 +1,4 @@
-package com.blind.api.domain.comment.v1.dto;
+package com.blind.api.domain.comment.dto;
 
 import lombok.Getter;
 import lombok.Setter;

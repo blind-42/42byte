@@ -1,12 +1,14 @@
-package com.blind.api.domain.comment.v1.controller;
+package com.blind.api.domain.comment.controller;
 
-import com.blind.api.domain.comment.v1.domain.Comment;
-import com.blind.api.domain.comment.v1.dto.CommentRequestDTO;
-import com.blind.api.domain.comment.v1.dto.CommentResponseDTO;
-import com.blind.api.domain.comment.v1.service.CommentService;
+import com.blind.api.domain.board.v1.domain.Board;
+import com.blind.api.domain.comment.domain.Comment;
+import com.blind.api.domain.comment.dto.CommentRequestDTO;
+import com.blind.api.domain.comment.dto.CommentResponseDTO;
+import com.blind.api.domain.comment.service.CommentService;
 import com.blind.api.domain.post.v2.domain.Post;
 import com.blind.api.domain.post.v2.service.PostService;
 import com.blind.api.domain.security.jwt.v1.service.TokenService;
+import com.blind.api.domain.user.v2.domain.RoleType;
 import com.blind.api.domain.user.v2.domain.User;
 import com.blind.api.domain.user.v2.service.UserService;
 import com.blind.api.global.utils.HeaderUtil;
@@ -24,7 +26,6 @@ import java.util.Map;
 public class CommentControllerImpl implements CommentController {
     private final CommentService commentService;
     private final PostService postService;
-    private final UserService userService;
     private final TokenService tokenService;
 
     @RequestMapping(value={"/comment"}, method=RequestMethod.POST)
@@ -47,10 +48,13 @@ public class CommentControllerImpl implements CommentController {
     @RequestMapping(value={"/comment"}, method = RequestMethod.DELETE)
     public void deleteComment(Long commentId, HttpServletRequest request){
         Comment comment = commentService.findCommentById(commentId);
-        Long userId = tokenService.findUserByAccessToken(HeaderUtil.getAccessToken(request)).getId();
-        if (!userId.equals(comment.getAuthorId()))
-            return ;
-        commentService.delete(comment);
+        User user = tokenService.findUserByAccessToken(HeaderUtil.getAccessToken(request));
+        RoleType roleType = setRoleType(user, comment.getPost().getBoard());
+
+        if (roleType == RoleType.USER && user.getId() != comment.getAuthorId())
+            return;
+        else
+            commentService.delete(comment, roleType.getValue());
         postService.updateComment(commentService.findCommentById(commentId).getPost().getId(), -1L);
     }
 
@@ -58,5 +62,14 @@ public class CommentControllerImpl implements CommentController {
     public CommentResponseDTO findCommentByUserId (Pageable pageable, HttpServletRequest request){
         Long userId = tokenService.findUserByAccessToken(HeaderUtil.getAccessToken(request)).getId();
         return commentService.findCommentByIdIn(userId, pageable);
+    }
+
+    RoleType setRoleType(User user, Board board) {
+        if (user.getRoleType() == RoleType.ADMIN)
+            return  RoleType.ADMIN;
+        else if (board.getManager() == user)
+            return RoleType.MANAGER;
+        else
+            return RoleType.USER;
     }
 }

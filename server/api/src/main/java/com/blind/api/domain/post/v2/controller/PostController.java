@@ -30,12 +30,12 @@ public interface PostController {
     PostResponseDTO findAllPost(@RequestParam("boardId") @Positive (message = "{invalid.request}") Long boardId,
                                 @SortDefault.SortDefaults({
                                         @SortDefault(sort = "isNotice", direction = Sort.Direction.DESC),
-                                        @SortDefault(sort = "id", direction = Sort.Direction.DESC)}) Pageable pageable);
+                                        @SortDefault(sort = "id", direction = Sort.Direction.DESC)}) Pageable pageable, HttpServletRequest request);
 
     PostResponseDTO searchPost(@RequestParam("keyword") @Length (min = 1, max= 255, message = "{invalid.request}") String keyword,
                                @SortDefault.SortDefaults({
                                        @SortDefault(sort = "isNotice", direction = Sort.Direction.DESC),
-                                       @SortDefault(sort = "id", direction = Sort.Direction.DESC)}) Pageable pageable);
+                                       @SortDefault(sort = "id", direction = Sort.Direction.DESC)}) Pageable pageable, HttpServletRequest request);
 
     PostResponseDTO findPostByUserId (@SortDefault.SortDefaults({@SortDefault(sort = "id", direction = Sort.Direction.DESC)}) Pageable pageable,
                                       HttpServletRequest request);

@@ -2,6 +2,7 @@ package com.blind.api.domain.board.v1.service;
 
 import com.blind.api.domain.board.v1.domain.Board;
 import com.blind.api.domain.board.v1.repository.BoardRepository;
+import com.blind.api.domain.user.v2.domain.User;
 import com.blind.api.global.exception.BusinessException;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -15,10 +16,37 @@ public class BoardServiceImpl implements BoardService{
     private final BoardRepository boardRepository;
     @Override
     @Transactional
-    public Board save(String name){
+    public Board save(User manager, String name){
         return boardRepository.findBoardByName(name).orElseGet(() ->
-                boardRepository.save(new Board(name)));
+                boardRepository.save(new Board(manager, name)));
     }
+
+    @Override
+    @Transactional
+    public void setManager(Board board, User user) {
+        board.setManager(user);
+    }
+
+    @Override
+    @Transactional
+    public void deleteManager(Board board) {
+        board.setManager(null);
+    }
+
+
+    @Override
+    @Transactional
+    public void delete(Board board, Integer type){
+        board.setIsDel(type);
+    }
+
+    @Override
+    @Transactional
+    public void deleteBoard(Board board) {
+        boardRepository.delete(board);
+    }
+
+
 
     @Override
     @Transactional
@@ -37,4 +65,5 @@ public class BoardServiceImpl implements BoardService{
     public List<Board> findAllBoard() {
         return boardRepository.findAll();
     }
+
 }
