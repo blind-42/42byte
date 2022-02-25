@@ -5,8 +5,8 @@ import Footer from 'components/Footer/Footer';
 import PageNation from 'components/PageNation/PageNation';
 import PostPreview from 'components/Postpreview/Postpreview';
 import CommentPreview from 'components/CommentPreview/CommentPreview';
-import { AppContainer, PageContainer, TopBar, PageName, Squares, ContentFooterWrap } from '../../styles/styled'
-import { MenuWrap, PostMenu, CommentMenu, MenuPostWrap, PostContainer, Category, ContentWrap, PostWrap } from './styled'
+import { AppContainer, PageContainer, TopBar, PageName, Squares, PostContainer, ContentFooterWrap } from '../../styles/styled'
+import { MenuWrap, PostMenu, CommentMenu, MenuPostWrap, Category, ContentWrap, PostWrap } from './styled'
 import instance from 'utils/functions/axios';
 import { BoardData, ContentData} from 'utils/functions/type';
 import { useNavigate } from "react-router-dom";
@@ -33,7 +33,7 @@ export interface CommentData {
   modifiedDate: string
 }
 
-function Mypage() {
+export default function Mypage() {
 	const [postBoardData, setPostBoardData] = useState({contents: [], page: 0, pages: 0});
 	const [commentBoardData, setCommentBoardData] = useState({contents: [], page: 0, pages: 0});
 	const [pageName, setPageName] = useState<string>('post');
@@ -144,5 +144,3 @@ function Mypage() {
 		</>
 	);
 }
-
-export default Mypage;

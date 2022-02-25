@@ -11,10 +11,14 @@ export const HeaderContainer = styled.div`
 	background: #C4C4C4;
 	border-top: solid 2px #fff;
 	border-left: solid 2px #fff;
-	@media screen and (min-width: 768px){
+	${({theme}) => theme.media.tablet`
 		height: 4.5vh;
 		padding: 3px;
-	}
+	`}
+	${({theme}) => theme.media.desktop`
+		height: 4.5vh;
+		padding: 3px;
+	`}
 `;
 
 export const MenubarLogoWrap = styled.div`
@@ -25,21 +29,28 @@ export const MenubarLogoWrap = styled.div`
 export const MenubarButton = styled.div`
 	display: flex;
 	align-items: center;
+	justify-content: center;
 	cursor: pointer;
 	border-top: solid 2px #fff;
 	border-left: solid 2px #fff;
 	border-right: solid 2px #000;
 	border-bottom: solid 2px #000;
-	padding: 0.8rem;
+	width: 6rem;
 	div {
 		font-size: 1.2rem;
 	}
-	@media screen and (min-width: 768px) {
-		padding: 0 0.8rem;
+	${({theme}) => theme.media.tablet`
+		width: 5.5rem;
 		div {
 			font-size: 1rem;
 		}
-	}
+	`}
+	${({theme}) => theme.media.desktop`
+		width: 5rem;
+		div {
+			font-size: 1rem;
+		}
+	`}
 `;
 
 export const Logo = styled.div`
@@ -50,6 +61,4 @@ export const Logo = styled.div`
 	padding: 0 1rem;
 	border-right: solid 2px #929191;
 	border-left: solid 2px #929191;
-	@media screen and (min-width: 768px) {
-	}
 `;

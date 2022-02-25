@@ -23,7 +23,6 @@ export const PageContainer = styled.div`
 		border-bottom: solid 2px #000;
 	`}
 	${({theme}) => theme.media.desktop`
-		grid-template-rows: 3rem auto 7rem;
 		width: 90vh;
 		height: 90vh;
 		margin: 2.5vh 0;
@@ -44,19 +43,19 @@ export const TopBar = styled.div<{err?: boolean;}>`
 
 export const PageName = styled.div`
 	color: #fff;
-	letter-spacing: 0.1rem;
 	font-size: 1.3rem;
-	font-weight: 600;
-	margin: 0 1rem;
-	display: flex;
+	font-weight: 550;
+	margin: 0 0.7rem;
 	div {
 		color: #fff
 	}
 	${({theme}) => theme.media.tablet`
-		font-size: 1rem;
+		font-size: 1.1rem;
+		margin: 0 0.7rem;
 	`}
 	${({theme}) => theme.media.desktop`
-		font-size: 1rem;
+		font-size: 0.9rem;
+		margin: 0 0.6rem;
 	`}
 `;
 
@@ -67,8 +66,8 @@ export const Squares = styled.div`
 		justify-content: center;
 		align-items: center;
 		background: #C4C4C4;
-		font-size: 1.5rem;
 		font-weight: 900;
+		font-size: 1.5rem;
 		width: 2rem;
 		height: 2rem;
 		text-align: center;
@@ -82,26 +81,37 @@ export const Squares = styled.div`
 	}
 	${({theme}) => theme.media.tablet`
 		div {
-			font-size: 1rem;
-			width: 1.2rem;
-			height: 1.2rem;
+			font-size: 1.2rem;
+			width: 1.5rem;
+			height: 1.5rem;
 		}
 	`}
 	${({theme}) => theme.media.desktop`
 		div {
 			font-size: 1rem;
-			width: 1.2rem;
-			height: 1.2rem;
+			width: 1.3rem;
+			height: 1.3rem;
 		}
 	`}
+`;
+
+export const PostContainer = styled.div`
+	overflow-y: scroll;
+	background: #C4C4C4;
+	border-top: solid 2px #000;
+	border-left: solid 2px #000;
+	border-right: solid 2px #fff;
+	border-bottom: solid 2px #fff;
+	margin: 3px 0;
+	padding: 3px;
 `;
 
 export const Category = styled.div`
 	display: grid;
 	grid-template-columns: 1.2fr 6fr 1fr 1fr 2fr;
 	border-bottom: solid 2px #929191;
-	font-size: 1.2rem;
 	font-weight: 600;
+	font-size: 1.2rem;
 	height: 2.5rem;
 	div {
 		place-self: center center;
@@ -121,7 +131,7 @@ export const ContentFooterWrap = styled.div`
 	align-items: stretch;
 	grid-template-rows: 80vh 10vh;
 	${({theme}) => theme.media.tablet`
-	grid-template-rows: 67vh 8vh;
+		grid-template-rows: 67vh 8vh;
 	`}
 	${({theme}) => theme.media.desktop`
 		grid-template-rows: 77vh 8vh;
@@ -181,11 +191,14 @@ export const AlertContentWrap = styled.div`
 export const AlertTextWrap = styled.div`
 	margin-top: 1.2rem;
 	line-height: 150%;
-	font-size: 0.8;
+	font-size: 0.8rem;
 	font-weight: 700;
 	color: #000;
 	font-family: 'Press Start 2P', cursive;
-	@media screen and (min-width: 768px) {
+	${({theme}) => theme.media.tablet`
 		font-size: 1.1rem;
-	}
+	`}
+	${({theme}) => theme.media.desktop`
+		font-size: 1.1rem;
+	`}
 `;
