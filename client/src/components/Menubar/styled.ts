@@ -227,7 +227,6 @@ export const Search = styled.div`
 		input {
 			font-size: 1rem;
 			width: 11rem;
-			padding-left: 0.4rem;
 		}
 		button {
 			height: 1.8rem;
@@ -243,7 +242,6 @@ export const Search = styled.div`
 		input {
 			font-size: 0.8rem;
 			width: 10rem;
-			padding-left: 0.4rem;
 		}
 		button {
 			height: 1.7rem;

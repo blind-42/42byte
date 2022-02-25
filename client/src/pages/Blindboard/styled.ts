@@ -30,10 +30,10 @@ export const Search = styled.div`
 	background: #fff;
 	input {
 		font-size: 1.1rem;
-		display: flex;
-		padding-left: 0.2rem;
-		border: none;
 		width: 15rem;
+		display: flex;
+		padding-left: 0.3rem;
+		border: none;
 	}
 	button {
 		cursor: pointer;
@@ -46,9 +46,11 @@ export const Search = styled.div`
 		color: #fff;
 		height: 2.3rem;
 		width: 2.3rem;
+		display: flex;
+		align-items: center;
+		justify-content: center;
 		div {
 			font-size: 1.2rem;
-			transform: rotate(100deg);
 		}
 	}
 	${({theme}) => theme.media.tablet`
@@ -75,7 +77,7 @@ export const Search = styled.div`
 			height: 1.6rem;
 			width: 1.6rem;
 			div {
-				font-size: 1rem; 
+				font-size: 0.8rem;
 			}
 		}
 	`}
