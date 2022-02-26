@@ -51,6 +51,12 @@ export interface CommentData {
   isDel: boolean
 	createdDate: string
   modifiedDate: string
+  recomments: RecommentData[]
+}
+
+export interface RecommentData {
+  rootCommentId: number
+	targetAuthorId: number
 }
 
 export interface CommentPreData {

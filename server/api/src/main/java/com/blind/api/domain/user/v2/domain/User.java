@@ -25,7 +25,7 @@ public class User extends BaseTimeEntity implements Serializable {
     private Long id;
 
     @NotNull
-    @Column(name = "hash_id", length = 64, unique = true)
+    @Column(name = "hash_id", length = 256, unique = true)
     private String hashId;
 
     @Column(name = "PROFILE_IMAGE_URL", length = 512)

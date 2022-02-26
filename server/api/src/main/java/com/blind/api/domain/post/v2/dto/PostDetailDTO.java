@@ -24,7 +24,7 @@ public class PostDetailDTO {
     private LocalDateTime createdDate;
     private LocalDateTime modifiedDate;
 
-    public static PostDetailDTO from(Post post, RoleType type) {
+    public static PostDetailDTO from(Post post, Boolean isUsers,Boolean isLiked, RoleType type) {
         return PostDetailDTO.builder()
                 .id(post.getId())
                 .title(post.getTitle())
@@ -34,6 +34,8 @@ public class PostDetailDTO {
                 .likeCnt(post.getLikeCnt())
                 .commentCnt(post.getCommentCnt())
                 .isNotice(post.getIsNotice())
+                .isUsers(isUsers)
+                .isLiked(isLiked)
                 .type(type)
                 .createdDate(post.getCreatedDate())
                 .modifiedDate(post.getModifiedDate())
@@ -41,7 +43,7 @@ public class PostDetailDTO {
     }
 
     @Builder
-    private PostDetailDTO(Long id, String title, String content, Long commentCnt, Long viewCnt, Long likeCnt, Boolean isNotice, Long blameCnt, Boolean isLiked, RoleType type, LocalDateTime createdDate, LocalDateTime modifiedDate) {
+    private PostDetailDTO(Long id, String title, String content, Long commentCnt, Long viewCnt, Long likeCnt, Boolean isNotice, Boolean isUsers, Long blameCnt, Boolean isLiked, RoleType type, LocalDateTime createdDate, LocalDateTime modifiedDate) {
         this.id = id;
         this.title = title;
         this.content = content;

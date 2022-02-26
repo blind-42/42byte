@@ -12,8 +12,6 @@ import java.util.List;
 @Setter
 public class ReCommentDTO {
     private Long id;
-    private Long boardId;
-    private Long postId;
     private Long authorId;
     private Long rootCommentId;
     private Long targetAuthorId;
@@ -31,8 +29,6 @@ public class ReCommentDTO {
     public static ReCommentDTO from(Comment comment) {
         return ReCommentDTO.builder()
                 .id(comment.getId())
-                .boardId(comment.getBoardId())
-                .postId(comment.getPost().getId())
                 .authorId(comment.getAuthorId())
                 .rootCommentId(comment.getRootCommentId())
                 .targetAuthorId(comment.getTargetAuthorId())
@@ -47,10 +43,8 @@ public class ReCommentDTO {
     }
 
     @Builder
-    private ReCommentDTO(Long id, Long boardId, Long postId, Long authorId, Long rootCommentId, Long targetAuthorId, String content, Long likeCnt, Long blameCnt, Boolean isAuthor, Integer isDel, Boolean isLiked, LocalDateTime createdDate, LocalDateTime modifiedDate) {
+    private ReCommentDTO(Long id, Long authorId, Long rootCommentId, Long targetAuthorId, String content, Long likeCnt, Long blameCnt, Boolean isAuthor, Integer isDel, Boolean isLiked, LocalDateTime createdDate, LocalDateTime modifiedDate) {
         this.id = id;
-        this.boardId = boardId;
-        this.postId = postId;
         this.authorId = authorId;
         this.rootCommentId = rootCommentId;
         this.targetAuthorId = targetAuthorId;

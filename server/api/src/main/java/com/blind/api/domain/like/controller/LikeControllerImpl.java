@@ -1,16 +1,22 @@
 package com.blind.api.domain.like.controller;
 
 import com.blind.api.domain.comment.domain.Comment;
+import com.blind.api.domain.comment.dto.CommentDTO;
 import com.blind.api.domain.comment.dto.CommentResponseDTO;
 import com.blind.api.domain.comment.service.CommentService;
+import com.blind.api.domain.like.domain.CommentLike;
+import com.blind.api.domain.like.domain.PostLike;
 import com.blind.api.domain.like.service.LikeService;
 import com.blind.api.domain.post.v2.domain.Post;
+import com.blind.api.domain.post.v2.dto.PostDTO;
 import com.blind.api.domain.post.v2.dto.PostResponseDTO;
 import com.blind.api.domain.post.v2.service.PostService;
 import com.blind.api.domain.security.jwt.v1.service.TokenService;
+import com.blind.api.domain.user.v2.domain.RoleType;
 import com.blind.api.domain.user.v2.domain.User;
 import com.blind.api.global.utils.HeaderUtil;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
@@ -51,13 +57,27 @@ public class LikeControllerImpl implements LikeController {
 
     @RequestMapping(value = {"mypage/post/like"}, method=RequestMethod.GET)
     public PostResponseDTO myPostLike(Pageable pageable, HttpServletRequest request){
-        Long userId = tokenService.findUserByAccessToken(HeaderUtil.getAccessToken(request)).getId();
-        return likeService.findLikePostByUserId(userId, pageable);
+        User user = tokenService.findUserByAccessToken(HeaderUtil.getAccessToken(request));
+        Page<PostLike> likeList = likeService.findLikePostByUserId(user.getId(), pageable);
+        PostResponseDTO responseDTO = new PostResponseDTO();
+        likeList.stream().forEach( postLike -> {
+            responseDTO.getContents().add(PostDTO.from(postLike.getPost(), user.getRoleType().getValue()));
+        });
+        responseDTO.setPage(likeList.getPageable().getPageNumber());
+        responseDTO.setPages(likeList.getTotalPages());
+        return responseDTO;
     }
 
     @RequestMapping(value = {"mypage/comment/like"}, method=RequestMethod.GET)
     public CommentResponseDTO myCommentLike(Pageable pageable, HttpServletRequest request){
         User user = tokenService.findUserByAccessToken(HeaderUtil.getAccessToken(request));
-        return likeService.findLikeCommentByUserId(user.getId(), pageable);
+        Page<CommentLike> likeList = likeService.findLikeCommentByUserId(user.getId(), pageable);
+        CommentResponseDTO dto = new CommentResponseDTO();
+        likeList.stream().forEach( commentLike -> {
+            dto.getContents().add(CommentDTO.from(commentLike.getComment()));
+        });
+        dto.setPage(likeList.getPageable().getPageNumber());
+        dto.setPages(likeList.getTotalPages());
+        return dto;
     }
 }

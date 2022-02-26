@@ -81,6 +81,9 @@ export const Squares = styled.div`
 		border-bottom: solid 2px #000;
 		padding-bottom: 3px;
 	}
+	div:last-child {
+		cursor: pointer;
+	}
 	${({theme}) => theme.media.tablet`
 		div {
 			font-size: 1.2rem;

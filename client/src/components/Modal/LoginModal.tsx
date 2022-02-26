@@ -22,12 +22,12 @@ function LoginModal({openLoginModalHandler}: Props) {
 			</TopBar>
 			<ContentContainer>
 				<LoginImg>
-				<img src="/images/ghost_저작권_임시.jpg" alt='Loginimg' />
+					<img src="/images/ghost_저작권_임시.jpg" alt='Loginimg' />
 				</LoginImg>
 				<TextWrap>로그인이 필요합니다.</TextWrap>
 				<Buttons>
 					<Link to='/login'>
-					<input type="button" value="로그인하기" />
+						<input type="button" value="로그인하기" />
 					</Link>
 				</Buttons>
 			</ContentContainer>
