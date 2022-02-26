@@ -74,7 +74,7 @@ function Detail() {
 				setBoxState(res.data.post.isLiked);
 				setCommentsUserList(Array.from(new Set(res.data.comment.filter((el:CommentData) => !el.isAuthor).map((el:CommentData) => el.authorId))))})},
 				{ retry: 0, 
-					refetchOnWindowFocus: false, // 다른 윈도우를 보고 와도 패치해오지 않음 (조회수 x)
+					refetchOnWindowFocus: false,
 					keepPreviousData: true,
 				});
 	
