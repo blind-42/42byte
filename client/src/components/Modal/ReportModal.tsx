@@ -1,30 +1,48 @@
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import instance from 'utils/functions/axios';
 import { PageName, Squares, TopBar } from 'styles/styled';
 import { ModalBackdrop, ReportModalContainer, ContentContainer, Instruction, ReportBox, ListName, ReportList, Buttons } from './styled';
 
-type Props = {
+type GreetingProps = {
 	clickModalHandler: () => void;
+	type: string
+	postId: number
+	commentId: number
 };
 
-export default function ReportModal (/*{ clickModalHandler }: Props*/) {
+export default function ReportModal ({ clickModalHandler, type, postId, commentId }: GreetingProps) {
+	const [reportIssue, setReportIssue] = useState('');
+	const navigate = useNavigate();
+	const id = type === "post" ? postId : commentId;
 
-	const reportHandler = () => {
-		
+	const issueHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
+		setReportIssue(event.target.value);
 	}
 
-	const issueCountHandler = () => {
-		
+	const reportHandler = () => {
+		if (reportIssue) {
+			instance
+			.post(`/${type}/blame?${type}Id=${id}`, { issue: reportIssue })
+			.then(() => { type === "post"
+				? navigate('/blindboard?page=1')
+				: navigate('/blindboard?page=1')
+			})
+			.catch((err) => { console.log(err) });
+			// clickModalHandler();
+		}
 	}
 
 	return (
 		<>
-			<ModalBackdrop /*onClick={clickModalHandler}*/>
+			<ModalBackdrop onClick={clickModalHandler}>
 				<ReportModalContainer onClick={(e) => e.stopPropagation()}>
 					<TopBar>
 						<PageName>신고하기</PageName>
 						<Squares>
 							<div>&#9866;</div>
 							<div>&#10064;</div>
-							<div /*onClick={clickModalHandler}*/>&times;</div>
+							<div onClick={clickModalHandler}>&times;</div>
 						</Squares>
 					</TopBar>
 					<ContentContainer>
@@ -36,14 +54,14 @@ export default function ReportModal (/*{ clickModalHandler }: Props*/) {
 							<ListName>신고사유</ListName>
 							<ReportList>
 								<form>
-									<div><input type="checkbox" onClick={issueCountHandler} name="issue" />욕설/폭력/혐오/차별적 표현입니다.</div>
-									<div><input type="checkbox" name="issue" />명예훼손/사칭/사생활침해 게시물입니다.</div>
-									<div><input type="checkbox" name="issue" />개인정보 노출 게시물입니다.</div>
-									<div><input type="checkbox" name="issue" />음란물입니다.</div>
-									<div><input type="checkbox" name="issue" />불법정보를 포함하고 있습니다.</div>
-									<div><input type="checkbox" name="issue" />스팸홍보/도배글입니다.</div>
-									<div><input type="checkbox" name="issue" />지나친 분란을 유도합니다.</div>
-									<div><input type="checkbox" name="issue" />기타</div>
+									<div><input type="radio" onChange={issueHandler} name="issue" value="욕설/혐오"/>욕설/폭력/혐오/차별적 표현입니다.</div>
+									<div><input type="radio" onChange={issueHandler} name="issue" value="인권침해"/>명예훼손/사칭/사생활침해 게시물입니다.</div>
+									<div><input type="radio" onChange={issueHandler} name="issue" value="욕설"/>개인정보 노출 게시물입니다.</div>
+									<div><input type="radio" onChange={issueHandler} name="issue" value="음란물"/>음란물입니다.</div>
+									<div><input type="radio" onChange={issueHandler} name="issue" value="불법정보"/>불법정보를 포함하고 있습니다.</div>
+									<div><input type="radio" onChange={issueHandler} name="issue" value="스팸/도배"/>스팸홍보/도배글입니다.</div>
+									<div><input type="radio" onChange={issueHandler} name="issue" value="분탕"/>지나친 분란을 유도합니다.</div>
+									<div><input type="radio" onChange={issueHandler} name="issue" value="기타"/>기타</div>
 								</form>
 							</ReportList>	
 						</ReportBox>

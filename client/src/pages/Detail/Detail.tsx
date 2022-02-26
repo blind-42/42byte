@@ -116,7 +116,7 @@ console.log(isUsers)
 	const inputCmmtHandler = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
 		setComment(e.target.value);
   }
-	const clickPostDelModalHandler = () => {
+	const postDelModalHandler = () => {
 		setOpenPostDelModal(!openPostDelModal);
 	}
 
@@ -132,8 +132,7 @@ console.log(isUsers)
 		<>
 			<AppContainer>
 				{openPostDelModal && (
-				<DeleteModal clickModalHandler={clickPostDelModalHandler} 
-											deleteHandler={deletePostHandler}/>)}
+				<DeleteModal clickModalHandler={postDelModalHandler} deleteHandler={deletePostHandler}/>)}
 				<Header />
 				<PageContainer>
 					<TopBar>
@@ -163,7 +162,7 @@ console.log(isUsers)
 											<div>{shortDate} {(createdDate !== modifiedDate) && '수정됨'}</div>
 											<div>조회 {Number(viewCnt) + 1}</div>
 										</Info>
-										<DropdownMenu isUsers={isUsers} delModalHandler={clickPostDelModalHandler} modifyHandler={modifyHandler}/>
+										<DropdownMenu isUsers={isUsers} delModalHandler={postDelModalHandler} modifyHandler={modifyHandler} type="post" postId={id} commentId={0} />
 									</Specific>
 								{content && <ContentWrap>
 									<Viewer initialValue={content}/>
