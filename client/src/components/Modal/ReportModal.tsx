@@ -1,6 +1,4 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import instance from 'utils/functions/axios';
 import { PageName, Squares, TopBar } from 'styles/styled';
 import { ModalBackdrop, ReportModalContainer, ContentContainer, Instruction, ReportBox, ListName, ReportList, Buttons } from './styled';
 
@@ -10,7 +8,7 @@ type GreetingProps = {
 };
 
 export default function ReportModal ({ clickModalHandler, reportHandler }: GreetingProps) {
-	const [reportIssue, setReportIssue] = useState('');
+	const [reportIssue, setReportIssue] = useState<string>('');
 
 	const issueHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
 		setReportIssue(event.target.value);
