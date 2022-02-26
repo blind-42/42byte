@@ -5,6 +5,8 @@ import com.blind.api.domain.board.v1.repository.BoardRepository;
 import com.blind.api.domain.user.v2.domain.User;
 import com.blind.api.global.exception.BusinessException;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -19,7 +21,7 @@ public class BoardServiceImpl implements BoardService{
     public Board save(User manager, String name){
         return boardRepository.findBoardByName(name).orElseGet(() ->
                 boardRepository.save(new Board(manager, name)));
-    }
+}
 
     @Override
     @Transactional

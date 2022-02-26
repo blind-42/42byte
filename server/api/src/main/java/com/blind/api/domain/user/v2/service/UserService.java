@@ -8,6 +8,7 @@ import com.blind.api.global.exception.BusinessException;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -28,5 +29,15 @@ public class UserService {
     @Transactional
     public void setRoleType(User user, RoleType type){
         user.setRoleType(type);
+    }
+
+    @Transactional
+    public List<User> findAllByRoleType(RoleType roleType) {
+        return userRepository.findAllByRoleType(roleType);
+    }
+
+    @Transactional
+    public List<User> findAll(){
+        return userRepository.findAll();
     }
 }

@@ -38,8 +38,7 @@ import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest
@@ -251,6 +250,19 @@ class AdminControllerImplTest {
                         .header("Authorization", "Bearer access0"))
                 .andExpect(status().isOk())
                 .andDo(document("delete-comment"))
+        ;
+    }
+
+    @Test
+    @Transactional
+    @DisplayName("게시판 매니저 조회")
+    void findAllManagers() throws Exception{
+        boardService.save(user2, "something");
+        boardService.save(user1, "wow");
+        mockMvc.perform(get("/admin/manager")
+                        .header("Authorization", "Bearer access0"))
+                .andExpect(status().isOk())
+                .andDo(document("all-board"))
         ;
     }
 }
