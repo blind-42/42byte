@@ -9,8 +9,6 @@ import com.blind.api.domain.board.v1.service.BoardService;
 import com.blind.api.domain.post.v2.domain.Post;
 import com.blind.api.domain.post.v2.dto.PostDTO;
 import com.blind.api.domain.post.v2.dto.PostResponseDTO;
-import com.blind.api.domain.security.jwt.v1.domain.Token;
-import com.blind.api.domain.security.jwt.v1.repository.TokenRepository;
 import com.blind.api.domain.security.jwt.v1.service.TokenService;
 import com.blind.api.domain.user.v2.domain.RoleType;
 import com.blind.api.domain.user.v2.domain.User;
@@ -35,8 +33,6 @@ import java.util.Optional;
 public class BoardControllerImpl implements BoardController {
     private final BoardService boardService;
     private final TokenService tokenService;
-    private final UserRepository userRepository;
-    private final TokenRepository tokenRepository;
 
     @RequestMapping(value="/board", method = RequestMethod.POST)
     public BoardDTO createBoard(BoardRequestDTO requestDTO, HttpServletRequest request) {
@@ -70,27 +66,4 @@ public class BoardControllerImpl implements BoardController {
         dtoList.setPages(savePageable.getTotalPages());
         return dtoList;
     }
-
-    /*
-    @PostConstruct
-    public void init(){
-        User user;
-        Token token;
-
-        user = userRepository.findByHashId("hashId").orElseGet(()->null);
-            if (user == null) {
-            user = new User();
-            user.setHashId("hashId");
-            user.setRoleType(RoleType.USER);
-                userRepository.save(user);
-        }
-        token = tokenRepository.findByAccessToken("access").orElseGet(()-> null);
-            if (token == null) {
-            token = new Token();
-            token.setAccessToken("access");
-            token.setRefreshToken("refresh");
-            token.setUser(user);
-                tokenRepository.save(token);
-        }
-    }*/
 }

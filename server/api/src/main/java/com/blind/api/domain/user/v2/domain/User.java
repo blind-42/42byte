@@ -19,7 +19,6 @@ import java.io.Serializable;
 @DynamicInsert
 @Table(name = "USER_INFO")
 public class User extends BaseTimeEntity implements Serializable {
-    @JsonIgnore
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)

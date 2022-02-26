@@ -1,9 +1,12 @@
 package com.blind.api.domain.admin.contorller;
 
+import com.blind.api.domain.board.v1.domain.Board;
+import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.constraints.Positive;
+import java.util.List;
 
 public interface AdminController {
     void setAdmin(@RequestParam(value = "userId") @Positive(message = "{invalid.request}") Long targetUserId, HttpServletRequest request);

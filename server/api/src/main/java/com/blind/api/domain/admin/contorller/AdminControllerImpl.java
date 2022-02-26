@@ -14,14 +14,12 @@ import com.blind.api.domain.user.v2.service.UserService;
 import com.blind.api.global.exception.BusinessException;
 import com.blind.api.global.utils.HeaderUtil;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
-
+import java.util.List;
 
 @RestController
 @AllArgsConstructor
@@ -98,6 +96,7 @@ public class AdminControllerImpl implements AdminController{
         Comment comment = commentService.findCommentById(commentId);
         commentService.deleteComment(comment);
     }
+
 
     private boolean isAdmin(HttpServletRequest request){
         User user = tokenService.findUserByAccessToken(HeaderUtil.getAccessToken(request));
