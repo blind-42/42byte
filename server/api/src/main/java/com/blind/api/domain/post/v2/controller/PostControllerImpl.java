@@ -81,7 +81,7 @@ public class PostControllerImpl implements PostController{
     public Map<String, Object> findPostDetailByPostId (Long boardId, Long postId, HttpServletRequest request){
         User user = tokenService.findUserByAccessToken(HeaderUtil.getAccessToken(request));
         Post post = postService.findById(postId);
-        Boolean isUsers = StringUtils.equals(post.getAuthorId(), user.getHashId());
+        Boolean isUsers = StringUtils.equals(post.getAuthorId(), user.getId());
         Boolean isLiked = likeService.checkPostLike(post, user);
 
         PostDetailDTO postDetailDTO = PostDetailDTO.from(post, isUsers, isLiked, setRoleType(user,post.getBoard()));

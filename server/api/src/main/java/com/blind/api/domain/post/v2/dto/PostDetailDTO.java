@@ -24,7 +24,7 @@ public class PostDetailDTO {
     private LocalDateTime createdDate;
     private LocalDateTime modifiedDate;
 
-    public static PostDetailDTO from(Post post, Boolean isUsers,Boolean isLiked, RoleType type) {
+    public static PostDetailDTO from(Post post, Boolean isUsers, Boolean isLiked, RoleType type) {
         return PostDetailDTO.builder()
                 .id(post.getId())
                 .title(post.getTitle())
