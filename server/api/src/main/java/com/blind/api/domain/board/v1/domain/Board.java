@@ -34,7 +34,7 @@ public class Board extends BaseTimeEntity {
     String name;
 
     @Column(name = "is_del", columnDefinition = "Integer default 0", updatable = false)
-    int isDel;
+    Integer isDel;
 
     @JoinColumn(name = "user_Id")
     @OneToOne

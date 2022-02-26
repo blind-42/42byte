@@ -65,27 +65,13 @@ public class LikeServiceImpl implements LikeService{
 
     @Override
     @Transactional
-    public PostResponseDTO findLikePostByUserId(Long userId, Pageable pageable){
-        Page<PostLike> savePageable = postLikeRepository.findAllPostByUserId(userId, pageable);
-        PostResponseDTO dto = new PostResponseDTO();
-        savePageable.stream().forEach( postLike -> {
-            dto.getContents().add(PostDTO.from(postLike.getPost(), RoleType.USER));
-        });
-        dto.setPage(savePageable.getPageable().getPageNumber());
-        dto.setPages(savePageable.getTotalPages());
-        return dto;
+    public Page<PostLike> findLikePostByUserId(Long userId, Pageable pageable){
+        return postLikeRepository.findAllPostByUserId(userId, pageable);
     }
 
     @Override
     @Transactional
-    public CommentResponseDTO findLikeCommentByUserId(Long userId, Pageable pageable){
-        Page<CommentLike> savePageable = commentLikeRepository.findAllCommentByUserId(userId, pageable);
-        CommentResponseDTO dto = new CommentResponseDTO();
-        savePageable.stream().forEach( commentLike -> {
-            dto.getContents().add(CommentDTO.from(commentLike.getComment()));
-        });
-        dto.setPage(savePageable.getPageable().getPageNumber());
-        dto.setPages(savePageable.getTotalPages());
-        return dto;
+    public Page<CommentLike> findLikeCommentByUserId(Long userId, Pageable pageable){
+        return commentLikeRepository.findAllCommentByUserId(userId, pageable);
     }
 }
