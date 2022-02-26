@@ -19,10 +19,9 @@ type GreetingProps = {
 
 function Comments({comment, commentsUserList}: GreetingProps) {
 	const { boardId, postId, id, authorId, content, likeCnt, blameCnt, isUsers, isAuthor, isLiked, isDel, createdDate, modifiedDate } = comment;
-	const [boxState, setBoxState] = useState<boolean>(isLiked);
-	const [openCmmtDelModal, setOpenCmmtDelModal] = useState<boolean>(false);
 	const [openEditor, setOpenEditor] = useState<boolean>(false);
-	const [modifyCmmt, setModifyCmmt] = useState<string>(content);
+	const [newCmt, setNewCmt] = useState<string>(content);
+	const [boxState, setBoxState] = useState<boolean>(isLiked);
 
 	const queryClient = useQueryClient();
 	const mutationPost = useMutation(
@@ -32,17 +31,38 @@ function Comments({comment, commentsUserList}: GreetingProps) {
 	const mutationPut = useMutation(
 		({ path, data }: { path: string; data?: object }) => instance.put(path, data));
 
-		
-	const cmtDelModalHandler = () => {
-		setOpenCmmtDelModal(!openCmmtDelModal);
-	}
-
-	const modifyHandler = () => {
+	const modifyCmtHandler = () => {
 		setOpenEditor(!openEditor);
 	}
 
-	const inputModifyCmmtHandler = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-		setModifyCmmt(e.target.value);
+	const newCmtInputHandler = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+		setNewCmt(e.target.value);
+	}
+
+	const updateCmtHandler = () => {
+		mutationPut.mutate({path: `/comment?commentId=${id}`, data: {content: newCmt}},
+		{ onSuccess: (data) => {
+				queryClient.invalidateQueries(['detail_key']);
+				setOpenEditor(!openEditor);},
+			onError: (data) => {window.location.href = '/error';}
+		})
+	}
+
+	const deleteCmtHandler = () => {
+		mutationDelete.mutate({path: `/comment?commentId=${id}`},
+		{ onSuccess: (data) => {
+				queryClient.invalidateQueries(['detail_key']);},
+			onError: (data) => {window.location.href = '/error';}
+		});
+	}
+
+	const reportHandler = (reportIssue: string) => {
+		if (reportIssue) {
+			instance
+			.post(`/comment/blame?commentId=${id}`, { issue: reportIssue })
+			.then(() => {})
+			.catch((err) => { console.log(err) });
+		}
 	}
 
 	const boxcolorHandler = () => {
@@ -53,29 +73,9 @@ function Comments({comment, commentsUserList}: GreetingProps) {
 			onError: (data) => {window.location.href = '/error';}
 		});
 	}
-	
-	const deleteCmmtHandler = () => {
-		mutationDelete.mutate({path: `/comment?commentId=${id}`},
-		{ onSuccess: (data) => {
-				queryClient.invalidateQueries(['detail_key']);
-				setOpenCmmtDelModal(!openCmmtDelModal);},
-			onError: (data) => {window.location.href = '/error';}
-		});
-	}
-
-	const sendModifyCmmtHandler = () => {
-		mutationPut.mutate({path: `/comment?commentId=${id}`, data: {content: modifyCmmt}},
-		{ onSuccess: (data) => {
-				queryClient.invalidateQueries(['detail_key']);
-				setOpenEditor(!openEditor);},
-			onError: (data) => {window.location.href = '/error';}
-		})
-	}
 
 	return (
 		<>
-		{openCmmtDelModal && (
-			<DeleteModal clickModalHandler={cmtDelModalHandler} deleteHandler={deleteCmmtHandler}/>)}
 			{openEditor
 			? <ModifyCommentWrap>
 					<CommentTop>
@@ -85,15 +85,15 @@ function Comments({comment, commentsUserList}: GreetingProps) {
 								: <h3>카뎃 {commentsUserList.indexOf(authorId)+1}</h3>}
 						</Info>
 						<Modify>
-							<div onClick={modifyHandler}>취소</div>
+							<div onClick={modifyCmtHandler}>취소</div>
 						</Modify>
 					</CommentTop>
 					<Content>
 						<CommentInput>
-							<textarea defaultValue={content} onChange={inputModifyCmmtHandler} maxLength={300} />
+							<textarea defaultValue={content} onChange={newCmtInputHandler} maxLength={300} />
 							<div>
-								<span>{modifyCmmt.length} / 300</span>
-								<input type='button' value='등록' onClick={sendModifyCmmtHandler}/>
+								<span>{newCmt.length} / 300</span>
+								<input type='button' value='등록' onClick={updateCmtHandler}/>
 							</div>
 						</CommentInput>
 					</Content>
@@ -106,15 +106,12 @@ function Comments({comment, commentsUserList}: GreetingProps) {
 							: <h3>카뎃 {commentsUserList.indexOf(authorId)+1}</h3>}
 						<div>{timeForToday(createdDate)} {(createdDate !== modifiedDate) && '수정됨'}</div>
 					</Info>
-					{/* {(isUsers && !isDel) && <Modify>
-						<div onClick={modifyHandler}>수정</div>
-						<div onClick={clickCmmtDelModalHandler}>삭제</div>
-					</Modify>} */}
-					{!isDel && <DropdownMenu isUsers={isUsers} delModalHandler={cmtDelModalHandler} modifyHandler={modifyHandler} type="comment" postId={postId} commentId={id}/>}
+					{!isDel && <DropdownMenu isUsers={isUsers} modifyHandler={modifyCmtHandler} deleteHandler={deleteCmtHandler} reportHandler={reportHandler} />}
 				</CommentTop>
 				<Content>
-					{isDel? <div className='isDel'>&#9986; 삭제된 댓글 입니다.</div> 
-								: <div>{content}</div>}
+					{isDel
+					? <div className='isDel'>&#9986; 삭제된 댓글 입니다.</div> 
+					: <div>{content}</div>}
 				</Content>
 					<LikesBox boxState={boxState} onClick={boxcolorHandler}>
 						<div><GrLike /></div>

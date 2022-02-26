@@ -55,21 +55,20 @@ function Detail() {
 	const { id, title, content, commentCnt, viewCnt, likeCnt, isUsers, isNotice, isLiked, blameCnt, createdDate, modifiedDate } = detailData.post
 	const [boxState, setBoxState] = useState<boolean>(false);
 	const [comment, setComment] = useState<string>('');
-	const [openPostDelModal, setOpenPostDelModal] = useState<boolean>(false);
   const [openEditor, setOpenEditor] = useState(false);
 	const currentUrl = window.location.href;
 	const urlId = currentUrl.split('detail?boardId=1&postId=')[1];
   const scrollRef = useRef<any>(null)
-console.log(isUsers)
 	
 	const queryClient = useQueryClient();
-	const mutationPost = useMutation(({ path, data }: { path: string; data?: object }) => instance.post(path, data));
-	const mutationDelete = useMutation(({ path }: { path: string; }) => instance.delete(path));
+	const mutationPost = useMutation(
+		({ path, data }: { path: string; data?: object }) => instance.post(path, data));
+	const mutationDelete = useMutation(
+		({ path }: { path: string; }) => instance.delete(path));
 	const { isFetching, isLoading, error, data } = useQuery(['detail_key', urlId], () => {
 		instance
 		.get(`/post?boardId=1&postId=${urlId}`)
 		.then((res) => {
-			console.log(res.data)
 			setDetailData(res.data);
 			setCommentData(res.data.comment);
 			setBoxState(res.data.post.isLiked);
@@ -85,17 +84,11 @@ console.log(isUsers)
 	const shortDate = createdDate?.slice(0, 16).replace('T', ' ');
   const [commentsUserList, setCommentsUserList] = useState([-1])
 
+	const cmtInputHandler = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+		setComment(e.target.value);
+  }
 
-	const boxcolorHandler = () => {
-		mutationPost.mutate({path: `/post/like?postId=${urlId}`, data: undefined}, 
-		{ onSuccess: (data) => {
-				queryClient.invalidateQueries(['detail_key']);
-				setBoxState(!boxState);},
-			onError: (data) => {window.location.href = '/error';} 
-		});
-	}
-
-	const sendCmmtHandler = () => {
+	const uploadCmtHandler = () => {
 		mutationPost.mutate({path: `/comment?boardId=1&postId=${urlId}`, data: {content: comment}},
 		{ onSuccess: (data) => {
 				queryClient.invalidateQueries(['detail_key']);
@@ -113,15 +106,26 @@ console.log(isUsers)
 		});
 	}
 
-	const inputCmmtHandler = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-		setComment(e.target.value);
-  }
-	const postDelModalHandler = () => {
-		setOpenPostDelModal(!openPostDelModal);
+	const modifyPostHandler = () => {
+    setOpenEditor(true);
 	}
 
-	const modifyHandler = () => {
-    setOpenEditor(true);
+	const reportHandler = (reportIssue: string) => {
+		if (reportIssue) {
+			instance
+			.post(`/post/blame?postId=${id}`, { issue: reportIssue })
+			.then(() => {window.location.href='/blindboard?page=1'})
+			.catch((err) => { console.log(err) });
+		}
+	}
+
+	const boxcolorHandler = () => {
+		mutationPost.mutate({path: `/post/like?postId=${urlId}`, data: undefined}, 
+		{ onSuccess: (data) => {
+				queryClient.invalidateQueries(['detail_key']);
+				setBoxState(!boxState);},
+			onError: (data) => {window.location.href = '/error';} 
+		});
 	}
 
 	if (isFetching || isLoading) return <Loading />
@@ -131,8 +135,6 @@ console.log(isUsers)
 	return (
 		<>
 			<AppContainer>
-				{openPostDelModal && (
-				<DeleteModal clickModalHandler={postDelModalHandler} deleteHandler={deletePostHandler}/>)}
 				<Header />
 				<PageContainer>
 					<TopBar>
@@ -152,9 +154,9 @@ console.log(isUsers)
 					</TopBar>
 					<ContentFooterWrap>
 						<PostContainer>
-						{openEditor ?
-							<PostEditor detailData={detailData}/> :
-							<DetailContainer>
+						{openEditor
+						?	<PostEditor detailData={detailData}/>
+						:	<DetailContainer>
 								<Title>{title}</Title>
 									<Specific>
 										<Info>
@@ -162,9 +164,10 @@ console.log(isUsers)
 											<div>{shortDate} {(createdDate !== modifiedDate) && '수정됨'}</div>
 											<div>조회 {Number(viewCnt) + 1}</div>
 										</Info>
-										<DropdownMenu isUsers={isUsers} delModalHandler={postDelModalHandler} modifyHandler={modifyHandler} type="post" postId={id} commentId={0} />
+										<DropdownMenu isUsers={isUsers} modifyHandler={modifyPostHandler} deleteHandler={deletePostHandler} reportHandler={reportHandler} />
 									</Specific>
-								{content && <ContentWrap>
+								{content &&
+								<ContentWrap>
 									<Viewer initialValue={content}/>
 								</ContentWrap>}
 								<LikeWrap>
@@ -176,10 +179,10 @@ console.log(isUsers)
 								<CommentContainer>
 									<CommentCount>댓글 {commentCnt}</CommentCount>
 									<CommentInput>
-										<textarea placeholder='댓글을 입력하세요.' onChange={inputCmmtHandler} maxLength={300} value={comment} />
+										<textarea placeholder='댓글을 입력하세요.' onChange={cmtInputHandler} maxLength={300} value={comment} />
 										<div>
 											<span>{comment.length} / 300</span>
-											<input type='button' value='등록' onClick={sendCmmtHandler}/>
+											<input type='button' value='등록' onClick={uploadCmtHandler}/>
 										</div>
 									</CommentInput>
 									<FLine />

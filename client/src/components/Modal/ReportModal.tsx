@@ -6,31 +6,19 @@ import { ModalBackdrop, ReportModalContainer, ContentContainer, Instruction, Rep
 
 type GreetingProps = {
 	clickModalHandler: () => void;
-	type: string
-	postId: number
-	commentId: number
+	reportHandler: (reportIssue: string) => void;
 };
 
-export default function ReportModal ({ clickModalHandler, type, postId, commentId }: GreetingProps) {
+export default function ReportModal ({ clickModalHandler, reportHandler }: GreetingProps) {
 	const [reportIssue, setReportIssue] = useState('');
-	const navigate = useNavigate();
-	const id = type === "post" ? postId : commentId;
 
 	const issueHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
 		setReportIssue(event.target.value);
 	}
 
-	const reportHandler = () => {
-		if (reportIssue) {
-			instance
-			.post(`/${type}/blame?${type}Id=${id}`, { issue: reportIssue })
-			.then(() => { type === "post"
-				? navigate('/blindboard?page=1')
-				: navigate('/blindboard?page=1')
-			})
-			.catch((err) => { console.log(err) });
-			// clickModalHandler();
-		}
+	const report = () => {
+		reportHandler(reportIssue);
+		clickModalHandler();
 	}
 
 	return (
@@ -67,7 +55,7 @@ export default function ReportModal ({ clickModalHandler, type, postId, commentI
 						</ReportBox>
 						<Buttons>
 							<form >
-								<input type="button" onClick={reportHandler} value="신고" />
+								<input type="button" onClick={report} value="신고" />
 							</form>
 						</Buttons>
 					</ContentContainer>
