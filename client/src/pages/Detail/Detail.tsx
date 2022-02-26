@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
-import { useQuery,  useQueryClient, useMutation } from 'react-query';
+import { useQuery, useQueryClient, useMutation } from 'react-query';
 import { Link } from 'react-router-dom';
 import { Viewer } from '@toast-ui/react-editor';
 import instance from 'utils/functions/axios';
@@ -10,11 +10,13 @@ import DeleteModal from 'components/Modal/DeleteModal';
 import PostEditor from 'components/PostEdit/PostEditor';
 import Loading from 'pages/Loading/Loading';
 import Error from 'pages/Error/Error';
+import DropdownMenu from 'components/DropdownMenu/DropdownMenu';
 import { DetailData, PostData, CommentData } from 'utils/functions/type';
 import { GrLike } from "react-icons/gr";
 import { AppContainer, PageContainer, TopBar, PageName, Squares, ContentFooterWrap } from 'styles/styled';
 import { PostContainer, DetailContainer, Title, Specific, Info, Modify, ContentWrap, LikeWrap, LikesBox
 				, CommentContainer, CommentCount, CommentInput, CommentListWrap, FLine } from './styled';
+
 
 function Detail() {
 	const [detailData, setDetailData] = useState<DetailData>(
@@ -31,52 +33,53 @@ function Detail() {
 			blameCnt: 0,
 			createdDate : "",
 			modifiedDate: ""
-		}, 
-		comment: [{
-			boardId: 0,
-			postId: 0,  
-			id: 0,
-			authorId: 0,
-			content: "",
-			likeCnt: 0,
-			blameCnt: 0,
-			isUsers: false,
-			isAuthor: false,
-			isLiked: false,
-			isDel: false,
-			createdDate: "",
-			modifiedDate: "",
-		}]
-	});
+			}, 
+			comment: [{
+				boardId: 0,
+				postId: 0,  
+				id: 0,
+				authorId: 0,
+				content: "",
+				likeCnt: 0,
+				blameCnt: 0,
+				isUsers: false,
+				isAuthor: false,
+				isLiked: false,
+				isDel: false,
+				createdDate: "",
+				modifiedDate: "",
+				recomments: []
+			}]
+		}
+	);
 	const { id, title, content, commentCnt, viewCnt, likeCnt, isUsers, isNotice, isLiked, blameCnt, createdDate, modifiedDate } = detailData.post
 	const [boxState, setBoxState] = useState<boolean>(false);
 	const [comment, setComment] = useState<string>('');
 	const [openPostDelModal, setOpenPostDelModal] = useState<boolean>(false);
-  const [isEdit, setIsEdit] = useState(false)
-  const [reRender, setReRender] = useState(false)
+  const [openEditor, setOpenEditor] = useState(false);
 	const currentUrl = window.location.href;
 	const urlId = currentUrl.split('detail?boardId=1&postId=')[1];
   const scrollRef = useRef<any>(null)
-
+console.log(isUsers)
 	
-	const mutationPost = useMutation(
-		({ path, data }: { path: string; data?: object }) => instance.post(path, data));
-	const mutationDelete = useMutation(
-		({ path }: { path: string; }) => instance.delete(path));
-	const { isFetching, isLoading, error, data } = useQuery(['detail_key', urlId, boxState, reRender], 
-		() => {
-			instance
-			.get(`/post?boardId=1&postId=${urlId}`)
-			.then((res) => {
-				console.log('use')
-				setDetailData(res.data);
-				setCommentData(res.data.comment);
-				setBoxState(res.data.post.isLiked);
-				setCommentsUserList(Array.from(new Set(res.data.comment.filter((el:CommentData) => !el.isAuthor).map((el:CommentData) => el.authorId))))})},
-				{ retry: 0, 
-					refetchOnWindowFocus: false,
-					keepPreviousData: true,
-				});
+	const queryClient = useQueryClient();
+	const mutationPost = useMutation(({ path, data }: { path: string; data?: object }) => instance.post(path, data));
+	const mutationDelete = useMutation(({ path }: { path: string; }) => instance.delete(path));
+	const { isFetching, isLoading, error, data } = useQuery(['detail_key', urlId], () => {
+		instance
+		.get(`/post?boardId=1&postId=${urlId}`)
+		.then((res) => {
+			console.log(res.data)
+			setDetailData(res.data);
+			setCommentData(res.data.comment);
+			setBoxState(res.data.post.isLiked);
+			setCommentsUserList(Array.from(new Set(res.data.comment.filter((el:CommentData) => (!el.isAuthor)).map((el:CommentData) => (el.authorId)))));
+		})},
+		{ retry: 0, 
+			refetchOnWindowFocus: false,
+			keepPreviousData: true,
+		}
+	)
 	
 	const [commentData, setCommentData] = useState([]);
 	const shortDate = createdDate?.slice(0, 16).replace('T', ' ');
@@ -85,7 +88,9 @@ function Detail() {
 
 	const boxcolorHandler = () => {
 		mutationPost.mutate({path: `/post/like?postId=${urlId}`, data: undefined}, 
-		{ onSuccess: (data) => {setBoxState(!boxState);},
+		{ onSuccess: (data) => {
+				queryClient.invalidateQueries(['detail_key']);
+				setBoxState(!boxState);},
 			onError: (data) => {window.location.href = '/error';} 
 		});
 	}
@@ -93,8 +98,8 @@ function Detail() {
 	const sendCmmtHandler = () => {
 		mutationPost.mutate({path: `/comment?boardId=1&postId=${urlId}`, data: {content: comment}},
 		{ onSuccess: (data) => {
+				queryClient.invalidateQueries(['detail_key']);
 				setComment('');
-				setReRender(!reRender);
 				setTimeout(() => scrollRef.current.scrollIntoView({behavior: "smooth", block: "end", inline: "nearest"}), 550);},
 			onError: (data) => {window.location.href = '/error';}
 		});
@@ -115,8 +120,8 @@ function Detail() {
 		setOpenPostDelModal(!openPostDelModal);
 	}
 
-	const modifiedHandler = () => {
-    setIsEdit(true);
+	const modifyHandler = () => {
+    setOpenEditor(true);
 	}
 
 	if (isFetching || isLoading) return <Loading />
@@ -148,7 +153,7 @@ function Detail() {
 					</TopBar>
 					<ContentFooterWrap>
 						<PostContainer>
-						{isEdit ?
+						{openEditor ?
 							<PostEditor detailData={detailData}/> :
 							<DetailContainer>
 								<Title>{title}</Title>
@@ -158,11 +163,7 @@ function Detail() {
 											<div>{shortDate} {(createdDate !== modifiedDate) && '수정됨'}</div>
 											<div>조회 {Number(viewCnt) + 1}</div>
 										</Info>
-										{isUsers &&
-											<Modify>
-												<div onClick={modifiedHandler}>수정</div>
-												<div onClick={clickPostDelModalHandler}>삭제</div>
-											</Modify>}
+										<DropdownMenu isUsers={isUsers} delModalHandler={clickPostDelModalHandler} modifyHandler={modifyHandler}/>
 									</Specific>
 								{content && <ContentWrap>
 									<Viewer initialValue={content}/>

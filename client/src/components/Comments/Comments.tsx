@@ -9,6 +9,7 @@ import { GrLike } from "react-icons/gr";
 import { CommentWrap, ModifyCommentWrap, CommentTop, Info, Modify, Content, 
 				LikesBox, GLine, FLine } from './styled'
 import { CommentInput } from 'pages/Detail/styled'
+import DropdownMenu from 'components/DropdownMenu/DropdownMenu';
 
 type GreetingProps = {
 	comment: CommentData
@@ -20,9 +21,8 @@ function Comments({comment, commentsUserList}: GreetingProps) {
 	const { boardId, postId, id, authorId, content, likeCnt, blameCnt, isUsers, isAuthor, isLiked, isDel, createdDate, modifiedDate } = comment;
 	const [boxState, setBoxState] = useState<boolean>(isLiked);
 	const [openCmmtDelModal, setOpenCmmtDelModal] = useState<boolean>(false);
-	const [modifyState, setModifyState] = useState<boolean>(false);
+	const [openEditor, setOpenEditor] = useState<boolean>(false);
 	const [modifyCmmt, setModifyCmmt] = useState<string>(content);
-
 
 	const queryClient = useQueryClient();
 	const mutationPost = useMutation(
@@ -38,7 +38,7 @@ function Comments({comment, commentsUserList}: GreetingProps) {
 	}
 
 	const modifyHandler = () => {
-		setModifyState(!modifyState);
+		setOpenEditor(!openEditor);
 	}
 
 	const inputModifyCmmtHandler = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -67,7 +67,7 @@ function Comments({comment, commentsUserList}: GreetingProps) {
 		mutationPut.mutate({path: `/comment?commentId=${id}`, data: {content: modifyCmmt}},
 		{ onSuccess: (data) => {
 				queryClient.invalidateQueries(['detail_key']);
-				setModifyState(!modifyState);},
+				setOpenEditor(!openEditor);},
 			onError: (data) => {window.location.href = '/error';}
 		})
 	}
@@ -77,7 +77,7 @@ function Comments({comment, commentsUserList}: GreetingProps) {
 		{openCmmtDelModal && (
 			<DeleteModal clickModalHandler={clickCmmtDelModalHandler}
 										deleteHandler={deleteCmmtHandler}/>)}
-			{modifyState
+			{openEditor
 			? <ModifyCommentWrap>
 					<CommentTop>
 						<Info>
@@ -107,10 +107,11 @@ function Comments({comment, commentsUserList}: GreetingProps) {
 							: <h3>카뎃 {commentsUserList.indexOf(authorId)+1}</h3>}
 						<div>{timeForToday(createdDate)} {(createdDate !== modifiedDate) && '수정됨'}</div>
 					</Info>
-					{(isUsers && !isDel) && <Modify>
+					{/* {(isUsers && !isDel) && <Modify>
 						<div onClick={modifyHandler}>수정</div>
 						<div onClick={clickCmmtDelModalHandler}>삭제</div>
-					</Modify>}
+					</Modify>} */}
+					{!isDel && <DropdownMenu isUsers={isUsers} delModalHandler={clickCmmtDelModalHandler} modifyHandler={modifyHandler} />}
 				</CommentTop>
 				<Content>
 					{isDel? <div className='isDel'>&#9986; 삭제된 댓글 입니다.</div> 
