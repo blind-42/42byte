@@ -10,6 +10,7 @@ import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.DynamicInsert;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 @Entity
 @Setter
@@ -17,8 +18,7 @@ import javax.persistence.*;
 @NoArgsConstructor
 @DynamicInsert
 @Table(name = "USER_INFO")
-public class User extends BaseTimeEntity {
-    @JsonIgnore
+public class User extends BaseTimeEntity implements Serializable {
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)

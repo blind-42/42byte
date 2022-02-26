@@ -83,7 +83,7 @@ public class PostControllerImpl implements PostController{
         RoleType roleType = setRoleType(user, board);
 
         PostDetailDTO postDetailDTO = PostDetailDTO.from(post, roleType);
-        postDetailDTO.setIsUsers(StringUtils.equals(post.getAuthorId(), user.getHashId()));
+        postDetailDTO.setIsUsers(StringUtils.equals(post.getAuthorId(), user.getId()));
         postDetailDTO.setIsLiked(likeService.checkPostLike(post, user));
 
         List<CommentDTO> commentDTOList = new ArrayList<CommentDTO>();

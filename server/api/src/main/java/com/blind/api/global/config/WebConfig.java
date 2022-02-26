@@ -40,7 +40,7 @@ public class WebConfig implements WebMvcConfigurer {
     @Override
     public void addViewControllers(ViewControllerRegistry registry) {
         registry.addViewController(baseUrl + "/swagger-ui/")
-                .setViewName("forward:" + baseUrl + "/swagger-ui/index.html");
+                .setViewName("forward:" + baseUrl + "/swagger-ui/admin.html");
     }
 
     /* Message - validation.properties Mapping */
