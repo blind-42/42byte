@@ -79,6 +79,7 @@ export const Buttons = styled.div`
 	justify-content: space-evenly;
 	margin: 0 2rem;
 	input {
+		cursor: pointer;
 		background: #518EDB;
 		border-top: solid 2px #fff;
 		border-left: solid 2px #fff;
@@ -175,31 +176,32 @@ export const ReportList = styled.div`
 		align-items: center;
 		font-weight: 500;
 		font-size: 1.2rem;
-		margin-top: 0.7rem;
-		input[id="issue"] {
-			height: 1.3rem;
-			width: 1.3rem;
-		}
-		.etcetera {
-			height: 1rem;
-
+		margin-top: 1rem;
+		input {
+			margin-right: 0.5rem;
+			height: 1.2rem;
+			width: 1.2rem;
 		}
 	}
 	${({theme}) => theme.media.tablet`
 		div {	
 			font-size: 0.9rem;
-			input[name="issue"] {
-				height: 1.2rem;
-				width: 1.2rem;
+			margin-top: 0.7rem;
+			input {
+				margin-right: 0.3rem;
+				height: 0.9rem;
+				width: 0.9rem;
 			}
 		}
 	`}
 	${({theme}) => theme.media.desktop`
 		div {	
 			font-size: 0.9rem;
-			input[id="issue"] {
-				height: 1rem;
-				width: 1rem;
+			margin-top: 0.7rem;
+			input {
+				margin-right: 0.3rem;
+				height: 0.9rem;
+				width: 0.9rem;
 			}
 		}
 	`}
