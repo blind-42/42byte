@@ -33,7 +33,8 @@ public class AdminControllerImpl implements AdminController{
     private final CommentService commentService;
     private final LikeService likeService;
 
-    @RequestMapping(value = "/admin/User", method = RequestMethod.POST)
+    /* 관리자 등록 */
+    @RequestMapping(value = "/admin/user", method = RequestMethod.POST)
     public void setAdmin(Long targetUserId, HttpServletRequest request) {
         if (!isAdmin(request))
             throw new BusinessException("{invalid.request}");
@@ -41,7 +42,8 @@ public class AdminControllerImpl implements AdminController{
         userService.setRoleType(targetUser, RoleType.ADMIN);
     }
 
-    @RequestMapping(value = "/admin/User", method = RequestMethod.DELETE)
+    /* 관리자 제거 */
+    @RequestMapping(value = "/admin/user", method = RequestMethod.DELETE)
     public void deleteAdmin(Long targetUserId, HttpServletRequest request){
         if (!isAdmin(request))
             throw new BusinessException("{invalid.request}");
@@ -49,6 +51,7 @@ public class AdminControllerImpl implements AdminController{
         userService.setRoleType(targetUser, RoleType.USER);
     }
 
+    /* 매니저 등록 */
     @RequestMapping(value = "/admin/manager", method = RequestMethod.POST)
     public void setManager(Long boardId, Long targetUserId, HttpServletRequest request){
         if (!isAdmin(request))
@@ -58,6 +61,7 @@ public class AdminControllerImpl implements AdminController{
         boardService.setManager(board, targetUser);
     }
 
+    /* 매니저 제거 */
     @RequestMapping(value = "/admin/manager", method = RequestMethod.DELETE)
     public void deleteManager(Long boardId, HttpServletRequest request) {
         if (!isAdmin(request))
@@ -66,7 +70,8 @@ public class AdminControllerImpl implements AdminController{
         boardService.deleteManager(board);
     }
 
-    @RequestMapping(value = "/admin/delete/board", method = RequestMethod.DELETE)
+    /* 게시판 영구 삭제 */
+    @RequestMapping(value = "/admin/board", method = RequestMethod.DELETE)
     public void deleteBoard(Long boardId, HttpServletRequest request){
         if (!isAdmin(request))
             throw new BusinessException("{invalid.request}");
@@ -74,7 +79,8 @@ public class AdminControllerImpl implements AdminController{
         boardService.deleteBoard(board);
     }
 
-    @RequestMapping(value = "/admin/delete/post", method = RequestMethod.DELETE)
+    /* 게시글 영구 삭제 */
+    @RequestMapping(value = "/admin/post", method = RequestMethod.DELETE)
     public void deletePost(Long postId, HttpServletRequest request) {
         if (!isAdmin(request))
             throw new BusinessException("{invalid.request}");
@@ -84,7 +90,8 @@ public class AdminControllerImpl implements AdminController{
         postService.deletePost(post);
     }
 
-    @RequestMapping(value = "/admin/delete/comment", method = RequestMethod.DELETE)
+    /* 댓글 영구 삭제 */
+    @RequestMapping(value = "/admin/comment", method = RequestMethod.DELETE)
     public void deleteComment(Long commentId, HttpServletRequest request) {
         if (!isAdmin(request))
             throw new BusinessException("{invalid.request}");

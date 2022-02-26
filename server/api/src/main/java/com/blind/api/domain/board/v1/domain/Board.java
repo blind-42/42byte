@@ -38,11 +38,11 @@ public class Board extends BaseTimeEntity {
 
     @JoinColumn(name = "user_Id")
     @OneToOne
-    User Manager;
+    User manager;
 
     @Builder
     public Board(User manager, String name){
-        this.Manager = manager;
+        this.manager = manager;
         this.name = name;
     }
 }
