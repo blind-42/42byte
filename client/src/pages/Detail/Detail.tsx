@@ -6,7 +6,6 @@ import instance from 'utils/functions/axios';
 import Header from 'components/Header/Header';
 import Footer from 'components/Footer/Footer';
 import Comments from 'components/Comments/Comments';
-import DeleteModal from 'components/Modal/DeleteModal';
 import PostEditor from 'components/PostEdit/PostEditor';
 import Loading from 'pages/Loading/Loading';
 import Error from 'pages/Error/Error';

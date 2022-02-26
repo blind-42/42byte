@@ -33,10 +33,10 @@ export default function DropdownMenu ({ isUsers, modifyHandler, deleteHandler, r
 	return (
 		<>
 			<DropdownWrap>
-			{openDelModal &&
-			<DeleteModal clickModalHandler={deleteModalHandler} deleteHandler={deleteHandler} />}
-			{openRptModal &&
-			<ReportModal clickModalHandler={reportModalHandler} reportHandler={reportHandler} />}
+				{openDelModal &&
+				<DeleteModal clickModalHandler={deleteModalHandler} deleteHandler={deleteHandler} />}
+				{openRptModal &&
+				<ReportModal clickModalHandler={reportModalHandler} reportHandler={reportHandler} />}
 				<Dots onClick={dropdownHandler}>
 					<div></div>
 					<div></div>
