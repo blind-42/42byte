@@ -19,8 +19,9 @@ public class BoardServiceImpl implements BoardService{
     @Override
     @Transactional
     public Board save(User manager, String name){
-        return boardRepository.findById(boardId).orElseThrow(() -> new BusinessException("{board.notfound}"));
-    }
+        return boardRepository.findBoardByName(name).orElseGet(() ->
+                boardRepository.save(new Board(manager, name)));
+}
 
     @Override
     @Transactional
