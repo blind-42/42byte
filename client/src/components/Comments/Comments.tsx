@@ -33,7 +33,7 @@ function Comments({comment, commentsUserList}: GreetingProps) {
 		({ path, data }: { path: string; data?: object }) => instance.put(path, data));
 
 		
-	const clickCmmtDelModalHandler = () => {
+	const cmtDelModalHandler = () => {
 		setOpenCmmtDelModal(!openCmmtDelModal);
 	}
 
@@ -75,8 +75,7 @@ function Comments({comment, commentsUserList}: GreetingProps) {
 	return (
 		<>
 		{openCmmtDelModal && (
-			<DeleteModal clickModalHandler={clickCmmtDelModalHandler}
-										deleteHandler={deleteCmmtHandler}/>)}
+			<DeleteModal clickModalHandler={cmtDelModalHandler} deleteHandler={deleteCmmtHandler}/>)}
 			{openEditor
 			? <ModifyCommentWrap>
 					<CommentTop>
@@ -111,7 +110,7 @@ function Comments({comment, commentsUserList}: GreetingProps) {
 						<div onClick={modifyHandler}>수정</div>
 						<div onClick={clickCmmtDelModalHandler}>삭제</div>
 					</Modify>} */}
-					{!isDel && <DropdownMenu isUsers={isUsers} delModalHandler={clickCmmtDelModalHandler} modifyHandler={modifyHandler} />}
+					{!isDel && <DropdownMenu isUsers={isUsers} delModalHandler={cmtDelModalHandler} modifyHandler={modifyHandler} type="comment" postId={postId} commentId={id}/>}
 				</CommentTop>
 				<Content>
 					{isDel? <div className='isDel'>&#9986; 삭제된 댓글 입니다.</div> 
