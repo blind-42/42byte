@@ -11,6 +11,7 @@ import Loading from 'pages/Loading/Loading';
 import Error from 'pages/Error/Error';
 import DropdownMenu from 'components/DropdownMenu/DropdownMenu';
 import { DetailData, PostData, CommentData } from 'utils/functions/type';
+import { isDelOption } from 'utils/functions/functions';
 import { GrLike } from "react-icons/gr";
 import { AppContainer, PageContainer, TopBar, PageName, Squares, ContentFooterWrap } from 'styles/styled';
 import { PostContainer, DetailContainer, Title, Specific, Info, Modify, ContentWrap, LikeWrap, LikesBox
@@ -44,7 +45,7 @@ function Detail() {
 				isUsers: false,
 				isAuthor: false,
 				isLiked: false,
-				isDel: false,
+				isDel: 0,
 				createdDate: "",
 				modifiedDate: "",
 				recomments: []
@@ -68,6 +69,7 @@ function Detail() {
 		instance
 		.get(`/post?boardId=1&postId=${urlId}`)
 		.then((res) => {
+			console.log(res.data)
 			setDetailData(res.data);
 			setCommentData(res.data.comment);
 			setBoxState(res.data.post.isLiked);

@@ -48,7 +48,7 @@ export interface CommentData {
 	isUsers: boolean
   isAuthor: boolean
 	isLiked : boolean
-  isDel: boolean
+  isDel: number
 	createdDate: string
   modifiedDate: string
   recomments: RecommentData[]
