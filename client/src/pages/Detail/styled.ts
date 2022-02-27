@@ -136,75 +136,75 @@ export const CommentCount = styled.div`
 `;
 
 
-export const CommentInput = styled.div`
-	display: grid;
-	grid-template-rows: 2f 1f;
-	margin: 5px 0;
-	border-top: solid 2px #000;
-	border-left: solid 2px #000;
-	border-right: solid 2px #fff;
-	border-bottom: solid 2px #fff;
-	padding: 0.3rem;
-	background: #fff;
-	font-size: 1.2rem;
-	textarea {
-		margin: 0.2rem 0;
-		resize: none;
-		border: none;
-		height: 4rem;
-	}
-	div {
-		display: flex;
-		justify-content: space-between;
-		align-items: flex-end;
-		span {
-			font-size: 1rem;
-			color: #929191;
-			padding: 0 2px;
-		}
-		input {
-			cursor: pointer;
-			background: #518EDB;
-			border-top: solid 2px #fff;
-			border-left: solid 2px #fff;
-			border-right: solid 2px #000;
-			border-bottom: solid 2px #000;
-			padding: 0.2rem 0.8rem;
-			font-size: 1.2rem;
-			font-weight: 700;
-			letter-spacing: 0.2rem;
-			color: #fff;
-		}
-	}
-	${({theme}) => theme.media.tablet`
-		textarea {
-			font-size: 0.9rem;
-		}
-		div {
-			font-size: 1rem;
-			span {
-				font-size: 0.8rem;
-			}
-			input {
-				font-size: 1rem;
-			}
-		}
-	`}
-	${({theme}) => theme.media.desktop`
-		textarea {
-			font-size: 0.9rem;
-		}
-		div {
-			font-size: 1rem;
-			span {
-				font-size: 0.8rem;
-			}
-			input {
-				font-size: 1rem;
-			}
-		}
-	`}
-`;
+// export const CommentInput = styled.div`
+// 	display: grid;
+// 	grid-template-rows: 2f 1f;
+// 	margin: 5px 0;
+// 	border-top: solid 2px #000;
+// 	border-left: solid 2px #000;
+// 	border-right: solid 2px #fff;
+// 	border-bottom: solid 2px #fff;
+// 	padding: 0.3rem;
+// 	background: #fff;
+// 	font-size: 1.2rem;
+// 	textarea {
+// 		margin: 0.2rem 0;
+// 		resize: none;
+// 		border: none;
+// 		height: 4rem;
+// 	}
+// 	div {
+// 		display: flex;
+// 		justify-content: space-between;
+// 		align-items: flex-end;
+// 		span {
+// 			font-size: 1rem;
+// 			color: #929191;
+// 			padding: 0 2px;
+// 		}
+// 		input {
+// 			cursor: pointer;
+// 			background: #518EDB;
+// 			border-top: solid 2px #fff;
+// 			border-left: solid 2px #fff;
+// 			border-right: solid 2px #000;
+// 			border-bottom: solid 2px #000;
+// 			padding: 0.2rem 0.8rem;
+// 			font-size: 1.2rem;
+// 			font-weight: 700;
+// 			letter-spacing: 0.2rem;
+// 			color: #fff;
+// 		}
+// 	}
+// 	${({theme}) => theme.media.tablet`
+// 		textarea {
+// 			font-size: 0.9rem;
+// 		}
+// 		div {
+// 			font-size: 1rem;
+// 			span {
+// 				font-size: 0.8rem;
+// 			}
+// 			input {
+// 				font-size: 1rem;
+// 			}
+// 		}
+// 	`}
+// 	${({theme}) => theme.media.desktop`
+// 		textarea {
+// 			font-size: 0.9rem;
+// 		}
+// 		div {
+// 			font-size: 1rem;
+// 			span {
+// 				font-size: 0.8rem;
+// 			}
+// 			input {
+// 				font-size: 1rem;
+// 			}
+// 		}
+// 	`}
+// `;
 
 export const FLine = styled.div`
 	border-top: solid 1px #929191;

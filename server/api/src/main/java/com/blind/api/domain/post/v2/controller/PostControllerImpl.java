@@ -44,7 +44,7 @@ public class PostControllerImpl implements PostController{
 
         PostResponseDTO<PostDTO> dtoList = new PostResponseDTO();
         postList.stream().forEach( post -> {
-            dtoList.getContents().add(PostDTO.from(post, roleType.getValue()));
+            dtoList.getContents().add(PostDTO.from(post, roleType));
         });
         dtoList.setPage(postList.getPageable().getPageNumber());
         dtoList.setPages(postList.getTotalPages());
@@ -61,7 +61,7 @@ public class PostControllerImpl implements PostController{
         postList.stream().forEach( post -> {
             Board board = post.getBoard();
             RoleType roleType = setRoleType(user, board);
-            dtoList.getContents().add(PostDTO.from(post, roleType.getValue()));
+            dtoList.getContents().add(PostDTO.from(post, roleType));
         });
         dtoList.setPage(postList.getPageable().getPageNumber());
         dtoList.setPages(postList.getTotalPages());
@@ -146,6 +146,19 @@ public class PostControllerImpl implements PostController{
             postService.delete(post, roleType.getValue());
     }
 
+    @RequestMapping(value={"/post"}, method = RequestMethod.PATCH)
+    public void setNotice(Long postId, HttpServletRequest request){
+        Post post = postService.findById(postId);
+        User user = tokenService.findUserByAccessToken(HeaderUtil.getAccessToken(request));
+        RoleType roleType = setRoleType(user, post.getBoard());
+        if (roleType == RoleType.USER)
+            return;
+        else if(post.getIsNotice() == false)
+            postService.setNotice(post);
+        else
+            postService.deleteNotice(post);
+    }
+
     /*마이페이지 (내가 쓴 글)*/
     @RequestMapping(value={"/mypage/post"}, method = RequestMethod.GET)
     public PostResponseDTO findPostByUserId (Pageable pageable, HttpServletRequest request){
@@ -155,7 +168,7 @@ public class PostControllerImpl implements PostController{
         PostResponseDTO dtoList = new PostResponseDTO();
         savePageable.stream().forEach( post -> {
             RoleType roleType = setRoleType(user, post.getBoard());
-            dtoList.getContents().add(PostDTO.from(post, roleType.getValue()));
+            dtoList.getContents().add(PostDTO.from(post, roleType));
         });
         dtoList.setPage(savePageable.getPageable().getPageNumber());
         dtoList.setPages(savePageable.getTotalPages());

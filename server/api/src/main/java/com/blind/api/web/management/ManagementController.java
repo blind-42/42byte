@@ -16,6 +16,7 @@ import com.blind.api.global.utils.HeaderUtil;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -39,7 +40,7 @@ public class ManagementController {
 
     @GetMapping("/admin/admin")
     public String adminPage(Model model) {
-        List<User> userList = userService.findAll();
+        List<User> userList = userService.findAll(pageable).getcontent();
         List<User> adminList = Optional.ofNullable(userList).orElseGet(Collections::emptyList).stream()
                         .filter(user -> user.getRoleType().equals(RoleType.ADMIN))
                         .collect(Collectors.toList());

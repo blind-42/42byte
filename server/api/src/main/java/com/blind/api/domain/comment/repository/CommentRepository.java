@@ -1,6 +1,7 @@
 package com.blind.api.domain.comment.repository;
 
 import com.blind.api.domain.comment.domain.Comment;
+import com.blind.api.domain.post.v2.domain.Post;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -25,4 +26,7 @@ public interface CommentRepository extends JpaRepository<Comment, Long> {
     @Modifying
     @Query("update Comment p set p.blameCnt = p.blameCnt + 1L where p.id = :id")
     void addBlameCnt(@Param("id") Long id);
+
+    Page<Comment> findAllByIsDelGreaterThan(Integer isDel, Pageable pageable);
+    Page<Comment> findAllByBlameCntGreaterThanEqual(Long blameCnt, Pageable pageable);
 }

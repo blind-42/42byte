@@ -2,6 +2,8 @@ import { Link } from 'react-router-dom';
 import { ContentData } from	'utils/functions/type';
 import { shortening, timeForToday } from 'utils/functions/functions';
 import { PreviewContainer, NoticeMark } from './styled';
+import { useMediaQuery } from "react-responsive";
+
 
 type GreetingProps = {
 	postData: ContentData;
@@ -9,6 +11,10 @@ type GreetingProps = {
 
 function PostPreview({ postData }: GreetingProps) {
 	const { id, title, commentCnt, viewCnt, likeCnt, isNotice, blameCnt, createdDate, modifiedDate } = postData;
+
+  const isMobile = useMediaQuery({
+    query : "(max-width:767px)"
+  });
 
 	return (
 		<>
@@ -19,7 +25,9 @@ function PostPreview({ postData }: GreetingProps) {
 						: <div>{id}</div>
 					}
 					<div>
-						<h3>{shortening(title, 12)}</h3>
+						{isMobile
+						? <h3>{shortening(title, 12)}</h3>
+						: <h3>{shortening(title, 22)}</h3>}
 						<div>[{commentCnt}]</div>
 					</div>
 					<div>{viewCnt}</div>

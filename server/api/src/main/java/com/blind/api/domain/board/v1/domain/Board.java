@@ -34,7 +34,7 @@ public class Board extends BaseTimeEntity {
     @ApiModelProperty(example = "Blind")
     String name;
 
-    @Column(name = "is_del", columnDefinition = "Integer default 0", updatable = false)
+    @Column(name = "is_del", columnDefinition = "Integer default 0")
     Integer isDel;
 
     @JoinColumn(name = "user_Id")

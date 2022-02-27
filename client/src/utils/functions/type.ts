@@ -48,15 +48,27 @@ export interface CommentData {
 	isUsers: boolean
   isAuthor: boolean
 	isLiked : boolean
-  isDel: boolean
+  isDel: number
 	createdDate: string
   modifiedDate: string
   recomments: RecommentData[]
 }
 
 export interface RecommentData {
+  authorId: number
+  blameCnt: number
+  content: string
+  createdDate: string
+  id: number
+  isAuthor: boolean
+  isDel: number
+  isLiked: boolean
+  isUsers: boolean
+  likeCnt: number
+  modifiedDate: string
+  recomments: any
   rootCommentId: number
-	targetAuthorId: number
+  targetAuthorId: number
 }
 
 export interface CommentPreData {
@@ -73,4 +85,12 @@ export interface CommentPreData {
 	title: string
   createdDate: string
   modifiedDate: string
+}
+
+export interface UserData {
+  createdDate: string
+  modifiedDate: string
+  hashId: string
+  profileImageUrl: string
+  roleType: string
 }

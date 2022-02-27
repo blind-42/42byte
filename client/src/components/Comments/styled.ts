@@ -57,6 +57,8 @@ export const Modify = styled.div`
 `;
 
 export const Content = styled.div`
+	word-wrap: break-word;
+	word-break: break-all;
 	font-size: 1.2rem;
 	color: #000;
 	.isDel {
@@ -105,3 +107,26 @@ export const FLine = styled.div`
 	border-top: solid 1px #fff;
 `;
 
+export const ReCommentListWrap = styled.div`
+	margin-left: 1rem;
+`;
+
+///////Recomment.tsx
+export const Container = styled.div`
+display: flex;
+flex-direction: column;
+align-items: stretch;
+`;
+
+export const RecommentContainer = styled.div`
+	display: flex;
+	margin-left: 1rem;
+`;
+
+export const ReCommentWrap = styled.div`
+	padding: 1rem 0.5rem;
+	background: #C4C4C4;
+	@media screen and (min-width: 768px) {
+		padding: 0.5rem;
+	}
+`;

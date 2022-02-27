@@ -18,11 +18,4 @@ public interface BlameController {
     public void postBlame(@RequestParam("postId") @Positive(message = "{invalid.request}") Long postId, @RequestBody @NotNull(message = "{invalid.request.NotNull}") String reason, HttpServletRequest request);
     public void commentBlame(@RequestParam("commentId") @Positive(message = "{invalid.request}") Long commentId, @RequestBody @NotNull(message = "{invalid.request.NotNull}") String reason, HttpServletRequest request);
 
-    BlameResponseDTO findAllPost(HttpServletRequest request,
-                                 @SortDefault.SortDefaults({
-                                        @SortDefault(sort = "id", direction = Sort.Direction.DESC)}) Pageable pageable);
-
-    BlameResponseDTO findAllComment(HttpServletRequest request,
-                                 @SortDefault.SortDefaults({
-                                         @SortDefault(sort = "id", direction = Sort.Direction.DESC)}) Pageable pageable);
 }

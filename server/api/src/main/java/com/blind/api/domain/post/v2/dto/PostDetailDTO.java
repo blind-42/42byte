@@ -53,6 +53,7 @@ public class PostDetailDTO {
         this.isNotice = isNotice;
         this.blameCnt = blameCnt;
         this.isLiked = isLiked;
+        this.isUsers = isUsers;
         this.type = type;
         this.createdDate = createdDate;
         this.modifiedDate = modifiedDate;
