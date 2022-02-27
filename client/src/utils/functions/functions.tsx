@@ -37,3 +37,9 @@ export const timeForToday = (value: string) => {
 
 	// return `${Math.floor(betweenTimeDay / 365)} 년전`;
 }
+
+export const isDelOption = (value: number) => {
+	if (value == 1) return '작성자';
+	if (value == 2) return '매니저';
+	else return '관리자';
+}

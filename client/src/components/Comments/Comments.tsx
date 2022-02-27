@@ -4,7 +4,7 @@ import { useQuery,  useQueryClient, useMutation } from 'react-query';
 import instance from 'utils/functions/axios';
 import DropdownMenu from 'components/DropdownMenu/DropdownMenu';
 import { CommentData } from 'utils/functions/type';
-import { timeForToday } from 'utils/functions/functions';
+import { timeForToday, isDelOption } from 'utils/functions/functions';
 import { GrLike } from "react-icons/gr";
 import { CommentWrap, ModifyCommentWrap, CommentTop, Info, Modify, Content, 
 				LikesBox, GLine, FLine } from './styled'
@@ -108,7 +108,7 @@ function Comments({ comment, commentsUserList }: GreetingProps) {
 					</CommentTop>
 					<Content>
 						{isDel
-						? <div className='isDel'>&#9986; 삭제된 댓글 입니다.</div> 
+						? <div className='isDel'>&#9986; {isDelOption(isDel)}에 의해 삭제된 댓글 입니다.</div> 
 						: <div>{content}</div>}
 					</Content>
 					<LikesBox boxState={boxState} onClick={boxcolorHandler}>
