@@ -3,12 +3,12 @@ import { useState } from 'react';
 import { useQuery,  useQueryClient, useMutation } from 'react-query';
 import instance from 'utils/functions/axios';
 import DropdownMenu from 'components/DropdownMenu/DropdownMenu';
+import CommentInput from 'components/CommentInput/CommentInput';
 import { CommentData } from 'utils/functions/type';
-import { timeForToday } from 'utils/functions/functions';
+import { timeForToday, isDelOption } from 'utils/functions/functions';
 import { GrLike } from "react-icons/gr";
 import { CommentWrap, ModifyCommentWrap, CommentTop, Info, Modify, Content, 
 				LikesBox, GLine, FLine } from './styled'
-import { CommentInput } from 'pages/Detail/styled'
 
 type GreetingProps = {
 	comment: CommentData
@@ -19,7 +19,6 @@ type GreetingProps = {
 function Comments({ comment, commentsUserList }: GreetingProps) {
 	const { boardId, postId, id, authorId, content, likeCnt, blameCnt, isUsers, isAuthor, isLiked, isDel, createdDate, modifiedDate } = comment;
 	const [openEditor, setOpenEditor] = useState<boolean>(false);
-	const [newCmt, setNewCmt] = useState<string>(content);
 	const [boxState, setBoxState] = useState<boolean>(isLiked);
 	const queryClient = useQueryClient();
 	const mutationPost = useMutation(
@@ -32,13 +31,9 @@ function Comments({ comment, commentsUserList }: GreetingProps) {
 	const modifyCmtHandler = () => {
 		setOpenEditor(!openEditor);
 	}
-
-	const newCmtInputHandler = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-		setNewCmt(e.target.value);
-	}
-
-	const updateCmtHandler = () => {
-		mutationPut.mutate({path: `/comment?commentId=${id}`, data: {content: newCmt}},
+console.log('1')
+	const updateCmtHandler = (comment: string) => {
+		mutationPut.mutate({path: `/comment?commentId=${id}`, data: {content: comment}},
 		{ onSuccess: (data) => {
 				queryClient.invalidateQueries(['detail_key']);
 				setOpenEditor(!openEditor);},
@@ -87,13 +82,7 @@ function Comments({ comment, commentsUserList }: GreetingProps) {
 						</Modify>
 					</CommentTop>
 					<Content>
-						<CommentInput>
-							<textarea defaultValue={content} onChange={newCmtInputHandler} maxLength={300} />
-							<div>
-								<span>{newCmt.length} / 300</span>
-								<input type='button' value='등록' onClick={updateCmtHandler}/>
-							</div>
-						</CommentInput>
+						<CommentInput submitCmtHandler={updateCmtHandler} defaultContent={content} />
 					</Content>
 				</ModifyCommentWrap>
 			: <CommentWrap>
@@ -108,7 +97,7 @@ function Comments({ comment, commentsUserList }: GreetingProps) {
 					</CommentTop>
 					<Content>
 						{isDel
-						? <div className='isDel'>&#9986; 삭제된 댓글 입니다.</div> 
+						? <div className='isDel'>&#9986; {isDelOption(isDel)}에 의해 삭제된 댓글 입니다.</div> 
 						: <div>{content}</div>}
 					</Content>
 					<LikesBox boxState={boxState} onClick={boxcolorHandler}>

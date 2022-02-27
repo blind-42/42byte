@@ -92,7 +92,6 @@ public class PostServiceImpl implements PostService {
     @Override
     @Transactional
     public Page<Post> findPostByIdIn(User user, Pageable pageable) {
-
         return postRepository.findAllByAuthorId(user.getId(), pageable);
     }
 
