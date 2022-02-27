@@ -24,7 +24,7 @@ public class PostDetailDTO {
     private LocalDateTime createdDate;
     private LocalDateTime modifiedDate;
 
-    public static PostDetailDTO from(Post post, Boolean isUsers,Boolean isLiked, RoleType type) {
+    public static PostDetailDTO from(Post post, Boolean isUsers, Boolean isLiked, RoleType type) {
         return PostDetailDTO.builder()
                 .id(post.getId())
                 .title(post.getTitle())
@@ -53,6 +53,7 @@ public class PostDetailDTO {
         this.isNotice = isNotice;
         this.blameCnt = blameCnt;
         this.isLiked = isLiked;
+        this.isUsers = isUsers;
         this.type = type;
         this.createdDate = createdDate;
         this.modifiedDate = modifiedDate;

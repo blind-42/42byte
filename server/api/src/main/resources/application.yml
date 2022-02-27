@@ -5,11 +5,6 @@ spring:
 #    driverClassName: com.mysql.cj.jdbc.Driver
 #    username: root
 #    password: blind42blind42
-  thymeleaf:
-    prefix : classpath:templates/
-    suffix : .html
-    cache : false
-
      url: jdbc:mysql://172.27.0.52:3306/TEST?serverTimezone=Asia/Seoul&characterEncoding=UTF-8
      driverClassName: com.mysql.cj.jdbc.Driver
      username: root
@@ -22,13 +17,16 @@ spring:
       ddl-auto: none
     properties:
       hibernate:
-        show_sql: false
+        show_sql: true
         format_sql: false
         use_sql_comments: false
     logging:
       level:
         org.hibernate.SQL: debug
-
+  thymeleaf:
+    prefix : classpath:templates/
+    suffix : .html
+    cache : false
   # pageable
   data:
     web:
@@ -42,10 +40,10 @@ spring:
     oauth2.client:
         registration:
           42:
-            client-id: "aa9c83987ce3e0dc4b79cc7c2d9c80147ec532ec4ce6cb5df032338272d54df5"
-            client-secret: "abaefa17bb4af72ff5dbdcf2fb39c1353d0dc3f9bcc61d6daec8e6939eebe7ca"
-#            client-id: "7b753e06873caf84820ba1f794ea93de33f2472495ff0e5a060bfcbcd2163ba8"
-#            client-secret: "48f245c07bfaf5f470a3002e282f8a2fda269b0469079950bdf3a24069a18990"
+#            client-id: "aa9c83987ce3e0dc4b79cc7c2d9c80147ec532ec4ce6cb5df032338272d54df5"
+#            client-secret: "abaefa17bb4af72ff5dbdcf2fb39c1353d0dc3f9bcc61d6daec8e6939eebe7ca"
+            client-id: "7b753e06873caf84820ba1f794ea93de33f2472495ff0e5a060bfcbcd2163ba8"
+            client-secret: "48f245c07bfaf5f470a3002e282f8a2fda269b0469079950bdf3a24069a18990"
             redirect-uri: "{baseUrl}/{action}/oauth2/code/{registrationId}"
             authorization-grant-type: authorization_code
             scope: public

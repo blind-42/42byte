@@ -15,6 +15,7 @@ import com.blind.api.global.utils.HeaderUtil;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -37,7 +38,8 @@ public class ManagementController {
 
     @GetMapping("/admin/admin")
     public String adminPage(Model model) {
-        List<User> userList = userService.findAll();
+        Pageable pageable = Pageable.unpaged();
+        Page<User> userList = userService.findAll(pageable);
         model.addAttribute("user", userList);
         model.addAttribute("token", "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI1N2NiMjI2YmViMTg5YTZlZWUxYzRlOGY3ZmYxYjQxZjkwZGY0NGU4ZjI5OTYxNzJiNjI5ODJmNjdlMTk2YTk5Iiwicm9sZSI6IlJPTEVfVVNFUiIsImV4cCI6MTY0NTg1NDEyMn0.ojY7aFNws34Qx2wj7NVdQjJZ-9B_0E4i1qg-jm34XnA");
         return "admin_management";

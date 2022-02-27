@@ -49,40 +49,4 @@ public class BlameControllerImpl implements BlameController{
             commentService.addBlameCnt(commentId);
         }
     }
-
-    @RequestMapping(value = {"/blame/post"}, method= RequestMethod.GET)
-    public BlameResponseDTO findAllPost(HttpServletRequest request, Pageable pageable) {
-        Page<PostBlame> postBlame = blameService.findAllPost(pageable);
-        BlameResponseDTO<PostBlame> dtoList = new BlameResponseDTO();
-
-        postBlame.stream().forEach( postBlames -> {
-            dtoList.getContents().add(PostBlame.builder()
-                    .post(postBlames.getPost())
-                    .user(postBlames.getUser())
-                    .reason(postBlames.getReason())
-                    .build());
-        });
-
-        dtoList.setPage(postBlame.getPageable().getPageNumber());
-        dtoList.setPages(postBlame.getTotalPages());
-        return dtoList;
-    }
-
-    @RequestMapping(value = {"/blame/comment"}, method= RequestMethod.GET)
-    public BlameResponseDTO findAllComment(HttpServletRequest request, Pageable pageable) {
-        Page<CommentBlame> commentBlame = blameService.findAllComment(pageable);
-        BlameResponseDTO<CommentBlame> dtoList = new BlameResponseDTO();
-
-        commentBlame.stream().forEach( commentBlames -> {
-            dtoList.getContents().add(CommentBlame.builder()
-                    .comment(commentBlames.getComment())
-                    .user(commentBlames.getUser())
-                    .reason(commentBlames.getReason())
-                    .build());
-        });
-
-        dtoList.setPage(commentBlame.getPageable().getPageNumber());
-        dtoList.setPages(commentBlame.getTotalPages());
-        return dtoList;
-    }
 }

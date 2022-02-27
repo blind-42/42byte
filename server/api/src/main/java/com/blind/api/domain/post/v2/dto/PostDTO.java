@@ -19,11 +19,11 @@ public class PostDTO {
     private Long blameCnt;
     private Boolean isNotice;
     private Integer isDel;
-    private Integer type;
+    private RoleType type;
     private LocalDateTime createdDate;
     private LocalDateTime modifiedDate;
 
-    public static PostDTO from(Post post, Integer type) {
+    public static PostDTO from(Post post, RoleType type) {
         return PostDTO.builder()
                 .id(post.getId())
                 .title(post.getTitle())
@@ -40,7 +40,7 @@ public class PostDTO {
     }
 
     @Builder
-    private PostDTO(Long id, String title, Long commentCnt, Long viewCnt, Long likeCnt, Long blameCnt, Boolean isNotice, Integer isDel, Integer type, LocalDateTime createdDate, LocalDateTime modifiedDate) {
+    private PostDTO(Long id, String title, Long commentCnt, Long viewCnt, Long likeCnt, Long blameCnt, Boolean isNotice, Integer isDel, RoleType type, LocalDateTime createdDate, LocalDateTime modifiedDate) {
         this.id = id;
         this.title = title;
         this.commentCnt = commentCnt;

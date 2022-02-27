@@ -35,6 +35,11 @@ public class BoardServiceImpl implements BoardService{
         board.setManager(null);
     }
 
+    @Override
+    @Transactional
+    public Page<Board> findDeleted(Pageable pageable) {
+        return boardRepository.findAllByIsDelGreaterThan(0, pageable);
+    }
 
     @Override
     @Transactional
@@ -47,7 +52,6 @@ public class BoardServiceImpl implements BoardService{
     public void deleteBoard(Board board) {
         boardRepository.delete(board);
     }
-
 
 
     @Override

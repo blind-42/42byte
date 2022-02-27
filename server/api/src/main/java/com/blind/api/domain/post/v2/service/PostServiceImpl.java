@@ -27,20 +27,22 @@ public class PostServiceImpl implements PostService {
 
         return postList;
     }
+
     @Override
     @Transactional
-    public Page<Post> findAllByAuthorId(Long authorId, Pageable pageable){
+    public Page<Post> findAllByAuthorId(Long authorId, Pageable pageable) {
         return postRepository.findAllByAuthorId(authorId, pageable);
     }
+
     @Override
     @Transactional
-    public Post findById(Long postId){
+    public Post findById(Long postId) {
         return postRepository.findById(postId).orElseThrow(() -> new BusinessException("{post.notfound}"));
     }
 
     @Override
     @Transactional
-    public Post save(Board board, User user, String title, String content){
+    public Post save(Board board, User user, String title, String content) {
         Post post = Post.builder()
                 .board(board)
                 .title(title)
@@ -116,5 +118,17 @@ public class PostServiceImpl implements PostService {
     @Transactional
     public void deleteNotice(Post post) {
         post.setIsNotice(false);
+    }
+
+    @Override
+    @Transactional
+    public Page<Post> findDeleted(Pageable pageable) {
+        return postRepository.findAllByIsDelGreaterThan(0, pageable);
+    }
+
+    @Override
+    @Transactional
+    public Page<Post> findBlamed(Pageable pageable) {
+        return postRepository.findAllByBlameCntGreaterThanEqual(3L, pageable);
     }
 }

@@ -5,6 +5,7 @@ import com.blind.api.domain.board.v1.dto.BoardDTO;
 import com.blind.api.domain.board.v1.dto.BoardRequestDTO;
 import com.blind.api.domain.board.v1.dto.BoardResponseDTO;
 import com.blind.api.domain.board.v1.service.BoardService;
+import com.blind.api.domain.security.jwt.v1.repository.TokenRepository;
 import com.blind.api.domain.security.jwt.v1.service.TokenService;
 import com.blind.api.domain.user.v2.domain.RoleType;
 import com.blind.api.domain.user.v2.domain.User;
