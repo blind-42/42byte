@@ -74,6 +74,7 @@ export const LikesBox = styled.div<{boxState?: boolean;}>`
 	display: flex;
 	justify-content: space-evenly;
 	align-items: center;
+	margin-top: 0.3rem;
 	margin-left: auto;
 	border: solid 1.5px #518EDB;
 	width: 3.2rem;
@@ -108,25 +109,33 @@ export const FLine = styled.div`
 `;
 
 export const ReCommentListWrap = styled.div`
-	margin-left: 1rem;
+	margin-left: 2rem;
 `;
 
 ///////Recomment.tsx
-export const Container = styled.div`
-display: flex;
-flex-direction: column;
-align-items: stretch;
-`;
 
 export const RecommentContainer = styled.div`
 	display: flex;
-	margin-left: 1rem;
+	margin-left: 0.5rem;
+	span {
+		flex: 0.5;
+		text-align: center;
+		font-size: 1.2rem;
+	}
+	@media screen and (min-width: 768px) {
+		span {
+		font-size: 0.9rem;
+	}
+	}
 `;
 
 export const ReCommentWrap = styled.div`
-	padding: 1rem 0.5rem;
+	flex: 9.5;
+	margin-left: 0.5rem;
+	padding: 1rem 1rem;
 	background: #C4C4C4;
 	@media screen and (min-width: 768px) {
-		padding: 0.5rem;
+		margin-left: 0;
+		padding: 0.5rem 1rem;
 	}
 `;

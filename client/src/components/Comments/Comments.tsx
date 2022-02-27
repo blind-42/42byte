@@ -108,6 +108,7 @@ function Comments({ comment, commentsUserList }: GreetingProps) {
 			<ReCommentListWrap>
 			{recomments.map((el: RecommentData) => {
 					return (<ReComments key={el.id} recomment={el}
+																					postId={postId}
 																				// commentsUserList={commentsUserList} 
 																				/>)
 				})}
