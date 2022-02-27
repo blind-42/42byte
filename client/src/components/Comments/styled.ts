@@ -57,6 +57,8 @@ export const Modify = styled.div`
 `;
 
 export const Content = styled.div`
+	word-wrap: break-word;
+	word-break: break-all;
 	font-size: 1.2rem;
 	color: #000;
 	.isDel {
