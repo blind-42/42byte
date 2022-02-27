@@ -4,11 +4,12 @@ import { useQuery,  useQueryClient, useMutation } from 'react-query';
 import instance from 'utils/functions/axios';
 import DropdownMenu from 'components/DropdownMenu/DropdownMenu';
 import CommentInput from 'components/CommentInput/CommentInput';
-import { CommentData } from 'utils/functions/type';
+import ReComments from './ReComments';
+import { CommentData, RecommentData } from 'utils/functions/type';
 import { timeForToday, isDelOption } from 'utils/functions/functions';
 import { GrLike } from "react-icons/gr";
 import { CommentWrap, ModifyCommentWrap, CommentTop, Info, Modify, Content, 
-				LikesBox, GLine, FLine } from './styled'
+				LikesBox, GLine, FLine, ReCommentListWrap } from './styled'
 
 type GreetingProps = {
 	comment: CommentData
@@ -17,7 +18,7 @@ type GreetingProps = {
 }
 
 function Comments({ comment, commentsUserList }: GreetingProps) {
-	const { boardId, postId, id, authorId, content, likeCnt, blameCnt, isUsers, isAuthor, isLiked, isDel, createdDate, modifiedDate } = comment;
+	const { boardId, postId, id, authorId, content, likeCnt, blameCnt, isUsers, isAuthor, isLiked, isDel, createdDate, modifiedDate, recomments } = comment;
 	const [openEditor, setOpenEditor] = useState<boolean>(false);
 	const [boxState, setBoxState] = useState<boolean>(isLiked);
 	const queryClient = useQueryClient();
@@ -31,7 +32,6 @@ function Comments({ comment, commentsUserList }: GreetingProps) {
 	const modifyCmtHandler = () => {
 		setOpenEditor(!openEditor);
 	}
-console.log('1')
 	const updateCmtHandler = (comment: string) => {
 		mutationPut.mutate({path: `/comment?commentId=${id}`, data: {content: comment}},
 		{ onSuccess: (data) => {
@@ -105,6 +105,13 @@ console.log('1')
 						<div>{likeCnt}</div>
 					</LikesBox>
 			</CommentWrap>}
+			<ReCommentListWrap>
+			{recomments.map((el: RecommentData) => {
+					return (<ReComments key={el.id} recomment={el}
+																				// commentsUserList={commentsUserList} 
+																				/>)
+				})}
+			</ReCommentListWrap>
 			<GLine/>
 			<FLine/>
 		</>
