@@ -34,4 +34,8 @@ public interface PostRepository extends PagingAndSortingRepository<Post, Long> {
     @Modifying
     @Query("update Post p set p.blameCnt = p.blameCnt + 1L where p.id = :id")
     void addBlameCnt(@Param("id") Long id);
+
+    Page<Post> findAllByIsDelGreaterThan(Integer isDel, Pageable pageable);
+    Page<Post> findAllByBlameCntGreaterThanEqual(Long blameCnt, Pageable pageable);
+
 }

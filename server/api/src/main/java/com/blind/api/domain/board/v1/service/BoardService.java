@@ -16,10 +16,11 @@ public interface BoardService {
     Board save (User manager, String name);
     Board findById (Long boardId);
     Board findByName (String name);
-    public void setManager(Board board, User user);
-    public void deleteManager(Board board);
+    void setManager(Board board, User user);
+    void deleteManager(Board board);
     void delete (Board board, Integer type);
     List<Board> findAllBoard();
     void deleteBoard(Board board);
+    Page<Board> findDeleted(Pageable pageable);
     Page<Board> findAllBoardByUser(User user, Pageable pageable);
 }

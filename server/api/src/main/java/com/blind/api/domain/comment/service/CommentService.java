@@ -32,4 +32,7 @@ public interface CommentService {
     Comment findCommentById(Long id);
 
     void addBlameCnt(Long id);
+
+    Page<Comment> findDeleted(Pageable pageable);
+    Page<Comment> findBlamed(Pageable pageable);
 }

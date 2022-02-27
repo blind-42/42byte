@@ -61,7 +61,7 @@ public class LikeControllerImpl implements LikeController {
         Page<PostLike> likeList = likeService.findLikePostByUserId(user.getId(), pageable);
         PostResponseDTO responseDTO = new PostResponseDTO();
         likeList.stream().forEach( postLike -> {
-            responseDTO.getContents().add(PostDTO.from(postLike.getPost(), user.getRoleType().getValue()));
+            responseDTO.getContents().add(PostDTO.from(postLike.getPost(), user.getRoleType()));
         });
         responseDTO.setPage(likeList.getPageable().getPageNumber());
         responseDTO.setPages(likeList.getTotalPages());

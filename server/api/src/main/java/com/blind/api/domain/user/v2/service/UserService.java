@@ -6,6 +6,8 @@ import com.blind.api.domain.user.v2.repository.UserRepository;
 
 import com.blind.api.global.exception.BusinessException;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 import java.util.List;
@@ -37,7 +39,12 @@ public class UserService {
     }
 
     @Transactional
-    public List<User> findAll(){
+    public Page<User> findAll(Pageable pageable){
+        return userRepository.findAll(pageable);
+    }
+
+    @Transactional
+    public List<User> findAllUsers() {
         return userRepository.findAll();
     }
 }

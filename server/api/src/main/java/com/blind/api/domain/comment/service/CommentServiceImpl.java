@@ -108,4 +108,16 @@ public class CommentServiceImpl implements CommentService{
     public void addBlameCnt(Long id) {
         commentRepository.addBlameCnt(id);
     }
+
+    @Override
+    @Transactional
+    public Page<Comment> findDeleted(Pageable pageable) {
+        return commentRepository.findAllByIsDelGreaterThan(0, pageable);
+    }
+
+    @Override
+    @Transactional
+    public Page<Comment> findBlamed(Pageable pageable) {
+        return commentRepository.findAllByBlameCntGreaterThanEqual( 3L, pageable);
+    }
 }

@@ -2,12 +2,9 @@ package com.blind.api.domain.post.v2.service;
 
 import com.blind.api.domain.board.v1.domain.Board;
 import com.blind.api.domain.post.v2.domain.Post;
-import com.blind.api.domain.post.v2.dto.PostResponseDTO;
 import com.blind.api.domain.user.v2.domain.User;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-
-import javax.transaction.Transactional;
 
 public interface PostService {
     Page<Post> findAllByBoardId(Long boardId, Pageable pageable);
@@ -25,4 +22,6 @@ public interface PostService {
     void addBlameCnt(Long id);
     void deleteNotice(Post post);
     void setNotice(Post post);
+    Page<Post> findDeleted(Pageable pageable);
+    Page<Post> findBlamed(Pageable pageable);
 }

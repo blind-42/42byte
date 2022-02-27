@@ -45,14 +45,14 @@ public class Post extends BaseTimeEntity {
     @Column(name = "like_count", columnDefinition = "Integer default 0", updatable = false)
     private Long likeCnt;
 
-    @Column(name = "is_notice", columnDefinition = "Boolean default false", updatable = false)
+    @Column(name = "is_notice", columnDefinition = "Boolean default false")
     private Boolean isNotice;
 
     @Column(name = "blame_count", columnDefinition = "Integer default 0", updatable = false)
     private Long blameCnt;
 
-    @Column(name = "is_del", columnDefinition = "Integer default 0", updatable = false)
-    private int isDel;
+    @Column(name = "is_del", columnDefinition = "Integer default 0")
+    private Integer isDel;
 
 
     @ManyToOne
