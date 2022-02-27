@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-export const CommentInputWrap = styled.div`
+export const CommentInputWrap = styled.form`
 	display: grid;
 	grid-template-rows: 2f 1f;
 	margin: 5px 0;
@@ -39,7 +39,7 @@ export const CommentInputWrap = styled.div`
 			letter-spacing: 0.2rem;
 			color: #fff;
 		}
-	}
+}
 	${({theme}) => theme.media.tablet`
 		textarea {
 			font-size: 0.9rem;
@@ -69,3 +69,4 @@ export const CommentInputWrap = styled.div`
 		}
 	`}
 `;
+

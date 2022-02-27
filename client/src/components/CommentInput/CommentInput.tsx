@@ -14,22 +14,29 @@ export default function CommentInput({submitCmtHandler, placeholder, defaultCont
 		setComment(e.target.value);
 	}
 
-	const submitHandler = () => {
+	// const submitKeyboardHandler = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
+	// 	if (e.key === 'Enter') {
+	// 		submitCmtHandler(comment)
+	// 		setComment('')
+	// 	}
+	// }
+
+	const submitValidHandler = (e: React.FormEvent<HTMLFormElement>) => {
+		e.preventDefault();
 		submitCmtHandler(comment)
 		setComment('')
 	}
 
 	return (
 		<>
-		<CommentInputWrap>
-				<textarea placeholder={placeholder} 
-									defaultValue={defaultContent} 
-									onChange={newCmtInputHandler} 
-									value={comment}
-									maxLength={300} />
+		<CommentInputWrap onSubmit={submitValidHandler} noValidate >
+			{placeholder
+				? <textarea placeholder={placeholder} onChange={newCmtInputHandler} value={comment} maxLength={300} />
+				: <textarea defaultValue={defaultContent} onChange={newCmtInputHandler} maxLength={300} />
+			}
 				<div>
 					<span>{comment.length} / 300</span>
-					<input type='button' value='등록' onClick={submitHandler}/>
+					<input type='submit' value='등록' />
 				</div>
 		</CommentInputWrap>
 		</>
