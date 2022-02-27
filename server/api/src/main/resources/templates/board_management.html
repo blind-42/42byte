@@ -13,7 +13,7 @@
                     <div class="">
                         <div class="page-title">
                             <div class="title_left">
-                                <h3>게시판 등록/삭제 </h3>
+                                <h3>게시판 관리</h3>
                             </div>
                             <div class="title_right">
                                 <div class="col-md-5 col-sm-5   form-group pull-right top_search">
@@ -32,7 +32,7 @@
                             <div class="col-md-12 col-sm-12  ">
                                 <div class="x_panel">
                                     <div class="x_title">
-                                        <h2>현재 게시판/h2>
+                                        <h2>게시판 리스트</h2>
                                         <ul class="nav navbar-right panel_toolbox">
                                             <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
                                             </li>
@@ -60,15 +60,23 @@
                                                 </thead>
                                                 <tbody>
 
-                                                <tr class="even pointer" th:each="board, i : ${board}">
+                                                <tr class="even pointer" th:each="board, i : ${boardList}">
                                                     <td class="a-center">
                                                         <input type="checkbox" name="table_records">
                                                     </td>
                                                     <td class=" " th:text="${board.getId()}"></td>
                                                     <td class=" " th:text="${board.getCreatedDate()}"></td>
                                                     <td class=" " th:text="${board.getName()}"></td>
-                                                    <td class=" " th:text="${board.getManager()}"></td>
-                                                    <td class=" last"><a href="/admin/User">삭제</a>
+                                                    <td class=" " th:if="${board.getManager() != null}" th:text="${board.getManager().getId()}"></td>
+                                                    <td class=" " th:unless="${board.getManager() != null}" th:text="없음"></td>
+                                                    <td class=" last">
+                                                        <form>
+                                                            <input type="hidden" id="url" name="url" value="/admin/board">
+                                                            <input type="hidden" id="method" value="delete">
+                                                            <input type="hidden" id="params"  th:value="|?boardId=${board.getId()}|">
+                                                            <input type="hidden" id="token" th:value="${token}">
+                                                            <input type="submit" value="삭제" th:onclick='js_request(this.form)'>
+                                                        </form>
                                                     </td>
                                                 </tr>
                                             </table>

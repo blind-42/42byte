@@ -54,7 +54,7 @@ public class AdminControllerImpl implements AdminController{
         userService.setRoleType(targetUser, RoleType.ADMIN);
     }
 
-    /* 관리자 제거 */
+    /* 관리자 해제 */
     @RequestMapping(value = "/admin/user", method = RequestMethod.DELETE)
     public void deleteAdmin(Long targetUserId, HttpServletRequest request){
         if (!isAdmin(request))

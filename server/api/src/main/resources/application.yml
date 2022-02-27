@@ -9,9 +9,8 @@ spring:
      driverClassName: com.mysql.cj.jdbc.Driver
      username: root
      password: Blind$242
-
+     
   jpa:
-  # JPA 설정
     database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
     hibernate:
       ddl-auto: none

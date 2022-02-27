@@ -13,7 +13,7 @@
                     <div class="">
                         <div class="page-title">
                             <div class="title_left">
-                                <h3>댓글 차단 등록/삭제</h3>
+                                <h3>댓글 관리</h3>
                             </div>
                             <div class="title_right">
                                 <div class="col-md-5 col-sm-5   form-group pull-right top_search">
@@ -32,7 +32,7 @@
                             <div class="col-md-12 col-sm-12  ">
                                 <div class="x_panel">
                                     <div class="x_title">
-                                        <h2>현재 차단된 댓글</h2>
+                                        <h2>차단 댓글 리스트</h2>
                                             <ul class="nav navbar-right panel_toolbox">
                                                 <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
                                                 </li>
@@ -40,6 +40,64 @@
                                                 </li>
                                             </ul>
                                             <div class="clearfix"></div>
+                                    </div>
+
+                                    <div class="x_content">
+                                        <div class="table-responsive">
+                                            <table class="table table-striped jambo_table bulk_action">
+                                                <thead>
+                                                <tr class="headings">
+                                                    <th>
+                                                        <input type="checkbox" id="check-all" class="flat">
+                                                    </th>
+                                                    <th class="column-title">차단 ID</th>
+                                                    <th class="column-title">차단 날짜</th>
+                                                    <th class="column-title">차단 내용</th>
+                                                    <th class="column-title">댓글 작성자</th>
+                                                    <th class="column-title">댓글 내용</th>
+                                                    <th class="column-title">댓글 생성일</th>
+                                                    <th class="column-title">비고</th>
+                                                    </th>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+
+                                                <tr class="even pointer" th:each="comment, i : ${comment}">
+                                                    <td class="a-center">
+                                                        <input type="checkbox" name="table_records">
+                                                    </td>
+                                                    <td class=" " th:text="${comment.getId()}"></td>
+                                                    <td class=" " th:text="${comment.getUser().getId()}"></td>
+                                                    <td class=" " th:text="${comment.getReason()}"></td>
+                                                    <td class=" " th:text="${comment.getComment().getAuthorId()}"></td>
+                                                    <td class=" " th:text="${comment.getComment().getContent()}"></td>
+                                                    <td class=" " th:text="${comment.getComment().getCreatedDate()}"></td>
+                                                    <td class=" last">
+                                                        <form>
+                                                        <input type="hidden" id="url" name="url" value="경로추가">
+                                                        <input type="hidden" id="method" value="post">
+                                                        <input type="hidden" id="params"  th:value="|?commentId=${comment.getId()}|">
+                                                        <input type="hidden" id="token" th:value="${token}">
+                                                        <input type="submit" value="삭제" th:onclick='js_request(this.form)'>
+                                                        </form>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-12 col-sm-12  ">
+                                <div class="x_panel">
+                                    <div class="x_title">
+                                        <h2>신고 댓글 리스트</h2>
+                                        <ul class="nav navbar-right panel_toolbox">
+                                            <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                                            </li>
+                                            <li><a class="close-link"><i class="fa fa-close"></i></a>
+                                            </li>
+                                        </ul>
+                                        <div class="clearfix"></div>
                                     </div>
 
                                     <div class="x_content">
@@ -72,7 +130,14 @@
                                                     <td class=" " th:text="${comment.getComment().getAuthorId()}"></td>
                                                     <td class=" " th:text="${comment.getComment().getContent()}"></td>
                                                     <td class=" " th:text="${comment.getComment().getCreatedDate()}"></td>
-                                                    <td class=" last"><a href="/admin/User">삭제</a>
+                                                    <td class=" last">
+                                                        <form>
+                                                            <input type="hidden" id="url" name="url" value="경로추가">
+                                                            <input type="hidden" id="method" value="post">
+                                                            <input type="hidden" id="params"  th:value="|?commentId=${comment.getId()}|">
+                                                            <input type="hidden" id="token" th:value="${token}">
+                                                            <input type="submit" value="삭제" th:onclick='js_request(this.form)'>
+                                                        </form>
                                                     </td>
                                                 </tr>
                                             </table>

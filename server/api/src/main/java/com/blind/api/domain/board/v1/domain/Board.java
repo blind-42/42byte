@@ -3,6 +3,7 @@ package com.blind.api.domain.board.v1.domain;
 import com.blind.api.domain.user.v2.domain.User;
 import com.blind.api.global.entity.BaseTimeEntity;
 import com.sun.istack.NotNull;
+import com.sun.istack.Nullable;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Builder;
 import lombok.Getter;
@@ -37,7 +38,7 @@ public class Board extends BaseTimeEntity {
     Integer isDel;
 
     @JoinColumn(name = "user_Id")
-    @OneToOne
+    @OneToOne()
     User manager;
 
     @Builder

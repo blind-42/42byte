@@ -18,7 +18,6 @@
                                 <div class="title_right">
                                     <div class="col-md-5 col-sm-5   form-group pull-right top_search">
                                         <div class="input-group">
-                    </span>
                                         </div>
                                     </div>
                                 </div>
@@ -32,7 +31,7 @@
                                 <div class="col-md-12 col-sm-12  ">
                                     <div class="x_panel">
                                         <div class="x_title">
-                                            <h2>현재 관리자 </h2>
+                                            <h2>현재 관리자</h2>
                                             <ul class="nav navbar-right panel_toolbox">
                                                 <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
                                                 </li>
@@ -59,7 +58,59 @@
                                                     </thead>
                                                     <tbody>
 
-                                                    <tr class="even pointer" th:each="user, i : ${user}">
+                                                    <tr class="even pointer" th:each="admin, i : ${adminList}">
+                                                        <td class="a-center">
+                                                            <input type="checkbox" name="table_records">
+                                                        </td>
+                                                        <td class=" " th:text="${admin.getId()}"></td>
+                                                        <td class=" " th:text="${admin.getCreatedDate()}"></td>
+                                                        <td class=" " th:text="${admin.getRoleType()}"></td>
+                                                        <td class=" last">
+                                                            <form>
+                                                            <input type="hidden" id="url" name="url" value="/admin/user">
+                                                            <input type="hidden" id="method" value="delete">
+                                                            <input type="hidden" id="params"  th:value="|?userId=${admin.getId()}|">
+                                                            <input type="hidden" id="token" th:value="${token}">
+                                                            <input type="submit" value="해제" th:onclick='js_request(this.form)'>
+                                                            </form>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-12 col-sm-12  ">
+                                    <div class="x_panel">
+                                        <div class="x_title">
+                                            <h2>유저 리스트</h2>
+                                            <ul class="nav navbar-right panel_toolbox">
+                                                <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                                                </li>
+                                                <li><a class="close-link"><i class="fa fa-close"></i></a>
+                                                </li>
+                                            </ul>
+                                            <div class="clearfix"></div>
+                                        </div>
+
+                                        <div class="x_content">
+                                            <div class="table-responsive">
+                                                <table class="table table-striped jambo_table bulk_action">
+                                                    <thead>
+                                                    <tr class="headings">
+                                                        <th>
+                                                            <input type="checkbox" id="check-all" class="flat">
+                                                        </th>
+                                                        <th class="column-title">유저 ID </th>
+                                                        <th class="column-title">가입 날짜 </th>
+                                                        <th class="column-title">유저 타입 </th>
+                                                        <th class="column-title">비고 </th>
+                                                        </th>
+                                                    </tr>
+                                                    </thead>
+                                                    <tbody>
+
+                                                    <tr class="even pointer" th:each="user, i : ${userList}">
                                                         <td class="a-center">
                                                             <input type="checkbox" name="table_records">
                                                         </td>
@@ -67,11 +118,12 @@
                                                         <td class=" " th:text="${user.getCreatedDate()}"></td>
                                                         <td class=" " th:text="${user.getRoleType()}"></td>
                                                         <td class=" last">
-                                                            <form th:method="post" >
-                                                            <input type="hidden" name="url" value="/admin/User">
-                                                            <input type="hidden" name="userId" th:value="${user.getId()}">
-                                                            <input type="hidden" name="token" th:value="${token}">
-                                                            <input type="submit" value="등록" th:onclick='js_request(this.form)'>
+                                                            <form>
+                                                                <input type="hidden" id="url" name= "url" value="/admin/user">
+                                                                <input type="hidden" id="method" name= "method" value="post">
+                                                                <input type="hidden" id="params" name= "params"  th:value="|?userId=${user.getId()}|">
+                                                                <input type="hidden" id="token" name= "token" th:value="${token}">
+                                                                <input type="submit" value="등록" th:onclick='js_request(this.form)'>
                                                             </form>
                                                         </td>
                                                     </tr>
