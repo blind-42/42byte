@@ -55,8 +55,20 @@ export interface CommentData {
 }
 
 export interface RecommentData {
+  authorId: number
+  blameCnt: number
+  content: string
+  createdDate: string
+  id: number
+  isAuthor: boolean
+  isDel: number
+  isLiked: boolean
+  isUsers: boolean
+  likeCnt: number
+  modifiedDate: string
+  recomments: any
   rootCommentId: number
-	targetAuthorId: number
+  targetAuthorId: number
 }
 
 export interface CommentPreData {
