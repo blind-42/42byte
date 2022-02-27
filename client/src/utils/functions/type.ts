@@ -74,3 +74,11 @@ export interface CommentPreData {
   createdDate: string
   modifiedDate: string
 }
+
+export interface UserData {
+  createdDate: string
+  modifiedDate: string
+  hashId: string
+  profileImageUrl: string
+  roleType: string
+}
