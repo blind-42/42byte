@@ -5,6 +5,7 @@ import { Viewer } from '@toast-ui/react-editor';
 import instance from 'utils/functions/axios';
 import Header from 'components/Header/Header';
 import Footer from 'components/Footer/Footer';
+import CommentInput from 'components/CommentInput/CommentInput';
 import Comments from 'components/Comments/Comments';
 import PostEditor from 'components/PostEdit/PostEditor';
 import Loading from 'pages/Loading/Loading';
@@ -15,7 +16,7 @@ import { isDelOption } from 'utils/functions/functions';
 import { GrLike } from "react-icons/gr";
 import { AppContainer, PageContainer, TopBar, PageName, Squares, ContentFooterWrap } from 'styles/styled';
 import { PostContainer, DetailContainer, Title, Specific, Info, Modify, ContentWrap, LikeWrap, LikesBox
-				, CommentContainer, CommentCount, CommentInput, CommentListWrap, FLine } from './styled';
+				, CommentContainer, CommentCount, CommentListWrap, FLine } from './styled';
 
 
 function Detail() {
@@ -54,7 +55,7 @@ function Detail() {
 	);
 	const { id, title, content, commentCnt, viewCnt, likeCnt, isUsers, isNotice, isLiked, blameCnt, createdDate, modifiedDate } = detailData.post
 	const [boxState, setBoxState] = useState<boolean>(false);
-	const [comment, setComment] = useState<string>('');
+	// const [comment, setComment] = useState<string>('');
   const [openEditor, setOpenEditor] = useState(false);
 	const currentUrl = window.location.href;
 	const urlId = currentUrl.split('detail?boardId=1&postId=')[1];
@@ -85,15 +86,11 @@ function Detail() {
 	const shortDate = createdDate?.slice(0, 16).replace('T', ' ');
   const [commentsUserList, setCommentsUserList] = useState([-1])
 
-	const cmtInputHandler = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-		setComment(e.target.value);
-  }
-
-	const uploadCmtHandler = () => {
+	const uploadCmtHandler = (comment: string) => {
+		console.log('2')
 		mutationPost.mutate({path: `/comment?boardId=1&postId=${urlId}`, data: {content: comment}},
 		{ onSuccess: (data) => {
 				queryClient.invalidateQueries(['detail_key']);
-				setComment('');
 				setTimeout(() => scrollRef.current.scrollIntoView({behavior: "smooth", block: "end", inline: "nearest"}), 550);},
 			onError: (data) => {window.location.href = '/error';}
 		});
@@ -179,13 +176,7 @@ function Detail() {
 								</LikeWrap>
 								<CommentContainer>
 									<CommentCount>댓글 {commentCnt}</CommentCount>
-									<CommentInput>
-										<textarea placeholder='댓글을 입력하세요.' onChange={cmtInputHandler} maxLength={300} value={comment} />
-										<div>
-											<span>{comment.length} / 300</span>
-											<input type='button' value='등록' onClick={uploadCmtHandler}/>
-										</div>
-									</CommentInput>
+									<CommentInput submitCmtHandler={uploadCmtHandler} placeholder={'댓글을 입력하세요.'} />
 									<FLine />
 									<CommentListWrap>
 										{commentData.map((el: CommentData) => {
