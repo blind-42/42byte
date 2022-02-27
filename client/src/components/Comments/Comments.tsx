@@ -31,11 +31,11 @@ function Comments({ comment, commentsUserList }: GreetingProps) {
 	const modifyCmtHandler = () => {
 		setOpenEditor(!openEditor);
 	}
-
+console.log('1')
 	const updateCmtHandler = (comment: string) => {
 		mutationPut.mutate({path: `/comment?commentId=${id}`, data: {content: comment}},
 		{ onSuccess: (data) => {
-				queryClient.invalidateQueries(['detail_key', postId]);
+				queryClient.invalidateQueries(['detail_key']);
 				setOpenEditor(!openEditor);},
 			onError: (data) => {window.location.href = '/error';}
 		})
@@ -44,7 +44,7 @@ function Comments({ comment, commentsUserList }: GreetingProps) {
 	const deleteCmtHandler = () => {
 		mutationDelete.mutate({path: `/comment?commentId=${id}`},
 		{ onSuccess: (data) => {
-				queryClient.invalidateQueries(['detail_key', postId]);},
+				queryClient.invalidateQueries(['detail_key']);},
 			onError: (data) => {window.location.href = '/error';}
 		});
 	}
@@ -61,7 +61,7 @@ function Comments({ comment, commentsUserList }: GreetingProps) {
 	const boxcolorHandler = () => {
 		mutationPost.mutate({path: `/comment/like?postId=${postId}&commentId=${id}`, data: undefined},
 		{ onSuccess: (data) => {
-				queryClient.invalidateQueries(['detail_key', postId]);
+				queryClient.invalidateQueries(['detail_key']);
 				setBoxState(!boxState);},
 			onError: (data) => {window.location.href = '/error';}
 		});
