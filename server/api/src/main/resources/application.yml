@@ -1,14 +1,14 @@
 spring:
   # 데이터 소스 설정
   datasource:
-#    url: jdbc:mysql://localhost:3306/TEST?serverTimezone=Asia/Seoul&characterEncoding=UTF-8
-#    driverClassName: com.mysql.cj.jdbc.Driver
-#    username: root
-#    password: blind42blind42
-     url: jdbc:mysql://172.27.0.52:3306/TEST?serverTimezone=Asia/Seoul&characterEncoding=UTF-8
-     driverClassName: com.mysql.cj.jdbc.Driver
-     username: root
-     password: Blind$242
+      url: jdbc:mysql://localhost:3306/TEST?serverTimezone=Asia/Seoul&characterEncoding=UTF-8
+      driverClassName: com.mysql.cj.jdbc.Driver
+      username: root
+      password: blind42blind42
+#     url: jdbc:mysql://172.27.0.52:3306/TEST?serverTimezone=Asia/Seoul&characterEncoding=UTF-8
+#     driverClassName: com.mysql.cj.jdbc.Driver
+#     username: root
+#     password: Blind$242
      
   jpa:
     database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
@@ -22,10 +22,12 @@ spring:
     logging:
       level:
         org.hibernate.SQL: debug
+
   thymeleaf:
     prefix : classpath:templates/
     suffix : .html
     cache : false
+
   # pageable
   data:
     web:
@@ -65,7 +67,7 @@ spring:
 # cors 설정
 cors:
   allowed-origins: 'http://localhost:3000'
-  allowed-methods: GET,POST,PUT,DELETE,OPTIONS
+  allowed-methods: GET,POST,PUT,DELETE,OPTIONS,UPDATE
   allowed-headers: '*'
   max-age: 3600
 

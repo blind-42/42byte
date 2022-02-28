@@ -136,4 +136,12 @@ public class PostServiceImpl implements PostService {
     public Page<Post> findBlocked(Pageable pageable) {
         return postRepository.findAllByBlameCntGreaterThanEqualOrIsDelGreaterThanEqual(5L, 2, pageable);
     }
+
+    @Override
+    @Transactional
+    public void updatePost(Post post) {
+        postRepository.save(post);
+    }
+
+
 }

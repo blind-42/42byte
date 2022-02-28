@@ -2,9 +2,11 @@ package com.blind.api.domain.blame.controller;
 
 import com.blind.api.domain.blame.domain.CommentBlame;
 import com.blind.api.domain.blame.domain.PostBlame;
+import com.blind.api.domain.blame.dto.BlameRequestDTO;
 import com.blind.api.domain.blame.dto.BlameResponseDTO;
 import com.blind.api.domain.blame.service.BlameService;
 import com.blind.api.domain.comment.domain.Comment;
+import com.blind.api.domain.comment.dto.ReCommentDTO;
 import com.blind.api.domain.comment.service.CommentService;
 import com.blind.api.domain.post.v2.domain.Post;
 import com.blind.api.domain.post.v2.service.PostService;
@@ -29,23 +31,23 @@ public class BlameControllerImpl implements BlameController{
     private final BlameService blameService;
 
     @RequestMapping(value = {"/post/blame"}, method= RequestMethod.POST)
-    public void postBlame(Long postId, String reason, HttpServletRequest request) {
+    public void postBlame(Long postId, BlameRequestDTO requestDTO, HttpServletRequest request) {
         Post post = postService.findById(postId);
         User user = tokenService.findUserByAccessToken(HeaderUtil.getAccessToken(request));
 
         if (blameService.checkPostBlame(post, user) == false) {
-            blameService.blamePost(post, user, reason);
+            blameService.blamePost(post, user, requestDTO.getIssue());
             postService.addBlameCnt(postId);
         }
     }
 
     @RequestMapping(value = {"/comment/blame"}, method= RequestMethod.POST)
-    public void commentBlame(Long commentId, String reason, HttpServletRequest request) {
+    public void commentBlame(Long commentId, BlameRequestDTO requestDTO , HttpServletRequest request) {
         Comment comment = commentService.findCommentById(commentId);
         User user = tokenService.findUserByAccessToken(HeaderUtil.getAccessToken(request));
 
         if (blameService.checkCommentBlame(comment, user) == false) {
-            blameService.blameComment(comment, user, reason);
+            blameService.blameComment(comment, user, requestDTO.getIssue());
             commentService.addBlameCnt(commentId);
         }
     }

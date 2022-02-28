@@ -265,4 +265,38 @@ class AdminControllerImplTest {
                 .andDo(document("all-board"))
         ;
     }
+
+    @Test
+    @Transactional
+    @DisplayName("게시글 차단 해제 - 신고 횟수")
+    void unBlockPost_blame() throws Exception{
+        /* 신고 횟수가 5회 이상*/
+        Post blockedPost = postService.save(board,user,"title", "content");
+        blockedPost.setBlameCnt(5L);
+        blockedPost.setIsDel(0);
+        postService.updatePost(blockedPost);
+        mockMvc.perform(post("/admin/unblock/post")
+                        .param("postId", blockedPost.getId().toString())
+                        .header("Authorization", "Bearer access0"))
+                .andExpect(status().isOk())
+                .andDo(document("all-board"))
+        ;
+    }
+
+    @Test
+    @Transactional
+    @DisplayName("게시글 차단 해제 - 관리자 삭제")
+    void unBlockPost_Admin() throws Exception{
+        /* 관리자에 의해 삭제 */
+        Post blockedPost = postService.save(board,user,"title", "content");
+        blockedPost.setIsDel(3);
+
+        postService.updatePost(blockedPost);
+        mockMvc.perform(post("/admin/unblock/post")
+                        .param("postId", blockedPost.getId().toString())
+                        .header("Authorization", "Bearer access0"))
+                .andExpect(status().isOk())
+                .andDo(document("all-board"))
+        ;
+    }
 }

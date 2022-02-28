@@ -22,11 +22,9 @@ import com.blind.api.global.utils.HeaderUtil;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.List;
 
 @RestController
 @AllArgsConstructor
@@ -47,7 +45,7 @@ public class AdminControllerImpl implements AdminController{
 
     /* 관리자 등록 */
     @RequestMapping(value = "/admin/user", method = RequestMethod.POST)
-    public void setAdmin(Long targetUserId, HttpServletRequest request) {
+    public void registerAdmin(Long targetUserId, HttpServletRequest request) {
         if (!isAdmin(request))
             throw new BusinessException("{invalid.request}");
         User targetUser = userService.findById(targetUserId);
@@ -56,7 +54,7 @@ public class AdminControllerImpl implements AdminController{
 
     /* 관리자 해제 */
     @RequestMapping(value = "/admin/user", method = RequestMethod.DELETE)
-    public void deleteAdmin(Long targetUserId, HttpServletRequest request){
+    public void unRegisterAdmin(Long targetUserId, HttpServletRequest request){
         if (!isAdmin(request))
             throw new BusinessException("{invalid.request}");
         User targetUser = userService.findById(targetUserId);
@@ -65,7 +63,7 @@ public class AdminControllerImpl implements AdminController{
 
     /* 매니저 등록 */
     @RequestMapping(value = "/admin/manager", method = RequestMethod.POST)
-    public void setManager(Long boardId, Long targetUserId, HttpServletRequest request){
+    public void registerManager(Long boardId, Long targetUserId, HttpServletRequest request){
         if (!isAdmin(request))
             throw new BusinessException("{invalid.request}");
         Board board = boardService.findById(boardId);
@@ -73,13 +71,35 @@ public class AdminControllerImpl implements AdminController{
         boardService.setManager(board, targetUser);
     }
 
-    /* 매니저 제거 */
+    /* 매니저 해제 */
     @RequestMapping(value = "/admin/manager", method = RequestMethod.DELETE)
-    public void deleteManager(Long boardId, HttpServletRequest request) {
+    public void unRegisterManager(Long boardId, HttpServletRequest request) {
         if (!isAdmin(request))
             throw new BusinessException("{invalid.request}");
         Board board = boardService.findById(boardId);
         boardService.deleteManager(board);
+    }
+    /* 게시글 차단 */
+    public void blockPost(Long postId, HttpServletRequest request) {
+        if (!isAdmin(request))
+            throw new BusinessException("{invalid.request}");
+        Post post = postService.findById(postId);
+        post.setIsDel(RoleType.ADMIN.getValue());
+        postService.updatePost(post);
+    }
+
+    /* 게시글 차단 해제 */
+    @RequestMapping(value = "/admin/unblock/post", method = RequestMethod.POST)
+    public void unBlockPost(Long postId, HttpServletRequest request) {
+        if (!isAdmin(request))
+            throw new BusinessException("{invalid.request}");
+        Post post = postService.findById(postId);
+        User user = post.getBoard().getManager();
+        if (post.getIsDel() > RoleType.USER.getValue())
+            post.setIsDel(0);
+        else
+            post.setBlameCnt(0L);
+        postService.updatePost(post);
     }
 
     /*차단된 게시글 조회*/
@@ -172,15 +192,6 @@ public class AdminControllerImpl implements AdminController{
         return dtoList;
     }
 
-    /* 게시판 영구 삭제 */
-    @RequestMapping(value = "/admin/board", method = RequestMethod.DELETE)
-    public void deleteBoard(Long boardId, HttpServletRequest request){
-        if (!isAdmin(request))
-            throw new BusinessException("{invalid.request}");
-        Board board = boardService.findById(boardId);
-        boardService.deleteBoard(board);
-    }
-
     /*삭제된 게시판 조회*/
     @RequestMapping(value = "/admin/deleted/board", method = RequestMethod.GET)
     public BoardResponseDTO deletedBoard(HttpServletRequest request, Pageable pageable) {
@@ -194,6 +205,15 @@ public class AdminControllerImpl implements AdminController{
         dtoList.setPage(boardList.getPageable().getPageNumber());
         dtoList.setPages(boardList.getTotalPages());
         return dtoList;
+    }
+
+    /* 게시판 영구 삭제 */
+    @RequestMapping(value = "/admin/board", method = RequestMethod.DELETE)
+    public void deleteBoard(Long boardId, HttpServletRequest request){
+        if (!isAdmin(request))
+            throw new BusinessException("{invalid.request}");
+        Board board = boardService.findById(boardId);
+        boardService.deleteBoard(board);
     }
 
     /* 게시글 영구 삭제 */
@@ -215,7 +235,6 @@ public class AdminControllerImpl implements AdminController{
         Comment comment = commentService.findCommentById(commentId);
         commentService.deleteComment(comment);
     }
-
 
     private boolean isAdmin(HttpServletRequest request){
         User user = tokenService.findUserByAccessToken(HeaderUtil.getAccessToken(request));
