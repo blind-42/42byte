@@ -118,6 +118,12 @@ public class CommentServiceImpl implements CommentService{
     @Override
     @Transactional
     public Page<Comment> findBlamed(Pageable pageable) {
-        return commentRepository.findAllByBlameCntGreaterThanEqual( 3L, pageable);
+        return commentRepository.findAllByBlameCntGreaterThanEqual( 1L, pageable);
+    }
+
+    @Transactional
+    @Override
+    public Page<Comment> findBlocked(Pageable pageable) {
+        return commentRepository.findAllByBlameCntGreaterThanEqualOrIsDel(5L, 2, pageable);
     }
 }

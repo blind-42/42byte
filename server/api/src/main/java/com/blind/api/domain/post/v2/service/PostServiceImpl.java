@@ -23,7 +23,7 @@ public class PostServiceImpl implements PostService {
     @Override
     @Transactional
     public Page<Post> findAllByBoardId(Long boardId, Pageable pageable) {
-        Page<Post> postList = postRepository.findAllByBoardId(boardId, pageable);
+        Page<Post> postList = postRepository.findAllByBoardIdAndIsDelLessThanEqualAndBlameCntIsLessThan(boardId, 3, 5L, pageable);
 
         return postList;
     }
@@ -122,12 +122,18 @@ public class PostServiceImpl implements PostService {
     @Override
     @Transactional
     public Page<Post> findDeleted(Pageable pageable) {
-        return postRepository.findAllByIsDelGreaterThan(0, pageable);
+        return postRepository.findAllByIsDelEquals(1, pageable);
     }
 
     @Override
     @Transactional
     public Page<Post> findBlamed(Pageable pageable) {
-        return postRepository.findAllByBlameCntGreaterThanEqual(3L, pageable);
+        return postRepository.findAllByBlameCntGreaterThanEqual(1L, pageable);
+    }
+
+    @Override
+    @Transactional
+    public Page<Post> findBlocked(Pageable pageable) {
+        return postRepository.findAllByBlameCntGreaterThanEqualOrIsDelGreaterThanEqual(5L, 2, pageable);
     }
 }

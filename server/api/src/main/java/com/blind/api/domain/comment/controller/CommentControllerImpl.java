@@ -53,6 +53,8 @@ public class CommentControllerImpl implements CommentController {
 
         if (roleType == RoleType.USER && user.getId() != comment.getAuthorId())
             return;
+        else if (user.getId() == comment.getAuthorId())
+            commentService.delete(comment, RoleType.USER.getValue());
         else
             commentService.delete(comment, roleType.getValue());
         postService.updateComment(commentService.findCommentById(commentId).getPost().getId(), -1L);

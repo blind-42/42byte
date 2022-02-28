@@ -24,4 +24,5 @@ public interface PostService {
     void setNotice(Post post);
     Page<Post> findDeleted(Pageable pageable);
     Page<Post> findBlamed(Pageable pageable);
-}
+    Page<Post> findBlocked(Pageable pageable);
+    }

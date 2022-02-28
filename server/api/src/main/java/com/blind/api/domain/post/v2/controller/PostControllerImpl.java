@@ -16,6 +16,7 @@ import com.blind.api.domain.post.v2.service.PostService;
 import com.blind.api.domain.security.jwt.v1.service.TokenService;
 import com.blind.api.domain.user.v2.domain.RoleType;
 import com.blind.api.domain.user.v2.domain.User;
+import com.blind.api.global.exception.BusinessException;
 import com.blind.api.global.utils.HeaderUtil;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -83,7 +84,10 @@ public class PostControllerImpl implements PostController{
         Post post = postService.findById(postId);
         Boolean isUsers = StringUtils.equals(post.getAuthorId(), user.getId());
         Boolean isLiked = likeService.checkPostLike(post, user);
+        RoleType roleType = setRoleType(user, post.getBoard());
 
+        if (roleType == RoleType.USER && post.getIsDel() >= 1)
+            throw new BusinessException("{invalid.request}");
         PostDetailDTO postDetailDTO = PostDetailDTO.from(post, isUsers, isLiked, setRoleType(user,post.getBoard()));
 
         /* 댓글 전체 조회 후 일반 댓글과 대댓글 구분*/
@@ -142,6 +146,8 @@ public class PostControllerImpl implements PostController{
         RoleType roleType = setRoleType(user, post.getBoard());
         if (roleType == RoleType.USER && user.getId() != post.getAuthorId())
             return;
+        else if (user.getId() == post.getAuthorId())
+            postService.delete(post, RoleType.USER.getValue());
         else
             postService.delete(post, roleType.getValue());
     }
