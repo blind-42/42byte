@@ -134,7 +134,7 @@ public class PostControllerImpl implements PostController{
         Post post = postService.findById(postId);
         Long userId = tokenService.findUserByAccessToken(HeaderUtil.getAccessToken(request)).getId();
         if (userId.equals(post.getAuthorId()) != true)
-            return ;
+            throw new BusinessException("{invalid.request}");
         postService.updatePost(post, requestDTO.getTitle(), requestDTO.getContent());
     }
 
@@ -145,7 +145,7 @@ public class PostControllerImpl implements PostController{
         User user = tokenService.findUserByAccessToken(HeaderUtil.getAccessToken(request));
         RoleType roleType = setRoleType(user, post.getBoard());
         if ((roleType == RoleType.USER) && (user.getId() != post.getAuthorId()))
-            return;
+            throw new BusinessException("{invalid.request}");
         if (user.getId() == post.getAuthorId() && post.getIsDel() == 0)
             postService.delete(post, RoleType.USER.getValue());
         else if (post.getIsDel() == 0)
