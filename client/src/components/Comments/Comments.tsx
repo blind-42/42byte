@@ -93,7 +93,8 @@ function Comments({ comment, commentsUserList }: GreetingProps) {
 								: <h3>카뎃 {commentsUserList.indexOf(authorId)+1}</h3>}
 							<div>{timeForToday(createdDate)} {(createdDate !== modifiedDate) && '수정됨'}</div>
 						</Info>
-						{!isDel && <DropdownMenu isUsers={isUsers} modifyHandler={modifyCmtHandler} deleteHandler={deleteCmtHandler} reportHandler={reportHandler} />}
+						{!isDel && <DropdownMenu isPost={false} isUsers={isUsers} modifyHandler={modifyCmtHandler}
+							deleteHandler={deleteCmtHandler} reportHandler={reportHandler} />}
 					</CommentTop>
 					<Content>
 						{isDel
@@ -108,6 +109,7 @@ function Comments({ comment, commentsUserList }: GreetingProps) {
 			<ReCommentListWrap>
 			{recomments.map((el: RecommentData) => {
 					return (<ReComments key={el.id} recomment={el}
+																					postId={postId}
 																				// commentsUserList={commentsUserList} 
 																				/>)
 				})}

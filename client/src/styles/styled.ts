@@ -207,3 +207,27 @@ export const AlertTextWrap = styled.div`
 		font-size: 1.1rem;
 	`}
 `;
+
+export const NoticeMark = styled.div`
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	font-size: 0.8rem;
+	font-weight: 600;
+	background: #BF2D2D;
+	color: #fff;
+	height: 1.5rem;
+	width: 2.5rem;
+	padding-bottom: 0.1rem;
+	letter-spacing: 0.05rem;
+	${({theme}) => theme.media.tablet`
+		height: 1.2rem;
+		width: 2.3rem;
+		font-size: 0.s7rem;
+	`}
+	${({theme}) => theme.media.desktop`
+		height: 1.2rem;
+		width: 2.3rem;
+		font-size: 0.7rem;
+	`}
+`;

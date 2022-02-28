@@ -1,7 +1,8 @@
 import { Link } from 'react-router-dom';
 import { ContentData } from	'utils/functions/type';
 import { shortening, timeForToday } from 'utils/functions/functions';
-import { PreviewContainer, NoticeMark } from './styled';
+import { NoticeMark } from 'styles/styled';
+import { PreviewContainer } from './styled';
 import { useMediaQuery } from "react-responsive";
 
 

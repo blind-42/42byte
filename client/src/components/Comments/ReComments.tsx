@@ -7,14 +7,15 @@ import CommentInput from 'components/CommentInput/CommentInput';
 import { RecommentData } from 'utils/functions/type';
 import { timeForToday, isDelOption } from 'utils/functions/functions';
 import { GrLike } from "react-icons/gr";
-import { Container, RecommentContainer, ReCommentWrap, ModifyCommentWrap, CommentTop, Info, Modify, Content, 
+import { RecommentContainer, ReCommentWrap, ModifyCommentWrap, CommentTop, Info, Modify, Content, 
 				LikesBox, GLine, FLine } from './styled'
 
 type GreetingProps = {
 	recomment: RecommentData
+	postId: number
 }
 
-function ReComments({recomment}: GreetingProps) {
+function ReComments({recomment, postId}: GreetingProps) {
 	const {authorId, blameCnt, content, createdDate, id, isAuthor, isDel, isLiked, isUsers, likeCnt, modifiedDate, recomments, rootCommentId, targetAuthorId } = recomment;
 
 	const [openEditor, setOpenEditor] = useState<boolean>(false);
@@ -56,23 +57,21 @@ function ReComments({recomment}: GreetingProps) {
 		}
 	}
 
-	// const boxcolorHandler = () => {
-	// 	mutationPost.mutate({path: `/comment/like?postId=${postId}&commentId=${id}`, data: undefined},
-	// 	{ onSuccess: (data) => {
-	// 			queryClient.invalidateQueries(['detail_key']);
-	// 			setBoxState(!boxState);},
-	// 		onError: (data) => {window.location.href = '/error';}
-	// 	});
-	// }
+	const boxcolorHandler = () => {
+		mutationPost.mutate({path: `/comment/like?postId=${postId}&commentId=${id}`, data: undefined},
+		{ onSuccess: (data) => {
+				queryClient.invalidateQueries(['detail_key']);
+				setBoxState(!boxState);},
+			onError: (data) => {window.location.href = '/error';}
+		});
+	}
 
 	return (
 		<>
-		<Container>
 			<GLine/>
 			<FLine/>
-			
 			<RecommentContainer>
-			<div>&#8627;</div>
+				<span>&#8627;</span>
 				{openEditor
 				? <ModifyCommentWrap>
 						<CommentTop>
@@ -100,20 +99,20 @@ function ReComments({recomment}: GreetingProps) {
 									: <h3>카뎃 {commentsUserList.indexOf(authorId)+1}</h3>} */}
 								<div>{timeForToday(createdDate)} {(createdDate !== modifiedDate) && '수정됨'}</div>
 							</Info>
-							{!isDel && <DropdownMenu isUsers={isUsers} modifyHandler={modifyCmtHandler} deleteHandler={deleteCmtHandler} reportHandler={reportHandler} />}
+							{!isDel && <DropdownMenu isPost={false} isUsers={isUsers} modifyHandler={modifyCmtHandler} 
+								deleteHandler={deleteCmtHandler} reportHandler={reportHandler} />}
 						</CommentTop>
 						<Content>
 							{isDel
 							? <div className='isDel'>&#9986; {isDelOption(isDel)}에 의해 삭제된 댓글 입니다.</div> 
 							: <div>{content}</div>}
 						</Content>
-						{/* <LikesBox boxState={boxState} onClick={boxcolorHandler}>
+						<LikesBox boxState={boxState} onClick={boxcolorHandler}>
 							<div><GrLike /></div>
 							<div>{likeCnt}</div>
-						</LikesBox> */}
+						</LikesBox>
 				</ReCommentWrap>}
 			</RecommentContainer>
-			</Container>
 		</>
 	);
 }

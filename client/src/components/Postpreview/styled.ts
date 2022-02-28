@@ -36,20 +36,3 @@ export const PreviewContainer = styled.div<{state?: boolean;}>`
 		font-size: 0.9rem;
 	`}
 `;
-
-export const NoticeMark = styled.div`
-	font-size: 0.8rem;
-	font-weight: 600;
-	background: #BF2D2D;
-	color: #fff;
-	padding: 0.3rem 0.6rem;
-	letter-spacing: 0.05rem;
-	${({theme}) => theme.media.tablet`
-		font-size: 0.7rem;
-		padding: 0.3rem 0.5rem;
-	`}
-	${({theme}) => theme.media.desktop`
-		font-size: 0.7rem;
-		padding: 0.3rem 0.5rem;
-	`}
-`;

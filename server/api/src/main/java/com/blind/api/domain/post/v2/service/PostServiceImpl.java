@@ -8,7 +8,9 @@ import com.blind.api.domain.post.v2.repository.PostRepository;
 import com.blind.api.domain.user.v2.domain.RoleType;
 import com.blind.api.domain.user.v2.domain.User;
 import com.blind.api.global.exception.BusinessException;
+import com.blind.api.global.utils.ApplicationYmlRead;
 import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -20,10 +22,14 @@ import javax.transaction.Transactional;
 public class PostServiceImpl implements PostService {
     private final PostRepository postRepository;
 
+    @Autowired
+    private final ApplicationYmlRead applicationYmlRead;
+
     @Override
     @Transactional
     public Page<Post> findAllByBoardId(Long boardId, Pageable pageable) {
-        Page<Post> postList = postRepository.findAllByBoardIdAndIsDelLessThanEqualAndBlameCntIsLessThan(boardId, 3, 5L, pageable);
+        Long blame = Long.parseLong(applicationYmlRead.getBlame());
+        Page<Post> postList = postRepository.findAllByBoardIdAndIsDelLessThanEqualAndBlameCntIsLessThan(boardId, 0, blame, pageable);
 
         return postList;
     }
@@ -134,7 +140,17 @@ public class PostServiceImpl implements PostService {
     @Override
     @Transactional
     public Page<Post> findBlocked(Pageable pageable) {
-        return postRepository.findAllByBlameCntGreaterThanEqualOrIsDelGreaterThanEqual(5L, 2, pageable);
+        String blame = applicationYmlRead.getBlame();
+        return postRepository.findAllByBlameCntGreaterThanEqualOrIsDelGreaterThanEqual(Long.parseLong(blame), 2, pageable);
+    }
+
+    @Override
+    @Transactional
+    public void restorePost(Post post) {
+        if (post.getIsDel() > 0)
+            post.setIsDel(0);
+        else if (post.getBlameCnt() >= 5)
+            post.setBlameCnt(0L);
     }
 
     @Override
