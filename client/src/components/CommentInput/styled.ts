@@ -22,6 +22,7 @@ export const CommentInputWrap = styled.form`
 		justify-content: space-between;
 		align-items: flex-end;
 		span {
+			text-align: start;
 			font-size: 1rem;
 			color: #929191;
 			padding: 0 2px;

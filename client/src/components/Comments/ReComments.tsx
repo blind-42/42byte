@@ -8,7 +8,7 @@ import { RecommentData } from 'utils/functions/type';
 import { timeForToday, isDelOption } from 'utils/functions/functions';
 import { GrLike } from "react-icons/gr";
 import { RecommentContainer, ReCommentWrap, ModifyCommentWrap, CommentTop, Info, Modify, Content, 
-				LikesBox, GLine, FLine } from './styled'
+	CommentBottom, ReCommentBox, LikesBox, GLine, FLine } from './styled'
 
 type GreetingProps = {
 	recomment: RecommentData
@@ -17,9 +17,9 @@ type GreetingProps = {
 
 function ReComments({recomment, postId}: GreetingProps) {
 	const {authorId, blameCnt, content, createdDate, id, isAuthor, isDel, isLiked, isUsers, likeCnt, modifiedDate, recomments, rootCommentId, targetAuthorId } = recomment;
-
-	const [openEditor, setOpenEditor] = useState<boolean>(false);
 	const [boxState, setBoxState] = useState<boolean>(isLiked);
+	const [openEditor, setOpenEditor] = useState<boolean>(false);
+	const [openReReCmt, setOpenReReCmt] = useState<boolean>(false);
 	const queryClient = useQueryClient();
 	const mutationPost = useMutation(
 		({ path, data }: { path: string; data?: object }) => instance.post(path, data));
@@ -28,9 +28,11 @@ function ReComments({recomment, postId}: GreetingProps) {
 	const mutationPut = useMutation(
 		({ path, data }: { path: string; data?: object }) => instance.put(path, data));
 
-	const modifyCmtHandler = () => {
-		setOpenEditor(!openEditor);
-	}
+console.log(recomment)	
+	const modifyCmtHandler = () => { setOpenEditor(!openEditor); }
+
+	const openReReCmtHandler = () => { setOpenReReCmt(!openReReCmt); }
+
 	const updateCmtHandler = (comment: string) => {
 		mutationPut.mutate({path: `/comment?commentId=${id}`, data: {content: comment}},
 		{ onSuccess: (data) => {
@@ -38,6 +40,15 @@ function ReComments({recomment, postId}: GreetingProps) {
 				setOpenEditor(!openEditor);},
 			onError: (data) => {window.location.href = '/error';}
 		})
+	}
+
+	const uploadReReCmtHandler = (comment: string) => {
+		mutationPost.mutate({path: `recomment?commentId=${id}`, data: {content: comment}},
+		{ onSuccess: (data) => {
+				queryClient.invalidateQueries(['detail_key']);
+				setOpenReReCmt(!openReReCmt);},
+			onError: (data) => {window.location.href = '/error';}
+		});
 	}
 
 	const deleteCmtHandler = () => {
@@ -99,20 +110,46 @@ function ReComments({recomment, postId}: GreetingProps) {
 									: <h3>카뎃 {commentsUserList.indexOf(authorId)+1}</h3>} */}
 								<div>{timeForToday(createdDate)} {(createdDate !== modifiedDate) && '수정됨'}</div>
 							</Info>
-							{!isDel && <DropdownMenu isPost={false} isUsers={isUsers} modifyHandler={modifyCmtHandler} 
-								deleteHandler={deleteCmtHandler} reportHandler={reportHandler} />}
+							{/* {!isDel && <DropdownMenu isPost={false} isUsers={isUsers} modifyHandler={modifyCmtHandler} 
+								deleteHandler={deleteCmtHandler} reportHandler={reportHandler} />} */}
 						</CommentTop>
 						<Content>
 							{isDel
 							? <div className='isDel'>&#9986; {isDelOption(isDel)}에 의해 삭제된 댓글 입니다.</div> 
 							: <div>{content}</div>}
 						</Content>
-						<LikesBox boxState={boxState} onClick={boxcolorHandler}>
-							<div><GrLike /></div>
-							<div>{likeCnt}</div>
-						</LikesBox>
-				</ReCommentWrap>}
+						<CommentBottom>
+							<ReCommentBox openReCmt={openReReCmt} onClick={openReReCmtHandler}>
+								답글
+							</ReCommentBox>
+							<LikesBox boxState={boxState} onClick={boxcolorHandler}>
+								<div><GrLike /></div>
+								<div>{likeCnt}</div>
+							</LikesBox>
+						</CommentBottom>
+				</ReCommentWrap>
+				}
 			</RecommentContainer>
+			{openReReCmt
+			&& <>
+				<GLine/>
+				<FLine/>
+				<RecommentContainer>
+					<span>&#8627;</span>
+					<ReCommentWrap>
+						<CommentInput submitCmtHandler={uploadReReCmtHandler} placeholder={`카뎃에게 댓글을 입력하세요.`} />
+					</ReCommentWrap>
+				</RecommentContainer>
+				</>
+			}
+			<>
+			{recomments?.map((el: RecommentData) => {
+					return (<ReComments key={el.id} recomment={el}
+																					postId={postId}
+																					// commentsUserList={commentsUserList} 
+																					/>)
+					})}
+			</>
 		</>
 	);
 }

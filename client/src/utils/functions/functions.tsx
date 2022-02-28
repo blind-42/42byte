@@ -39,7 +39,11 @@ export const timeForToday = (value: string) => {
 }
 
 export const isDelOption = (value: number) => {
-	if (value == 1) return '작성자';
-	if (value == 2) return '매니저';
+	if (value === 1) return '작성자';
+	if (value === 2) return '매니저';
 	else return '관리자';
+}
+
+export const cardetNumbering = (arrUsers: number[], authorId: number) => {
+	return arrUsers.indexOf(authorId) + 1;
 }
