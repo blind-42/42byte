@@ -28,52 +28,53 @@ function ReComments({recomment, postId}: GreetingProps) {
 	const mutationPut = useMutation(
 		({ path, data }: { path: string; data?: object }) => instance.put(path, data));
 
-console.log(recomment)	
 	const modifyCmtHandler = () => { setOpenEditor(!openEditor); }
 
 	const openReReCmtHandler = () => { setOpenReReCmt(!openReReCmt); }
 
 	const updateCmtHandler = (comment: string) => {
 		mutationPut.mutate({path: `/comment?commentId=${id}`, data: {content: comment}},
-		{ onSuccess: (data) => {
+		{ onSuccess: () => {
 				queryClient.invalidateQueries(['detail_key']);
 				setOpenEditor(!openEditor);},
-			onError: (data) => {window.location.href = '/error';}
+			onError: () => {window.location.href = '/error';}
 		})
 	}
 
 	const uploadReReCmtHandler = (comment: string) => {
 		mutationPost.mutate({path: `recomment?commentId=${id}`, data: {content: comment}},
-		{ onSuccess: (data) => {
+		{ onSuccess: () => {
 				queryClient.invalidateQueries(['detail_key']);
 				setOpenReReCmt(!openReReCmt);},
-			onError: (data) => {window.location.href = '/error';}
+			onError: () => {window.location.href = '/error';}
 		});
 	}
 
 	const deleteCmtHandler = () => {
 		mutationDelete.mutate({path: `/comment?commentId=${id}`},
-		{ onSuccess: (data) => {
+		{ onSuccess: () => {
 				queryClient.invalidateQueries(['detail_key']);},
-			onError: (data) => {window.location.href = '/error';}
+			onError: () => {window.location.href = '/error';}
 		});
 	}
 
 	const reportHandler = (reportIssue: string) => {
 		if (reportIssue) {
-			instance
-			.post(`/comment/blame?commentId=${id}`, { issue: reportIssue })
-			.then(() => {})
-			.catch((err) => { console.log(err) });
+			mutationPost.mutate({ path: `/post/blame?postId=${id}`, data: { issue: reportIssue } }, {
+				onSuccess: () => { 
+					alert('신고가 정상적으로 처리되었습니다.');
+					window.location.href='/blindboard?page=1';},
+				onError: () => { window.location.href = '/error'; }
+			});
 		}
 	}
 
 	const boxcolorHandler = () => {
 		mutationPost.mutate({path: `/comment/like?postId=${postId}&commentId=${id}`, data: undefined},
-		{ onSuccess: (data) => {
+		{ onSuccess: () => {
 				queryClient.invalidateQueries(['detail_key']);
 				setBoxState(!boxState);},
-			onError: (data) => {window.location.href = '/error';}
+			onError: () => {window.location.href = '/error';}
 		});
 	}
 
@@ -84,7 +85,8 @@ console.log(recomment)
 			<RecommentContainer>
 				<span>&#8627;</span>
 				{openEditor
-				? <ModifyCommentWrap>
+				? <ReCommentWrap>
+					<ModifyCommentWrap>
 						<CommentTop>
 							<Info>
 							<h3>카뎃</h3>
@@ -101,6 +103,7 @@ console.log(recomment)
 							<CommentInput submitCmtHandler={updateCmtHandler} defaultContent={content} />
 						</Content>
 					</ModifyCommentWrap>
+					</ReCommentWrap> 
 				: <ReCommentWrap>
 						<CommentTop>
 							<Info>
@@ -110,8 +113,8 @@ console.log(recomment)
 									: <h3>카뎃 {commentsUserList.indexOf(authorId)+1}</h3>} */}
 								<div>{timeForToday(createdDate)} {(createdDate !== modifiedDate) && '수정됨'}</div>
 							</Info>
-							{/* {!isDel && <DropdownMenu isPost={false} isUsers={isUsers} modifyHandler={modifyCmtHandler} 
-								deleteHandler={deleteCmtHandler} reportHandler={reportHandler} />} */}
+							{!isDel && <DropdownMenu isPost={false} isUsers={isUsers} modifyHandler={modifyCmtHandler} 
+								deleteHandler={deleteCmtHandler} reportHandler={reportHandler} />}
 						</CommentTop>
 						<Content>
 							{isDel
