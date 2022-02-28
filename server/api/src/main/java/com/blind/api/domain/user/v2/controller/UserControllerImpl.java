@@ -27,25 +27,4 @@ public class UserControllerImpl implements UserController {
     public User getUserInfo(HttpServletRequest request) {
         return tokenService.findUserByAccessToken(HeaderUtil.getAccessToken(request));
     }
-
-    @PostConstruct
-    public void init() {
-        User user;
-        Token token;
-        user = userRepository.findByHashId("hashId").orElseGet(() -> null);
-        if (user == null) {
-            user = new User();
-            user.setHashId("hashId");
-            user.setRoleType(RoleType.USER);
-            userRepository.save(user);
-        }
-        token = tokenRepository.findByAccessToken("access").orElseGet(() -> null);
-        if (token == null) {
-            token = new Token();
-            token.setAccessToken("access");
-            token.setRefreshToken("refresh");
-            token.setUser(user);
-            tokenRepository.save(token);
-        }
-    }
 }
