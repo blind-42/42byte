@@ -6,6 +6,7 @@ import com.blind.api.domain.board.v1.dto.BoardResponseDTO;
 import com.blind.api.domain.board.v1.service.BoardService;
 import com.blind.api.domain.comment.domain.Comment;
 import com.blind.api.domain.comment.dto.CommentDTO;
+import com.blind.api.domain.comment.dto.CommentRequestDTO;
 import com.blind.api.domain.comment.dto.CommentResponseDTO;
 import com.blind.api.domain.comment.service.CommentService;
 import com.blind.api.domain.like.service.LikeService;
@@ -216,6 +217,23 @@ public class AdminControllerImpl implements AdminController{
         commentService.deleteComment(comment);
     }
 
+    /*게시글 복구*/
+    @RequestMapping(value={"/admin/restore/post"}, method=RequestMethod.POST)
+    public void restorePost(Long postId, HttpServletRequest request){
+        if (!isAdmin(request))
+            throw new BusinessException("{invalid.request}");
+        Post post = postService.findById(postId);
+        postService.restorePost(post);
+    }
+
+    /*댓글 복구*/
+    @RequestMapping(value={"/admin/restore/comment"}, method=RequestMethod.POST)
+    public void restoreComment(Long commentId, HttpServletRequest request){
+        if (!isAdmin(request))
+            throw new BusinessException("{invalid.request}");
+        Comment comment = commentService.findCommentById(commentId);
+        commentService.restoreComment(comment);
+    }
 
     private boolean isAdmin(HttpServletRequest request){
         User user = tokenService.findUserByAccessToken(HeaderUtil.getAccessToken(request));

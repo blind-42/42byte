@@ -51,6 +51,7 @@ public class LikeControllerImpl implements LikeController {
             likeService.CommentLike(comment.getPost(), comment, user, 0L);
             commentService.updateLike(comment.getId(), 1L);
         } else {
+            likeService.CommentLike(comment.getPost(), comment, user, 1L);
             commentService.updateLike(comment.getId(), -1L);
         }
     }

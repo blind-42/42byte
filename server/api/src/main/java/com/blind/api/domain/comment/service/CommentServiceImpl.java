@@ -7,6 +7,7 @@ import com.blind.api.domain.comment.domain.Comment;
 import com.blind.api.domain.comment.repository.CommentRepository;
 import com.blind.api.domain.user.v2.domain.User;
 import com.blind.api.global.exception.BusinessException;
+import com.blind.api.global.utils.ApplicationYmlRead;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -19,6 +20,7 @@ import java.util.List;
 @AllArgsConstructor
 public class CommentServiceImpl implements CommentService{
     private final CommentRepository commentRepository;
+    private final ApplicationYmlRead applicationYmlRead;
 
     @Override
     @Transactional
@@ -124,6 +126,16 @@ public class CommentServiceImpl implements CommentService{
     @Transactional
     @Override
     public Page<Comment> findBlocked(Pageable pageable) {
-        return commentRepository.findAllByBlameCntGreaterThanEqualOrIsDel(5L, 2, pageable);
+        String blame = applicationYmlRead.getBlame();
+        return commentRepository.findAllByBlameCntGreaterThanEqualOrIsDel(Long.parseLong(blame), 2, pageable);
+    }
+
+    @Override
+    @Transactional
+    public void restoreComment(Comment comment) {
+        if (comment.getIsDel() > 0)
+            comment.setIsDel(0);
+        else if (comment.getBlameCnt() >= 5)
+            comment.setBlameCnt(0L);
     }
 }

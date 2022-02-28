@@ -53,11 +53,12 @@ public class CommentControllerImpl implements CommentController {
 
         if (roleType == RoleType.USER && user.getId() != comment.getAuthorId())
             return;
-        else if (user.getId() == comment.getAuthorId())
+        if (user.getId() == comment.getAuthorId() && comment.getIsDel() == 0)
             commentService.delete(comment, RoleType.USER.getValue());
-        else
+        else if (comment.getIsDel() == 0)
             commentService.delete(comment, roleType.getValue());
-        postService.updateComment(commentService.findCommentById(commentId).getPost().getId(), -1L);
+        if (comment.getIsDel() == 0)
+            postService.updateComment(commentService.findCommentById(commentId).getPost().getId(), -1L);
     }
 
     @RequestMapping(value={"/mypage/comment"}, method = RequestMethod.GET)
@@ -65,6 +66,8 @@ public class CommentControllerImpl implements CommentController {
         Long userId = tokenService.findUserByAccessToken(HeaderUtil.getAccessToken(request)).getId();
         return commentService.findCommentByIdIn(userId, pageable);
     }
+
+
 
     RoleType setRoleType(User user, Board board) {
         if (user.getRoleType() == RoleType.ADMIN)
