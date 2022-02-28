@@ -20,15 +20,25 @@ export const DetailContainer = styled.div`
 `;
 
 export const Title = styled.div`
-	font-size: 1.5rem;
-	font-weight: 600;
-	color: #000;
-	padding: 0 0.3rem;
+	display: flex;
+	align-items: center;
+	div:last-child {
+		font-size: 1.6rem;
+		font-weight: 600;
+		color: #000;
+		padding: 0 1rem 0.3rem 1rem;
+	}
 	${({theme}) => theme.media.tablet`
-		font-size: 1.2rem;
+		div:last-child {
+			font-size: 1.2rem;
+			padding: 0 0.6rem 0.2rem 0.6rem;
+		}
 	`}
 	${({theme}) => theme.media.desktop`
-		font-size: 1.2rem;
+		div:last-child {
+			font-size: 1.2rem;
+			padding: 0 0.6rem 0.2rem 0.6rem;
+		}
 	`}
 `;
 
