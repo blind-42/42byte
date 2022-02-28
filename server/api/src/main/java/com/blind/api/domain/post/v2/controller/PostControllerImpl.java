@@ -138,7 +138,7 @@ public class PostControllerImpl implements PostController{
         postService.updatePost(post, requestDTO.getTitle(), requestDTO.getContent());
     }
 
-    /*게시글 삭제*/
+    /*게시글 삭제 및 차단 */
     @RequestMapping(value={"/post"}, method = RequestMethod.DELETE)
     public void deletePost(Long postId, HttpServletRequest request){
         Post post = postService.findById(postId);

@@ -114,7 +114,7 @@ public class CommentServiceImpl implements CommentService{
     @Override
     @Transactional
     public Page<Comment> findDeleted(Pageable pageable) {
-        return commentRepository.findAllByIsDelGreaterThan(0, pageable);
+        return commentRepository.findAllByIsDelEquals(1, pageable);
     }
 
     @Override
@@ -127,7 +127,7 @@ public class CommentServiceImpl implements CommentService{
     @Override
     public Page<Comment> findBlocked(Pageable pageable) {
         String blame = applicationYmlRead.getBlame();
-        return commentRepository.findAllByBlameCntGreaterThanEqualOrIsDel(Long.parseLong(blame), 2, pageable);
+        return commentRepository.findAllByBlameCntGreaterThanEqualOrIsDelGreaterThanEqual(Long.parseLong(blame), 2, pageable);
     }
 
     @Override

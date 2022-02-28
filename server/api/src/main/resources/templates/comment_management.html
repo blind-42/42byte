@@ -32,65 +32,7 @@
                             <div class="col-md-12 col-sm-12  ">
                                 <div class="x_panel">
                                     <div class="x_title">
-                                        <h2>차단 댓글 리스트</h2>
-                                            <ul class="nav navbar-right panel_toolbox">
-                                                <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-                                                </li>
-                                                <li><a class="close-link"><i class="fa fa-close"></i></a>
-                                                </li>
-                                            </ul>
-                                            <div class="clearfix"></div>
-                                    </div>
-
-                                    <div class="x_content">
-                                        <div class="table-responsive">
-                                            <table class="table table-striped jambo_table bulk_action">
-                                                <thead>
-                                                <tr class="headings">
-                                                    <th>
-                                                        <input type="checkbox" id="check-all" class="flat">
-                                                    </th>
-                                                    <th class="column-title">차단 ID</th>
-                                                    <th class="column-title">차단 날짜</th>
-                                                    <th class="column-title">차단 내용</th>
-                                                    <th class="column-title">댓글 작성자</th>
-                                                    <th class="column-title">댓글 내용</th>
-                                                    <th class="column-title">댓글 생성일</th>
-                                                    <th class="column-title">비고</th>
-                                                    </th>
-                                                </tr>
-                                                </thead>
-                                                <tbody>
-
-                                                <tr class="even pointer" th:each="comment, i : ${comment}">
-                                                    <td class="a-center">
-                                                        <input type="checkbox" name="table_records">
-                                                    </td>
-                                                    <td class=" " th:text="${comment.getId()}"></td>
-                                                    <td class=" " th:text="${comment.getUser().getId()}"></td>
-                                                    <td class=" " th:text="${comment.getReason()}"></td>
-                                                    <td class=" " th:text="${comment.getComment().getAuthorId()}"></td>
-                                                    <td class=" " th:text="${comment.getComment().getContent()}"></td>
-                                                    <td class=" " th:text="${comment.getComment().getCreatedDate()}"></td>
-                                                    <td class=" last">
-                                                        <form>
-                                                        <input type="hidden" id="url" name="url" value="경로추가">
-                                                        <input type="hidden" id="method" value="post">
-                                                        <input type="hidden" id="params"  th:value="|?commentId=${comment.getId()}|">
-                                                        <input type="hidden" id="token" th:value="${token}">
-                                                        <input type="submit" value="삭제" th:onclick='js_request(this.form)'>
-                                                        </form>
-                                                    </td>
-                                                </tr>
-                                            </table>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-12 col-sm-12  ">
-                                <div class="x_panel">
-                                    <div class="x_title">
-                                        <h2>신고 댓글 리스트</h2>
+                                        <h2>차단된 댓글 리스트</h2>
                                         <ul class="nav navbar-right panel_toolbox">
                                             <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
                                             </li>
@@ -106,37 +48,151 @@
                                                 <thead>
                                                 <tr class="headings">
                                                     <th>
-                                                        <input type="checkbox" id="check-all" class="flat">
+                                                        <input type="checkbox" class="flat">
                                                     </th>
-                                                    <th class="column-title">신고 ID</th>
-                                                    <th class="column-title">신고 작성자</th>
-                                                    <th class="column-title">신고 내용</th>
-                                                    <th class="column-title">댓글 작성자</th>
-                                                    <th class="column-title">댓글 내용</th>
+                                                    <th class="column-title">댓글 ID</th>
                                                     <th class="column-title">댓글 생성일</th>
-                                                    <th class="column-title">비고</th>
+                                                    <th class="column-title">댓글 작성자</th>
+                                                    <th class="column-title">댓글 제목</th>
+                                                    <th class="column-title">신고횟수</th>
+                                                    <th class="column-title">비 고</th>
                                                     </th>
                                                 </tr>
                                                 </thead>
                                                 <tbody>
 
-                                                <tr class="even pointer" th:each="comment, i : ${comment}">
+                                                <tr class="even pointer" th:each="blocked, i : ${blockedList}">
                                                     <td class="a-center">
                                                         <input type="checkbox" name="table_records">
                                                     </td>
-                                                    <td class=" " th:text="${comment.getId()}"></td>
-                                                    <td class=" " th:text="${comment.getUser().getId()}"></td>
-                                                    <td class=" " th:text="${comment.getReason()}"></td>
-                                                    <td class=" " th:text="${comment.getComment().getAuthorId()}"></td>
-                                                    <td class=" " th:text="${comment.getComment().getContent()}"></td>
-                                                    <td class=" " th:text="${comment.getComment().getCreatedDate()}"></td>
+                                                    <td class=" " th:text="${blocked.getId()}"></td>
+                                                    <td class=" " th:text="${blocked.getCreatedDate()}"></td>
+                                                    <td class=" " th:text="${blocked.getAuthorId()}"></td>
+                                                    <td class=" " th:text="${blocked.getContent()}"></td>
+                                                    <td class=" " th:text="${blocked.getBlameCnt()}"></td>
                                                     <td class=" last">
                                                         <form>
-                                                            <input type="hidden" id="url" name="url" value="경로추가">
+                                                            <input type="hidden" id="url" name="url" value="/admin/restore/comment">
                                                             <input type="hidden" id="method" value="post">
-                                                            <input type="hidden" id="params"  th:value="|?commentId=${comment.getId()}|">
+                                                            <input type="hidden" id="params"  th:value="|?commentId=${blocked.getId()}|">
                                                             <input type="hidden" id="token" th:value="${token}">
-                                                            <input type="submit" value="삭제" th:onclick='js_request(this.form)'>
+                                                            <input type="submit" value="복구" th:onclick='js_request(this.form)'>
+                                                        </form>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-12 col-sm-12  ">
+                                <div class="x_panel">
+                                    <div class="x_title">
+                                        <h2>신고된 댓글 리스트</h2>
+                                        <ul class="nav navbar-right panel_toolbox">
+                                            <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                                            </li>
+                                            <li><a class="close-link"><i class="fa fa-close"></i></a>
+                                            </li>
+                                        </ul>
+                                        <div class="clearfix"></div>
+                                    </div>
+
+                                    <div class="x_content">
+                                        <div class="table-responsive">
+                                            <table class="table table-striped jambo_table bulk_action">
+                                                <thead>
+                                                <tr class="headings">
+                                                    <th>
+                                                        <input type="checkbox" class="flat">
+                                                    </th>
+                                                    <th class="column-title">댓글 ID</th>
+                                                    <th class="column-title">댓글 생성일</th>
+                                                    <th class="column-title">댓글 작성자</th>
+                                                    <th class="column-title">댓글 내용</th>
+                                                    <th class="column-title">신고 작성자</th>
+                                                    <th class="column-title">신고 내용</th>
+                                                    <th class="column-title">신고 횟수</th>
+                                                    <th class="column-title">비 고</th>
+                                                    </th>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+
+                                                <tr class="even pointer" th:each="blamed, i : ${blamedList}">
+                                                    <td class="a-center">
+                                                        <input type="checkbox" name="table_records">
+                                                    </td>
+                                                    <td class=" " th:text="${blamed.getComment().getId()}"></td>
+                                                    <td class=" " th:text="${blamed.getComment().getCreatedDate()}"></td>
+                                                    <td class=" " th:text="${blamed.getComment().getAuthorId()}"></td>
+                                                    <td class=" " th:text="${blamed.getComment().getContent()}"></td>
+                                                    <td class=" " th:text="${blamed.getUser().getId()}"></td>
+                                                    <td class=" " th:text="${blamed.getReason()}"></td>
+                                                    <td class=" " th:text="${blamed.getComment().getBlameCnt()}"></td>
+                                                    <td class=" last">
+                                                        <form>
+                                                            <input type="hidden" id="url" name="url" value="/comment">
+                                                            <input type="hidden" id="method" value="delete">
+                                                            <input type="hidden" id="params"  th:value="|?commentId=${blamed.getComment().getId()}|">
+                                                            <input type="hidden" id="token" th:value="${token}">
+                                                            <input type="submit" value="차단" th:onclick='js_request(this.form)'>
+                                                        </form>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-12 col-sm-12  ">
+                                <div class="x_panel">
+                                    <div class="x_title">
+                                        <h2>삭제된 댓글 리스트</h2>
+                                        <ul class="nav navbar-right panel_toolbox">
+                                            <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                                            </li>
+                                            <li><a class="close-link"><i class="fa fa-close"></i></a>
+                                            </li>
+                                        </ul>
+                                        <div class="clearfix"></div>
+                                    </div>
+
+                                    <div class="x_content">
+                                        <div class="table-responsive">
+                                            <table class="table table-striped jambo_table bulk_action">
+                                                <thead>
+                                                <tr class="headings">
+                                                    <th>
+                                                        <input type="checkbox" class="flat">
+                                                    </th>
+                                                    <th class="column-title">댓글 ID</th>
+                                                    <th class="column-title">댓글 삭제일</th>
+                                                    <th class="column-title">댓글 작성자</th>
+                                                    <th class="column-title">댓글 제목</th>
+                                                    <th class="column-title">댓글 생성일</th>
+                                                    <th class="column-title">비 고</th>
+                                                    </th>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+
+                                                <tr class="even pointer" th:each="deleted, i : ${deletedList}">
+                                                    <td class="a-center">
+                                                        <input type="checkbox" name="table_records">
+                                                    </td>
+                                                    <td class=" " th:text="${deleted.getId()}"></td>
+                                                    <td class=" " th:text="${deleted.getModifiedDate()}"></td>
+                                                    <td class=" " th:text="${deleted.getAuthorId()}"></td>
+                                                    <td class=" " th:text="${deleted.getContent()}"></td>
+                                                    <td class=" " th:text="${deleted.getCreatedDate()}"></td>
+                                                    <td class=" last">
+                                                        <form>
+                                                            <input type="hidden" id="url" name="url" value="/admin/restore/comment">
+                                                            <input type="hidden" id="method" value="post">
+                                                            <input type="hidden" id="params"  th:value="|?commentId=${deleted.getId()}|">
+                                                            <input type="hidden" id="token" th:value="${token}">
+                                                            <input type="submit" value="복구" th:onclick='js_request(this.form)'>
                                                         </form>
                                                     </td>
                                                 </tr>
