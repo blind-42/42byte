@@ -26,7 +26,7 @@ export const Title = styled.div`
 		font-size: 1.6rem;
 		font-weight: 600;
 		color: #000;
-		padding: 0 1rem 0.3rem 1rem;
+		padding: 0 1rem 0.5rem 1rem;
 	}
 	${({theme}) => theme.media.tablet`
 		div:last-child {
@@ -45,14 +45,16 @@ export const Title = styled.div`
 export const Specific = styled.div`
 	display: flex;
 	justify-content: space-between;
-	padding: 0.3rem;
+	padding: 0 1rem 0.3rem 1rem;
 	border-bottom: solid 2px #929191;
 	font-size: 1.1rem;
 	${({theme}) => theme.media.tablet`
 		font-size: 0.8rem;
+		padding: 0 0.6rem 0.2rem 0.6rem;
 	`}
 	${({theme}) => theme.media.desktop`
 		font-size: 0.8rem;
+		padding: 0 0.6rem 0.2rem 0.6rem;
 	`}
 `;
 
