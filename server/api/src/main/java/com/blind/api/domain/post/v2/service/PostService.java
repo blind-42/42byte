@@ -25,4 +25,5 @@ public interface PostService {
     Page<Post> findDeleted(Pageable pageable);
     Page<Post> findBlamed(Pageable pageable);
     Page<Post> findBlocked(Pageable pageable);
+    void restorePost(Post post);
     }

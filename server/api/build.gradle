@@ -88,4 +88,7 @@ dependencies {
 	implementation 'nz.net.ultraq.thymeleaf:thymeleaf-layout-dialect'
 
 	testImplementation 'org.springframework.restdocs:spring-restdocs-mockmvc'
+
+	/*yml파일 상수 가져오기*/
+	annotationProcessor "org.springframework.boot:spring-boot-configuration-processor"
 }

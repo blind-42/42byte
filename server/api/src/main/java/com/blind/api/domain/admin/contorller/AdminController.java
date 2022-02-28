@@ -29,6 +29,6 @@ public interface AdminController {
     PostResponseDTO deletedPost(HttpServletRequest request, @SortDefault.SortDefaults({@SortDefault(sort = "id", direction = Sort.Direction.DESC)}) Pageable pageable);
     PostResponseDTO blockedPost(HttpServletRequest request, @SortDefault.SortDefaults({@SortDefault(sort = "id", direction = Sort.Direction.DESC)}) Pageable pageable);
     CommentResponseDTO blockedComment(HttpServletRequest request, @SortDefault.SortDefaults({@SortDefault(sort = "id", direction = Sort.Direction.DESC)}) Pageable pageable);
-
-
+    void restoreComment(@RequestParam @Positive (message = "{invalid.request}") Long commentId, HttpServletRequest request);
+    void restorePost(@RequestParam @Positive (message = "{invalid.request}") Long postId, HttpServletRequest request);
 }

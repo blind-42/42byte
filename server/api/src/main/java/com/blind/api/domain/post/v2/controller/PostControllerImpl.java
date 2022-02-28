@@ -91,7 +91,7 @@ public class PostControllerImpl implements PostController{
         PostDetailDTO postDetailDTO = PostDetailDTO.from(post, isUsers, isLiked, setRoleType(user,post.getBoard()));
 
         /* 댓글 전체 조회 후 일반 댓글과 대댓글 구분*/
-        HashMap<Long, CommentDTO> commentDTOHashMap = new HashMap<>();
+        HashMap<Long, CommentDTO> commentDTOHashMap = new LinkedHashMap<>();
         List<ReCommentDTO> reCommentList = new ArrayList<>();
         List<Comment> commentList = commentService.findAllComment(boardId, postId);
         commentList.stream().forEach(
@@ -144,11 +144,11 @@ public class PostControllerImpl implements PostController{
         Post post = postService.findById(postId);
         User user = tokenService.findUserByAccessToken(HeaderUtil.getAccessToken(request));
         RoleType roleType = setRoleType(user, post.getBoard());
-        if (roleType == RoleType.USER && user.getId() != post.getAuthorId())
+        if ((roleType == RoleType.USER) && (user.getId() != post.getAuthorId()))
             return;
-        else if (user.getId() == post.getAuthorId())
+        if (user.getId() == post.getAuthorId() && post.getIsDel() == 0)
             postService.delete(post, RoleType.USER.getValue());
-        else
+        else if (post.getIsDel() == 0)
             postService.delete(post, roleType.getValue());
     }
 
@@ -158,7 +158,9 @@ public class PostControllerImpl implements PostController{
         User user = tokenService.findUserByAccessToken(HeaderUtil.getAccessToken(request));
         RoleType roleType = setRoleType(user, post.getBoard());
         if (roleType == RoleType.USER)
-            return;
+            throw new BusinessException("{invalid.request}");
+        if (post.getIsDel() > 0)
+            throw new BusinessException("{invalid.request}");
         else if(post.getIsNotice() == false)
             postService.setNotice(post);
         else

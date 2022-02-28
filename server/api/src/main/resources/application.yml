@@ -9,7 +9,7 @@ spring:
      driverClassName: com.mysql.cj.jdbc.Driver
      username: root
      password: Blind$242
-     
+
   jpa:
     database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
     hibernate:
@@ -53,7 +53,6 @@ spring:
             token-uri: "https://api.intra.42.fr/oauth/token"
             user-info-uri: "https://api.intra.42.fr/v2/me"
             user-name-attribute: id
-
 # Swagger 설정
   mvc:
     pathmatch:
@@ -65,7 +64,7 @@ spring:
 # cors 설정
 cors:
   allowed-origins: 'http://localhost:3000'
-  allowed-methods: GET,POST,PUT,DELETE,OPTIONS
+  allowed-methods: GET,POST,PUT,DELETE,OPTIONS,PATCH
   allowed-headers: '*'
   max-age: 3600
 
@@ -78,6 +77,8 @@ app:
     authorizedRedirectUris:
       - http://localhost:3000/oauth/redirect
 
-
 # jwt secret key 설정
 jwt.secret: a2f6abd304bcd1d2ff9691bb0e7c1bab1010d0466c628d23b49550fb932300a43054a6030811f6118eb8129d9033cf5e2b63b762c5bd7bee246f63d34ee04fd3
+
+van:
+  blame: 5
