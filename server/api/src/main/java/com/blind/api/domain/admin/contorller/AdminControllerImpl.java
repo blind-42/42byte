@@ -80,28 +80,6 @@ public class AdminControllerImpl implements AdminController{
         Board board = boardService.findById(boardId);
         boardService.deleteManager(board);
     }
-    /* 게시글 차단 */
-    public void blockPost(Long postId, HttpServletRequest request) {
-        if (!isAdmin(request))
-            throw new BusinessException("{invalid.request}");
-        Post post = postService.findById(postId);
-        post.setIsDel(RoleType.ADMIN.getValue());
-        postService.updatePost(post);
-    }
-
-    /* 게시글 차단 해제 */
-    @RequestMapping(value = "/admin/unblock/post", method = RequestMethod.POST)
-    public void unBlockPost(Long postId, HttpServletRequest request) {
-        if (!isAdmin(request))
-            throw new BusinessException("{invalid.request}");
-        Post post = postService.findById(postId);
-        User user = post.getBoard().getManager();
-        if (post.getIsDel() > RoleType.USER.getValue())
-            post.setIsDel(0);
-        else
-            post.setBlameCnt(0L);
-        postService.updatePost(post);
-    }
 
     /*차단된 게시글 조회*/
     @RequestMapping(value = "/admin/blocked/post", method = RequestMethod.GET)
