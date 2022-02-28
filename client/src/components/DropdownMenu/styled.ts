@@ -7,33 +7,20 @@ export const DropdownWrap = styled.div`
 
 export const Dots = styled.div`
 	cursor: pointer;
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	div {
-		height: 0.3rem;
-		width: 0.3rem;
-		border-radius: 50%;
-		background: #929191;
-		margin: 0.1rem 0;
-	}
+	font-size: 1.5rem;
+	color: #929191;
 	${({theme}) => theme.media.tablet`
-		div {
-			height: 0.2rem;
-			width: 0.2rem;
-			margin: 0.07rem 0;
-		}
+		font-size: 1.2rem;
 	`}
 	${({theme}) => theme.media.desktop`
-		div {
-			height: 0.2rem;
-			width: 0.2rem;
-			margin: 0.07rem 0;
-		}
+		font-size: 1.2rem;
 	`}
 `;
 
 export const DropdownBox = styled.div`
+	display: flex;
+	align-items: stretch;
+	justify-content: center;
 	position: absolute;
 	z-index: 1;
 	right: 0;
@@ -42,15 +29,13 @@ export const DropdownBox = styled.div`
 	border-left: solid 1px #fff;
 	border-right: solid 1px #000;
 	border-bottom: solid 1px #000;
-	padding: 0.5rem 0;
-	width: 4.5rem;
+	width: 7rem;
+	padding: 0.3rem 0;
 	${({theme}) => theme.media.tablet`
-		width: 4rem;
-		padding: 0.2rem 0;
+		width: 5.3rem;
 	`}
 	${({theme}) => theme.media.desktop`
-		width: 4rem;
-		padding: 0.2rem 0;
+		width: 5.3rem;
 	`}
 `;
 
@@ -62,15 +47,21 @@ export const MenuList = styled.div`
 	div {
 		cursor: pointer;
 		font-size: 1rem;
+		line-height: 1rem;
+		margin: 0.3rem 0;
 	}
 	${({theme}) => theme.media.tablet`
 		div {
-			font-size: 0.8rem;
+			font-size: 0.75rem;
+			line-height: 0.75rem;
+			margin: 0.2rem 0;
 		}
 	`}
 	${({theme}) => theme.media.desktop`
 		div {
-			font-size: 0.8rem;
+			font-size: 0.75rem;
+			line-height: 0.75rem;
+			margin: 0.2rem 0;
 		}
 	`}
 `;
