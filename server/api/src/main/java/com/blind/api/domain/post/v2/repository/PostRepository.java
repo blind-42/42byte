@@ -11,7 +11,7 @@ import org.springframework.data.repository.query.Param;
 import java.util.List;
 
 public interface PostRepository extends PagingAndSortingRepository<Post, Long> {
-    Page<Post> findAllByBoardId(Long boardId, Pageable pageable);
+    Page<Post> findAllByBoardIdAndIsDelLessThanEqualAndBlameCntIsLessThan(Long boardId, Integer isDel, Long BlameCnt, Pageable pageable);
     Page<Post> findAllByAuthorId(Long authorId, Pageable pageable);
     @Query(
             value = "SELECT p FROM Post p WHERE p.title LIKE %:keyword% OR p.content LIKE %:keyword%",
@@ -35,7 +35,7 @@ public interface PostRepository extends PagingAndSortingRepository<Post, Long> {
     @Query("update Post p set p.blameCnt = p.blameCnt + 1L where p.id = :id")
     void addBlameCnt(@Param("id") Long id);
 
-    Page<Post> findAllByIsDelGreaterThan(Integer isDel, Pageable pageable);
+    Page<Post> findAllByIsDelEquals(Integer isDel, Pageable pageable);
     Page<Post> findAllByBlameCntGreaterThanEqual(Long blameCnt, Pageable pageable);
-
+    Page<Post> findAllByBlameCntGreaterThanEqualOrIsDelGreaterThanEqual(Long blameCnt, Integer isDel, Pageable pageable);
 }

@@ -27,6 +27,8 @@ public interface AdminController {
     CommentResponseDTO deletedComment(HttpServletRequest request, @SortDefault.SortDefaults({@SortDefault(sort = "id", direction = Sort.Direction.DESC)}) Pageable pageable);
     PostResponseDTO blamedPost(HttpServletRequest request, @SortDefault.SortDefaults({@SortDefault(sort = "id", direction = Sort.Direction.DESC)}) Pageable pageable);
     PostResponseDTO deletedPost(HttpServletRequest request, @SortDefault.SortDefaults({@SortDefault(sort = "id", direction = Sort.Direction.DESC)}) Pageable pageable);
+    PostResponseDTO blockedPost(HttpServletRequest request, @SortDefault.SortDefaults({@SortDefault(sort = "id", direction = Sort.Direction.DESC)}) Pageable pageable);
+    CommentResponseDTO blockedComment(HttpServletRequest request, @SortDefault.SortDefaults({@SortDefault(sort = "id", direction = Sort.Direction.DESC)}) Pageable pageable);
 
 
 }

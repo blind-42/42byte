@@ -35,4 +35,5 @@ public interface CommentService {
 
     Page<Comment> findDeleted(Pageable pageable);
     Page<Comment> findBlamed(Pageable pageable);
-}
+    Page<Comment> findBlocked(Pageable pageable);
+    }

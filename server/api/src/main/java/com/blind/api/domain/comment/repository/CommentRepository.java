@@ -29,4 +29,5 @@ public interface CommentRepository extends JpaRepository<Comment, Long> {
 
     Page<Comment> findAllByIsDelGreaterThan(Integer isDel, Pageable pageable);
     Page<Comment> findAllByBlameCntGreaterThanEqual(Long blameCnt, Pageable pageable);
+    Page<Comment> findAllByBlameCntGreaterThanEqualOrIsDel(Long blameCnt, Integer isDel, Pageable pageable);
 }
