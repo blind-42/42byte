@@ -142,14 +142,6 @@ console.log(recomment)
 				</RecommentContainer>
 				</>
 			}
-			<>
-			{recomments?.map((el: RecommentData) => {
-					return (<ReComments key={el.id} recomment={el}
-																					postId={postId}
-																					// commentsUserList={commentsUserList} 
-																					/>)
-					})}
-			</>
 		</>
 	);
 }
