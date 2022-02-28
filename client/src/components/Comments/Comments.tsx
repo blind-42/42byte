@@ -6,7 +6,7 @@ import DropdownMenu from 'components/DropdownMenu/DropdownMenu';
 import CommentInput from 'components/CommentInput/CommentInput';
 import ReComments from './ReComments';
 import { CommentData, RecommentData } from 'utils/functions/type';
-import { timeForToday, isDelOption, cardetNumbering } from 'utils/functions/functions';
+import { timeForToday, isDelOption, whoIsWriter } from 'utils/functions/functions';
 import { GrLike } from "react-icons/gr";
 import { CommentWrap, ModifyCommentWrap, CommentTop, Info, Modify, Content, CommentBottom, ReCommentBox, LikesBox, 
 	GLine, FLine, ReCommentListWrap, ReCommentWrap, RecommentContainer } from './styled'
@@ -22,7 +22,8 @@ function Comments({ comment, commentsUserList }: GreetingProps) {
 	const [boxState, setBoxState] = useState<boolean>(isLiked);
 	const [openEditor, setOpenEditor] = useState<boolean>(false);
 	const [openReCmt, setOpenReCmt] = useState<boolean>(false);
-	const cardetNumer = '카뎃' + cardetNumbering(commentsUserList, authorId);
+	const writer = whoIsWriter(isAuthor, commentsUserList, authorId);
+
 	const queryClient = useQueryClient();
 	const mutationPost = useMutation(
 		({ path, data }: { path: string; data?: object }) => instance.post(path, data));
@@ -86,10 +87,8 @@ function Comments({ comment, commentsUserList }: GreetingProps) {
 			{openEditor
 			? <ModifyCommentWrap>
 					<CommentTop>
-						<Info>
-							{isAuthor ? <h3>작성자</h3>
-								: isUsers ? <h3><u>{cardetNumer}</u></h3>
-								: <h3>{cardetNumer}</h3>}
+						<Info isUsers={isUsers}>
+							<h3>{writer}</h3>
 						</Info>
 						<Modify>
 							<div onClick={modifyCmtHandler}>취소</div>
@@ -101,10 +100,8 @@ function Comments({ comment, commentsUserList }: GreetingProps) {
 				</ModifyCommentWrap>
 			: <CommentWrap>
 					<CommentTop>
-						<Info>
-							{isAuthor ? <h3>작성자</h3>
-								: isUsers ? <h3><u>{cardetNumer}</u></h3>
-								: <h3>{cardetNumer}</h3>}
+						<Info isUsers={isUsers}>
+							<h3>{writer}</h3>
 							<div>{timeForToday(createdDate)} {(createdDate !== modifiedDate) && '수정됨'}</div>
 						</Info>
 						{!isDel && <DropdownMenu isPost={false} isUsers={isUsers} modifyHandler={modifyCmtHandler}
@@ -133,14 +130,14 @@ function Comments({ comment, commentsUserList }: GreetingProps) {
 					<RecommentContainer>
 						<span>&#8627;</span>
 						<ReCommentWrap>
-							<CommentInput submitCmtHandler={uploadReCmtHandler} placeholder={`@${cardetNumer}에게 댓글을 입력하세요.`} />
+							<CommentInput submitCmtHandler={uploadReCmtHandler} placeholder={`@${writer} 에게 댓글을 입력하세요.`} />
 						</ReCommentWrap>
 					</RecommentContainer>
 					</>}
 				{recomments.map((el: RecommentData) => {
-					return (<ReComments key={el.id} recomment={el}
-																					postId={postId}
-																					// commentsUserList={commentsUserList} 
+					return (<ReComments key={el.id} postId={postId}
+																					recomment={el}
+																					commentsUserList={commentsUserList} 
 																					/>)
 					})}
 			</ReCommentListWrap>

@@ -12,7 +12,7 @@ import Loading from 'pages/Loading/Loading';
 import Error from 'pages/Error/Error';
 import DropdownMenu from 'components/DropdownMenu/DropdownMenu';
 import { UserData, DetailData, PostData, CommentData } from 'utils/functions/type';
-import { isDelOption } from 'utils/functions/functions';
+import { makeCommentUserList } from 'utils/functions/functions';
 import { GrLike } from "react-icons/gr";
 import { AppContainer, PageContainer, TopBar, PageName, Squares, ContentFooterWrap, NoticeMark } from 'styles/styled';
 import { PostContainer, DetailContainer, Title, Specific, Info, Modify, ContentWrap, LikeWrap, LikesBox
@@ -23,14 +23,13 @@ import { stringify } from 'querystring';
 function Detail() {
 	const [detailData, setDetailData] = useState<DetailData>({
 		post: { id: 0, title: "", content: "", commentCnt: 0, viewCnt: 0, likeCnt: 0, isUsers: false, isNotice: false, isLiked: false, blameCnt: 0, createdDate : "", modifiedDate: "" }, 
-		comment: [{ boardId: 0, postId: 0, id: 0, authorId: 0, content: "", likeCnt: 0, blameCnt: 0, isUsers: false, isAuthor: false, isLiked: false, isDel: 0, createdDate: "", modifiedDate: "", recomments: [] }]
-	});
+		comment: [{ boardId: 0, postId: 0, id: 0, authorId: 0, content: "", likeCnt: 0, blameCnt: 0, isUsers: false, isAuthor: false, isLiked: false, isDel: 0, createdDate: "", modifiedDate: "", recomments: [] }] });
 	const { id, title, content, commentCnt, viewCnt, likeCnt, isUsers, isNotice, isLiked, blameCnt, createdDate, modifiedDate } = detailData.post
 	const [userData, setUserData] = useState<UserData>({createdDate: '', modifiedDate: '', hashId: '', profileImageUrl: '', roleType: ''});
 	const { hashId, roleType } = userData;
 	const [commentData, setCommentData] = useState([]);
   const [commentsUserList, setCommentsUserList] = useState([-1]);
-	const [likeState, setLikeState] = useState<boolean>(false);
+	const [boxState, setBoxState] = useState(isLiked);
   const [openEditor, setOpenEditor] = useState(false);
 	const currentUrl = window.location.href;
 	const urlId = currentUrl.split('detail?boardId=1&postId=')[1];
@@ -48,11 +47,10 @@ function Detail() {
 		instance
 		.get(`/post?boardId=1&postId=${urlId}`)
 		.then((res) => {
-			console.log(res.data)
 			setDetailData(res.data);
 			setCommentData(res.data.comment);
-			setLikeState(res.data.post.isLiked);
-			setCommentsUserList(Array.from(new Set(res.data.comment.filter((el:CommentData) => (!el.isAuthor)).map((el:CommentData) => (el.authorId)))));
+			setBoxState(res.data.post.isLiked);
+			setCommentsUserList(makeCommentUserList(res.data.comment))
 		})},
 		{ retry: 0, 
 			refetchOnWindowFocus: false,
@@ -66,7 +64,7 @@ function Detail() {
 		.then((res) => setUserData(res.data))
 		.catch((err) => console.log(err))
 	}, [])
-	
+
 	const uploadCmtHandler = (comment: string) => {
 		if (comment) {
 			mutationPost.mutate({ path: `/comment?boardId=1&postId=${urlId}`, data: { content: comment } }, {
@@ -114,7 +112,7 @@ function Detail() {
 		mutationPost.mutate({path: `/post/like?postId=${urlId}`, data: undefined}, {
 			onSuccess: (data) => {
 				queryClient.invalidateQueries(['detail_key']);
-				setLikeState(!likeState);},
+				setBoxState(!boxState);},
 			onError: () => { window.location.href = '/error'; } 
 		});
 	}
@@ -167,7 +165,7 @@ function Detail() {
 									<Viewer initialValue={content}/>
 								</ContentWrap>}
 								<LikeWrap>
-									<LikesBox boxState={likeState} onClick={likeBoxHandler}>
+									<LikesBox boxState={boxState} onClick={likeBoxHandler}>
 										<div><GrLike /></div>
 										<div>{likeCnt}</div>
 									</LikesBox>
@@ -179,7 +177,6 @@ function Detail() {
 									<CommentListWrap>
 										{commentData.map((el: CommentData) => {
 											return (<Comments key={el.id} comment={el}
-																										// setReRender={setReRender}
 																										commentsUserList={commentsUserList} />)
 										})}
 									</CommentListWrap>

@@ -5,21 +5,24 @@ import instance from 'utils/functions/axios';
 import DropdownMenu from 'components/DropdownMenu/DropdownMenu';
 import CommentInput from 'components/CommentInput/CommentInput';
 import { RecommentData } from 'utils/functions/type';
-import { timeForToday, isDelOption } from 'utils/functions/functions';
+import { timeForToday, isDelOption, whoIsWriter } from 'utils/functions/functions';
 import { GrLike } from "react-icons/gr";
 import { RecommentContainer, ReCommentWrap, ModifyCommentWrap, CommentTop, Info, Modify, Content, 
 	CommentBottom, ReCommentBox, LikesBox, GLine, FLine } from './styled'
 
 type GreetingProps = {
-	recomment: RecommentData
 	postId: number
+	recomment: RecommentData
+	commentsUserList: number[]
 }
 
-function ReComments({recomment, postId}: GreetingProps) {
+function ReComments({ postId, recomment, commentsUserList }: GreetingProps) {
 	const {authorId, blameCnt, content, createdDate, id, isAuthor, isDel, isLiked, isUsers, likeCnt, modifiedDate, recomments, rootCommentId, targetAuthorId } = recomment;
 	const [boxState, setBoxState] = useState<boolean>(isLiked);
 	const [openEditor, setOpenEditor] = useState<boolean>(false);
 	const [openReReCmt, setOpenReReCmt] = useState<boolean>(false);
+	const writer = whoIsWriter(isAuthor, commentsUserList, authorId);
+
 	const queryClient = useQueryClient();
 	const mutationPost = useMutation(
 		({ path, data }: { path: string; data?: object }) => instance.post(path, data));
@@ -88,12 +91,8 @@ function ReComments({recomment, postId}: GreetingProps) {
 				? <ReCommentWrap>
 					<ModifyCommentWrap>
 						<CommentTop>
-							<Info>
-							<h3>카뎃</h3>
-								{/* {isAuthor ? <h3>작성자</h3>
-									: isUsers ? <h3><u>카뎃 {commentsUserList.indexOf(authorId)+1}</u></h3>
-									: <h3>카뎃 {commentsUserList.indexOf(authorId)+1}</h3>
-									} */}
+							<Info isUsers={isUsers}>
+								<h3>{writer}</h3>
 							</Info>
 							<Modify>
 								<div onClick={modifyCmtHandler}>취소</div>
@@ -106,11 +105,8 @@ function ReComments({recomment, postId}: GreetingProps) {
 					</ReCommentWrap> 
 				: <ReCommentWrap>
 						<CommentTop>
-							<Info>
-							<h3>카뎃</h3>
-								{/* {isAuthor ? <h3>작성자</h3>
-									: isUsers ? <h3><u>카뎃 {commentsUserList.indexOf(authorId)+1}</u></h3>
-									: <h3>카뎃 {commentsUserList.indexOf(authorId)+1}</h3>} */}
+							<Info isUsers={isUsers}>
+								<h3>{writer}</h3>
 								<div>{timeForToday(createdDate)} {(createdDate !== modifiedDate) && '수정됨'}</div>
 							</Info>
 							{!isDel && <DropdownMenu isPost={false} isUsers={isUsers} modifyHandler={modifyCmtHandler} 
@@ -140,7 +136,7 @@ function ReComments({recomment, postId}: GreetingProps) {
 				<RecommentContainer>
 					<span>&#8627;</span>
 					<ReCommentWrap>
-						<CommentInput submitCmtHandler={uploadReReCmtHandler} placeholder={`카뎃에게 댓글을 입력하세요.`} />
+						<CommentInput submitCmtHandler={uploadReReCmtHandler} placeholder={`${writer} 에게 댓글을 입력하세요.`} />
 					</ReCommentWrap>
 				</RecommentContainer>
 				</>
