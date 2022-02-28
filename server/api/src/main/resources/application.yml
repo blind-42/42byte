@@ -9,7 +9,6 @@ spring:
      driverClassName: com.mysql.cj.jdbc.Driver
      username: root
      password: Blind$242
-
   jpa:
     database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
     hibernate:
@@ -22,10 +21,12 @@ spring:
     logging:
       level:
         org.hibernate.SQL: debug
+
   thymeleaf:
     prefix : classpath:templates/
     suffix : .html
     cache : false
+
   # pageable
   data:
     web:

@@ -1,5 +1,7 @@
 package com.blind.api.domain.user.v2.controller;
 
+import com.blind.api.domain.security.jwt.v1.domain.Token;
+import com.blind.api.domain.security.jwt.v1.repository.TokenRepository;
 import com.blind.api.domain.security.jwt.v1.service.TokenService;
 import com.blind.api.domain.user.v2.domain.RoleType;
 import com.blind.api.domain.user.v2.repository.UserRepository;
@@ -18,11 +20,11 @@ import javax.servlet.http.HttpServletRequest;
 @AllArgsConstructor
 public class UserControllerImpl implements UserController {
     private final UserRepository userRepository;
+    private final TokenRepository tokenRepository;
     private final TokenService tokenService;
 
     @RequestMapping(value={"/user"}, method= RequestMethod.GET)
     public User getUserInfo(HttpServletRequest request) {
         return tokenService.findUserByAccessToken(HeaderUtil.getAccessToken(request));
     }
-
 }

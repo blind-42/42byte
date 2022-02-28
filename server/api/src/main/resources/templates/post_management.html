@@ -32,7 +32,7 @@
                             <div class="col-md-12 col-sm-12  ">
                                 <div class="x_panel">
                                     <div class="x_title">
-                                        <h2>차단 게시글 리스트</h2>
+                                        <h2>차단된 게시글 리스트</h2>
                                         <ul class="nav navbar-right panel_toolbox">
                                             <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
                                             </li>
@@ -48,32 +48,33 @@
                                                 <thead>
                                                 <tr class="headings">
                                                     <th>
-                                                        <input type="checkbox" id="check-all" class="flat">
+                                                        <input type="checkbox" class="flat">
                                                     </th>
-                                                    <th class="column-title">차단 ID</th>
-                                                    <th class="column-title">차단 날짜</th>
-                                                    <th class="column-title">차단 내용</th>
-                                                    <th class="column-title">게시글 작성자</th>
-                                                    <th class="column-title">게시글 제목</th>
-                                                    <th class="column-title">게시글 생성일</th>
-                                                    <th class="column-title">비고</th>
+                                                    <th class="column-title">ID</th>
+                                                    <th class="column-title">생성일</th>
+                                                    <th class="column-title">작성자</th>
+                                                    <th class="column-title">제목</th>
+                                                    <th class="column-title">신고횟수</th>
+                                                    <th class="column-title">비 고</th>
                                                     </th>
                                                 </tr>
                                                 </thead>
                                                 <tbody>
 
-                                                <tr class="even pointer" th:each="post, i : ${posts}">
-                                                    <td class=" " th:text="${post.getId()}"></td>
-                                                    <td class=" " th:text="${post.getUser().getId()}"></td>
-                                                    <td class=" " th:text="${post.getReason()}"></td>
-                                                    <td class=" " th:text="${post.getPost().getAuthorId()}"></td>
-                                                    <td class=" " th:text="${post.getPost().getTitle()}"></td>
-                                                    <td class=" " th:text="${post.getPost().getCreatedDate()}"></td>
+                                                <tr class="even pointer" th:each="blocked, i : ${blockedList}">
+                                                    <td class="a-center">
+                                                        <input type="checkbox" name="table_records">
+                                                    </td>
+                                                    <td class=" " th:text="${blocked.getId()}"></td>
+                                                    <td class=" " th:text="${blocked.getCreatedDate()}"></td>
+                                                    <td class=" " th:text="${blocked.getAuthorId()}"></td>
+                                                    <td class=" " th:text="${blocked.getTitle()}"></td>
+                                                    <td class=" " th:text="${blocked.getBlameCnt()}"></td>
                                                     <td class=" last">
                                                         <form>
-                                                            <input type="hidden" id="url" name="url" value="경로추가">
+                                                            <input type="hidden" id="url" name="url" value="/admin/unblock/post">
                                                             <input type="hidden" id="method" value="post">
-                                                            <input type="hidden" id="params"  th:value="|?postId=${post.getId()}|">
+                                                            <input type="hidden" id="params"  th:value="|?postId=${blocked.getId()}|">
                                                             <input type="hidden" id="token" th:value="${token}">
                                                             <input type="submit" value="해제" th:onclick='js_request(this.form)'>
                                                         </form>
@@ -87,7 +88,7 @@
                             <div class="col-md-12 col-sm-12  ">
                                 <div class="x_panel">
                                     <div class="x_title">
-                                        <h2>신고 게시글 리스트</h2>
+                                        <h2>신고된 게시글 리스트</h2>
                                         <ul class="nav navbar-right panel_toolbox">
                                             <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
                                             </li>
@@ -103,11 +104,70 @@
                                                 <thead>
                                                 <tr class="headings">
                                                     <th>
-                                                        <input type="checkbox" id="check-all" class="flat">
+                                                        <input type="checkbox" class="flat">
                                                     </th>
-                                                    <th class="column-title">신고 ID</th>
+                                                    <th class="column-title">ID</th>
+                                                    <th class="column-title">생성일</th>
+                                                    <th class="column-title">게시글 작성자</th>
+                                                    <th class="column-title">게시글 제목</th>
                                                     <th class="column-title">신고 작성자</th>
                                                     <th class="column-title">신고 내용</th>
+                                                    <th class="column-title">신고 횟수</th>
+                                                    <th class="column-title">비고</th>
+                                                    </th>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+
+                                                <tr class="even pointer" th:each="blamed, i : ${blamedList}">
+                                                    <td class="a-center">
+                                                        <input type="checkbox" name="table_records">
+                                                    </td>
+                                                    <td class=" " th:text="${blamed.getPost().getId()}"></td>
+                                                    <td class=" " th:text="${blamed.getPost().getCreatedDate()}"></td>
+                                                    <td class=" " th:text="${blamed.getPost().getAuthorId()}"></td>
+                                                    <td class=" " th:text="${blamed.getPost().getTitle()}"></td>
+                                                    <td class=" " th:text="${blamed.getUser()}"></td>
+                                                    <td class=" " th:text="${blamed.getReason()}"></td>
+                                                    <td class=" " th:text="${blamed.getPost().getBlameCnt()}"></td>
+                                                    <td class=" last">
+                                                        <form>
+                                                            <input type="hidden" id="url" name="url" value="/admin/">
+                                                            <input type="hidden" id="method" value="post">
+                                                            <input type="hidden" id="params"  th:value="|?postId=${blamed.getId()}|">
+                                                            <input type="hidden" id="token" th:value="${token}">
+                                                            <input type="submit" value="삭제" th:onclick='js_request(this.form)'>
+                                                        </form>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-12 col-sm-12  ">
+                                <div class="x_panel">
+                                    <div class="x_title">
+                                        <h2>삭제된 게시글 리스트</h2>
+                                        <ul class="nav navbar-right panel_toolbox">
+                                            <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                                            </li>
+                                            <li><a class="close-link"><i class="fa fa-close"></i></a>
+                                            </li>
+                                        </ul>
+                                        <div class="clearfix"></div>
+                                    </div>
+
+                                    <div class="x_content">
+                                        <div class="table-responsive">
+                                            <table class="table table-striped jambo_table bulk_action">
+                                                <thead>
+                                                <tr class="headings">
+                                                    <th>
+                                                        <input type="checkbox" class="flat">
+                                                    </th>
+                                                    <th class="column-title">게시글 ID</th>
+                                                    <th class="column-title">삭제일</th>
                                                     <th class="column-title">게시글 작성자</th>
                                                     <th class="column-title">게시글 제목</th>
                                                     <th class="column-title">게시글 생성일</th>
@@ -117,18 +177,17 @@
                                                 </thead>
                                                 <tbody>
 
-                                                <tr class="even pointer" th:each="post, i : ${posts}">
-                                                    <td class=" " th:text="${post.getId()}"></td>
-                                                    <td class=" " th:text="${post.getUser().getId()}"></td>
-                                                    <td class=" " th:text="${post.getReason()}"></td>
-                                                    <td class=" " th:text="${post.getPost().getAuthorId()}"></td>
-                                                    <td class=" " th:text="${post.getPost().getTitle()}"></td>
-                                                    <td class=" " th:text="${post.getPost().getCreatedDate()}"></td>
+                                                <tr class="even pointer" th:each="deleted, i : ${deletedList}">
+                                                    <td class=" " th:text="${deleted.getId()}"></td>
+                                                    <td class=" " th:text="${deleted.getModifiedDate()}"></td>
+                                                    <td class=" " th:text="${deleted.getAuthorId()}"></td>
+                                                    <td class=" " th:text="${deleted.getTitle()}"></td>
+                                                    <td class=" " th:text="${deleted.getCreatedDate()}"></td>
                                                     <td class=" last">
                                                         <form>
                                                             <input type="hidden" id="url" name="url" value="경로추가">
                                                             <input type="hidden" id="method" value="post">
-                                                            <input type="hidden" id="params"  th:value="|?postId=${post.getId()}|">
+                                                            <input type="hidden" id="params"  th:value="|?postId=${deleted.getId()}|">
                                                             <input type="hidden" id="token" th:value="${token}">
                                                             <input type="submit" value="해제" th:onclick='js_request(this.form)'>
                                                         </form>

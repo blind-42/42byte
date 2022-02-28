@@ -152,4 +152,12 @@ public class PostServiceImpl implements PostService {
         else if (post.getBlameCnt() >= 5)
             post.setBlameCnt(0L);
     }
+
+    @Override
+    @Transactional
+    public void updatePost(Post post) {
+        postRepository.save(post);
+    }
+
+
 }
