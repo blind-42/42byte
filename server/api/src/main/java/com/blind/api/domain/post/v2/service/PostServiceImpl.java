@@ -28,7 +28,8 @@ public class PostServiceImpl implements PostService {
     @Override
     @Transactional
     public Page<Post> findAllByBoardId(Long boardId, Pageable pageable) {
-        Page<Post> postList = postRepository.findAllByBoardIdAndIsDelLessThanEqualAndBlameCntIsLessThan(boardId, 3, 5L, pageable);
+        Long blame = Long.parseLong(applicationYmlRead.getBlame());
+        Page<Post> postList = postRepository.findAllByBoardIdAndIsDelLessThanEqualAndBlameCntIsLessThan(boardId, 0, blame, pageable);
 
         return postList;
     }

@@ -218,7 +218,7 @@ public class AdminControllerImpl implements AdminController{
     }
 
     /*게시글 복구*/
-    @RequestMapping(value={"/restore/post"}, method=RequestMethod.POST)
+    @RequestMapping(value={"/admin/restore/post"}, method=RequestMethod.POST)
     public void restorePost(Long postId, HttpServletRequest request){
         if (!isAdmin(request))
             throw new BusinessException("{invalid.request}");
@@ -227,7 +227,7 @@ public class AdminControllerImpl implements AdminController{
     }
 
     /*댓글 복구*/
-    @RequestMapping(value={"/restore/comment"}, method=RequestMethod.POST)
+    @RequestMapping(value={"/admin/restore/comment"}, method=RequestMethod.POST)
     public void restoreComment(Long commentId, HttpServletRequest request){
         if (!isAdmin(request))
             throw new BusinessException("{invalid.request}");
