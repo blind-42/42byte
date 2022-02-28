@@ -275,7 +275,7 @@ class AdminControllerImplTest {
         blockedPost.setBlameCnt(5L);
         blockedPost.setIsDel(0);
         postService.updatePost(blockedPost);
-        mockMvc.perform(post("/admin/unblock/post")
+        mockMvc.perform(post("/admin/restore/post")
                         .param("postId", blockedPost.getId().toString())
                         .header("Authorization", "Bearer access0"))
                 .andExpect(status().isOk())
@@ -292,7 +292,7 @@ class AdminControllerImplTest {
         blockedPost.setIsDel(3);
 
         postService.updatePost(blockedPost);
-        mockMvc.perform(post("/admin/unblock/post")
+        mockMvc.perform(post("/admin/restore/post")
                         .param("postId", blockedPost.getId().toString())
                         .header("Authorization", "Bearer access0"))
                 .andExpect(status().isOk())
