@@ -1,13 +1,13 @@
 import { Link } from 'react-router-dom';
-import { ContentData } from	'utils/functions/type';
-import { shortening, timeForToday } from 'utils/functions/functions';
+import { PostPre } from	'utils/functions/type';
+import { stringLimit, timeForToday } from 'utils/functions/functions';
 import { NoticeMark } from 'styles/styled';
 import { PreviewContainer } from './styled';
 import { useMediaQuery } from "react-responsive";
 
 
 type GreetingProps = {
-	postData: ContentData;
+	postData: PostPre;
 }
 
 function PostPreview({ postData }: GreetingProps) {
@@ -27,8 +27,8 @@ function PostPreview({ postData }: GreetingProps) {
 					}
 					<div>
 						{isMobile
-						? <h3>{shortening(title, 12)}</h3>
-						: <h3>{shortening(title, 22)}</h3>}
+						? <h3>{stringLimit(title, 12)}</h3>
+						: <h3>{stringLimit(title, 22)}</h3>}
 						<div>[{commentCnt}]</div>
 					</div>
 					<div>{viewCnt}</div>

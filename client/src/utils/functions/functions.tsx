@@ -1,4 +1,6 @@
-export const shortening = (param: string, length: number) => {
+import { CommentData } from "./type";
+
+export const stringLimit = (param: string, length: number) => {
 	let temp = param;
 	if (temp.length > length) {
 		temp = temp.slice(0,length) + '...';
@@ -44,6 +46,25 @@ export const isDelOption = (value: number) => {
 	else return '관리자';
 }
 
-export const cardetNumbering = (arrUsers: number[], authorId: number) => {
-	return arrUsers.indexOf(authorId) + 1;
+export const whoIsWriter = (isAuthor: boolean, commentsUserList: number[], authorId: number) => {
+	if (isAuthor)
+			return ('작성자');
+	else
+		return (`카뎃${commentsUserList.indexOf(authorId) + 1}`);
+}
+
+export const makeCommentUserList = (comments: CommentData[]) => {
+	let result: number[] = [];
+
+	for (let cmt of comments) {
+		if (!cmt.isAuthor) 
+			result.push(cmt.authorId);
+		if (cmt.recomments !== null ) {
+			for (let recmt of cmt.recomments) {
+				if (!recmt.isAuthor) 
+					result.push(recmt.authorId);
+			}
+		}
+	}
+	return Array.from(new Set(result));
 }

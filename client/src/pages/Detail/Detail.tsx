@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
-import { useQuery, useQueryClient, useMutation } from 'react-query';
+import { useQuery, useQueryClient, useMutation, useQueries } from 'react-query';
 import { Link } from 'react-router-dom';
 import { Viewer } from '@toast-ui/react-editor';
 import instance from 'utils/functions/axios';
@@ -11,26 +11,21 @@ import PostEditor from 'components/PostEdit/PostEditor';
 import Loading from 'pages/Loading/Loading';
 import Error from 'pages/Error/Error';
 import DropdownMenu from 'components/DropdownMenu/DropdownMenu';
-import { UserData, DetailData, PostData, CommentData } from 'utils/functions/type';
-import { isDelOption } from 'utils/functions/functions';
+import { PostData, CommentData } from 'utils/functions/type';
+import { makeCommentUserList } from 'utils/functions/functions';
 import { GrLike } from "react-icons/gr";
 import { AppContainer, PageContainer, TopBar, PageName, Squares, ContentFooterWrap, NoticeMark } from 'styles/styled';
 import { PostContainer, DetailContainer, Title, Specific, Info, Modify, ContentWrap, LikeWrap, LikesBox
-				, CommentContainer, CommentCount, CommentListWrap, FLine } from './styled';
-import { stringify } from 'querystring';
+	, CommentContainer, CommentCount, CommentListWrap, FLine } from './styled';
 
 
 function Detail() {
-	const [detailData, setDetailData] = useState<DetailData>({
-		post: { id: 0, title: "", content: "", commentCnt: 0, viewCnt: 0, likeCnt: 0, isUsers: false, isNotice: false, isLiked: false, blameCnt: 0, createdDate : "", modifiedDate: "" }, 
-		comment: [{ boardId: 0, postId: 0, id: 0, authorId: 0, content: "", likeCnt: 0, blameCnt: 0, isUsers: false, isAuthor: false, isLiked: false, isDel: 0, createdDate: "", modifiedDate: "", recomments: [] }]
-	});
-	const { id, title, content, commentCnt, viewCnt, likeCnt, isUsers, isNotice, isLiked, blameCnt, createdDate, modifiedDate } = detailData.post
-	const [userData, setUserData] = useState<UserData>({createdDate: '', modifiedDate: '', hashId: '', profileImageUrl: '', roleType: ''});
-	const { hashId, roleType } = userData;
+	const [detailData, setDetailData] = useState<PostData>({ boardId: 0, boardName: '', commentCnt: 0, content: '', createdDate: '',
+		id: 0, isLiked: false, isNotice: false, isUsers: false, likeCnt: 0, modifiedDate: '', title: '', type: '', viewCnt: 0 });
+	const { boardId, boardName, commentCnt, content, createdDate, id, isLiked, isNotice, isUsers, likeCnt, modifiedDate, title, type, viewCnt } = detailData;
 	const [commentData, setCommentData] = useState([]);
   const [commentsUserList, setCommentsUserList] = useState([-1]);
-	const [likeState, setLikeState] = useState<boolean>(false);
+	const [boxState, setBoxState] = useState(isLiked);
   const [openEditor, setOpenEditor] = useState(false);
 	const currentUrl = window.location.href;
 	const urlId = currentUrl.split('detail?boardId=1&postId=')[1];
@@ -44,34 +39,43 @@ function Detail() {
 		({ path }: { path: string; }) => instance.delete(path));
 	const mutationPatch = useMutation(
 		({ path }: { path: string; }) => instance.patch(path));
-	const { isFetching, isLoading, error, data } = useQuery(['detail_key', urlId], () => {
-		instance
-		.get(`/post?boardId=1&postId=${urlId}`)
-		.then((res) => {
-			console.log(res.data)
-			setDetailData(res.data);
-			setCommentData(res.data.comment);
-			setLikeState(res.data.post.isLiked);
-			setCommentsUserList(Array.from(new Set(res.data.comment.filter((el:CommentData) => (!el.isAuthor)).map((el:CommentData) => (el.authorId)))));
-		})},
-		{ retry: 0, 
+	const results = useQueries([
+		{
+			queryKey: ['detail_key', urlId],
+			queryFn: () => {
+				instance
+				.get(`/post?boardId=1&postId=${urlId}`)
+				.then((res) => {
+					setDetailData(res.data);
+					setBoxState(res.data.isLiked);
+				})},
+			retry: 0, 
 			refetchOnWindowFocus: false,
-			keepPreviousData: true,
+			keepPreviousData: true
+		},
+		{
+			queryKey: ['comment_key', urlId],
+			queryFn: () => {
+				instance
+				.get(`/comment?boardId=1&postId=${urlId}`)
+				.then((res) => {
+					setCommentData(res.data);
+					setCommentsUserList(makeCommentUserList(res.data))
+				})},
+			retry: 0, 
+			refetchOnWindowFocus: false,
+			keepPreviousData: true
 		}
-	)
+	]);
+	const isFetching = results.some(result => result.isFetching);
+	const isLoading = results.some(result => result.isLoading);
+	const error = results.some(result => result.error);
 
-	useEffect(() => {
-		instance
-		.get('/user')
-		.then((res) => setUserData(res.data))
-		.catch((err) => console.log(err))
-	}, [])
-	
 	const uploadCmtHandler = (comment: string) => {
 		if (comment) {
 			mutationPost.mutate({ path: `/comment?boardId=1&postId=${urlId}`, data: { content: comment } }, {
-				onSuccess: (data) => {
-					queryClient.invalidateQueries(['detail_key']);
+				onSuccess: () => {
+					queryClient.invalidateQueries(['comment_key']);
 					setTimeout(() => scrollRef.current.scrollIntoView({ behavior: "smooth", block: "end", inline: "nearest" }), 550);},
 				onError: () => { window.location.href = '/error'; }
 			});
@@ -112,9 +116,9 @@ function Detail() {
 
 	const likeBoxHandler = () => {
 		mutationPost.mutate({path: `/post/like?postId=${urlId}`, data: undefined}, {
-			onSuccess: (data) => {
+			onSuccess: () => {
 				queryClient.invalidateQueries(['detail_key']);
-				setLikeState(!likeState);},
+				setBoxState(!boxState);},
 			onError: () => { window.location.href = '/error'; } 
 		});
 	}
@@ -131,7 +135,7 @@ function Detail() {
 					<TopBar>
 						<PageName>
 							<Link to='/blindboard'>
-								<div>자유 게시판</div>
+								<div>{boardName}</div>
 							</Link>
 							<div>&nbsp;&#10095; #{id}</div>
 						</PageName>
@@ -159,7 +163,7 @@ function Detail() {
 										<div>{shortDate} {(createdDate !== modifiedDate) && '수정됨'}</div>
 										<div>조회 {Number(viewCnt) + 1}</div>
 									</Info>
-									<DropdownMenu isPost={true} isUsers={isUsers} isNotice={isNotice} roleType={roleType} modifyHandler={modifyPostHandler}
+									<DropdownMenu isPost={true} isUsers={isUsers} isNotice={isNotice} roleType={type} modifyHandler={modifyPostHandler}
 										deleteHandler={deletePostHandler} reportHandler={reportHandler} noticeHandler={noticeHandler} />
 								</Specific>
 								{content &&
@@ -167,7 +171,7 @@ function Detail() {
 									<Viewer initialValue={content}/>
 								</ContentWrap>}
 								<LikeWrap>
-									<LikesBox boxState={likeState} onClick={likeBoxHandler}>
+									<LikesBox boxState={boxState} onClick={likeBoxHandler}>
 										<div><GrLike /></div>
 										<div>{likeCnt}</div>
 									</LikesBox>
@@ -179,7 +183,6 @@ function Detail() {
 									<CommentListWrap>
 										{commentData.map((el: CommentData) => {
 											return (<Comments key={el.id} comment={el}
-																										// setReRender={setReRender}
 																										commentsUserList={commentsUserList} />)
 										})}
 									</CommentListWrap>

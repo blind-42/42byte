@@ -11,11 +11,11 @@ import instance from 'utils/functions/axios';
 import { GoSearch } from "react-icons/go";
 import { AppContainer, PageContainer, TopBar, PageName, Squares, PostContainer, ContentFooterWrap, Category } from 'styles/styled';
 import { UtilPostWrap, UtilWrap, Search, WritingButton, PostWrap, ContentWrap } from './styled';
-import { BoardData, ContentData} from 'utils/functions/type';
+import { BoardData, PostPre} from 'utils/functions/type';
 
-export default function Blindboard() {
-	const [boardData, setBoardData] = useState({contents: [], page: 0, pages: 0});
-	const {page, pages} = boardData
+export default function Board() {
+	const [boardData, setBoardData] = useState<BoardData>({id: 0, name: '', contents: [], page: 0, pages: 0});
+	const { id, name, contents, page, pages } = boardData
 	const currentUrl = window.location.href;
 	const urlId = currentUrl.split('blindboard?page=')[1];
 	const navigate = useNavigate();
@@ -42,7 +42,7 @@ export default function Blindboard() {
 				<Header />
 				<PageContainer>
 					<TopBar>
-						<PageName>자유 게시판</PageName>
+						<PageName>{name}</PageName>
 						<Squares>
 							<div>&#9866;</div>
 							<div>&#10064;</div>
@@ -77,7 +77,7 @@ export default function Blindboard() {
 								<ContentWrap>
 								{/* <div ref={scrollRef}/> */}
 									<PostWrap>
-										{boardData.contents.map((el: ContentData, idx) => {
+										{contents.map((el: PostPre, idx) => {
 											return (<PostPreview key={idx} postData={el} />)
 										})}
 									</PostWrap>

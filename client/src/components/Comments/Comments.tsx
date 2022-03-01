@@ -6,7 +6,7 @@ import DropdownMenu from 'components/DropdownMenu/DropdownMenu';
 import CommentInput from 'components/CommentInput/CommentInput';
 import ReComments from './ReComments';
 import { CommentData, RecommentData } from 'utils/functions/type';
-import { timeForToday, isDelOption, cardetNumbering } from 'utils/functions/functions';
+import { timeForToday, isDelOption, whoIsWriter } from 'utils/functions/functions';
 import { GrLike } from "react-icons/gr";
 import { CommentWrap, ModifyCommentWrap, CommentTop, Info, Modify, Content, CommentBottom, ReCommentBox, LikesBox, 
 	GLine, FLine, ReCommentListWrap, ReCommentWrap, RecommentContainer } from './styled'
@@ -22,7 +22,8 @@ function Comments({ comment, commentsUserList }: GreetingProps) {
 	const [boxState, setBoxState] = useState<boolean>(isLiked);
 	const [openEditor, setOpenEditor] = useState<boolean>(false);
 	const [openReCmt, setOpenReCmt] = useState<boolean>(false);
-	const cardetNumer = '카뎃' + cardetNumbering(commentsUserList, authorId);
+	const writer = whoIsWriter(isAuthor, commentsUserList, authorId);
+
 	const queryClient = useQueryClient();
 	const mutationPost = useMutation(
 		({ path, data }: { path: string; data?: object }) => instance.post(path, data));
@@ -37,45 +38,47 @@ function Comments({ comment, commentsUserList }: GreetingProps) {
 
 	const updateCmtHandler = (comment: string) => {
 		mutationPut.mutate({path: `/comment?commentId=${id}`, data: {content: comment}},
-		{ onSuccess: (data) => {
-				queryClient.invalidateQueries(['detail_key']);
+		{ onSuccess: () => {
+				queryClient.invalidateQueries(['comment_key']);
 				setOpenEditor(!openEditor);},
-			onError: (data) => {window.location.href = '/error';}
+			onError: () => {window.location.href = '/error';}
 		})
 	}
 
 	const uploadReCmtHandler = (comment: string) => {
 		mutationPost.mutate({path: `recomment?commentId=${id}`, data: {content: comment}},
-		{ onSuccess: (data) => {
-				queryClient.invalidateQueries(['detail_key']);
+		{ onSuccess: () => {
+				queryClient.invalidateQueries(['comment_key']);
 				setOpenReCmt(!openReCmt);},
-			onError: (data) => {window.location.href = '/error';}
+			onError: () => {window.location.href = '/error';}
 		});
 	}
 
 	const deleteCmtHandler = () => {
 		mutationDelete.mutate({path: `/comment?commentId=${id}`},
-		{ onSuccess: (data) => {
-				queryClient.invalidateQueries(['detail_key']);},
-			onError: (data) => {window.location.href = '/error';}
+		{ onSuccess: () => {
+				queryClient.invalidateQueries(['comment_key']);},
+			onError: () => {window.location.href = '/error';}
 		});
 	}
 
 	const reportHandler = (reportIssue: string) => {
 		if (reportIssue) {
-			instance
-			.post(`/comment/blame?commentId=${id}`, { issue: reportIssue })
-			.then(() => {})
-			.catch((err) => { console.log(err) });
+			mutationPost.mutate({ path: `/post/blame?postId=${id}`, data: { issue: reportIssue } }, {
+				onSuccess: () => { 
+					alert('신고가 정상적으로 처리되었습니다.');
+					window.location.href='/blindboard?page=1';},
+				onError: () => { window.location.href = '/error'; }
+			});
 		}
 	}
 
 	const boxcolorHandler = () => {
 		mutationPost.mutate({path: `/comment/like?postId=${postId}&commentId=${id}`, data: undefined},
-		{ onSuccess: (data) => {
-				queryClient.invalidateQueries(['detail_key']);
+		{ onSuccess: () => {
+				queryClient.invalidateQueries(['comment_key']);
 				setBoxState(!boxState);},
-			onError: (data) => {window.location.href = '/error';}
+			onError: () => {window.location.href = '/error';}
 		});
 	}
 
@@ -84,10 +87,8 @@ function Comments({ comment, commentsUserList }: GreetingProps) {
 			{openEditor
 			? <ModifyCommentWrap>
 					<CommentTop>
-						<Info>
-							{isAuthor ? <h3>작성자</h3>
-								: isUsers ? <h3><u>{cardetNumer}</u></h3>
-								: <h3>{cardetNumer}</h3>}
+						<Info isUsers={isUsers}>
+							<h3>{writer}</h3>
 						</Info>
 						<Modify>
 							<div onClick={modifyCmtHandler}>취소</div>
@@ -99,14 +100,12 @@ function Comments({ comment, commentsUserList }: GreetingProps) {
 				</ModifyCommentWrap>
 			: <CommentWrap>
 					<CommentTop>
-						<Info>
-							{isAuthor ? <h3>작성자</h3>
-								: isUsers ? <h3><u>{cardetNumer}</u></h3>
-								: <h3>{cardetNumer}</h3>}
+						<Info isUsers={isUsers}>
+							<h3>{writer}</h3>
 							<div>{timeForToday(createdDate)} {(createdDate !== modifiedDate) && '수정됨'}</div>
 						</Info>
-						{/* {!isDel && <DropdownMenu isPost={false} isUsers={isUsers} modifyHandler={modifyCmtHandler}
-							deleteHandler={deleteCmtHandler} reportHandler={reportHandler} />} */}
+						{!isDel && <DropdownMenu isPost={false} isUsers={isUsers} modifyHandler={modifyCmtHandler}
+							deleteHandler={deleteCmtHandler} reportHandler={reportHandler} />}
 					</CommentTop>
 					<Content>
 						{isDel
@@ -131,14 +130,13 @@ function Comments({ comment, commentsUserList }: GreetingProps) {
 					<RecommentContainer>
 						<span>&#8627;</span>
 						<ReCommentWrap>
-							<CommentInput submitCmtHandler={uploadReCmtHandler} placeholder={`@${cardetNumer}에게 댓글을 입력하세요.`} />
+							<CommentInput submitCmtHandler={uploadReCmtHandler} placeholder={`@${writer} 에게 댓글을 입력하세요.`} />
 						</ReCommentWrap>
 					</RecommentContainer>
 					</>}
 				{recomments.map((el: RecommentData) => {
 					return (<ReComments key={el.id} recomment={el}
-																					postId={postId}
-																					// commentsUserList={commentsUserList} 
+																					commentsUserList={commentsUserList} 
 																					/>)
 					})}
 			</ReCommentListWrap>

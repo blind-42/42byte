@@ -6,6 +6,7 @@ import com.blind.api.domain.blame.domain.PostBlame;
 import com.blind.api.domain.blame.service.BlameService;
 import com.blind.api.domain.board.v1.domain.Board;
 import com.blind.api.domain.board.v1.service.BoardService;
+import com.blind.api.domain.comment.domain.Comment;
 import com.blind.api.domain.comment.service.CommentService;
 import com.blind.api.domain.post.v2.domain.Post;
 import com.blind.api.domain.post.v2.service.PostService;
@@ -89,8 +90,18 @@ public class ManagementController {
     /* 댓글 관리 */
     @GetMapping("/admin/comment")
     public String commentPage(Model model) {
-        Page<CommentBlame> blames = blameService.findAllComment(Pageable.unpaged());
-        model.addAttribute("comment", blames);
+        /* 차단된 게시글 조회 */
+        Pageable pageable = Pageable.unpaged();
+        Page<Comment> blockedList = commentService.findBlocked(pageable);
+        /* 신고된 게시글 조회 */
+        Page<CommentBlame> blamedList = blameService.findAllComment(pageable);
+        /* 삭제된 게시글 조회 */
+        Page<Comment> deletedList = commentService.findDeleted(pageable);
+
+        model.addAttribute("blockedList", blockedList.getContent());
+        model.addAttribute("blamedList", blamedList.getContent());
+        model.addAttribute("deletedList", deletedList.getContent());
+        model.addAttribute("token", "access");
         return "comment_management";
     }
 

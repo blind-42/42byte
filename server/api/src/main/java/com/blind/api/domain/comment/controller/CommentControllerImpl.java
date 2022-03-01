@@ -14,6 +14,7 @@ import com.blind.api.domain.security.jwt.v1.service.TokenService;
 import com.blind.api.domain.user.v2.domain.RoleType;
 import com.blind.api.domain.user.v2.domain.User;
 import com.blind.api.domain.user.v2.service.UserService;
+import com.blind.api.global.exception.BusinessException;
 import com.blind.api.global.utils.HeaderUtil;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -58,7 +59,7 @@ public class CommentControllerImpl implements CommentController {
         RoleType roleType = setRoleType(user, comment.getPost().getBoard());
 
         if (roleType == RoleType.USER && user.getId() != comment.getAuthorId())
-            return;
+            throw new BusinessException("{invalid.request}");
         if (user.getId() == comment.getAuthorId() && comment.getIsDel() == 0)
             commentService.delete(comment, RoleType.USER.getValue());
         else if (comment.getIsDel() == 0)

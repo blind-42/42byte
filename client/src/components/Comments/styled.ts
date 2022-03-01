@@ -21,13 +21,13 @@ export const CommentTop = styled.div`
 	margin-bottom: 0.5rem;
 `;
 
-export const Info = styled.div`
+export const Info = styled.div<{isUsers: boolean;}>`
 	display: flex;
 	h3 {
 		margin-right: 1rem;
 		font-size: 1.2rem;
 		font-weight: 600;
-		color: #000;
+		color: ${(props) => props.isUsers ? '#518EDB' : '#000'};
 	}
 	div {
 		font-size: 1.1rem;
@@ -64,9 +64,17 @@ export const Content = styled.div`
 	.isDel {
 		color: #929191;
 	}
+	span {
+		color: #929191;
+	}
 	@media screen and (min-width: 768px) {
 		font-size: 0.8rem;
-}
+		div {
+			span {
+			font-size: 0.8rem;
+		}
+		}
+	}
 `;
 
 export const CommentBottom = styled.div`
@@ -74,14 +82,16 @@ export const CommentBottom = styled.div`
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
-	
+	margin-top: 0.5rem;
+	@media screen and (min-width: 768px) {
+		margin-top: 0.3rem;
+	}
 `;
 
 export const ReCommentBox = styled.div<{openReCmt: boolean}>`
 	display: flex;
 	justify-content: space-evenly;
 	align-items: center;
-	margin-top: 0.3rem;
 	border: solid 1.5px #929191;
 	width: 3.2rem;
 	height: 2.1rem;
@@ -97,12 +107,11 @@ export const ReCommentBox = styled.div<{openReCmt: boolean}>`
 	}
 `;
 
-export const LikesBox = styled.div<{boxState?: boolean;}>`
+export const LikesBox = styled.div<{boxState: boolean;}>`
 	cursor: pointer;
 	display: flex;
 	justify-content: space-evenly;
 	align-items: center;
-	margin-top: 0.3rem;
 	/* margin-left: auto; */
 	border: solid 1.5px #518EDB;
 	width: 3.2rem;
@@ -160,7 +169,7 @@ export const ReCommentWrap = styled.div`
 	flex: 9.5;
 	margin-left: 0.5rem;
 	padding: 1rem 1rem 0.5rem;
-	background: #C4C4C4;
+	background: #DBDBDB;
 	@media screen and (min-width: 768px) {
 		margin-left: 0;
 		padding: 0.5rem 1rem;

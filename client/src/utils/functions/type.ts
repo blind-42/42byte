@@ -1,11 +1,25 @@
-
-export interface BoardData {
-  contents: ContentData[]
+export interface BoardList {
+  contents: BoardPre[]
   page: number
   pages: number
 }
 
-export interface ContentData {
+export interface BoardPre {
+  id: number
+  name: string
+  isDel: number
+  managerId: number
+}
+
+export interface BoardData {
+	id: number
+	name: string
+  contents: PostPre[]
+  page: number
+  pages: number
+}
+
+export interface PostPre {
   id: number
   title: string
   commentCnt: number
@@ -17,24 +31,21 @@ export interface ContentData {
   modifiedDate: string
 }
 
-export interface DetailData {
-  post: PostData
-  comment: CommentData[]
-}
-
 export interface PostData {
-  id: number
-  title: string
-  content: string
+  boardId: number
+  boardName: string
   commentCnt: number
-  viewCnt: number
-  likeCnt: number
-	isUsers: boolean
+  content: string
+  createdDate: string
+  id: number
+  isLiked: boolean
   isNotice: boolean
-	isLiked: boolean
-  blameCnt: number
-	createdDate: string
+  isUsers: boolean
+  likeCnt: number
   modifiedDate: string
+  title: string
+  type: string
+  viewCnt: number
 }
 
 export interface CommentData {
@@ -66,12 +77,11 @@ export interface RecommentData {
   isUsers: boolean
   likeCnt: number
   modifiedDate: string
-  recomments: any
-  rootCommentId: number
+  postId: number
   targetAuthorId: number
 }
 
-export interface CommentPreData {
+export interface CommentPre {
   id: number
   boardId: number
   postId: number

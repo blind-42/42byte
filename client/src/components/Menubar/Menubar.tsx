@@ -1,10 +1,13 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useRecoilState } from 'recoil';
 import { Link } from 'react-router-dom';
 import { LoggedinState } from 'States/LoginState';
 import { GoSearch } from "react-icons/go";
-import { MenubarContainer, ExitButton, UserProfileWrap, UserImg, UserName, UserMenu, UtilWrap, WritingButton, Search, MenuListWrap } from './styled';
 import LoginModal from 'components/Modal/LoginModal';
+import instance from 'utils/functions/axios';
+import { BoardList, BoardPre } from 'utils/functions/type';
+import { MenubarContainer, ExitButton, UserProfileWrap, UserImg, UserName, UserMenu, UtilWrap, WritingButton, Search, MenuListWrap } from './styled';
+
 
 type GreetingProps = {
 	menubarHandler: () => void;
@@ -13,6 +16,16 @@ type GreetingProps = {
 export default function Menubar({ menubarHandler }: GreetingProps) {
 	const [isLoggedIn, setIsLoggedIn] = useRecoilState(LoggedinState);
 	const [openLoginModal, setOpenLoginModal] = useState<boolean>(false);
+	const [boardList, setBoardList] = useState<BoardList>({contents: [], page: 0, pages: 0});
+	const [boardPreview, setBoearPreview] = useState<BoardPre>({ id: 0, name: '', isDel: 0, managerId: 0});
+	const { id, name, isDel, managerId } = boardPreview;
+
+	useEffect(() => {
+		instance
+		.get('/board/list')
+		.then((res) => setBoardList(res.data))
+		.catch((err) => console.log(err))
+	})
 
 	const logoutHandler = () => {
 		localStorage.removeItem('4242-token');
@@ -23,6 +36,10 @@ export default function Menubar({ menubarHandler }: GreetingProps) {
 	const openLoginModalHandler = () => {
     setOpenLoginModal(!openLoginModal);
   };
+
+	const toBoardHandler = () => {
+		window.location.href = `/board?boardId=${id}`
+	}
 	
   return (
 		<>
@@ -82,9 +99,10 @@ export default function Menubar({ menubarHandler }: GreetingProps) {
 				</UtilWrap>
 				<MenuListWrap>
 					<ul>
-						<li>
+						{/* <bcontents.map((el: BoardPre, idx) => {
+							return (!el.isDel && <Link to='/board?boardId='>el.name</Link>)})}
 							<Link to="/blindboard?page=1">블라인드 게시판</Link>
-						</li>
+						</li> */}
 					</ul>
 				</MenuListWrap>
 			</MenubarContainer>
