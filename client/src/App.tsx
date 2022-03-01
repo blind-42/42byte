@@ -26,7 +26,7 @@ export default function App() {
 						<Routes>
 							<Route path='/' element={<Main />} />
 							<Route path='/login' element={<Login />} />
-							<Route path='/blindboard' element={<Board />} />
+							<Route path='/board' element={<Board />} />
 							<Route path='/writing' element={<Writing />} />
 							<Route path='/detail' element={<Detail />} />
 							<Route path='/mypage' element={<Mypage />} />
@@ -36,7 +36,7 @@ export default function App() {
 							<Route path='/admin' element={<Admin />} />
 						</Routes>
 					</Router>
-			</RecoilRoot>
+				</RecoilRoot>
 			</QueryClientProvider>
     </>
   );
