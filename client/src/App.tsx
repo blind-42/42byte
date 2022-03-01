@@ -3,7 +3,7 @@ import { QueryClient, QueryClientProvider } from 'react-query'
 import { RecoilRoot } from 'recoil';
 import Main from './pages/Main/Main';
 import Login from './pages/Login/Login';
-import Blindboard from './pages/Blindboard/Blindboard';
+import Board from './pages/Board/Board';
 import Writing from './pages/Writing/Writing';
 import Detail from './pages/Detail/Detail';
 import Mypage from './pages/Mypage/Mypage';
@@ -26,7 +26,7 @@ export default function App() {
 						<Routes>
 							<Route path='/' element={<Main />} />
 							<Route path='/login' element={<Login />} />
-							<Route path='/blindboard' element={<Blindboard />} />
+							<Route path='/blindboard' element={<Board />} />
 							<Route path='/writing' element={<Writing />} />
 							<Route path='/detail' element={<Detail />} />
 							<Route path='/mypage' element={<Mypage />} />

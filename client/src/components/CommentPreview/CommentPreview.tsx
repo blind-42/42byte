@@ -1,11 +1,11 @@
 import { Link } from 'react-router-dom';
-import { CommentPreData } from 'utils/functions/type';
-import { shortening, timeForToday } from 'utils/functions/functions';
+import { CommentPre } from 'utils/functions/type';
+import { stringLimit, timeForToday } from 'utils/functions/functions';
 import { CommentPreviewContainer, CommentWrap, OriginalPost } from './styled';
 import { useMediaQuery } from "react-responsive";
 
 type GreetingProps = {
-	commentData: CommentPreData;
+	commentData: CommentPre;
 }
 
 function CommentPreview({ commentData }: GreetingProps) {
@@ -21,14 +21,14 @@ function CommentPreview({ commentData }: GreetingProps) {
 				<CommentPreviewContainer>
 					<CommentWrap>
 						{isMobile
-						? <div>{shortening(content, 16)}</div>
-						: <div>{shortening(content, 25)}</div>}
+						? <div>{stringLimit(content, 16)}</div>
+						: <div>{stringLimit(content, 25)}</div>}
 						<div>{timeForToday(createdDate)}</div>
 					</CommentWrap>
 					<OriginalPost>
 						{isMobile
-						? <h3>{shortening(title, 16)}</h3>
-						: <h3>{shortening(title, 30)}</h3>}
+						? <h3>{stringLimit(title, 16)}</h3>
+						: <h3>{stringLimit(title, 30)}</h3>}
 						<div>[{commentCnt}]</div>
 					</OriginalPost>
 				</CommentPreviewContainer>

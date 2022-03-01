@@ -38,15 +38,17 @@ function Main() {
 		.catch((err) => console.log(err))
 	}, [])
 
+	const adminpage = () => {
+		window.location.href='http://211.253.31.22:8080/admin';
+	}
+
   return (
 			<AppContainer>
 				<Header />
 					{roleType === 'ADMIN' &&
-					<SettingsBtn>
-						<Link to='/admin'>
+					<SettingsBtn onClick={adminpage}>
 							<div><AiFillSetting /></div>
 							<div>Settings</div>
-						</Link>
 					</SettingsBtn>}
 			</AppContainer>
   );

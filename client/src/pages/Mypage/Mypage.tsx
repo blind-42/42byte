@@ -11,7 +11,7 @@ import Error from 'pages/Error/Error';
 import { AppContainer, PageContainer, TopBar, PageName, Squares, PostContainer, ContentFooterWrap } from '../../styles/styled'
 import { MenuWrap, PostMenu, CommentMenu, MenuPostWrap, Category, ContentWrap, PostWrap } from './styled'
 import instance from 'utils/functions/axios';
-import { BoardData, ContentData, CommentPreData } from 'utils/functions/type';
+import { BoardData, PostPre, CommentPre } from 'utils/functions/type';
 import { useNavigate } from "react-router-dom";
 
 export default function Mypage() {
@@ -120,10 +120,10 @@ export default function Mypage() {
 									<ContentWrap>
 									<PostWrap>
 										{pageName === 'post'
-											?	postBoardData.contents.map((el: ContentData, idx) => {
+											?	postBoardData.contents.map((el: PostPre, idx) => {
 												return (<PostPreview key={idx} postData={el} />)
 											})
-											:	commentBoardData.contents.map((el: CommentPreData, idx) => {
+											:	commentBoardData.contents.map((el: CommentPre, idx) => {
 												return (el.content && <CommentPreview key={idx} commentData={el} />)
 											})
 										}

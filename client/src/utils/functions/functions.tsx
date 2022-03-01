@@ -1,6 +1,6 @@
 import { CommentData } from "./type";
 
-export const shortening = (param: string, length: number) => {
+export const stringLimit = (param: string, length: number) => {
 	let temp = param;
 	if (temp.length > length) {
 		temp = temp.slice(0,length) + '...';

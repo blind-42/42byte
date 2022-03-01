@@ -1,11 +1,24 @@
-
-export interface BoardData {
-  contents: ContentData[]
+export interface BoardList {
+  contents: BoardPre[]
   page: number
   pages: number
 }
 
-export interface ContentData {
+export interface BoardPre {
+  id: number
+  name: string
+  isDel: number
+  managerId: number
+}
+
+export interface BoardData {
+	name: string
+  contents: PostPre[]
+  page: number
+  pages: number
+}
+
+export interface PostPre {
   id: number
   title: string
   commentCnt: number
@@ -71,7 +84,7 @@ export interface RecommentData {
   targetAuthorId: number
 }
 
-export interface CommentPreData {
+export interface CommentPre {
   id: number
   boardId: number
   postId: number
