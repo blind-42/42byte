@@ -182,6 +182,12 @@ export const ReportList = styled.div`
 			height: 1.2rem;
 			width: 1.2rem;
 		}
+		textarea {
+			margin-left: 2rem;
+			resize: none;
+			border: solid 1px #929191;
+			width: 20rem;
+		}
 	}
 	${({theme}) => theme.media.tablet`
 		div {	
