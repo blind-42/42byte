@@ -28,7 +28,8 @@ function Detail() {
 	const [boxState, setBoxState] = useState(isLiked);
   const [openEditor, setOpenEditor] = useState(false);
 	const currentUrl = window.location.href;
-	const urlId = currentUrl.split('detail?boardId=1&postId=')[1];
+	const boardUrl = currentUrl.split('&postId=')[0].split('boardId=')[1];
+	const postUrl = currentUrl.split('&postId=')[1];
 	const shortDate = createdDate?.slice(0, 16).replace('T', ' ');
   const scrollRef = useRef<any>(null);
 	
@@ -41,10 +42,10 @@ function Detail() {
 		({ path }: { path: string; }) => instance.patch(path));
 	const results = useQueries([
 		{
-			queryKey: ['detail_key', urlId],
+			queryKey: ['detail_key', postUrl],
 			queryFn: () => {
 				instance
-				.get(`/post?boardId=1&postId=${urlId}`)
+				.get(`/post?boardId=${boardUrl}&postId=${postUrl}`)
 				.then((res) => {
 					setDetailData(res.data);
 					setBoxState(res.data.isLiked);
@@ -54,10 +55,10 @@ function Detail() {
 			keepPreviousData: true
 		},
 		{
-			queryKey: ['comment_key', urlId],
+			queryKey: ['comment_key', postUrl],
 			queryFn: () => {
 				instance
-				.get(`/comment?boardId=1&postId=${urlId}`)
+				.get(`/comment?boardId=${boardUrl}&postId=${postUrl}`)
 				.then((res) => {
 					setCommentData(res.data);
 					setCommentsUserList(makeCommentUserList(res.data))
@@ -73,7 +74,7 @@ function Detail() {
 
 	const uploadCmtHandler = (comment: string) => {
 		if (comment) {
-			mutationPost.mutate({ path: `/comment?boardId=1&postId=${urlId}`, data: { content: comment } }, {
+			mutationPost.mutate({ path: `/comment?boardId=${boardId}&postId=${postUrl}`, data: { content: comment } }, {
 				onSuccess: () => {
 					queryClient.invalidateQueries(['comment_key']);
 					setTimeout(() => scrollRef.current.scrollIntoView({ behavior: "smooth", block: "end", inline: "nearest" }), 550);},
@@ -115,7 +116,7 @@ function Detail() {
 	}
 
 	const likeBoxHandler = () => {
-		mutationPost.mutate({path: `/post/like?postId=${urlId}`, data: undefined}, {
+		mutationPost.mutate({path: `/post/like?postId=${postUrl}`, data: undefined}, {
 			onSuccess: () => {
 				queryClient.invalidateQueries(['detail_key']);
 				setBoxState(!boxState);},
