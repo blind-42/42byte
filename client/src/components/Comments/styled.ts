@@ -64,9 +64,17 @@ export const Content = styled.div`
 	.isDel {
 		color: #929191;
 	}
+	span {
+		color: #929191;
+	}
 	@media screen and (min-width: 768px) {
 		font-size: 0.8rem;
-}
+		div {
+			span {
+			font-size: 0.8rem;
+		}
+		}
+	}
 `;
 
 export const CommentBottom = styled.div`
@@ -161,7 +169,7 @@ export const ReCommentWrap = styled.div`
 	flex: 9.5;
 	margin-left: 0.5rem;
 	padding: 1rem 1rem 0.5rem;
-	background: #C4C4C4;
+	background: #DBDBDB;
 	@media screen and (min-width: 768px) {
 		margin-left: 0;
 		padding: 0.5rem 1rem;
