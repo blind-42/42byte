@@ -1,12 +1,16 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
+import { useQuery } from 'react-query';
 import { useRecoilState } from 'recoil';
 import { Link } from 'react-router-dom';
 import { LoggedinState } from 'States/LoginState';
 import { GoSearch } from "react-icons/go";
+import Loading from 'pages/Loading/Loading';
+import Error from 'pages/Error/Error';
 import LoginModal from 'components/Modal/LoginModal';
 import instance from 'utils/functions/axios';
 import { BoardList, BoardPre } from 'utils/functions/type';
-import { MenubarContainer, ExitButton, UserProfileWrap, UserImg, UserName, UserMenu, UtilWrap, WritingButton, Search, MenuListWrap } from './styled';
+import { stringLimit } from 'utils/functions/functions';
+import { MenubarContainer, Topbar, UserProfileWrap, UserImg, UserName, UserMenu, UtilWrap, WritingButton, Search, BoardListWrap, WrapTitle, BoardNames } from './styled';
 
 
 type GreetingProps = {
@@ -17,15 +21,18 @@ export default function Menubar({ menubarHandler }: GreetingProps) {
 	const [isLoggedIn, setIsLoggedIn] = useRecoilState(LoggedinState);
 	const [openLoginModal, setOpenLoginModal] = useState<boolean>(false);
 	const [boardList, setBoardList] = useState<BoardList>({contents: [], page: 0, pages: 0});
-	const [boardPreview, setBoearPreview] = useState<BoardPre>({ id: 0, name: '', isDel: 0, managerId: 0});
-	const { id, name, isDel, managerId } = boardPreview;
-
-	useEffect(() => {
-		instance
-		.get('/board/list')
-		.then((res) => setBoardList(res.data))
-		.catch((err) => console.log(err))
-	})
+	const { contents, page, pages } = boardList;
+	const { isFetching, isLoading, error, data } = useQuery(
+		['menubar_key', ], () => {
+			instance
+			.get('/board/list')
+			.then((res) => setBoardList(res.data))
+		}, {
+			retry: 0, 
+			refetchOnWindowFocus: false,
+			keepPreviousData: true
+		}
+	);
 
 	const logoutHandler = () => {
 		localStorage.removeItem('4242-token');
@@ -37,19 +44,19 @@ export default function Menubar({ menubarHandler }: GreetingProps) {
     setOpenLoginModal(!openLoginModal);
   };
 
-	const toBoardHandler = () => {
-		window.location.href = `/board?boardId=${id}`
-	}
-	
+	if (isFetching || isLoading) return <Loading />
+
+	if (error) return <Error />
+
   return (
 		<>
 		{openLoginModal && (
         <LoginModal openLoginModalHandler={openLoginModalHandler}/>
       )}
 			<MenubarContainer>
-				<ExitButton onClick={menubarHandler}>
-					<div>&times;</div>
-				</ExitButton>
+				<Topbar>
+					<div onClick={menubarHandler}>&times;</div>
+				</Topbar>
 				<UserProfileWrap>
 					<UserImg>
 						<img src='/images/egg.png' alt='pfimg' />
@@ -92,19 +99,24 @@ export default function Menubar({ menubarHandler }: GreetingProps) {
 					: <Search onClick={openLoginModalHandler}>
 							<input type="text" placeholder='검색어를 입력하세요'/>
 							<button>
-								<div>&#9740;</div>
+								<div><GoSearch /></div>
 							</button>
 						</Search>
 					}
 				</UtilWrap>
-				<MenuListWrap>
-					<ul>
-						{/* <bcontents.map((el: BoardPre, idx) => {
-							return (!el.isDel && <Link to='/board?boardId='>el.name</Link>)})}
-							<Link to="/blindboard?page=1">블라인드 게시판</Link>
-						</li> */}
-					</ul>
-				</MenuListWrap>
+				<BoardListWrap>
+					<WrapTitle>TOP 게시판</WrapTitle>
+					<BoardNames>
+					{contents.map((el: BoardPre, idx) => {
+						return (
+							!(el.isDel) &&
+							<Link to={`/board?=boardId=${el.id}`}>
+								<div onClick={menubarHandler}>{stringLimit(el.name, 10)}</div>
+							</Link>
+						)
+					})}
+					</BoardNames>
+				</BoardListWrap>
 			</MenubarContainer>
 		</>
 	);
