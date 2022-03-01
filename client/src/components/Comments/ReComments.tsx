@@ -11,13 +11,12 @@ import { RecommentContainer, ReCommentWrap, ModifyCommentWrap, CommentTop, Info,
 	CommentBottom, ReCommentBox, LikesBox, GLine, FLine } from './styled'
 
 type GreetingProps = {
-	postId: number
 	recomment: RecommentData
 	commentsUserList: number[]
 }
 
-function ReComments({ postId, recomment, commentsUserList }: GreetingProps) {
-	const {authorId, blameCnt, content, createdDate, id, isAuthor, isDel, isLiked, isUsers, likeCnt, modifiedDate, recomments, rootCommentId, targetAuthorId } = recomment;
+function ReComments({ recomment, commentsUserList }: GreetingProps) {
+	const {authorId, blameCnt, content, createdDate, id, isAuthor, isDel, isLiked, isUsers, likeCnt, modifiedDate, postId, targetAuthorId } = recomment;
 	const [boxState, setBoxState] = useState<boolean>(isLiked);
 	const [openEditor, setOpenEditor] = useState<boolean>(false);
 	const [openReReCmt, setOpenReReCmt] = useState<boolean>(false);
@@ -38,7 +37,7 @@ function ReComments({ postId, recomment, commentsUserList }: GreetingProps) {
 	const updateCmtHandler = (comment: string) => {
 		mutationPut.mutate({path: `/comment?commentId=${id}`, data: {content: comment}},
 		{ onSuccess: () => {
-				queryClient.invalidateQueries(['detail_key']);
+				queryClient.invalidateQueries(['comment_key']);
 				setOpenEditor(!openEditor);},
 			onError: () => {window.location.href = '/error';}
 		})
@@ -47,7 +46,7 @@ function ReComments({ postId, recomment, commentsUserList }: GreetingProps) {
 	const uploadReReCmtHandler = (comment: string) => {
 		mutationPost.mutate({path: `recomment?commentId=${id}`, data: {content: comment}},
 		{ onSuccess: () => {
-				queryClient.invalidateQueries(['detail_key']);
+				queryClient.invalidateQueries(['comment_key']);
 				setOpenReReCmt(!openReReCmt);},
 			onError: () => {window.location.href = '/error';}
 		});
@@ -56,7 +55,7 @@ function ReComments({ postId, recomment, commentsUserList }: GreetingProps) {
 	const deleteCmtHandler = () => {
 		mutationDelete.mutate({path: `/comment?commentId=${id}`},
 		{ onSuccess: () => {
-				queryClient.invalidateQueries(['detail_key']);},
+				queryClient.invalidateQueries(['comment_key']);},
 			onError: () => {window.location.href = '/error';}
 		});
 	}
@@ -75,7 +74,7 @@ function ReComments({ postId, recomment, commentsUserList }: GreetingProps) {
 	const boxcolorHandler = () => {
 		mutationPost.mutate({path: `/comment/like?postId=${postId}&commentId=${id}`, data: undefined},
 		{ onSuccess: () => {
-				queryClient.invalidateQueries(['detail_key']);
+				queryClient.invalidateQueries(['comment_key']);
 				setBoxState(!boxState);},
 			onError: () => {window.location.href = '/error';}
 		});
