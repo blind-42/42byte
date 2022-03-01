@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
-import { useQuery } from 'react-query';
+import { useQueries } from 'react-query';
 import { Link, useNavigate } from 'react-router-dom';
 import Header from 'components/Header/Header';
 import Footer from 'components/Footer/Footer';
@@ -15,24 +15,49 @@ import { BoardData, PostPre} from 'utils/functions/type';
 
 export default function Board() {
 	const [boardData, setBoardData] = useState<BoardData>({id: 0, name: '', contents: [], page: 0, pages: 0});
-	const { id, name, contents, page, pages } = boardData
+	const { id, name, contents, page, pages } = boardData;
 	const currentUrl = window.location.href;
-	const urlId = currentUrl.split('blindboard?page=')[1];
+	const boardUrl = currentUrl.split('&page=')[0].split('boardId=')[1];
+	const pageUrl = currentUrl.split('&page=')[1];
 	const navigate = useNavigate();
 	// const scrollRef = useRef<any>(null)
 
-	const { isLoading, error, data  } = useQuery(['blindboard_key', urlId], 
-		() => {instance.get(`/board?boardId=1&page=${urlId}`).then((res) => {setBoardData(res.data);})},
-			{ retry: 0,
-				refetchOnWindowFocus: false,
-				keepPreviousData: true});
+	// const { isLoading, error, data  } 
+	const results = useQueries([
+		{
+			queryKey: ['board_key', boardUrl],
+			queryFn: () => {
+				instance
+				.get(`/board?boardId=${boardUrl}&page=1`)
+				.then((res) => setBoardData(res.data))
+			}, 
+			retry: 0,
+			refetchOnWindowFocus: false,
+			keepPreviousData: true
+		},
+		{
+			queryKey: ['page_key', pageUrl],
+			queryFn: () => {
+				instance
+				.get(`/board?boardId=${boardUrl}&page=${pageUrl}`)
+				.then((res) => setBoardData(res.data))
+			}, 
+			retry: 0,
+			refetchOnWindowFocus: false,
+			keepPreviousData: true
+		}
+	]);
+
+	const isFetching = results.some(result => result.isFetching);
+	const isLoading = results.some(result => result.isLoading);
+	const error = results.some(result => result.error);
 
 	const pageChangeHandler = (page: number) => {
-		navigate(`/blindboard?page=${page}`);
+		navigate(`/board?boardId=${id}&page=${page}`);
 		// setTimeout(() => scrollRef.current.scrollIntoView({behavior: "smooth", block: "end", inline: "nearest"}), 50);
   };
 
-	if (isLoading) return <Loading />
+	if (isFetching || isLoading) return <Loading />
 
 	if (error) return <Error />
 
