@@ -1,6 +1,7 @@
 package com.blind.api.domain.post.v2.controller;
 
 import com.blind.api.domain.post.v2.domain.Post;
+import com.blind.api.domain.post.v2.dto.PostDetailDTO;
 import com.blind.api.domain.post.v2.dto.PostRequestDTO;
 import com.blind.api.domain.post.v2.dto.PostResponseDTO;
 import org.hibernate.validator.constraints.Length;
@@ -40,7 +41,7 @@ public interface PostController {
     PostResponseDTO findPostByUserId (@SortDefault.SortDefaults({@SortDefault(sort = "id", direction = Sort.Direction.DESC)}) Pageable pageable,
                                       HttpServletRequest request);
 
-    Map<String, Object> findPostDetailByPostId (@RequestParam("boardId") @Positive (message = "{invalid.request}") Long boardId,
-                                                @RequestParam("postId") @Positive (message = "{invalid.request}") Long postId,
-                                                HttpServletRequest request);
+    PostDetailDTO findPostDetailByPostId (@RequestParam("boardId") @Positive (message = "{invalid.request}") Long boardId,
+                                          @RequestParam("postId") @Positive (message = "{invalid.request}") Long postId,
+                                          HttpServletRequest request);
 }

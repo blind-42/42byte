@@ -15,6 +15,6 @@ import java.util.List;
 
 public interface BoardController {
     BoardDTO createBoard(@RequestBody @Valid BoardRequestDTO requestDTO, HttpServletRequest request);
-    BoardResponseDTO findAllBoard();
+    BoardResponseDTO findAllBoard(Pageable pageable, HttpServletRequest request);
     BoardPageResponseDTO findAllBoardByUserId (@SortDefault.SortDefaults({@SortDefault(sort = "id", direction = Sort.Direction.DESC)})Pageable pageable, HttpServletRequest request);
 }

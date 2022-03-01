@@ -32,7 +32,6 @@ public class CommentServiceImpl implements CommentService{
     @Transactional
     public void update(Comment comment, String content) {
         comment.setContent(content);
-        commentRepository.saveAndFlush(comment);
     }
 
     @Override

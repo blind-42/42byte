@@ -2,9 +2,12 @@ package com.blind.api.domain.comment.controller;
 
 import com.blind.api.domain.board.v1.domain.Board;
 import com.blind.api.domain.comment.domain.Comment;
+import com.blind.api.domain.comment.dto.CommentDTO;
 import com.blind.api.domain.comment.dto.CommentRequestDTO;
 import com.blind.api.domain.comment.dto.CommentResponseDTO;
+import com.blind.api.domain.comment.dto.ReCommentDTO;
 import com.blind.api.domain.comment.service.CommentService;
+import com.blind.api.domain.like.service.LikeService;
 import com.blind.api.domain.post.v2.domain.Post;
 import com.blind.api.domain.post.v2.service.PostService;
 import com.blind.api.domain.security.jwt.v1.service.TokenService;
@@ -14,13 +17,15 @@ import com.blind.api.domain.user.v2.service.UserService;
 import com.blind.api.global.exception.BusinessException;
 import com.blind.api.global.utils.HeaderUtil;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.SortDefault;
 import org.springframework.web.bind.annotation.*;
+import org.thymeleaf.util.StringUtils;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.Map;
+import java.util.*;
 
 @RestController
 @AllArgsConstructor
@@ -28,6 +33,7 @@ public class CommentControllerImpl implements CommentController {
     private final CommentService commentService;
     private final PostService postService;
     private final TokenService tokenService;
+    private final LikeService likeService;
 
     @RequestMapping(value={"/comment"}, method=RequestMethod.POST)
     public void saveComment(Long boardId, Long postId, CommentRequestDTO requestDTO, HttpServletRequest request){
@@ -68,7 +74,41 @@ public class CommentControllerImpl implements CommentController {
         return commentService.findCommentByIdIn(userId, pageable);
     }
 
+    @RequestMapping(value={"/comment"}, method = RequestMethod.GET)
+    public List<CommentDTO> findCommentByPost (Long boardId, Long postId, HttpServletRequest request){
+        Post post = postService.findById(postId);
+        User user = tokenService.findUserByAccessToken(HeaderUtil.getAccessToken(request));
+        HashMap<Long, CommentDTO> commentDTOHashMap = new LinkedHashMap<>();
+        List<ReCommentDTO> reCommentList = new ArrayList<>();
 
+        List<Comment> commentList = commentService.findAllComment(post.getBoard().getId(), postId);
+            commentList.stream().forEach(
+                    (comment -> {
+            Long rooCmmtId = comment.getRootCommentId();
+            if (rooCmmtId == null) {
+                CommentDTO commentDTO = CommentDTO.from(comment);
+                commentDTO.setIsUsers(StringUtils.equals(comment.getAuthorId(), user.getId()));
+                commentDTO.setIsLiked(likeService.checkCommentLike(comment, user));
+                commentDTOHashMap.put(commentDTO.getId(), commentDTO);
+            }
+            else
+            {
+                ReCommentDTO reCommentDTO = ReCommentDTO.from(comment);
+                reCommentDTO.setIsUsers(StringUtils.equals(comment.getAuthorId(), user.getId()));
+                reCommentDTO.setIsLiked(likeService.checkCommentLike(comment, user));
+                reCommentList.add(reCommentDTO);
+            }
+        }));
+
+        /* 대댓글을 일반 댓글의 리스트에 추가 */
+            reCommentList.stream().forEach( reCommentDTO ->{
+            CommentDTO commentDTO = commentDTOHashMap.get(reCommentDTO.getRootCommentId());
+            if (commentDTO != null)
+                commentDTO.getRecomments().add(reCommentDTO);
+            });
+        List<CommentDTO> result = new LinkedList<>(commentDTOHashMap.values());
+        return result;
+    }
 
     RoleType setRoleType(User user, Board board) {
         if (user.getRoleType() == RoleType.ADMIN)

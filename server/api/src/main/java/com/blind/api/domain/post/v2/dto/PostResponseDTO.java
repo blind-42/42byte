@@ -9,6 +9,8 @@ import java.util.List;
 @Getter
 @Setter
 public class PostResponseDTO<T> {
+    private String name;
+    private Long id;
     private List<T> contents;
     private int page;
     private int pages;

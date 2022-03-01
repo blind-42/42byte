@@ -13,6 +13,7 @@ import java.util.Optional;
 @Repository
 public interface BoardRepository extends JpaRepository<Board, Long> {
     Optional<Board> findBoardByName(String name);
+    Page<Board> findAll(Pageable pageable);
     Page<Board> findAllByIsDelGreaterThan(Integer isDel, Pageable pageable);
     Page<Board> findAllBoardByManager(User manager, Pageable pageable);
 }
