@@ -14,8 +14,8 @@ import { UtilPostWrap, UtilWrap, Search, WritingButton, PostWrap, ContentWrap } 
 import { BoardData, PostPre} from 'utils/functions/type';
 
 export default function Board() {
-	const [boardData, setBoardData] = useState({name: '', contents: [], page: 0, pages: 0});
-	const {name, contents, page, pages} = boardData
+	const [boardData, setBoardData] = useState<BoardData>({id: 0, name: '', contents: [], page: 0, pages: 0});
+	const { id, name, contents, page, pages } = boardData
 	const currentUrl = window.location.href;
 	const urlId = currentUrl.split('blindboard?page=')[1];
 	const navigate = useNavigate();

@@ -12,6 +12,7 @@ export interface BoardPre {
 }
 
 export interface BoardData {
+	id: number
 	name: string
   contents: PostPre[]
   page: number
