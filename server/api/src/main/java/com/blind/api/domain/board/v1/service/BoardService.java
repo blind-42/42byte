@@ -19,7 +19,7 @@ public interface BoardService {
     void setManager(Board board, User user);
     void deleteManager(Board board);
     void delete (Board board, Integer type);
-    List<Board> findAllBoard();
+    Page<Board> findAllBoard(Pageable pageable);
     void deleteBoard(Board board);
     Page<Board> findDeleted(Pageable pageable);
     Page<Board> findAllBoardByUser(User user, Pageable pageable);

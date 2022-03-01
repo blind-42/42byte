@@ -1,5 +1,6 @@
 package com.blind.api.domain.post.v2.controller;
 
+import com.blind.api.domain.blame.service.BlameService;
 import com.blind.api.domain.board.v1.domain.Board;
 import com.blind.api.domain.board.v1.service.BoardService;
 import com.blind.api.domain.comment.domain.Comment;
@@ -31,7 +32,7 @@ import java.util.*;
 @AllArgsConstructor
 public class PostControllerImpl implements PostController{
     private final PostService postService;
-    private final CommentService commentService;
+    private final BlameService blameService;
     private final TokenService tokenService;
     private final LikeService likeService;
     private final BoardService boardService;
@@ -40,13 +41,17 @@ public class PostControllerImpl implements PostController{
     @RequestMapping(value="/board", method = RequestMethod.GET)
     public PostResponseDTO findAllPost(Long boardId, Pageable pageable, HttpServletRequest request) {
         User user = tokenService.findUserByAccessToken(HeaderUtil.getAccessToken(request));
+        Board board = boardService.findById(boardId);
         Page<Post> postList = postService.findAllByBoardId(boardId, pageable);
         RoleType roleType = setRoleType(user, boardService.findById(boardId));
 
         PostResponseDTO<PostDTO> dtoList = new PostResponseDTO();
         postList.stream().forEach( post -> {
-            dtoList.getContents().add(PostDTO.from(post, roleType));
+            if (blameService.checkPostBlame(post, user) == false)
+                dtoList.getContents().add(PostDTO.from(post, roleType));
         });
+        dtoList.setName(board.getName());
+        dtoList.setId(board.getId());
         dtoList.setPage(postList.getPageable().getPageNumber());
         dtoList.setPages(postList.getTotalPages());
         return dtoList;
@@ -79,7 +84,7 @@ public class PostControllerImpl implements PostController{
 
     /*게시글 상세조회 페이지*/
     @RequestMapping(value={"/post"}, method = RequestMethod.GET)
-    public Map<String, Object> findPostDetailByPostId (Long boardId, Long postId, HttpServletRequest request){
+    public PostDetailDTO findPostDetailByPostId (Long boardId, Long postId, HttpServletRequest request){
         User user = tokenService.findUserByAccessToken(HeaderUtil.getAccessToken(request));
         Post post = postService.findById(postId);
         Boolean isUsers = StringUtils.equals(post.getAuthorId(), user.getId());
@@ -90,42 +95,8 @@ public class PostControllerImpl implements PostController{
             throw new BusinessException("{invalid.request}");
         PostDetailDTO postDetailDTO = PostDetailDTO.from(post, isUsers, isLiked, setRoleType(user,post.getBoard()));
 
-        /* 댓글 전체 조회 후 일반 댓글과 대댓글 구분*/
-        HashMap<Long, CommentDTO> commentDTOHashMap = new LinkedHashMap<>();
-        List<ReCommentDTO> reCommentList = new ArrayList<>();
-        List<Comment> commentList = commentService.findAllComment(boardId, postId);
-        commentList.stream().forEach(
-                (comment -> {
-                    Long rooCmmtId = comment.getRootCommentId();
-                    if (rooCmmtId == null) {
-                        CommentDTO commentDTO = CommentDTO.from(comment);
-                        commentDTO.setIsUsers(StringUtils.equals(comment.getAuthorId(), user.getId()));
-                        commentDTO.setIsLiked(likeService.checkCommentLike(comment, user));
-                        commentDTOHashMap.put(commentDTO.getId(), commentDTO);
-                    }
-                    else
-                    {
-                        ReCommentDTO reCommentDTO = ReCommentDTO.from(comment);
-                        reCommentDTO.setIsUsers(StringUtils.equals(comment.getAuthorId(), user.getId()));
-                        reCommentDTO.setIsLiked(likeService.checkCommentLike(comment, user));
-                        reCommentList.add(reCommentDTO);
-                    }
-                })
-        );
-
-        /* 대댓글을 일반 댓글의 리스트에 추가 */
-        reCommentList.stream().forEach( reCommentDTO ->{
-            CommentDTO commentDTO = commentDTOHashMap.get(reCommentDTO.getRootCommentId());
-            if (commentDTO != null)
-                commentDTO.getRecomments().add(reCommentDTO);
-        });
-
         postService.updateView(postId);
-
-        Map<String, Object> map = new HashMap<>();
-        map.put("post", postDetailDTO);
-        map.put("comment", commentDTOHashMap.values());
-        return map;
+        return postDetailDTO;
     }
 
     /*게시글 수정*/

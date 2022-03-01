@@ -18,11 +18,11 @@ public class CommentDTO {
     private Long authorId;
     private String content;
     private Long likeCnt;
-    private Long blameCnt;
     private Boolean isAuthor;
     private Integer isDel;
     private Boolean isUsers;
     private Boolean isLiked;
+    private Long blameCnt;
     private List<ReCommentDTO> recomments;
     private LocalDateTime createdDate;
     private LocalDateTime modifiedDate;
@@ -35,27 +35,27 @@ public class CommentDTO {
                 .authorId(comment.getAuthorId())
                 .content(comment.getContent())
                 .likeCnt(comment.getLikeCnt())
-                .blameCnt(comment.getBlameCnt())
                 .isAuthor(comment.getIsAuthor())
                 .isDel(comment.getIsDel())
+                .blameCnt(comment.getBlameCnt())
                 .createdDate(comment.getCreatedDate())
                 .modifiedDate(comment.getModifiedDate())
                 .build();
     }
 
     @Builder
-    private CommentDTO(Long id, Long boardId, Long postId, Long authorId, String content, Long likeCnt, Long blameCnt, Boolean isAuthor, Integer isDel, Boolean isLiked, LocalDateTime createdDate, LocalDateTime modifiedDate) {
+    private CommentDTO(Long id, Long boardId, Long postId, Long authorId, String content, Long likeCnt, Boolean isAuthor, Integer isDel, Boolean isLiked, Long blameCnt, LocalDateTime createdDate, LocalDateTime modifiedDate) {
         this.id = id;
         this.boardId = boardId;
         this.postId = postId;
         this.authorId = authorId;
         this.content = content;
         this.likeCnt = likeCnt;
-        this.blameCnt = blameCnt;
         this.isAuthor = isAuthor;
         this.isDel = isDel;
         this.isLiked = isLiked;
         this.recomments = new ArrayList<>();
+        this.blameCnt = blameCnt;
         this.createdDate = createdDate;
         this.modifiedDate = modifiedDate;
     }

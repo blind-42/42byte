@@ -29,7 +29,6 @@ public class Board extends BaseTimeEntity {
     @Column(name="id")
     Long id;
 
-
     @Column(name="name")
     @ApiModelProperty(example = "Blind")
     String name;

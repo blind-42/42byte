@@ -16,7 +16,6 @@ public class PostDTO {
     private Long commentCnt;
     private Long viewCnt;
     private Long likeCnt;
-    private Long blameCnt;
     private Boolean isNotice;
     private Integer isDel;
     private RoleType type;
@@ -28,7 +27,6 @@ public class PostDTO {
                 .id(post.getId())
                 .title(post.getTitle())
                 .viewCnt(post.getViewCnt())
-                .blameCnt(post.getBlameCnt())
                 .likeCnt(post.getLikeCnt())
                 .commentCnt(post.getCommentCnt())
                 .isNotice(post.getIsNotice())
@@ -40,13 +38,12 @@ public class PostDTO {
     }
 
     @Builder
-    private PostDTO(Long id, String title, Long commentCnt, Long viewCnt, Long likeCnt, Long blameCnt, Boolean isNotice, Integer isDel, RoleType type, LocalDateTime createdDate, LocalDateTime modifiedDate) {
+    private PostDTO(Long id, String title, Long commentCnt, Long viewCnt, Long likeCnt, Boolean isNotice, Integer isDel, RoleType type, LocalDateTime createdDate, LocalDateTime modifiedDate) {
         this.id = id;
         this.title = title;
         this.commentCnt = commentCnt;
         this.viewCnt = viewCnt;
         this.likeCnt = likeCnt;
-        this.blameCnt = blameCnt;
         this.isNotice = isNotice;
         this.isDel = isDel;
         this.type = type;

@@ -55,7 +55,7 @@ public class ManagementController {
     /* 매니저 관리 */
     @GetMapping("/admin/manager")
     public String managerPage(Model model) {
-        List<Board> boardList = boardService.findAllBoard();
+        List<Board> boardList = boardService.findAllBoard(Pageable.unpaged()).getContent();
         model.addAttribute("boardList", boardList);
         return "manager_management";
     }
@@ -63,7 +63,7 @@ public class ManagementController {
     /* 게시판 관리 */
     @GetMapping("/admin/board")
     public String boardPage(Model model) {
-        List<Board> boardList = boardService.findAllBoard();
+        List<Board> boardList = boardService.findAllBoard(Pageable.unpaged()).getContent();
         model.addAttribute("boardList", boardList);
         return "board_management";
     }

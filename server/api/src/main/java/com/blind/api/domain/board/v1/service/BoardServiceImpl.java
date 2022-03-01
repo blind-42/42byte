@@ -71,8 +71,8 @@ public class BoardServiceImpl implements BoardService{
 
     @Override
     @Transactional
-    public List<Board> findAllBoard() {
-        return boardRepository.findAll();
+    public Page<Board> findAllBoard(Pageable pageable) {
+        return boardRepository.findAll(pageable);
     }
 
     @Override

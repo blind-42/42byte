@@ -44,13 +44,15 @@ public class BoardControllerImpl implements BoardController {
     }
 
     @RequestMapping(value="/board/list", method = RequestMethod.GET)
-    public BoardResponseDTO findAllBoard() {
+    public BoardResponseDTO findAllBoard(Pageable pageable, HttpServletRequest request) {
         BoardResponseDTO dtoList = new BoardResponseDTO();
-        List<Board> boardList = boardService.findAllBoard();
-        Optional.ofNullable(boardList).map(Collection::stream).orElseGet(()-> null)
-                .forEach( board -> {
-                    dtoList.getContents().add(BoardDTO.from(board));
+        Page<Board> boardList = boardService.findAllBoard(pageable);
+
+        boardList.stream().forEach( board -> {
+            dtoList.getContents().add(BoardDTO.from(board));
                 });
+        dtoList.setPage(dtoList.getPage());
+        dtoList.setPages(boardList.getTotalPages());
         return dtoList;
     }
 

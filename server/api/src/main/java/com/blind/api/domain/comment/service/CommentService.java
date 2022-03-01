@@ -23,11 +23,11 @@ public interface CommentService {
 
     void deleteCommentByPostId(Long postId);
 
-    public Page<Comment> findCommentByAuthorId(Long userId, Pageable pageable);
+    Page<Comment> findCommentByAuthorId(Long userId, Pageable pageable);
 
-    public void updateLike(Long id, Long add);
+    void updateLike(Long id, Long add);
 
-    public CommentResponseDTO findCommentByIdIn(Long userId, Pageable pageable);
+    CommentResponseDTO findCommentByIdIn(Long userId, Pageable pageable);
 
     Comment findCommentById(Long id);
 
@@ -38,4 +38,5 @@ public interface CommentService {
     Page<Comment> findBlocked(Pageable pageable);
 
     void restoreComment(Comment comment);
+
 }
