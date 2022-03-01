@@ -26,7 +26,7 @@ export const MenubarContainer = styled.div`
 	`}
 `;
 
-export const ExitButton = styled.div`
+export const Topbar = styled.div`
 	display: flex;
 	align-items: flex-start;
 	justify-content: flex-end;
@@ -141,8 +141,9 @@ export const UtilWrap = styled.div`
 	flex-direction: column;
 	align-items: center;
 	border-top: solid 2px #fff;
+	border-bottom: solid 2px #929191;
 	${({theme}) => theme.media.tablet`
-		padding: 1.2rem 0;
+		padding: 1.5rem 0;
 	`}
 	${({theme}) => theme.media.desktop`
 		padding: 1.2rem 0;
@@ -253,26 +254,57 @@ export const Search = styled.div`
 	`}
 `;
 
-export const MenuListWrap = styled.div`
+export const BoardListWrap = styled.div`
+	display: flex;
+	flex-direction: column;
+	align-items: stretch;
+	padding: 3px 0;
+	border-top: solid 2px #fff;
+`;
+
+export const WrapTitle = styled.div`
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	background: #D5D5D5;
+	color: #000;
+	height: 2.5rem;
+	font-size: 1.3rem;
+	font-weight: 500;
+	${({theme}) => theme.media.tablet`
+		height: 1.8rem;
+		font-size: 1.1rem;
+	`}
+	${({theme}) => theme.media.desktop`
+		height: 1.5rem;
+		font-size: 0.9rem;
+	`}
+`;
+
+export const BoardNames = styled.div`
 	display: flex;
 	flex-direction: column;
 	align-items: center;
-	margin: 1rem 0;
-	li {
+	margin: 2rem 0;
+	div {
+		width: 16rem;
 		cursor: pointer;
-		font-size: 1.3rem;
+		font-size: 1.5rem;
 		font-weight: 400;
+		margin-bottom: 1.5rem;
 	}
 	${({theme}) => theme.media.tablet`
-		margin: 1rem 0;
-		li {
-			font-size: 1.1rem;
-		}
+	div {
+		width: 12rem;
+		font-size: 1.1rem;
+		margin-bottom: 1.1rem;
+	}
 	`}
 	${({theme}) => theme.media.desktop`
-		margin: 0.7rem 0;
-		li {
-			font-size: 0.9rem;
-		}
+	div {
+		width: 11rem;
+		font-size: 0.9rem;
+		margin-bottom: 0.9rem;
+	}
 	`}
 `;

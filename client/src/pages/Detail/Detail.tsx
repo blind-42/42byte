@@ -85,7 +85,7 @@ function Detail() {
 	const deletePostHandler = () => {
 		mutationDelete.mutate({ path: `/post?postId=${id}` }, {
 			onSuccess: () => { 
-				window.location.href = '/blindboard?page=1';},
+				window.location.href = `/board?boardId=${boardId}&page=1`;},
 			onError: () => { window.location.href = '/error'; }
 		});
 	}
@@ -99,7 +99,7 @@ function Detail() {
 			mutationPost.mutate({ path: `/post/blame?postId=${id}`, data: { issue: reportIssue } }, {
 				onSuccess: () => { 
 					alert('신고가 정상적으로 처리되었습니다.');
-					window.location.href='/blindboard?page=1';},
+					window.location.href = `/board?boardId=${boardId}&page=1`;},
 				onError: () => { window.location.href = '/error'; }
 			});
 		}
@@ -134,7 +134,7 @@ function Detail() {
 				<PageContainer>
 					<TopBar>
 						<PageName>
-							<Link to='/blindboard'>
+							<Link to={`/board?=boardId=${boardId}`}>
 								<div>{boardName}</div>
 							</Link>
 							<div>&nbsp;&#10095; #{id}</div>
@@ -142,7 +142,7 @@ function Detail() {
 						<Squares>
 							<div>&#9866;</div>
 							<div>&#10064;</div>
-							<Link to='/blindboard'>
+							<Link to={`/board?=boardId=${boardId}`}>
 								<div>&times;</div>
 							</Link>
 						</Squares>
