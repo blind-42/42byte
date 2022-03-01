@@ -115,7 +115,13 @@ function ReComments({ postId, recomment, commentsUserList }: GreetingProps) {
 						<Content>
 							{isDel
 							? <div className='isDel'>&#9986; {isDelOption(isDel)}에 의해 삭제된 댓글 입니다.</div> 
-							: <div>{content}</div>}
+							: <div>
+									<span>
+										{commentsUserList.indexOf(authorId) < 0
+										? '@작성자 ' : `@카뎃${commentsUserList.indexOf(authorId) + 1} `}
+									</span>
+									{content}
+								</div>}
 						</Content>
 						<CommentBottom>
 							<ReCommentBox openReCmt={openReReCmt} onClick={openReReCmtHandler}>
