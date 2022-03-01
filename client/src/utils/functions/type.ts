@@ -31,24 +31,21 @@ export interface PostPre {
   modifiedDate: string
 }
 
-export interface DetailData {
-  post: PostData
-  comment: CommentData[]
-}
-
 export interface PostData {
-  id: number
-  title: string
-  content: string
+  boardId: number
+  boardName: string
   commentCnt: number
-  viewCnt: number
-  likeCnt: number
-	isUsers: boolean
+  content: string
+  createdDate: string
+  id: number
+  isLiked: boolean
   isNotice: boolean
-	isLiked: boolean
-  blameCnt: number
-	createdDate: string
+  isUsers: boolean
+  likeCnt: number
   modifiedDate: string
+  title: string
+  type: string
+  viewCnt: number
 }
 
 export interface CommentData {
@@ -80,8 +77,7 @@ export interface RecommentData {
   isUsers: boolean
   likeCnt: number
   modifiedDate: string
-  recomments: any
-  rootCommentId: number
+  postId: number
   targetAuthorId: number
 }
 

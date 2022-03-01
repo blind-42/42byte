@@ -1,11 +1,11 @@
 import { useState, useRef, useEffect } from 'react'
 import { Editor } from '@toast-ui/react-editor';
 import instance from 'utils/functions/axios';
-import { DetailData, PostData, CommentData } from 'utils/functions/type';
+import { PostData } from 'utils/functions/type';
 import { EditorContainer, TitleUploadWrap, EditorWrap, Title, UploadButton } from './styled'
 
 type PostDataType = {
-  detailData? : DetailData
+  detailData? : PostData
 }
 
 export default function PostEditor({detailData}: PostDataType) {
@@ -17,9 +17,9 @@ export default function PostEditor({detailData}: PostDataType) {
 
   useEffect(() => {
     if (detailData) {
-      editorRef.current?.getInstance().setMarkdown(detailData.post.content)
-      setTitle(detailData.post.title)
-      setContent(detailData.post.content)
+      editorRef.current?.getInstance().setMarkdown(detailData.content)
+      setTitle(detailData.title)
+      setContent(detailData.content)
     }
   },[])
 
@@ -32,7 +32,7 @@ export default function PostEditor({detailData}: PostDataType) {
     }
     else {
 			instance
-			.put(`/post?boardId=1&postId=${detailData?.post.id}`, { title: title, content: content })
+			.put(`/post?boardId=1&postId=${detailData?.id}`, { title: title, content: content })
 			.then(() => {
         window.location.href=`/detail?boardId=1&postId=${urlId}`
       })

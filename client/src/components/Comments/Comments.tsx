@@ -39,7 +39,7 @@ function Comments({ comment, commentsUserList }: GreetingProps) {
 	const updateCmtHandler = (comment: string) => {
 		mutationPut.mutate({path: `/comment?commentId=${id}`, data: {content: comment}},
 		{ onSuccess: () => {
-				queryClient.invalidateQueries(['detail_key']);
+				queryClient.invalidateQueries(['comment_key']);
 				setOpenEditor(!openEditor);},
 			onError: () => {window.location.href = '/error';}
 		})
@@ -48,7 +48,7 @@ function Comments({ comment, commentsUserList }: GreetingProps) {
 	const uploadReCmtHandler = (comment: string) => {
 		mutationPost.mutate({path: `recomment?commentId=${id}`, data: {content: comment}},
 		{ onSuccess: () => {
-				queryClient.invalidateQueries(['detail_key']);
+				queryClient.invalidateQueries(['comment_key']);
 				setOpenReCmt(!openReCmt);},
 			onError: () => {window.location.href = '/error';}
 		});
@@ -57,7 +57,7 @@ function Comments({ comment, commentsUserList }: GreetingProps) {
 	const deleteCmtHandler = () => {
 		mutationDelete.mutate({path: `/comment?commentId=${id}`},
 		{ onSuccess: () => {
-				queryClient.invalidateQueries(['detail_key']);},
+				queryClient.invalidateQueries(['comment_key']);},
 			onError: () => {window.location.href = '/error';}
 		});
 	}
@@ -76,7 +76,7 @@ function Comments({ comment, commentsUserList }: GreetingProps) {
 	const boxcolorHandler = () => {
 		mutationPost.mutate({path: `/comment/like?postId=${postId}&commentId=${id}`, data: undefined},
 		{ onSuccess: () => {
-				queryClient.invalidateQueries(['detail_key']);
+				queryClient.invalidateQueries(['comment_key']);
 				setBoxState(!boxState);},
 			onError: () => {window.location.href = '/error';}
 		});
@@ -135,8 +135,7 @@ function Comments({ comment, commentsUserList }: GreetingProps) {
 					</RecommentContainer>
 					</>}
 				{recomments.map((el: RecommentData) => {
-					return (<ReComments key={el.id} postId={postId}
-																					recomment={el}
+					return (<ReComments key={el.id} recomment={el}
 																					commentsUserList={commentsUserList} 
 																					/>)
 					})}
