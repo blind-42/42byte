@@ -110,7 +110,7 @@ export default function Menubar({ menubarHandler }: GreetingProps) {
 					{contents.map((el: BoardPre, idx) => {
 						return (
 							!(el.isDel) &&
-							<Link to={`/board?=boardId=${el.id}`}>
+							<Link to={`/board?=boardId=${el.id}`} key={idx}>
 								<div onClick={menubarHandler}>{stringLimit(el.name, 10)}</div>
 							</Link>
 						)
