@@ -86,7 +86,7 @@ export default function Board() {
 									</button>
 								</Search>
 								<WritingButton>
-									<Link to="/writing">
+									<Link to={`/writing?=boardId=${id}`}>
 										<input type="button" value="글쓰기" />
 									</Link>
 								</WritingButton>

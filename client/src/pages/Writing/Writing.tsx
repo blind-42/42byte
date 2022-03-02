@@ -19,7 +19,14 @@ export default function Writing() {
 		['writing_key', ], () => {
 			instance
 			.get('/board/list')
-			.then((res) => setBoardList(res.data))
+			.then((res) => {
+				const currentUrl = window.location.href;
+				setBoardList(res.data)
+				if (currentUrl.includes('boardId=')) {
+					const defaultBoardId = (+currentUrl.split('boardId=')[1])
+					setBoard(res.data.contents.filter((el: BoardPre) => el.id === defaultBoardId)[0].id)
+				}
+			})
 		}, {
 			retry: 0, 
 			refetchOnWindowFocus: false,
@@ -27,20 +34,9 @@ export default function Writing() {
 		}
 	);
 
-	// const currentUrl = window.location.href;
-	// let defaultBoardId = 0;
-	// let defaultBoardName = '';
-	// useEffect(() => {
-	// 	if (currentUrl.includes('boardId=')) {
-	// 		defaultBoardId = +currentUrl.split('boardId=')[1];
-	// 	}
-	// }, [])
-
-
 	const boardHandler = (event: React.ChangeEvent<HTMLSelectElement>) => {
 		setBoard(event.target.value);
 	}
-	console.log(board);
 
 	// if (isFetching || isLoading) return <Loading />
 
@@ -63,8 +59,7 @@ export default function Writing() {
 					</TopBar>
 					<ContentWrap>
 						<SelectBoard>
-							<select name='board' onChange={boardHandler}>
-								{/* <option value={defaultBoardId} key='0'>==== 선택 ====</option> */}
+							<select name='board' onChange={boardHandler} value={board}>
 								{contents.map((el: BoardPre, idx) => {
 									return (
 										<option value={el.id} key={idx}>{el.name}</option>
