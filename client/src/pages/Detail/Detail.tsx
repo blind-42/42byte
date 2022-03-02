@@ -151,7 +151,7 @@ function Detail() {
 					<ContentFooterWrap>
 						<PostContainer>
 						{openEditor
-						?	<PostEditor detailData={detailData}/>
+						?	<PostEditor detailData={detailData} boardId={boardId}/>
 						:	<DetailContainer>
 								<Title>
 									{isNotice && 
