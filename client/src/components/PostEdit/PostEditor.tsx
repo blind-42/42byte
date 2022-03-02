@@ -6,14 +6,15 @@ import { EditorContainer, TitleUploadWrap, EditorWrap, Title, UploadButton } fro
 
 type PostDataType = {
   detailData? : PostData
+	boardId: number
 }
 
-export default function PostEditor({detailData}: PostDataType) {
+export default function PostEditor({ detailData, boardId }: PostDataType) {
   const [title, setTitle] = useState<string>('');
 	const [content, setContent] = useState<string>('');
 	const editorRef = useRef<Editor>(null);
   const currentUrl = window.location.href;
-	const urlId = currentUrl.split('detail?boardId=1&postId=')[1];
+	const urlId = currentUrl.split('&postId=')[1];
 
   useEffect(() => {
     if (detailData) {
@@ -26,16 +27,14 @@ export default function PostEditor({detailData}: PostDataType) {
 	const uploadHandler = () => {
 		if (window.location.pathname === '/writing') {
 			instance
-			.post('/post?boardId=1', { title: title, content: content })
-			.then((res) => {window.location.href=`/detail?boardId=1&postId=${res.data.id}`})
+			.post(`/post?boardId=${boardId}`, { title: title, content: content })
+			.then((res) => window.location.href=`/detail?boardId=${boardId}&postId=${res.data.id}`)
 			.catch((err) => console.log(err));
     }
     else {
 			instance
-			.put(`/post?boardId=1&postId=${detailData?.id}`, { title: title, content: content })
-			.then(() => {
-        window.location.href=`/detail?boardId=1&postId=${urlId}`
-      })
+			.put(`/post?boardId=${boardId}&postId=${detailData?.id}`, { title: title, content: content })
+			.then(() => window.location.href=`/detail?boardId=${boardId}&postId=${urlId}`)
 			.catch((err) => console.log(err));
     }
 	}
