@@ -14,7 +14,7 @@ import { ContentWrap, SelectBoard } from './styled';
 export default function Writing() {
 	const [boardList, setBoardList] = useState<BoardList>({contents: [{id: 0, name: '', isDel: 0, managerId: 0}], page: 0, pages: 0});
 	const { contents, page, pages } = boardList;
-	const [board, setBoard] = useState('');
+	const [board, setBoard] = useState('1');
 	const { isFetching, isLoading, error, data } = useQuery(
 		['writing_key', ], () => {
 			instance
