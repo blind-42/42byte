@@ -113,7 +113,9 @@ function ReComments({ recomment, commentsUserList }: GreetingProps) {
 						</CommentTop>
 						<Content>
 							{isDel
-							? <div className='isDel'>&#9986; {isDelOption(isDel)}에 의해 삭제된 댓글 입니다.</div> 
+							? <div className='isDel'>&#9986; {isDelOption(isDel)}에 의해 삭제된 댓글 입니다.</div>
+							: blameCnt >= 5
+							? <div className='isDel'>&#10754; 신고누적으로 숨김처리된 댓글입니다.</div>
 							: <div>
 									<span>
 										{commentsUserList.indexOf(authorId) < 0

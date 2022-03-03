@@ -1,5 +1,5 @@
 import { Link, useNavigate } from 'react-router-dom';
-import { useState, useRef } from 'react';
+import { useState } from 'react';
 import { useQuery } from 'react-query';
 import Header from 'components/Header/Header';
 import Footer from 'components/Footer/Footer';
@@ -20,9 +20,8 @@ export default function Mypage() {
 	const pageName = currentUrl.split('&page=')[0].split('mypage?=')[1];
 	const pageNumber = currentUrl.split('&page=')[1];
 	const navigate = useNavigate();
-	const scrollRef = useRef<HTMLDivElement>(null);
 
-	const { isLoading, error, data  } = useQuery(['mypage_key', pageName, pageNumber], 
+	const { isLoading, isFetching, error, data  } = useQuery(['mypage_key', pageName, pageNumber], 
 		() => {
 			instance
 			.get(`/mypage/${pageName}?page=${pageNumber}`)
@@ -42,11 +41,10 @@ export default function Mypage() {
 	}
 	
 	const pageChangeHandler = (page: number) => {
-		navigate(`/mypage?=${pageName}&page=${page}`);
-		scrollRef.current?.scrollIntoView(true);
+		navigate(`/mypage?=${pageName}&page=${page}`)
   };
 
-	if (isLoading) return <Loading />
+	if (isFetching || isLoading) return <Loading />
 
 	if (error) return <Error />
 
@@ -77,14 +75,14 @@ export default function Mypage() {
 							</MenuWrap>
 							<PostContainer>
 								{pageName === 'post'
-									?	<Category state={pageName} ref={scrollRef}>
+									?	<Category state={pageName}>
 											<div></div>
 											<div>제목</div>
 											<div>조회</div>
 											<div>추천</div>
 											<div>작성일</div>
 										</Category>
-									: <Category state={pageName} ref={scrollRef}>
+									: <Category state={pageName}>
 											<div>댓글</div>
 										</Category>
 									}
@@ -94,7 +92,7 @@ export default function Mypage() {
 											?	contents.map((el: PostPre, idx) => {
 												return (<PostPreview key={idx} postData={el} />)
 											})
-											:	contents.map((el: CommentPre, idx) => {
+											: contents.map((el: CommentPre, idx) => {
 												return (el.content && <CommentPreview key={idx} commentData={el} />)
 											})
 										}
