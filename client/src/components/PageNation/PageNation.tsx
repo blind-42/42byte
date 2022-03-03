@@ -18,7 +18,6 @@ function PageNation({
 		<>
 			<PageContainer>
 				<PageNationWrap>
-					{window.scrollTo(0, 0)}
 					<Pagination
 							activePage={curPage}
 							itemsCountPerPage={1}

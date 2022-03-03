@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { useQuery } from 'react-query';
 import { Link, useNavigate } from 'react-router-dom';
 import Header from 'components/Header/Header';
@@ -20,8 +20,9 @@ export default function Board() {
 	const boardUrl = currentUrl.split('&page=')[0].split('boardId=')[1];
 	const pageUrl = currentUrl.split('&page=')[1];
 	const navigate = useNavigate();
+	const scrollRef = useRef<HTMLDivElement>(null);
 
-	const { isLoading, isFetching, error, data  } = useQuery(['board_key', boardUrl, pageUrl],
+	const { isLoading, error, data  } = useQuery(['board_key', boardUrl, pageUrl],
 		() => {
 			instance
 			.get(`/board?boardId=${boardUrl}&page=${pageUrl}`)
@@ -34,9 +35,10 @@ export default function Board() {
 
 	const pageChangeHandler = (page: number) => {
 		navigate(`/board?boardId=${id}&page=${page}`);
+		scrollRef.current?.scrollIntoView(true);
 	};
 
-	if (isFetching || isLoading) return <Loading />
+	if (isLoading) return <Loading />
 
 	if (error) return <Error />
 
@@ -71,7 +73,7 @@ export default function Board() {
 								</WritingButton>
 							</UtilWrap>
 							<PostContainer>
-								<Category>
+								<Category ref={scrollRef}>
 									<div></div>
 									<div>제목</div>
 									<div>조회</div>
