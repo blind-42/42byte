@@ -10,18 +10,15 @@ export const MenubarContainer = styled.div`
 	flex-direction: column;
 	align-items: stretch;
 	background: #C4C4C4;
-	height: 80vh;
 	width: 25rem;
 	border-top: solid 2px #fff;
 	border-left: solid 2px #fff;
 	border-right: solid 2px #000;
 	border-bottom: solid 2px #000;
 	${({theme}) => theme.media.tablet`
-		height: 70vh;
 		width: 21rem;
   `}
 	${({theme}) => theme.media.desktop`
-		height: 75vh;
 		width: 17rem;
 	`}
 `;
@@ -65,18 +62,30 @@ export const Topbar = styled.div`
 	`}
 `;
 
+export const ContentContainer = styled.div`
+	display: grid;
+	grid-template-rows: 1fr 9rem 3.5rem;
+	height: 80vh;
+	${({theme}) => theme.media.tablet`
+		grid-template-rows: 1fr 7rem 2.5rem;
+		height: 70vh;
+	`}
+	${({theme}) => theme.media.desktop`
+		grid-template-rows: 1fr 6rem 2.5rem;
+		height: 75vh;
+	`}
+`;
 export const UserProfileWrap = styled.div`
+	display: grid;
+	grid-template-columns: 2fr 3fr;
+	border-top: solid 2px #fff;
+`;
+
+export const Profile = styled.div`
 	display: flex;
 	flex-direction: column;
 	align-items: center;
-	padding: 2rem 0;
-	border-bottom: solid 2px #929191;
-	${({theme}) => theme.media.tablet`
-		padding: 1.5rem 0;
-	`}
-	${({theme}) => theme.media.desktop`
-		padding: 1.2rem 0;
-	`}
+	justify-content: center;
 `;
 
 export const UserImg = styled.div`
@@ -85,17 +94,19 @@ export const UserImg = styled.div`
 	margin-bottom: 1.2rem;
   img {
     border-radius: 50%;
-    height: 4.2rem;
+    height: 4rem;
 		border: solid 1px #fff;
   }
 	${({theme}) => theme.media.tablet`
+		margin-bottom: 0.7rem;
 		img {
-			height: 3.3rem;
+			height: 3rem;
 		}
 	`}
 	${({theme}) => theme.media.desktop`
+		margin-bottom: 0.7rem;
 		img {
-			height: 3.3rem;
+			height: 2.5rem;
 		}
 	`}
 `;
@@ -106,84 +117,82 @@ export const UserName = styled.div`
   font-size: 1.5rem;
 	font-weight: 700;
 	${({theme}) => theme.media.tablet`
-		font-size: 1.2rem;
+		font-size: 1.1rem;
 	`}
 	${({theme}) => theme.media.desktop`
-		font-size: 1rem;
+		font-size: 0.9rem;
 	`}
 `;
 
 export const UserMenu = styled.div`
 	display: flex;
-	margin-top: 0.8rem;
-	div {
-		margin: 0 1rem;
-		font-size: 1.3rem; 
+	flex-direction: column;
+	justify-content: space-between;
+	align-items: stretch;
+	padding-top: 1.5rem;
+	span {
+		padding-left: 1.7rem;
+		font-size: 1.4rem; 
 		cursor: pointer;
 	}
 	${({theme}) => theme.media.tablet`
-		div {
+		padding-top: 1rem;	
+		span {
+			padding-left: 1rem;
 			margin: 0 0.5rem;
 			font-size: 1.1rem;
 		}
 	`}
 	${({theme}) => theme.media.desktop`
-		div {
+		padding-top: 0.8rem;
+		span {
+			padding-left: 1rem;
 			margin: 0 0.5rem;
 			font-size: 0.9rem;
 		}
 	`}
 `;
 
-export const UtilWrap = styled.div`
-	padding: 2rem 0;
+export const WritingBtn = styled.div`
 	display: flex;
-	flex-direction: column;
-	align-items: center;
-	border-top: solid 2px #fff;
-	border-bottom: solid 2px #929191;
-	${({theme}) => theme.media.tablet`
-		padding: 1.5rem 0;
-	`}
-	${({theme}) => theme.media.desktop`
-		padding: 1.2rem 0;
-	`}
-`;
-
-export const WritingButton = styled.div`
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	margin: 0.5rem 0;
+	justify-content: flex-end;
+	margin: 3px 6px;
+	padding: 0;
 	input {
 		cursor: pointer;
-		height: 3.5rem;
-		width: 11rem;
+		height: 2.5rem;
+		width: 13rem;
 		background: #518EDB;
 		border-top: solid 2px #fff;
 		border-left: solid 2px #fff;
 		border-right: solid 2px #000;
 		border-bottom: solid 2px #000;
 		font-weight: 600;
-		font-size: 1.5rem;
+		font-size: 1.3rem;
 		color: #fff;
 	}
 	${({theme}) => theme.media.tablet`
 		input {
-			height: 2.8rem;
-			width: 9rem;
+			height: 1.8rem;
+			width: 12rem;
 			font-size: 1.2rem;
-			font-weight: 700;
 		}
 	`}
 	${({theme}) => theme.media.desktop`
 		input {
-			height: 2.4rem;
-			width: 8rem;
-			font-size: 1rem;
-			font-weight: 700;
+			height: 1.7rem;
+			width: 9rem;
+			font-size: 0.9rem;
 		}
 	`}
+`;
+
+export const UtilWrap = styled.div`
+	display: flex;
+	flex-direction: column;
+	align-items: stretch;
+	justify-content: flex-end;
+	padding: 3px;
 `;
 
 export const Search = styled.div`
@@ -195,11 +204,11 @@ export const Search = styled.div`
 	border-right: solid 2px #fff;
 	border-bottom: solid 2px #fff;
 	height: 2.5rem;
-	margin: 0.5rem 0;
+	margin: 3px;
 	background: #fff;
 	input {
 		font-size: 1.2rem;
-		width: 14rem;
+		width: 20rem;
 		display: flex;
 		padding-left: 0.3rem;
 		border: none;
@@ -224,10 +233,9 @@ export const Search = styled.div`
 	}
 	${({theme}) => theme.media.tablet`
 		height: 1.8rem;
-		margin: 0.3rem 0;
 		input {
 			font-size: 1rem;
-			width: 11rem;
+			width: 17rem;
 		}
 		button {
 			height: 1.8rem;
@@ -239,10 +247,9 @@ export const Search = styled.div`
 	`}
 	${({theme}) => theme.media.desktop`
 		height: 1.7rem;
-		margin: 0.3rem 0;
 		input {
 			font-size: 0.8rem;
-			width: 10rem;
+			width: 13rem;
 		}
 		button {
 			height: 1.7rem;
@@ -259,7 +266,7 @@ export const BoardListWrap = styled.div`
 	flex-direction: column;
 	align-items: stretch;
 	padding: 3px 0;
-	border-top: solid 2px #fff;
+	border-bottom: solid 2px #929191;
 `;
 
 export const WrapTitle = styled.div`

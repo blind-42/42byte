@@ -10,7 +10,7 @@ import LoginModal from 'components/Modal/LoginModal';
 import instance from 'utils/functions/axios';
 import { BoardList, BoardPre } from 'utils/functions/type';
 import { stringLimit } from 'utils/functions/functions';
-import { MenubarContainer, Topbar, UserProfileWrap, UserImg, UserName, UserMenu, UtilWrap, WritingButton, Search, BoardListWrap, WrapTitle, BoardNames } from './styled';
+import { MenubarContainer, Topbar, ContentContainer, UserProfileWrap, Profile, UserImg, UserName, UserMenu, UtilWrap, WritingBtn, Search, BoardListWrap, WrapTitle, BoardNames } from './styled';
 
 
 type GreetingProps = {
@@ -44,6 +44,10 @@ export default function Menubar({ menubarHandler }: GreetingProps) {
     setOpenLoginModal(!openLoginModal);
   };
 
+	const toWriting = () => {
+		window.location.href='/writing';
+	}
+	
 	if (isFetching || isLoading) return <Loading />
 
 	if (error) return <Error />
@@ -57,38 +61,54 @@ export default function Menubar({ menubarHandler }: GreetingProps) {
 				<Topbar>
 					<div onClick={menubarHandler}>&times;</div>
 				</Topbar>
+				<ContentContainer>
+				<BoardListWrap>
+					<WrapTitle>TOP 게시판</WrapTitle>
+					<BoardNames>
+					{contents.map((el: BoardPre, idx) => {
+						return (
+							!(el.isDel) &&
+							<Link to={`/board?=boardId=${el.id}`} key={idx}>
+								<div onClick={menubarHandler}>{stringLimit(el.name, 10)}</div>
+							</Link>
+						)
+					})}
+					</BoardNames>
+				</BoardListWrap>
 				<UserProfileWrap>
-					<UserImg>
-						<img src='/images/egg.png' alt='pfimg' />
-					</UserImg>
-					<UserName>
-						{isLoggedIn
-						? <div>
-								<strong>카뎃</strong>
-							</div>
-						:	<Link to='/login'>로그인</Link>
-						}
-					</UserName>
+					<Profile>
+						<UserImg>
+							<img src='/images/egg.png' alt='pfimg' />
+						</UserImg>
+						<UserName>
+							{isLoggedIn
+							? <div>
+									<strong>카뎃</strong>
+								</div>
+							:	<Link to='/login'>로그인</Link>
+							}
+						</UserName>
+					</Profile>
 					{isLoggedIn &&
 						<UserMenu>
-							<Link to='/mypage?=post&page=1'>
-								<div>마이페이지</div>
-							</Link>
-							<Link to='/' onClick={logoutHandler}>
-								<div>로그아웃</div>
-							</Link>
+								<Link to='/mypage?=post&page=1'>
+									<span>마이페이지</span>
+								</Link>
+								<Link to='/' onClick={logoutHandler}>
+									<span>로그아웃</span>
+								</Link>
+							<WritingBtn>
+							{isLoggedIn 
+							? <Link to='/writing'>
+									<input type="button" value="새 글쓰기"/>
+								</Link>
+							: <input type="button" value="새 글쓰기" onClick={openLoginModalHandler}/>
+							}
+							</WritingBtn>
 						</UserMenu>
 					}
 				</UserProfileWrap>
 				<UtilWrap>
-					<WritingButton>
-					{isLoggedIn 
-					? <Link to="/writing">
-							<input type="button" value="새 글쓰기" />
-						</Link>
-					: <input type="button" value="새 글쓰기" onClick={openLoginModalHandler}/>
-					}
-					</WritingButton>
 					{isLoggedIn
 					? <Search>
 							<input type="text" placeholder='검색어를 입력하세요'/>
@@ -104,19 +124,7 @@ export default function Menubar({ menubarHandler }: GreetingProps) {
 						</Search>
 					}
 				</UtilWrap>
-				<BoardListWrap>
-					<WrapTitle>TOP 게시판</WrapTitle>
-					<BoardNames>
-					{contents.map((el: BoardPre, idx) => {
-						return (
-							!(el.isDel) &&
-							<Link to={`/board?=boardId=${el.id}`} key={idx}>
-								<div onClick={menubarHandler}>{stringLimit(el.name, 10)}</div>
-							</Link>
-						)
-					})}
-					</BoardNames>
-				</BoardListWrap>
+				</ContentContainer>
 			</MenubarContainer>
 		</>
 	);
