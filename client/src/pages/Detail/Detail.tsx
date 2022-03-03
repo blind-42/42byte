@@ -31,7 +31,7 @@ function Detail() {
 	const boardUrl = currentUrl.split('&postId=')[0].split('boardId=')[1];
 	const postUrl = currentUrl.split('&postId=')[1];
 	const shortDate = createdDate?.slice(0, 16).replace('T', ' ');
-  const scrollRef = useRef<any>(null);
+  const scrollRef = useRef<HTMLDivElement>(null);
 	
 	const queryClient = useQueryClient();
 	const mutationPost = useMutation(
@@ -68,7 +68,6 @@ function Detail() {
 			keepPreviousData: true
 		}
 	]);
-	const isFetching = results.some(result => result.isFetching);
 	const isLoading = results.some(result => result.isLoading);
 	const error = results.some(result => result.error);
 
@@ -77,7 +76,7 @@ function Detail() {
 			mutationPost.mutate({ path: `/comment?boardId=${boardId}&postId=${postUrl}`, data: { content: comment } }, {
 				onSuccess: () => {
 					queryClient.invalidateQueries(['comment_key']);
-					setTimeout(() => scrollRef.current.scrollIntoView({ behavior: "smooth", block: "end", inline: "nearest" }), 550);},
+					setTimeout(() => scrollRef.current?.scrollIntoView({ behavior: "smooth", block: "end", inline: "nearest" }), 550);},
 				onError: () => { window.location.href = '/error'; }
 			});
 		}
@@ -124,7 +123,7 @@ function Detail() {
 		});
 	}
 
-	if (isFetching || isLoading) return <Loading />
+	if (isLoading) return <Loading />
 
 	if (error) return <Error />
 
