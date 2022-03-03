@@ -1,16 +1,21 @@
-import { FooterWrap, List, Detail } from './styled';
+import { AiFillAlert } from 'react-icons/ai'
+import { FaGithubAlt } from 'react-icons/fa'
+import { FooterWrap, GitLink, Names, Copyright } from './styled';
 
 function Footer() {
   return (
     <>
       <FooterWrap>
-        <List>
-          <div><a href='https://github.com/blind-42/Blind42/wiki/정책-정의서(1.3-update)'>RULES</a></div>
-          <div><a href='https://github.com/blind-42/Blind42'>ABOUT</a></div>
-          <div>MAKER</div>
-          <div>CONTACT</div>
-        </List>
-        <Detail>Copyright © 2022 Blind42. All rights reserved.</Detail>
+        <GitLink>
+          <div><a href='https://github.com/blind-42/Blind42/wiki/정책-정의서(1.3-update)'><AiFillAlert /></a></div>
+          <div><a href='https://github.com/blind-42/Blind42'><FaGithubAlt /></a></div>
+        </GitLink>
+				<Names>
+					<div>donghyuk | nheo | jihyukim | jabae | jinhyupa</div>
+				</Names>
+        <Copyright>
+					<div>ⓒ 2021 42byte</div>
+				</Copyright>
       </FooterWrap>
     </>
   );
