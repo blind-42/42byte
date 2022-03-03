@@ -1,5 +1,5 @@
-import { Link } from 'react-router-dom';
-import { useEffect, useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { useState } from 'react';
 import { useQuery } from 'react-query';
 import Header from 'components/Header/Header';
 import Footer from 'components/Footer/Footer';
@@ -8,66 +8,35 @@ import PostPreview from 'components/Postpreview/Postpreview';
 import CommentPreview from 'components/CommentPreview/CommentPreview';
 import Loading from 'pages/Loading/Loading';
 import Error from 'pages/Error/Error';
+import instance from 'utils/functions/axios';
+import { PostPre, CommentPre } from 'utils/functions/type';
 import { AppContainer, PageContainer, TopBar, PageName, Squares, PostContainer, ContentFooterWrap } from '../../styles/styled'
 import { MenuWrap, PostMenu, CommentMenu, MenuPostWrap, Category, ContentWrap, PostWrap } from './styled'
-import instance from 'utils/functions/axios';
-import { BoardData, PostPre, CommentPre } from 'utils/functions/type';
-import { useNavigate } from "react-router-dom";
 
 export default function Mypage() {
-	const [postBoardData, setPostBoardData] = useState({contents: [], page: 0, pages: 0});
-	const [commentBoardData, setCommentBoardData] = useState({contents: [], page: 0, pages: 0});
-	const [pageName, setPageName] = useState<string>('post');
-	const [currentPageNumber, setCurrentPageNumber] = useState({page: 1, pages: 1})
+	const [mypageData, setMypageData] = useState({contents: [], page: 0, pages: 0});
+	const { contents, page, pages } = mypageData;
 	const currentUrl = window.location.href;
-	const urlId = currentUrl.split('page=')[1];
+	const pageName = currentUrl.split('&page=')[0].split('mypage?=')[1];
+	const pageNumber = currentUrl.split('&page=')[1];
 	const navigate = useNavigate();
 
-	const { isLoading, error, data  } = useQuery(['mypage_key', urlId, pageName, navigate], 
+	const { isLoading, isFetching, error, data  } = useQuery(['mypage_key', pageName, pageNumber], 
 		() => {
-			console.log(pageName)
-			instance.get(`/mypage/${pageName}?page=${urlId}`)
-			.then((res) => {
-				setCurrentPageNumber({page: res.data.page, pages: res.data.pages});
-				if (pageName === "post")
-					setPostBoardData(res.data);
-				else
-					setCommentBoardData(res.data);
-			})},
-			{ retry: 0,
-				refetchOnWindowFocus: false,
-				keepPreviousData: true});
-
-	// useEffect(() => {
-	// 	const currentPageName = window.location.search.split('&')[0].slice(2)
-	// 	setPageName(currentPageName)
-	// 	if (currentPageName === "post") {
-	// 		instance
-	// 		.get(`/mypage/${currentPageName}?page=${urlId}`)
-	// 		.then((res) => {
-	// 			setCurrentPageNumber({page: res.data.page, pages: res.data.pages})
-	// 			setPostBoardData(res.data)
-	// 		})
-	// 		.catch((err) => { window.location.href = '/error'; });
-	// 	}
-	// 	else {
-	// 		instance
-	// 		.get(`/mypage/comment?page=${urlId}`)
-	// 		.then((res) => {
-	// 			setCurrentPageNumber({page: res.data.page, pages: res.data.pages})
-	// 			setCommentBoardData(res.data);
-	// 		})
-	// 		.catch((err) => { window.location.href = '/error'; })
-	// 	}
-	// }, [window.location.href])
+			instance
+			.get(`/mypage/${pageName}?page=${pageNumber}`)
+			.then((res) =>  setMypageData(res.data) )
+		}, { 
+			retry: 0,
+			refetchOnWindowFocus: false,
+			keepPreviousData: true
+		});
 
 	const switchToComment = () => {
-		setPageName('comment')
 		navigate('/mypage?=comment&page=1')
 	}
 
 	const switchToPost = () => {
-		setPageName('post')
 		navigate('/mypage?=post&page=1')
 	}
 	
@@ -75,7 +44,7 @@ export default function Mypage() {
 		navigate(`/mypage?=${pageName}&page=${page}`)
   };
 
-	if (isLoading) return <Loading />
+	if (isFetching || isLoading) return <Loading />
 
 	if (error) return <Error />
 
@@ -120,18 +89,18 @@ export default function Mypage() {
 									<ContentWrap>
 									<PostWrap>
 										{pageName === 'post'
-											?	postBoardData.contents.map((el: PostPre, idx) => {
+											?	contents.map((el: PostPre, idx) => {
 												return (<PostPreview key={idx} postData={el} />)
 											})
-											:	commentBoardData.contents.map((el: CommentPre, idx) => {
+											:	contents.map((el: CommentPre, idx) => {
 												return (el.content && <CommentPreview key={idx} commentData={el} />)
 											})
 										}
 									</PostWrap>
 								</ContentWrap>
 								<PageNation 
-									curPage={currentPageNumber.page}
-									totalPages={currentPageNumber.pages}
+									curPage={page}
+									totalPages={pages}
 									pageChangeHandler={pageChangeHandler}
 								/>
 							</PostContainer>

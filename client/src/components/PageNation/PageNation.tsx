@@ -1,17 +1,6 @@
 
 import Pagination from 'react-js-pagination';
-import { useEffect } from "react";
-import { useLocation } from "react-router-dom";
 import { PageContainer, PageNationWrap } from './styled'
-
-// type GreetingProps = {
-// 	pageData: pageType;
-// }
-
-// type pageType = {
-// 	page: number,
-// 	pages: number
-// }
 
 interface GreetingProps {
   curPage: number;
@@ -24,16 +13,12 @@ function PageNation({
   totalPages,
   pageChangeHandler,
 }: GreetingProps) {
-	// const {page, pages} = pageData;
-	// console.log(pageData.page);
-	console.log(window.scrollY);
 
 	return (
 		<>
 			<PageContainer>
 				<PageNationWrap>
-					{/* {window.scrollTo(0, 0)} */}
-					{window.scroll({top:0,behavior:'smooth'})}
+					{window.scrollTo(0, 0)}
 					<Pagination
 							activePage={curPage}
 							itemsCountPerPage={1}
