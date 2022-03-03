@@ -8,7 +8,6 @@ export const FooterWrap = styled.div`
 	align-items: center;
 	height: 10vh;
 	background: #C4C4C4;
-	padding: 1rem;
 	${({theme}) => theme.media.tablet`
 		height: 8vh;
 	`}
@@ -17,36 +16,64 @@ export const FooterWrap = styled.div`
 	`}
 `;
 
-export const List = styled.div`
+export const GitLink = styled.div`
 	display: flex;
 	justify-content: space-evenly;
 	div {
-		margin: 0 1rem;
-		font-size: 1rem;
-		font-weight: 700;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		margin: 0 0.3rem;
+		font-size: 2.5rem;
+		height: 2.5rem;
+		width: 2.5rem;
+	}
+	div:last-child {
+		padding-top: 0.3rem;
+		font-size: 2.2rem;
 	}
 	${({theme}) => theme.media.tablet`
 		div {
-			margin: 0 1.5rem;
-			font-size: 0.8rem;
-			font-weight: 700;
+			margin: 0 0.2rem;
+			font-size: 1.3rem;
+			height: 1.3rem;
+			width: 1.3rem;
+		}
+		div:last-child {
+			padding-top: 0.1rem;
+			font-size: 1.13rem;
 		}
 	`}
 	${({theme}) => theme.media.desktop`
 		div {
-			margin: 0 1.5rem;
-			font-size: 0.8rem;
-			font-weight: 700;
+			margin: 0 0.2rem;
+			font-size: 1.3rem;
+			height: 1.3rem;
+			width: 1.3rem;
+		}
+		div:last-child {
+			padding-top: 0.1rem;
+			font-size: 1.13rem;
 		}
 	`}
 `;
 
-export const Detail = styled.div`
-	font-size: 1rem;
+export const Names = styled.div`
+	font-size: 0.9rem;
 	${({theme}) => theme.media.tablet`
-		font-size: 0.8rem;
+		font-size: 0.6rem;
 	`}
 	${({theme}) => theme.media.desktop`
-		font-size: 0.8rem;
+		font-size: 0.6rem;
+	`}
+`;
+
+export const Copyright = styled.div`
+	font-size: 0.9rem;
+	${({theme}) => theme.media.tablet`
+		font-size: 0.6rem;
+	`}
+	${({theme}) => theme.media.desktop`
+		font-size: 0.6rem;
 	`}
 `;
