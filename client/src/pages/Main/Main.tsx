@@ -5,10 +5,10 @@ import { Link } from 'react-router-dom';
 import { AiFillSetting } from "react-icons/ai";
 import Header from '../../components/Header/Header';
 import { LoggedinState } from 'States/LoginState';
-import { AppContainer } from 'styles/styled';
-import { SettingsBtn } from './styled';
 import instance from 'utils/functions/axios';
 import { UserData } from 'utils/functions/type';
+import { AppContainer } from 'styles/styled';
+import { LogoImg, SettingsBtn } from './styled';
 
 function Main() {
 	const [isLoggedIn, setIsLoggedIn] = useRecoilState(LoggedinState);
@@ -45,6 +45,9 @@ function Main() {
   return (
 			<AppContainer>
 				<Header />
+					<LogoImg>
+						<img src='/images/42byteLogo.png'/>
+					</LogoImg>
 					{roleType === 'ADMIN' &&
 					<SettingsBtn onClick={adminpage}>
 							<div><AiFillSetting /></div>

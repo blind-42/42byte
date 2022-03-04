@@ -3,7 +3,7 @@ import styled from 'styled-components';
 export const MenubarContainer = styled.div`
 	z-index: 1;
 	position: fixed;
-	bottom: 4.5vh;
+	bottom: 3rem;
 	left: 0;
 	padding: 3px;
 	display: flex;
@@ -17,9 +17,11 @@ export const MenubarContainer = styled.div`
 	border-bottom: solid 2px #000;
 	${({theme}) => theme.media.tablet`
 		width: 21rem;
+		bottom: 2.5rem;
   `}
 	${({theme}) => theme.media.desktop`
 		width: 17rem;
+		bottom: 2.5rem;
 	`}
 `;
 
