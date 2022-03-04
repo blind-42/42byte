@@ -25,7 +25,8 @@ public class CommentServiceImpl implements CommentService{
     @Override
     @Transactional
     public Page<Comment> findCommentByAuthorId(Long userId, Pageable pageable) {
-        return commentRepository.findCommentByAuthorId(userId, pageable);
+        Long blame = Long.parseLong(applicationYmlRead.getBlame());
+        return commentRepository.findCommentByAuthorIdAndIsDelEqualsAndBlameCntLessThan(userId, 0, blame, pageable);
     }
 
     @Override

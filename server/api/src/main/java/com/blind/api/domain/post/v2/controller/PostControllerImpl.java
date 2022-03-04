@@ -21,6 +21,7 @@ import com.blind.api.global.exception.BusinessException;
 import com.blind.api.global.utils.HeaderUtil;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
 import org.thymeleaf.util.StringUtils;
@@ -32,7 +33,6 @@ import java.util.*;
 @AllArgsConstructor
 public class PostControllerImpl implements PostController{
     private final PostService postService;
-    private final BlameService blameService;
     private final TokenService tokenService;
     private final LikeService likeService;
     private final BoardService boardService;
@@ -42,12 +42,11 @@ public class PostControllerImpl implements PostController{
     public PostResponseDTO findAllPost(Long boardId, Pageable pageable, HttpServletRequest request) {
         User user = tokenService.findUserByAccessToken(HeaderUtil.getAccessToken(request));
         Board board = boardService.findById(boardId);
-        Page<Post> postList = postService.findAllByBoardId(boardId, pageable);
+        Page<Post> postList = postService.findAllByBoardId(boardId, user, pageable);
         RoleType roleType = setRoleType(user, boardService.findById(boardId));
 
         PostResponseDTO<PostDTO> dtoList = new PostResponseDTO();
         postList.stream().forEach( post -> {
-            if (blameService.checkPostBlame(post, user) == false)
                 dtoList.getContents().add(PostDTO.from(post, roleType));
         });
         dtoList.setName(board.getName());
@@ -59,16 +58,23 @@ public class PostControllerImpl implements PostController{
 
     /*전체 게시판 게시글 검색*/
     @RequestMapping(value="/board/search", method = RequestMethod.GET)
-    public PostResponseDTO searchPost(String keyword, Pageable pageable, HttpServletRequest request){
+    public PostResponseDTO searchPost(Long boardId, String keyword, Pageable pageable, HttpServletRequest request){
         PostResponseDTO dtoList = new PostResponseDTO();
+        Board board;
+        if (boardId != 0)
+            board = boardService.findById(boardId);
+        else
+            board = new Board("전체 게시판");
         User user = tokenService.findUserByAccessToken(HeaderUtil.getAccessToken(request));
-        Page<Post> postList = postService.search(keyword, pageable);
+        Page<Post> postList = postService.search(boardId, user, keyword, pageable);
 
         postList.stream().forEach( post -> {
-            Board board = post.getBoard();
-            RoleType roleType = setRoleType(user, board);
+            Board board1 = post.getBoard();
+            RoleType roleType = setRoleType(user, board1);
             dtoList.getContents().add(PostDTO.from(post, roleType));
         });
+        dtoList.setName(board.getName());
+        dtoList.setId(boardId);
         dtoList.setPage(postList.getPageable().getPageNumber());
         dtoList.setPages(postList.getTotalPages());
         return dtoList;

@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import javax.validation.constraints.Positive;
+import javax.validation.constraints.PositiveOrZero;
 import java.util.Map;
 
 public interface PostController {
@@ -30,12 +31,12 @@ public interface PostController {
 
     PostResponseDTO findAllPost(@RequestParam("boardId") @Positive (message = "{invalid.request}") Long boardId,
                                 @SortDefault.SortDefaults({
-                                        @SortDefault(sort = "isNotice", direction = Sort.Direction.DESC),
+                                        @SortDefault(sort = "is_notice", direction = Sort.Direction.DESC),
                                         @SortDefault(sort = "id", direction = Sort.Direction.DESC)}) Pageable pageable, HttpServletRequest request);
 
-    PostResponseDTO searchPost(@RequestParam("keyword") @Length (min = 1, max= 255, message = "{invalid.request}") String keyword,
+    PostResponseDTO searchPost(@RequestParam("boardId") @PositiveOrZero(message = "{invalid.request}") Long boardId, @RequestParam("keyword") @Length (min = 1, max= 255, message = "{invalid.request}") String keyword,
                                @SortDefault.SortDefaults({
-                                       @SortDefault(sort = "isNotice", direction = Sort.Direction.DESC),
+                                       @SortDefault(sort = "is_notice", direction = Sort.Direction.DESC),
                                        @SortDefault(sort = "id", direction = Sort.Direction.DESC)}) Pageable pageable, HttpServletRequest request);
 
     PostResponseDTO findPostByUserId (@SortDefault.SortDefaults({@SortDefault(sort = "id", direction = Sort.Direction.DESC)}) Pageable pageable,
