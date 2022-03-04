@@ -1,11 +1,25 @@
 import styled from 'styled-components';
 
-// export const AppContainer = styled.div`
-// 	display: flex;
-// 	flex-direction: column;
-// 	height: 100vh;
-// 	background: #6BB8F0;
-// `;
+export const LogoImg = styled.div`
+	position: absolute;
+	top: 50%;
+  left: 50%;
+	transform: translate(-50%, -50%);
+	img {
+		height: 5rem;
+	}
+	${({theme}) => theme.media.tablet`
+		img {
+			height: 6rem;
+		}
+	`}
+	${({theme}) => theme.media.desktop`
+		img {
+			height: 6rem;
+		}
+	`}
+`;
+
 
 export const SettingsBtn = styled.div`
 	position: absolute;
