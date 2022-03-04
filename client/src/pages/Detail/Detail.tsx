@@ -113,7 +113,7 @@ function Detail() {
 			onError: () => { window.location.href = '/error'; }
 		});
 	}
-
+console.log('1')
 	const likeBoxHandler = () => {
 		mutationPost.mutate({path: `/post/like?postId=${postUrl}`, data: undefined}, {
 			onSuccess: () => {
