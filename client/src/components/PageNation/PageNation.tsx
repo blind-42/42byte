@@ -1,5 +1,6 @@
 
 import Pagination from 'react-js-pagination';
+import { IoPlaySkipBackSharp, IoPlaySkipForwardSharp, IoCaretBackSharp, IoCaretForwardSharp } from "react-icons/io5";
 import { PageContainer, PageNationWrap } from './styled'
 
 interface GreetingProps {
@@ -23,8 +24,10 @@ function PageNation({
 							itemsCountPerPage={1}
 							pageRangeDisplayed={5}
 							totalItemsCount={totalPages}
-							prevPageText="<"
-							nextPageText=">"
+							firstPageText={<IoPlaySkipBackSharp />}
+							lastPageText={<IoPlaySkipForwardSharp/>}
+							prevPageText={<IoCaretBackSharp />}
+							nextPageText={<IoCaretForwardSharp />}
 							onChange={pageChangeHandler}
 						/>
 				</PageNationWrap>
