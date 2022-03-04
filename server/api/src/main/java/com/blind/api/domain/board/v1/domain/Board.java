@@ -45,4 +45,8 @@ public class Board extends BaseTimeEntity {
         this.manager = manager;
         this.name = name;
     }
+
+    public Board(String name) {
+        this.name = name;
+    }
 }

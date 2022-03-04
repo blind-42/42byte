@@ -16,7 +16,7 @@ import java.util.Optional;
 @Repository
 public interface CommentRepository extends JpaRepository<Comment, Long> {
     List<Comment> findAllByBoardIdAndPostId(Long boardId, Long postId);
-    Page<Comment> findCommentByAuthorId(Long userId, Pageable pageable);
+    Page<Comment> findCommentByAuthorIdAndIsDelEqualsAndBlameCntLessThan(Long userId, Integer isDel, Long blameCnt, Pageable pageable);
     void deleteCommentByPostId(Long postId);
     @Modifying
     @Query("update Comment p set p.likeCnt = p.likeCnt + :add where p.id = :id")

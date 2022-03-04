@@ -6,12 +6,13 @@ import com.blind.api.domain.user.v2.domain.User;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
+import java.util.List;
+
 public interface PostService {
-    Page<Post> findAllByBoardId(Long boardId, Pageable pageable);
+    Page<Post> findAllByBoardId(Long boardId, User user, Pageable pageable);
     Post findById(Long postId);
-    Page<Post> findAllByAuthorId(Long authorId, Pageable pageable);
     Post save(Board board, User user, String title, String content);
-    Page<Post> search(String keyword, Pageable pageable);
+    Page<Post> search(Long boardId, User user, String keyword, Pageable pageable);
     void updateLike(Long postId, Long add);
     void updateView(Long postId);
     void updatePost(Post post, String title, String content);

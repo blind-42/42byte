@@ -1,14 +1,14 @@
 spring:
   # 데이터 소스 설정
   datasource:
-    url: jdbc:mysql://localhost:3306/TEST?serverTimezone=Asia/Seoul&characterEncoding=UTF-8
-    driverClassName: com.mysql.cj.jdbc.Driver
-    username: root
-    password: blind42blind42
-#     url: jdbc:mysql://172.27.0.52:3306/TEST?serverTimezone=Asia/Seoul&characterEncoding=UTF-8
-#     driverClassName: com.mysql.cj.jdbc.Driver
-#     username: root
-#     password: Blind$242
+#    url: jdbc:mysql://localhost:3306/TEST?serverTimezone=Asia/Seoul&characterEncoding=UTF-8
+#    driverClassName: com.mysql.cj.jdbc.Driver
+#    username: root
+#    password: blind42blind42
+     url: jdbc:mysql://172.27.0.52:3306/TEST?serverTimezone=Asia/Seoul&characterEncoding=UTF-8
+     driverClassName: com.mysql.cj.jdbc.Driver
+     username: root
+     password: Blind$242
   jpa:
     database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
     hibernate:
@@ -37,6 +37,7 @@ spring:
       #sort = "id", direction = Sort.Direction.DESC)
   # Security OAuth
   security:
+    requir-ssl: true
     oauth2.client:
         registration:
           42:
@@ -83,3 +84,13 @@ jwt.secret: a2f6abd304bcd1d2ff9691bb0e7c1bab1010d0466c628d23b49550fb932300a43054
 
 van:
   blame: 5
+
+#server:
+#  ssl:
+#    enabled: true
+##    key-store: keystore.p12
+#    key-store: keystore.p12
+#    key-store-password: 42byte
+#    key-store-type: PKCS12
+#    key-alias: bns-ssl
+#  port: 8080

@@ -274,7 +274,7 @@ class AdminControllerImplTest {
         Post blockedPost = postService.save(board,user,"title", "content");
         blockedPost.setBlameCnt(5L);
         blockedPost.setIsDel(0);
-        postService.updatePost(blockedPost);
+        postService.restorePost(blockedPost);
         mockMvc.perform(post("/admin/restore/post")
                         .param("postId", blockedPost.getId().toString())
                         .header("Authorization", "Bearer access0"))
@@ -291,7 +291,7 @@ class AdminControllerImplTest {
         Post blockedPost = postService.save(board,user,"title", "content");
         blockedPost.setIsDel(3);
 
-        postService.updatePost(blockedPost);
+        postService.restorePost(blockedPost);
         mockMvc.perform(post("/admin/restore/post")
                         .param("postId", blockedPost.getId().toString())
                         .header("Authorization", "Bearer access0"))

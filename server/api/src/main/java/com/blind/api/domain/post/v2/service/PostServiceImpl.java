@@ -16,6 +16,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.List;
 
 @Service
 @AllArgsConstructor
@@ -27,17 +28,11 @@ public class PostServiceImpl implements PostService {
 
     @Override
     @Transactional
-    public Page<Post> findAllByBoardId(Long boardId, Pageable pageable) {
+    public Page<Post> findAllByBoardId(Long boardId, User user, Pageable pageable) {
         Long blame = Long.parseLong(applicationYmlRead.getBlame());
-        Page<Post> postList = postRepository.findAllByBoardIdAndIsDelLessThanEqualAndBlameCntIsLessThan(boardId, 0, blame, pageable);
+        Page<Post> postList = postRepository.findPostForUser(boardId, 0, blame, user.getId(), pageable);
 
         return postList;
-    }
-
-    @Override
-    @Transactional
-    public Page<Post> findAllByAuthorId(Long authorId, Pageable pageable) {
-        return postRepository.findAllByAuthorId(authorId, pageable);
     }
 
     @Override
@@ -60,8 +55,11 @@ public class PostServiceImpl implements PostService {
 
     @Override
     @Transactional
-    public Page<Post> search(String keyword, Pageable pageable) {
-        return postRepository.findPostsWithKeyword(keyword, pageable);
+    public Page<Post> search(Long boardId, User user, String keyword, Pageable pageable) {
+        Long blame = Long.parseLong(applicationYmlRead.getBlame());
+        if (boardId == 0)
+            return postRepository.findPostsWithKeyword(0, blame, user.getId(), keyword, pageable);
+        return postRepository.findPostsWithKeywordByBoard(boardId, 0, blame, user.getId(), keyword, pageable);
     }
 
     @Override
@@ -98,7 +96,7 @@ public class PostServiceImpl implements PostService {
     @Override
     @Transactional
     public Page<Post> findPostByIdIn(User user, Pageable pageable) {
-        return postRepository.findAllByAuthorId(user.getId(), pageable);
+        return postRepository.findAllByAuthorIdAndIsDelEquals(user.getId(), 0, pageable);
     }
 
     @Override

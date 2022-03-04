@@ -11,13 +11,16 @@ import org.springframework.data.repository.query.Param;
 import java.util.List;
 
 public interface PostRepository extends PagingAndSortingRepository<Post, Long> {
-    Page<Post> findAllByBoardIdAndIsDelLessThanEqualAndBlameCntIsLessThan(Long boardId, Integer isDel, Long BlameCnt, Pageable pageable);
-    Page<Post> findAllByAuthorId(Long authorId, Pageable pageable);
-    @Query(
-            value = "SELECT p FROM Post p WHERE p.title LIKE %:keyword% OR p.content LIKE %:keyword%",
-            countQuery = "SELECT COUNT(p.id) FROM Post p WHERE p.title LIKE %:keyword% OR p.content LIKE %:keyword%"
-    )
-    Page<Post> findPostsWithKeyword(@Param(value = "keyword")String keyword, Pageable pageable);
+
+    @Query(nativeQuery = true, value = "select * from post where id not in (select post_id as id from post_blame where user_id = :userId) and board_id = :boardId and is_del = :isDel and blame_count < :blameCnt")
+    Page<Post> findPostForUser(@Param("boardId") Long boardId, @Param("isDel") Integer isDel, @Param("blameCnt") Long BlameCnt, @Param("userId") Long userId, Pageable pageable);
+
+    Page<Post> findAllByAuthorIdAndIsDelEquals(Long authorId, Integer isDel, Pageable pageable);
+    @Query(nativeQuery = true, value = "select * from post where id not in (select post_id as id from post_blame where user_id = :userId) and board_id = :boardId and is_del = :isDel and blame_count < :blameCnt and title like %:keyword% or content like %:keyword%")
+    Page<Post> findPostsWithKeywordByBoard(@Param("boardId") Long boardId, @Param("isDel") Integer isDel, @Param("blameCnt") Long BlameCnt, @Param("userId") Long userId, @Param(value = "keyword")String keyword, Pageable pageable);
+
+    @Query(nativeQuery = true, value = "select * from post where id not in (select post_id as id from post_blame where user_id = :userId) and is_del = :isDel and blame_count < :blameCnt and title like %:keyword% or content like %:keyword%")
+    Page<Post> findPostsWithKeyword(@Param("isDel") Integer isDel, @Param("blameCnt") Long BlameCnt, @Param("userId") Long userId, @Param(value = "keyword")String keyword, Pageable pageable);
 
     @Modifying
     @Query("update Post p set p.viewCnt = p.viewCnt + 1 where p.id = :id")
