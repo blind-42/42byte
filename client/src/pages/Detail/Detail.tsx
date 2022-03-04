@@ -42,13 +42,12 @@ function Detail() {
 		({ path }: { path: string; }) => instance.patch(path));
 	const results = useQueries([
 		{
-			queryKey: ['detail_key', postUrl],
+			queryKey: ['detail_key', boardUrl, postUrl, boxState],
 			queryFn: () => {
 				instance
 				.get(`/post?boardId=${boardUrl}&postId=${postUrl}`)
 				.then((res) => {
 					setDetailData(res.data);
-					setBoxState(res.data.isLiked);
 				})},
 			retry: 0, 
 			refetchOnWindowFocus: false,
@@ -109,7 +108,8 @@ function Detail() {
 		mutationPatch.mutate({path: `/post?postId=${id}`}, {
 			onSuccess: () => {
 				isNotice ? alert('공지가 해제되었습니다.') : alert('공지가 성공적으로 등록되었습니다.');
-				queryClient.invalidateQueries(['detail_key']); },
+				queryClient.invalidateQueries(['detail_key']); 
+			},
 			onError: () => { window.location.href = '/error'; }
 		});
 	}
@@ -117,8 +117,8 @@ console.log('1')
 	const likeBoxHandler = () => {
 		mutationPost.mutate({path: `/post/like?postId=${postUrl}`, data: undefined}, {
 			onSuccess: () => {
-				queryClient.invalidateQueries(['detail_key']);
-				setBoxState(!boxState);},
+				setBoxState(!boxState);
+			},
 			onError: () => { window.location.href = '/error'; } 
 		});
 	}
@@ -171,7 +171,7 @@ console.log('1')
 									<Viewer initialValue={content}/>
 								</ContentWrap>}
 								<LikeWrap>
-									<LikesBox boxState={boxState} onClick={likeBoxHandler}>
+									<LikesBox boxState={isLiked} onClick={likeBoxHandler}>
 										<div><GrLike /></div>
 										<div>{likeCnt}</div>
 									</LikesBox>
