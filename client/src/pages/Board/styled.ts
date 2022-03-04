@@ -20,64 +20,72 @@ export const UtilWrap = styled.div`
 
 export const Search = styled.div`
 	display: flex;
-	justify-content: space-between;
-	align-items: center;
+	align-items: center;	
 	border-top: solid 2px #000;
 	border-left: solid 2px #000;
 	border-right: solid 2px #fff;
 	border-bottom: solid 2px #fff;
 	height: 2.3rem;
 	background: #fff;
-	input {
-		font-size: 1.1rem;
-		width: 15rem;
+	form {
 		display: flex;
-		padding-left: 0.3rem;
-		border: none;
-	}
-	button {
-		cursor: pointer;
-		margin-right: -2px;
-		background: #518EDB;
-		border-top: solid 2px #fff;
-		border-left: solid 2px #fff;
-		border-right: solid 2px #000;
-		border-bottom: solid 2px #000;
-		color: #fff;
-		height: 2.3rem;
-		width: 2.3rem;
-		display: flex;
+		justify-content: space-between;
 		align-items: center;
-		justify-content: center;
-		div {
-			font-size: 1.2rem;
+		input {
+			font-size: 1.1rem;
+			width: 15rem;
+			display: flex;
+			padding-left: 0.3rem;
+			border: none;
+		}
+		button {
+			cursor: pointer;
+			margin-right: -2px;
+			background: #518EDB;
+			border-top: solid 2px #fff;
+			border-left: solid 2px #fff;
+			border-right: solid 2px #000;
+			border-bottom: solid 2px #000;
+			color: #fff;
+			height: 2.3rem;
+			width: 2.3rem;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			div {
+				font-size: 1.2rem;
+			}
 		}
 	}
 	${({theme}) => theme.media.tablet`
 		height: 1.6rem;
-		input {
-			font-size: 0.8rem;
-			width: 12rem;
-		}
-		button {
-			height: 1.6rem;
-			width: 1.6rem;
-			div {
-				font-size: 1rem; 
+		form {
+			input {
+				font-size: 0.8rem;
+				width: 12rem;
+			}
+			button {
+				height: 1.6rem;
+				width: 1.6rem;
+				div {
+					font-size: 1rem; 
+				}
 			}
 		}
 	`}
 	${({theme}) => theme.media.desktop`
 		height: 1.6rem;
-		input {
-			font-size: 0.8rem;
-			width: 12rem;
-		}
-		button {
-			height: 1.6rem;
-			width: 1.6rem;
-			div {
+		form {
+			input {
 				font-size: 0.8rem;
+				width: 12rem;
+			}
+			button {
+				height: 1.6rem;
+				width: 1.6rem;
+				div {
+					font-size: 0.8rem;
+				}
 			}
 		}
 	`}

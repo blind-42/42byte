@@ -20,6 +20,7 @@ type GreetingProps = {
 export default function Menubar({ menubarHandler }: GreetingProps) {
 	const [isLoggedIn, setIsLoggedIn] = useRecoilState(LoggedinState);
 	const [openLoginModal, setOpenLoginModal] = useState<boolean>(false);
+	const [keyword, setKeyword] = useState('');
 	const [boardList, setBoardList] = useState<BoardList>({contents: [], page: 0, pages: 0});
 	const { contents, page, pages } = boardList;
 	const { isFetching, isLoading, error, data } = useQuery(
@@ -44,10 +45,17 @@ export default function Menubar({ menubarHandler }: GreetingProps) {
     setOpenLoginModal(!openLoginModal);
   };
 
-	const toWriting = () => {
-		window.location.href='/writing';
+	const keywordHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
+		setKeyword(event.target.value);
 	}
 	
+	const searchHandeler = () => {
+		instance
+		.get(`/board/search?boardId=1&keyword=${keyword}`)
+		.then((res) => console.log(res.data))
+		.catch((err) => console.log(err))
+	}
+
 	if (isFetching || isLoading) return <Loading />
 
 	if (error) return <Error />
@@ -111,16 +119,20 @@ export default function Menubar({ menubarHandler }: GreetingProps) {
 				<UtilWrap>
 					{isLoggedIn
 					? <Search>
-							<input type="text" placeholder='검색어를 입력하세요'/>
-							<button>
-								<div><GoSearch /></div>
-							</button>
+							<form name='searchForm'>
+								<input type='text' onChange={keywordHandler} placeholder='검색어를 입력하세요'/>
+								<button onClick={searchHandeler}>
+									<div><GoSearch /></div>
+								</button>
+							</form>
 						</Search>
 					: <Search onClick={openLoginModalHandler}>
-							<input type="text" placeholder='검색어를 입력하세요'/>
-							<button>
-								<div><GoSearch /></div>
-							</button>
+							<form name='searchForm'>
+								<input type="text" placeholder='검색어를 입력하세요'/>
+								<button>
+									<div><GoSearch /></div>
+								</button>
+							</form>
 						</Search>
 					}
 				</UtilWrap>
