@@ -3,7 +3,7 @@ import styled from 'styled-components';
 export const MenubarContainer = styled.div`
 	z-index: 1;
 	position: fixed;
-	bottom: 4.5vh;
+	bottom: 3rem;
 	left: 0;
 	padding: 3px;
 	display: flex;
@@ -17,9 +17,11 @@ export const MenubarContainer = styled.div`
 	border-bottom: solid 2px #000;
 	${({theme}) => theme.media.tablet`
 		width: 21rem;
+		bottom: 2.5rem;
   `}
 	${({theme}) => theme.media.desktop`
 		width: 17rem;
+		bottom: 2.5rem;
 	`}
 `;
 
@@ -65,14 +67,14 @@ export const Topbar = styled.div`
 export const ContentContainer = styled.div`
 	display: grid;
 	grid-template-rows: 1fr 9rem 3.5rem;
-	height: 80vh;
+	/* height: 80vh; */
 	${({theme}) => theme.media.tablet`
 		grid-template-rows: 1fr 7rem 2.5rem;
-		height: 70vh;
+		// height: 70vh;
 	`}
 	${({theme}) => theme.media.desktop`
 		grid-template-rows: 1fr 6rem 2.5rem;
-		height: 75vh;
+		// height: 75vh;
 	`}
 `;
 export const UserProfileWrap = styled.div`
@@ -286,15 +288,28 @@ export const WrapTitle = styled.div`
 	background: #D5D5D5;
 	color: #000;
 	height: 2.5rem;
+	font-family: 'Press Start 2P', cursive;
 	font-size: 1.3rem;
 	font-weight: 500;
+	img {
+		height: 2rem;
+		margin: 0.5rem;
+	}
 	${({theme}) => theme.media.tablet`
 		height: 1.8rem;
 		font-size: 1.1rem;
+		img {
+			height: 1.4rem;
+			margin: 0.5rem;
+		}
 	`}
 	${({theme}) => theme.media.desktop`
 		height: 1.5rem;
-		font-size: 0.9rem;
+		font-size: 0.8rem;
+		img {
+			height: 1.1rem;
+			margin: 0.5rem;
+		}
 	`}
 `;
 
@@ -304,7 +319,7 @@ export const BoardNames = styled.div`
 	align-items: center;
 	margin: 2rem 0;
 	div {
-		width: 16rem;
+		width: 18rem;
 		cursor: pointer;
 		font-size: 1.5rem;
 		font-weight: 400;
@@ -312,14 +327,14 @@ export const BoardNames = styled.div`
 	}
 	${({theme}) => theme.media.tablet`
 	div {
-		width: 12rem;
+		width: 14rem;
 		font-size: 1.1rem;
 		margin-bottom: 1.1rem;
 	}
 	`}
 	${({theme}) => theme.media.desktop`
 	div {
-		width: 11rem;
+		width: 13rem;
 		font-size: 0.9rem;
 		margin-bottom: 0.9rem;
 	}

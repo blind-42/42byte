@@ -4,6 +4,7 @@ import { useRecoilState } from 'recoil';
 import { Link } from 'react-router-dom';
 import { LoggedinState } from 'States/LoginState';
 import { GoSearch } from "react-icons/go";
+import { AiFillFolderOpen } from "react-icons/ai";
 import Loading from 'pages/Loading/Loading';
 import Error from 'pages/Error/Error';
 import LoginModal from 'components/Modal/LoginModal';
@@ -71,13 +72,19 @@ export default function Menubar({ menubarHandler }: GreetingProps) {
 				</Topbar>
 				<ContentContainer>
 				<BoardListWrap>
-					<WrapTitle>TOP 게시판</WrapTitle>
+					<WrapTitle>
+						{isLoggedIn 
+						? 'welcome!' : 'Join us? '}
+						<img src="/images/ourImg.png" alt='Ourimg' />
+					</WrapTitle>
 					<BoardNames>
 					{contents.map((el: BoardPre, idx) => {
 						return (
 							!(el.isDel) &&
 							<Link to={`/board?=boardId=${el.id}`} key={idx}>
-								<div onClick={menubarHandler}>{stringLimit(el.name, 10)}</div>
+								<div onClick={menubarHandler}>
+									<AiFillFolderOpen /> {stringLimit(el.name, 10)}
+								</div>
 							</Link>
 						)
 					})}
