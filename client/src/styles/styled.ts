@@ -1,15 +1,23 @@
 import styled from 'styled-components';
 
 export const AppContainer = styled.div`
-	display: flex;
-	flex-direction: column;
-	align-items: center;
+	// display: flex;
+	// flex-direction: column;
+	// align-items: center;
+	display: grid;
+	grid-template-rows: 1fr 3rem; 
+	justify-items: center;
 	background: #6BB8F0;
 	height: 100vh;
+	${({theme}) => theme.media.tablet`
+		grid-template-rows: 1fr 2.5rem; 
+	`}
+	${({theme}) => theme.media.desktop`
+		grid-template-rows: 1fr 2.5rem; 
+	`}
 `;
 
 export const PageContainer = styled.div`
-	height: 95vh;
 	width: 100vw;
 	background: #C4C4C4;
 	padding: 3px;

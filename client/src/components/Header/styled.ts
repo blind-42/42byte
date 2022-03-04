@@ -3,7 +3,7 @@ import styled from 'styled-components';
 export const HeaderContainer = styled.div`
 	position: fixed;
 	bottom: 0;
-  height: 5vh;
+  height: 3rem;
 	width: 100vw;
   display: flex;
   justify-content: space-between;
@@ -12,11 +12,11 @@ export const HeaderContainer = styled.div`
 	border-top: solid 2px #fff;
 	border-left: solid 2px #fff;
 	${({theme}) => theme.media.tablet`
-		height: 4.5vh;
+		height: 2.5rem;
 		padding: 3px;
 	`}
 	${({theme}) => theme.media.desktop`
-		height: 4.5vh;
+		height: 2.5rem;
 		padding: 3px;
 	`}
 `;
@@ -53,9 +53,22 @@ export const Logo = styled.div`
 	align-items: center;
 	justify-content: center;
 	margin: 0 3px;
-	padding: 0 1rem;
+	padding: 0 0.5rem;
 	border-right: solid 2px #929191;
 	border-left: solid 2px #929191;
+	img {
+		height: 2.5rem;
+	}
+	${({theme}) => theme.media.tablet`
+		img {
+			height: 2rem;
+		}
+	`}
+	${({theme}) => theme.media.desktop`
+		img {
+			height: 2rem;
+		}
+	`}
 `;
 
 export const Clock = styled.div`
