@@ -75,7 +75,7 @@ export default function Menubar({ menubarHandler }: GreetingProps) {
 					<WrapTitle>
 						{isLoggedIn 
 						? 'welcome!' : 'Join us? '}
-						<img src="/images/ourImg.png" alt='Ourimg' />
+						<img src="/images/dogfoot.png" alt='footimg' />
 					</WrapTitle>
 					<BoardNames>
 					{contents.map((el: BoardPre, idx) => {
