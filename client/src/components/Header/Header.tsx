@@ -32,7 +32,7 @@ export default function Header() {
 					{showMenu && <Menubar menubarHandler={menubarHandler}/>}
 					<Logo>
 						<Link to="/">
-							<img src="" alt="LOGO" />
+							<img src="/images/42byteLogo.png" alt="LOGO" />
 						</Link>
 					</Logo>
 				</MenubarLogoWrap>
