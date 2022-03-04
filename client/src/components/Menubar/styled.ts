@@ -197,8 +197,9 @@ export const UtilWrap = styled.div`
 
 export const Search = styled.div`
 	display: flex;
-	justify-content: space-between;
-	align-items: center;
+	flex-direction: column;
+	justify-content: center;
+	align-items: stretch;
 	border-top: solid 2px #000;
 	border-left: solid 2px #000;
 	border-right: solid 2px #fff;
@@ -206,56 +207,65 @@ export const Search = styled.div`
 	height: 2.5rem;
 	margin: 3px;
 	background: #fff;
-	input {
-		font-size: 1.2rem;
-		width: 20rem;
+	form {
 		display: flex;
-		padding-left: 0.3rem;
-		border: none;
-	}
-	button {
-		cursor: pointer;
-		margin-right: -2px;
-		background: #518EDB;
-		border-top: solid 2px #fff;
-		border-left: solid 2px #fff;
-		border-right: solid 2px #000;
-		border-bottom: solid 2px #000;
-		color: #fff;
-		height: 2.5rem;
-		width: 2.5rem;
-		display: flex;
+		justify-content: space-between;
 		align-items: center;
-		justify-content: center;
-		div {
-			font-size: 1.3rem;
+		input {
+			font-size: 1.2rem;
+			width: 20rem;
+			display: flex;
+			padding-left: 0.3rem;
+			border: none;
+		}
+		button {
+			cursor: pointer;
+			margin-right: -2px;
+			background: #518EDB;
+			border-top: solid 2px #fff;
+			border-left: solid 2px #fff;
+			border-right: solid 2px #000;
+			border-bottom: solid 2px #000;
+			color: #fff;
+			height: 2.5rem;
+			width: 2.5rem;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			div {
+				font-size: 1.3rem;
+			}
 		}
 	}
 	${({theme}) => theme.media.tablet`
 		height: 1.8rem;
-		input {
-			font-size: 1rem;
-			width: 17rem;
-		}
-		button {
-			height: 1.8rem;
-			width: 1.8rem;
-			div {
-				font-size: 1.1rem; 
+		form {
+			input {
+				font-size: 1rem;
+				width: 17rem;
+			}
+			button {
+				height: 1.8rem;
+				width: 1.8rem;
+				div {
+					font-size: 1.1rem; 
+				}
 			}
 		}
 	`}
 	${({theme}) => theme.media.desktop`
 		height: 1.7rem;
-		input {
-			font-size: 0.8rem;
-			width: 13rem;
-		}
-		button {
-			height: 1.7rem;
-			width: 1.7rem;
-			div {
-				font-size: 0.9rem; 
+		form {
+			input {
+				font-size: 0.8rem;
+				width: 13rem;
+			}
+			button {
+				height: 1.7rem;
+				width: 1.7rem;
+				div {
+					font-size: 0.9rem; 
+				}
 			}
 		}
 	`}

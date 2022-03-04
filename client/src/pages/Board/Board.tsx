@@ -16,6 +16,7 @@ import { UtilPostWrap, UtilWrap, Search, WritingButton, PostWrap, ContentWrap } 
 export default function Board() {
 	const [boardData, setBoardData] = useState<BoardData>({id: 0, name: '', contents: [], page: 0, pages: 0});
 	const { id, name, contents, page, pages } = boardData;
+	const [keyword, setKeyword] = useState('');
 	const currentUrl = window.location.href;
 	const boardUrl = currentUrl.split('&page=')[0].split('boardId=')[1];
 	const pageUrl = currentUrl.split('&page=')[1];
@@ -37,6 +38,18 @@ export default function Board() {
 		navigate(`/board?boardId=${id}&page=${page}`);
 		scrollRef.current?.scrollIntoView(true);
 	};
+
+	const keywordHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
+		setKeyword(event.target.value);
+	}
+	
+	const searchHandeler = () => {
+		instance
+		.get(`/board/search?boardId=1&keyword=${keyword}`)
+		.then((res) => console.log(res.data))
+		.catch((err) => console.log(err))
+	}
+
 
 	if (isLoading) return <Loading />
 
@@ -61,10 +74,12 @@ export default function Board() {
 						<UtilPostWrap>
 							<UtilWrap>
 								<Search>
-									<input type="text" placeholder='검색어를 입력하세요'/>
-									<button>
-										<div><GoSearch /></div>
-									</button>
+									<form name='searchForm'>
+										<input type='text' onChange={keywordHandler} placeholder='검색어를 입력하세요'/>
+										<button onClick={searchHandeler}>
+											<div><GoSearch /></div>
+										</button>
+									</form>
 								</Search>
 								<WritingButton>
 									<Link to={`/writing?=boardId=${id}`}>
