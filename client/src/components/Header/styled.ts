@@ -27,29 +27,24 @@ export const MenubarLogoWrap = styled.div`
 `;
 
 export const MenubarButton = styled.div`
+	cursor: pointer;
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	cursor: pointer;
 	border-top: solid 2px #fff;
 	border-left: solid 2px #fff;
 	border-right: solid 2px #000;
 	border-bottom: solid 2px #000;
 	width: 6rem;
-	div {
-		font-size: 1.2rem;
-	}
+	font-size: 1rem;
+	font-family: 'Press Start 2P', cursive;
 	${({theme}) => theme.media.tablet`
 		width: 5.5rem;
-		div {
-			font-size: 1rem;
-		}
+		font-size: 0.8rem;
 	`}
 	${({theme}) => theme.media.desktop`
 		width: 5rem;
-		div {
-			font-size: 1rem;
-		}
+		font-size: 0.8rem;
 	`}
 `;
 
@@ -61,4 +56,16 @@ export const Logo = styled.div`
 	padding: 0 1rem;
 	border-right: solid 2px #929191;
 	border-left: solid 2px #929191;
+`;
+
+export const Clock = styled.div`
+	display: flex;
+	align-items: center;
+	border-top: solid 2px #000;
+	border-left: solid 2px #000;
+	border-right: solid 2px #fff;
+	border-bottom: solid 2px #fff;
+	padding: 0.3rem 0.5rem;
+	font-family: 'Press Start 2P', cursive;
+	font-size: 0.8rem;
 `;
