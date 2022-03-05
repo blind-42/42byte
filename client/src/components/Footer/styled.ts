@@ -27,34 +27,43 @@ export const GitLink = styled.div`
 		font-size: 2.5rem;
 		height: 2.5rem;
 		width: 2.5rem;
+		img {
+			width: 2.3rem;
+		}
 	}
-	div:last-child {
-		padding-top: 0.3rem;
-		font-size: 2.2rem;
-	}
+	// div:last-child {
+	// 	padding-top: 0.3rem;
+	// 	font-size: 2.2rem;
+	// }
 	${({theme}) => theme.media.tablet`
 		div {
-			margin: 0 0.2rem;
+			margin: 0 0.3rem;
 			font-size: 1.3rem;
 			height: 1.3rem;
 			width: 1.3rem;
+			img {
+				width: 1.3rem;
+			}
 		}
-		div:last-child {
-			padding-top: 0.1rem;
-			font-size: 1.13rem;
-		}
+		// div:last-child {
+		// 	padding-top: 0.1rem;
+		// 	font-size: 1.13rem;
+		// }
 	`}
 	${({theme}) => theme.media.desktop`
 		div {
-			margin: 0 0.2rem;
+			margin: 0 0.3rem;
 			font-size: 1.3rem;
 			height: 1.3rem;
 			width: 1.3rem;
+			img {
+				width: 1.3rem;
+			}
 		}
-		div:last-child {
-			padding-top: 0.1rem;
-			font-size: 1.13rem;
-		}
+		// div:last-child {
+		// 	padding-top: 0.1rem;
+		// 	font-size: 1.13rem;
+		// }
 	`}
 `;
 

@@ -7,8 +7,18 @@ function Footer() {
     <>
       <FooterWrap>
         <GitLink>
-          <div><a href='https://github.com/blind-42/Blind42/wiki/정책-정의서(1.3-update)'><AiFillAlert /></a></div>
-          <div><a href='https://github.com/blind-42/Blind42'><FaGithubAlt /></a></div>
+          <div>
+						<a href='https://github.com/blind-42/Blind42/wiki/정책-정의서(1.3-update)'>
+							{/* <AiFillAlert /> */}
+							<img src='images/rulesImg.png' />
+						</a>
+					</div>
+          <div>
+						<a href='https://github.com/blind-42/Blind42'>
+							{/* <FaGithubAlt /> */}
+							<img src='images/githubImg.png' />
+						</a>
+					</div>
         </GitLink>
 				<Names>
 					<div>donghyuk | nheo | jihyukim | jabae | jinhyupa</div>
