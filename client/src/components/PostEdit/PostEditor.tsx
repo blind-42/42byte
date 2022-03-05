@@ -1,72 +1,118 @@
-import { useState, useRef, useEffect } from 'react'
+import { useState, useRef, useEffect } from 'react';
+import S3 from 'react-aws-s3-typescript';
+import { v4 as uuidv4 } from 'uuid';
 import { Editor } from '@toast-ui/react-editor';
 import instance from 'utils/functions/axios';
 import { PostData } from 'utils/functions/type';
-import { EditorContainer, TitleUploadWrap, EditorWrap, Title, UploadButton } from './styled'
+import {
+  EditorContainer,
+  TitleUploadWrap,
+  EditorWrap,
+  Title,
+  UploadButton,
+} from './styled';
+
+window.Buffer = window.Buffer || require('buffer').Buffer;
 
 type PostDataType = {
-  detailData? : PostData
-	boardId: number
-}
+  detailData?: PostData;
+  boardId: number;
+};
 
 export default function PostEditor({ detailData, boardId }: PostDataType) {
   const [title, setTitle] = useState<string>('');
-	const [content, setContent] = useState<string>('');
-	const editorRef = useRef<Editor>(null);
+  const [content, setContent] = useState<string>('');
+  const editorRef = useRef<Editor>(null);
   const currentUrl = window.location.href;
-	const urlId = currentUrl.split('&postId=')[1];
+  const urlId = currentUrl.split('&postId=')[1];
 
   useEffect(() => {
     if (detailData) {
-      editorRef.current?.getInstance().setMarkdown(detailData.content)
-      setTitle(detailData.title)
-      setContent(detailData.content)
+      editorRef.current?.getInstance().setMarkdown(detailData.content);
+      setTitle(detailData.title);
+      setContent(detailData.content);
     }
-  },[])
+  }, []);
 
-	const uploadHandler = () => {
-		if (window.location.pathname === '/writing') {
-			instance
-			.post(`/post?boardId=${boardId}`, { title: title, content: content })
-			.then((res) => window.location.href=`/detail?boardId=${boardId}&postId=${res.data.id}`)
-			.catch((err) => console.log(err));
-    }
-    else {
-			instance
-			.put(`/post?boardId=${boardId}&postId=${detailData?.id}`, { title: title, content: content })
-			.then(() => window.location.href=`/detail?boardId=${boardId}&postId=${urlId}`)
-			.catch((err) => console.log(err));
-    }
-	}
+  useEffect(() => {
+    if (editorRef.current) {
+      editorRef.current.getInstance().removeHook('addImageBlobHook');
 
-	const titleHandler = (event: { target: { value: string } }) => {setTitle(event.target.value)};
-	const contentHandler = () => {
-		setContent(editorRef.current?.getInstance().getMarkdown() || '');
-	}
+      editorRef.current
+        .getInstance()
+        .addHook('addImageBlobHook', (blob, callback) => {
+          const s3config = {
+            bucketName: process.env.REACT_APP_BUCKET_NAME as string,
+            region: process.env.REACT_APP_REGION as string,
+            accessKeyId: process.env.REACT_APP_ACCESS_ID as string,
+            secretAccessKey: process.env.REACT_APP_ACCESS_KEY as string,
+          };
+          const ReactS3Client = new S3(s3config);
+          ReactS3Client.uploadFile(blob, uuidv4())
+            .then((data) => callback(data.location, 'imageURL'))
+            .catch((err) => (window.location.href = '/error'));
+        });
+    }
+  }, []);
+
+  const uploadHandler = () => {
+    if (window.location.pathname === '/writing') {
+      instance
+        .post(`/post?boardId=${boardId}`, { title: title, content: content })
+        .then(
+          (res) =>
+            (window.location.href = `/detail?boardId=${boardId}&postId=${res.data.id}`),
+        )
+        .catch((err) => console.log(err));
+    } else {
+      instance
+        .put(`/post?boardId=${boardId}&postId=${detailData?.id}`, {
+          title: title,
+          content: content,
+        })
+        .then(
+          () =>
+            (window.location.href = `/detail?boardId=${boardId}&postId=${urlId}`),
+        )
+        .catch((err) => console.log(err));
+    }
+  };
+
+  const titleHandler = (event: { target: { value: string } }) => {
+    setTitle(event.target.value);
+  };
+  const contentHandler = () => {
+    setContent(editorRef.current?.getInstance().getMarkdown() || '');
+  };
   return (
-		<>
-			<EditorContainer>
-			<TitleUploadWrap>
-				<Title>
-					<input onChange={titleHandler} type="text" placeholder='제목을 입력해 주세요.' value={title}/>
-				</Title>
-				<UploadButton>
-					<button onClick={uploadHandler}>등록</button>
-				</UploadButton>
-			</TitleUploadWrap>
-			<EditorWrap>
-				<Editor
-					initialValue={content}
-					previewStyle="tab"
-					height="70vh"
-					initialEditType="markdown"
-					useCommandShortcut={true}
-					// hooks={{addImageBlobHook: }}
-					onChange={contentHandler}
-					ref={editorRef}
-				/>
-			</EditorWrap>
-			</EditorContainer>
+    <>
+      <EditorContainer>
+        <TitleUploadWrap>
+          <Title>
+            <input
+              onChange={titleHandler}
+              type="text"
+              placeholder="제목을 입력해 주세요."
+              value={title}
+            />
+          </Title>
+          <UploadButton>
+            <button onClick={uploadHandler}>등록</button>
+          </UploadButton>
+        </TitleUploadWrap>
+        <EditorWrap>
+          <Editor
+            initialValue={content}
+            previewStyle="tab"
+            height="70vh"
+            initialEditType="markdown"
+            useCommandShortcut={true}
+            // hooks={{addImageBlobHook: }}
+            onChange={contentHandler}
+            ref={editorRef}
+          />
+        </EditorWrap>
+      </EditorContainer>
     </>
-  )
+  );
 }

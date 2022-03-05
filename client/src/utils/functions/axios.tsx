@@ -9,15 +9,15 @@ instance.interceptors.request.use(
     const config = parameter;
 
     config.headers = {
-      'Content-Type' : 'application/json',
-			'Authorization' : `Bearer ${localStorage.getItem('4242-token')}`,
-    }
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${localStorage.getItem('4242-token')}`,
+    };
 
     return config;
   },
   function getError(error) {
     return Promise.reject(error);
-  }
-)
+  },
+);
 
 export default instance;
