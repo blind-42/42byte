@@ -61,14 +61,12 @@ function Detail() {
 				.then((res) => {
 					setCommentData(res.data);
 					setCommentsUserList(makeCommentUserList(res.data))
-					console.log(res.data)
 				})},
 			retry: 0, 
 			refetchOnWindowFocus: false,
 			keepPreviousData: true
 		}
 	]);
-	const isLoading = results.some(result => result.isLoading);
 	const error = results.some(result => result.error);
 
 	const uploadCmtHandler = (comment: string) => {
@@ -123,8 +121,6 @@ function Detail() {
 			onError: () => { window.location.href = '/error'; } 
 		});
 	}
-
-	if (isLoading) return <Loading />
 
 	if (error) return <Error />
 
