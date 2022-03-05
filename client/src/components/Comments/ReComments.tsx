@@ -118,8 +118,8 @@ function ReComments({ recomment, commentsUserList }: GreetingProps) {
 							? <div className='isDel'>&#10754; 신고누적으로 숨김처리된 댓글입니다.</div>
 							: <div>
 									<span>
-										{commentsUserList.indexOf(authorId) < 0
-										? '@작성자 ' : `@카뎃${commentsUserList.indexOf(authorId) + 1} `}
+										{commentsUserList.indexOf(targetAuthorId) < 0
+										? '@작성자 ' : `@카뎃${commentsUserList.indexOf(targetAuthorId) + 1} `}
 									</span>
 									{content}
 								</div>}

@@ -61,6 +61,7 @@ function Detail() {
 				.then((res) => {
 					setCommentData(res.data);
 					setCommentsUserList(makeCommentUserList(res.data))
+					console.log(res.data)
 				})},
 			retry: 0, 
 			refetchOnWindowFocus: false,
@@ -113,7 +114,7 @@ function Detail() {
 			onError: () => { window.location.href = '/error'; }
 		});
 	}
-console.log('1')
+
 	const likeBoxHandler = () => {
 		mutationPost.mutate({path: `/post/like?postId=${postUrl}`, data: undefined}, {
 			onSuccess: () => {
