@@ -39,7 +39,7 @@ function Main() {
 	}, [])
 
 	const adminpage = () => {
-		window.location.href='http://211.253.31.22:8080/admin';
+		window.location.href='http://api-42byte.shop/admin';
 	}
 
   return (
