@@ -72,8 +72,9 @@ export default function Menubar({ menubarHandler }: GreetingProps) {
     event.preventDefault();
     if (!isLoggedIn) {
       openLoginModalHandler();
+    } else {
+      window.location.href = `/search?boardId=0&keyword=${keyword}`;
     }
-    window.location.href = `/search?boardId=0&keyword=${keyword}`;
   };
 
   if (isFetching || isLoading) return <Loading />;
