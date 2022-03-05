@@ -1,5 +1,5 @@
 import React, { useState, useRef } from 'react';
-import { useQuery } from 'react-query';
+import { useQuery, useQueryClient, useMutation } from 'react-query';
 import { Link, useNavigate } from 'react-router-dom';
 import Header from 'components/Header/Header';
 import Footer from 'components/Footer/Footer';
@@ -38,18 +38,28 @@ export default function Board() {
     pages: 0,
   });
   const { id, name, contents, page, pages } = boardData;
-  const [keyword, setKeyword] = useState('');
-  const currentUrl = window.location.href;
-  const boardUrl = currentUrl.split('&page=')[0].split('boardId=')[1];
-  const pageUrl = currentUrl.split('&page=')[1];
+  const [keyword, setKeyword] = useState(
+    decodeURI(window.location.search.split('keyword=')[1]),
+  );
+  const currentUrl = window.location.search;
+  const boardUrl = window.location.search.split('&')[0].split('=')[1];
+  // const pageUrl = currentUrl.split('&page=')[1];
   const navigate = useNavigate();
   const scrollRef = useRef<HTMLDivElement>(null);
 
+  const mutationSearchData = useMutation(({ path }: { path: string }) =>
+    instance.get(path),
+  );
+
   const { error, data } = useQuery(
-    ['board_key', boardUrl, pageUrl],
+    [
+      'search_key',
+      boardUrl,
+      //  pageUrl
+    ],
     () => {
       instance
-        .get(`/board?boardId=${boardUrl}&page=${pageUrl}`)
+        .get(`/board/search?boardId=${boardUrl}&keyword=${keyword}`)
         .then((res) => setBoardData(res.data));
     },
     {
@@ -71,6 +81,14 @@ export default function Board() {
   const searchHandeler = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     navigate(`/search?boardId=${boardUrl}&keyword=${keyword}`);
+    mutationSearchData.mutate(
+      { path: `/board/search?boardId=${boardUrl}&keyword=${keyword}` },
+      {
+        onSuccess: (res) => {
+          setBoardData(res.data);
+        },
+      },
+    );
   };
 
   if (error) return <Error />;
