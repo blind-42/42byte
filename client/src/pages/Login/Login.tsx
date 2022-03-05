@@ -31,7 +31,7 @@ function Login() {
 							</div>
 						</TextWrap>
 						<LoginButtonWrap>
-							<a href='http://211.253.31.22:8080/oauth2/authorization/42'>
+							<a href='http://api-42byte.shop/oauth2/authorization/42'>
 								<button>로그인</button>
 							</a>
 						</LoginButtonWrap>
