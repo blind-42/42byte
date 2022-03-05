@@ -21,7 +21,7 @@ export default function Mypage() {
 	const pageNumber = currentUrl.split('&page=')[1];
 	const navigate = useNavigate();
 
-	const { isLoading, isFetching, error, data  } = useQuery(['mypage_key', pageName, pageNumber], 
+	const { error, data  } = useQuery(['mypage_key', pageName, pageNumber], 
 		() => {
 			instance
 			.get(`/mypage/${pageName}?page=${pageNumber}`)
@@ -43,8 +43,6 @@ export default function Mypage() {
 	const pageChangeHandler = (page: number) => {
 		navigate(`/mypage?=${pageName}&page=${page}`)
   };
-
-	if (isFetching || isLoading) return <Loading />
 
 	if (error) return <Error />
 

@@ -23,7 +23,7 @@ export default function Board() {
 	const navigate = useNavigate();
 	const scrollRef = useRef<HTMLDivElement>(null);
 
-	const { isLoading, error, data  } = useQuery(['board_key', boardUrl, pageUrl],
+	const { error, data  } = useQuery(['board_key', boardUrl, pageUrl],
 		() => {
 			instance
 			.get(`/board?boardId=${boardUrl}&page=${pageUrl}`)
@@ -49,9 +49,6 @@ export default function Board() {
 		.then((res) => console.log(res.data))
 		.catch((err) => console.log(err))
 	}
-
-
-	if (isLoading) return <Loading />
 
 	if (error) return <Error />
 
