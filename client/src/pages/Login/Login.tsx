@@ -1,7 +1,14 @@
 import { Link } from 'react-router-dom';
-import { PageName, Squares } from 'styles/styled'
-import { AppContainer, PageContainer, TopBar, ContentContainer
-				, SeoulImg, TextWrap, LoginButtonWrap } from './styled'
+import { PageName, Squares } from 'styles/styled';
+import {
+  AppContainer,
+  PageContainer,
+  TopBar,
+  ContentContainer,
+  SeoulImg,
+  TextWrap,
+  LoginButtonWrap,
+} from './styled';
 
 function Login() {
 
