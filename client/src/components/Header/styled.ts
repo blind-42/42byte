@@ -38,6 +38,9 @@ export const MenubarButton = styled.div`
 	width: 6rem;
 	font-size: 1rem;
 	font-family: 'Press Start 2P', cursive;
+	:hover {
+		background: #D5D5D5;
+	}
 	${({theme}) => theme.media.tablet`
 		width: 5.5rem;
 		font-size: 0.8rem;
@@ -53,20 +56,30 @@ export const Logo = styled.div`
 	align-items: center;
 	justify-content: center;
 	margin: 0 3px;
-	padding: 0 0.5rem;
+	padding: 0 3px;
 	border-right: solid 2px #929191;
 	border-left: solid 2px #929191;
 	img {
+		border-top: solid 2px #fff;
+		border-left: solid 2px #fff;
+		border-right: solid 2px #000;
+		border-bottom: solid 2px #000;
 		height: 2.5rem;
+		padding: 0 1rem;
+	}
+	img:hover {
+		background: #D5D5D5;
 	}
 	${({theme}) => theme.media.tablet`
 		img {
 			height: 2rem;
+			padding: 0 0.8rem;
 		}
 	`}
 	${({theme}) => theme.media.desktop`
 		img {
 			height: 2rem;
+			padding: 0 0.8rem;
 		}
 	`}
 `;
