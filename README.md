@@ -2,7 +2,7 @@
 <br><br>
 <div align=center><img src="https://user-images.githubusercontent.com/90084199/156922062-1e722599-1365-493a-93da-9a3e0e55c963.png"></div>
 
-<div align=center><h1>📚 Tech Stack</h1></div>
+<div align=center><h1> Tech Stack</h1></div>
 
 <div align=center> 
   <img src="https://img.shields.io/badge/html5-E34F26?style=for-the-badge&logo=html5&logoColor=white"> 
