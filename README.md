@@ -1,4 +1,4 @@
-<div align=center><img src="https://capsule-render.vercel.app/api?type=slice&text=%20개발바닥%20&desc=Web%20Development%20Team&fontSize=32&height=150&fontAlign=82&descAlign=81&fontAlignY=18&descAlignY=37&rotate=9&descrotate=9&animation=fadeIn&color=gradient&customColorList=3" width=2000></div>
+<div align=center><img src="https://capsule-render.vercel.app/api?type=slice&text=%20개발바닥%20&desc=Web%20Development%20Team&fontSize=36&height=150&fontAlign=82&descAlign=81&fontAlignY=17&descAlignY=37&rotate=9&descrotate=9&animation=fadeIn&color=gradient&customColorList=3" width=2000></div>
 <br><br>
 <div align=center><img src="https://user-images.githubusercontent.com/90084199/156922062-1e722599-1365-493a-93da-9a3e0e55c963.png"></div>
 
