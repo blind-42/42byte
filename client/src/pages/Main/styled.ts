@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 export const LogoImg = styled.div`
-	position: absolute;
+	position: fixed;
 	top: 50%;
   left: 50%;
 	transform: translate(-50%, -50%);
@@ -22,7 +22,7 @@ export const LogoImg = styled.div`
 
 
 export const SettingsBtn = styled.div`
-	position: absolute;
+	position: fixed;
 	bottom: 7vh;
 	right: 2rem;
 	display: flex;
