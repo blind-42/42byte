@@ -1,4 +1,4 @@
-<div align=center><img src="https://capsule-render.vercel.app/api?type=slice&text=%20개발바닥%20&desc=Web%20Development%20Team&fontSize=32&height=150&fontAlign=81&descAlign=80&fontAlignY=17&descAlignY=37&rotate=9&descrotate=9&animation=fadeIn&color=gradient&customColorList=3"></div>
+<div align=center><img src="https://capsule-render.vercel.app/api?type=slice&text=%20개발바닥%20&desc=Web%20Development%20Team&fontSize=32&height=150&fontAlign=81&descAlign=80&fontAlignY=17&descAlignY=37&rotate=9&descrotate=9&animation=fadeIn&color=gradient&customColorList=3" width=2000></div>
 <div align=center><img src="https://user-images.githubusercontent.com/90084199/156922062-1e722599-1365-493a-93da-9a3e0e55c963.png"></div>
 
 <div align=center><h1>📚 Tech Stack</h1></div>
