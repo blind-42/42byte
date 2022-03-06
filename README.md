@@ -8,8 +8,16 @@
 <!-- Content -->
   
 <!-- Tech Stack -->
-<p><h3><strong>기술 스택</strong></h3></p>
 
+<h3> 팀 구성 </h3>
+
+|<img src="https://user-images.githubusercontent.com/90084199/156928347-0f33c409-22b0-440a-ba2e-b499adb9ce60.gif" width=100 height=100>|<img src="https://user-images.githubusercontent.com/90084199/156928743-e23197c1-b902-4a22-b617-0c15b02f9802.gif" width=100 height=100>|<img src="https://user-images.githubusercontent.com/90084199/156929132-d7303470-ebb3-42f8-86fe-a6b15ec839b9.png" width=100 height=100>|nheo|donghyuk|
+|------|---|---|---|---|
+|<a href="">@jabae</a>|<a href="">@jihyukim</a>|<a href="">@jinhyupa</a>|<a href="">@nheo</a>|<a href="">@donghyuk</a>|
+|한마디|한마디|한마디|한마디|한마디|
+
+
+<p><h3>기술 스택</h3></p>
 <p> 
   <img src="https://img.shields.io/badge/html5-E34F26?style=for-the-badge&logo=html5&logoColor=white"> 
   <img src="https://img.shields.io/badge/css-1572B6?style=for-the-badge&logo=css3&logoColor=white"> 
@@ -26,13 +34,6 @@
   <img src="https://img.shields.io/badge/figma-e05b33?style=for-the-badge&logo=figma&logoColor=white">
   <br>
 </p><br>
-
-<h3> 팀 구성 </h3>
-
-|<img src="https://user-images.githubusercontent.com/90084199/156928347-0f33c409-22b0-440a-ba2e-b499adb9ce60.gif" width=100 height=100>|<img src="https://user-images.githubusercontent.com/90084199/156928743-e23197c1-b902-4a22-b617-0c15b02f9802.gif" width=100 height=100>|<img src="https://user-images.githubusercontent.com/90084199/156929132-d7303470-ebb3-42f8-86fe-a6b15ec839b9.png" width=100 height=100>|nheo|donghyuk|
-|------|---|---|---|---|
-|<a href="">@jabae</a>|<a href="">@jihyukim</a>|<a href="">@jinhyupa</a>|<a href="">@nheo</a>|<a href="">@donghyuk</a>|
-|한마디|한마디|한마디|한마디|한마디|
 
 </div>
 <br><br>
