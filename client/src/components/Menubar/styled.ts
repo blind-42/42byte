@@ -1,7 +1,6 @@
 import styled from 'styled-components';
 
 export const MenubarContainer = styled.div`
-	z-index: 1;
 	position: fixed;
 	bottom: 3rem;
 	left: 0;
