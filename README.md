@@ -1,14 +1,14 @@
 <div align=center><img src="https://capsule-render.vercel.app/api?type=slice&text=%20개발바닥%20&desc=Web%20Development%20Team&fontSize=36&height=130&fontAlign=82&descAlign=81&fontAlignY=17&descAlignY=37&rotate=8&descrotate=8&animation=fadeIn&color=gradient&customColorList=3" width=2000></div>
 
 <!-- Logo -->
-<p align="center"><img src="https://user-images.githubusercontent.com/90084199/156922062-1e722599-1365-493a-93da-9a3e0e55c963.png"></p>
+<p align="center"><img src="https://user-images.githubusercontent.com/90084199/156922062-1e722599-1365-493a-93da-9a3e0e55c963.png"></p><br>
 
 <div align=center>
 <!-- Title -->
 <!-- Content -->
   
 <!-- Tech Stack -->
-<p><h3><strong>기술 스택</strong></h3></p><br>
+<p><h3><strong>기술 스택</strong></h3></p>
 
 <p> 
   <img src="https://img.shields.io/badge/html5-E34F26?style=for-the-badge&logo=html5&logoColor=white"> 
