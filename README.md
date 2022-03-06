@@ -1,3 +1,4 @@
+<div align=center><img src="https://capsule-render.vercel.app/api?type=slice&text=%20개발바닥%20&desc=Web%20Development%20Team&fontSize=32&height=150&fontAlign=81&descAlign=80&fontAlignY=15&descAlignY=35&rotate=9.5&descrotate=9.5&animation=fadeIn&color=gradient&customColorList=27,3"></div>
 <div align=center><img src="https://user-images.githubusercontent.com/90084199/156922062-1e722599-1365-493a-93da-9a3e0e55c963.png"></div>
 
 <div align=center><h1>📚 Front-End Stack</h1></div>
