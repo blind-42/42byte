@@ -23,7 +23,7 @@ function DeleteModal({ clickModalHandler, deleteHandler }: Props) {
 			</TopBar>
 			<ContentContainer>
 				<ModalImg>
-				<img src="/images/delete.png" alt='Deleteimg' />
+				<img src="/images/delete!.png" alt='Deleteimg' />
 				</ModalImg>
 				<TextWrap>정말 삭제하시겠습니까?</TextWrap>
 				<Buttons>
