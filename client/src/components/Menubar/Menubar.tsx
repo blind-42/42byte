@@ -5,7 +5,6 @@ import { Link } from 'react-router-dom';
 import { LoggedinState } from 'States/LoginState';
 import { GoSearch } from 'react-icons/go';
 import { AiFillFolderOpen } from 'react-icons/ai';
-import Loading from 'pages/Loading/Loading';
 import Error from 'pages/Error/Error';
 import LoginModal from 'components/Modal/LoginModal';
 import instance from 'utils/functions/axios';
@@ -76,8 +75,6 @@ export default function Menubar({ menubarHandler }: GreetingProps) {
       window.location.href = `/search?boardId=0&keyword=${keyword}`;
     }
   };
-
-  if (isFetching || isLoading) return <Loading />;
 
   if (error) return <Error />;
 
