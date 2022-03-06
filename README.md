@@ -34,8 +34,6 @@
 |<a href="">@jabae</a>|<a href="">@jihyukim</a>|<a href="">@jinhyupa</a>|<a href="">@nheo</a>|<a href="">@donghyuk</a>|
 |한마디|한마디|한마디|한마디|한마디|
 
-<br>
-
 </div>
 <br><br>
 <div align=center><img src="https://capsule-render.vercel.app/api?type=slice&height=130&color=gradient&customColorList=3&reversal=true&section=footer" width=2000></div>
