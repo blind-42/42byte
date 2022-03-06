@@ -1,4 +1,4 @@
-<center> ![42byteLogo](https://user-images.githubusercontent.com/90084199/156922062-1e722599-1365-493a-93da-9a3e0e55c963.png)</center>
+<center><img src="https://user-images.githubusercontent.com/90084199/156922062-1e722599-1365-493a-93da-9a3e0e55c963.png"/></center>
 
 <div align=center><h1>📚 Front-End Stack</h1></div>
 
