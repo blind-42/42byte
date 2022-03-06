@@ -65,14 +65,6 @@ export const Info = styled.div`
 	}
 `;
 
-export const Modify = styled.div`
-	cursor: pointer;
-	display: flex;
-	div {
-		margin-left: 1rem;
-	}
-`;
-
 export const ContentWrap = styled.div`
 	border-top: solid 1px #fff;
 	padding: 1.5rem;

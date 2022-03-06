@@ -1,5 +1,5 @@
-import { useState, useEffect, useRef } from 'react';
-import { useQuery, useQueryClient, useMutation, useQueries } from 'react-query';
+import { useState, useRef } from 'react';
+import { useQueryClient, useMutation, useQueries } from 'react-query';
 import { Link } from 'react-router-dom';
 import { Viewer } from '@toast-ui/react-editor';
 import instance from 'utils/functions/axios';
@@ -8,20 +8,53 @@ import Footer from 'components/Footer/Footer';
 import CommentInput from 'components/CommentInput/CommentInput';
 import Comments from 'components/Comments/Comments';
 import PostEditor from 'components/PostEdit/PostEditor';
-import Loading from 'pages/Loading/Loading';
 import Error from 'pages/Error/Error';
 import DropdownMenu from 'components/DropdownMenu/DropdownMenu';
 import { PostData, CommentData } from 'utils/functions/type';
 import { makeCommentUserList } from 'utils/functions/functions';
 import { GrLike } from "react-icons/gr";
-import { AppContainer, PageContainer, TopBar, PageName, Squares, ContentFooterWrap, NoticeMark } from 'styles/styled';
-import { PostContainer, DetailContainer, Title, Specific, Info, Modify, ContentWrap, LikeWrap, LikesBox
-	, CommentContainer, CommentCount, CommentListWrap, FLine } from './styled';
+import {
+	AppContainer,
+	PageContainer,
+	TopBar,
+	PageName,
+	Squares,
+	ContentFooterWrap,
+	NoticeMark
+} from 'styles/styled';
+import {
+	PostContainer,
+	DetailContainer,
+	Title,
+	Specific,
+	Info,
+	ContentWrap,
+	LikeWrap,
+	LikesBox,
+	CommentContainer,
+	CommentCount,
+	CommentListWrap,
+	FLine
+} from './styled';
 
 
 function Detail() {
-	const [detailData, setDetailData] = useState<PostData>({ boardId: 0, boardName: '', commentCnt: 0, content: '', createdDate: '',
-		id: 0, isLiked: false, isNotice: false, isUsers: false, likeCnt: 0, modifiedDate: '', title: '', type: '', viewCnt: 0 });
+	const [detailData, setDetailData] = useState<PostData>({
+		boardId: 0,
+		boardName: '',
+		commentCnt: 0,
+		content: '',
+		createdDate: '',
+		id: 0,
+		isLiked: false,
+		isNotice: false,
+		isUsers: false,
+		likeCnt: 0,
+		modifiedDate: '',
+		title: '',
+		type: '',
+		viewCnt: 0
+	});
 	const { boardId, boardName, commentCnt, content, createdDate, id, isLiked, isNotice, isUsers, likeCnt, modifiedDate, title, type, viewCnt } = detailData;
 	const [commentData, setCommentData] = useState([]);
   const [commentsUserList, setCommentsUserList] = useState([-1]);
@@ -179,8 +212,7 @@ function Detail() {
 									<FLine />
 									<CommentListWrap>
 										{commentData.map((el: CommentData) => {
-											return (<Comments key={el.id} comment={el}
-																										commentsUserList={commentsUserList} />)
+											return (<Comments key={el.id} comment={el} commentsUserList={commentsUserList} />)
 										})}
 									</CommentListWrap>
 								</CommentContainer>
