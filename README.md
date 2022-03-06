@@ -1,7 +1,6 @@
 # 42Byte
-<div align=center>
 ![42byteLogo](https://user-images.githubusercontent.com/90084199/156922062-1e722599-1365-493a-93da-9a3e0e55c963.png)
-</div>
+
 <div align=center><h1>📚 Front-End Stack</h1></div>
 
 <div align=center> 
