@@ -10,7 +10,7 @@ public class ExceptionEntity {
     private String message;
 
     @Builder
-    public ExceptionEntity(HttpStatus status, String code, String message){
+    public ExceptionEntity(String code, String message){
         this.code = code;
         this.message = message;
     }

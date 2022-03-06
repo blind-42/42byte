@@ -1,10 +1,12 @@
 package com.blind.api.global.exception.handler;
 
+import com.blind.api.global.exception.AccessException;
 import com.blind.api.global.exception.BusinessException;
 import com.blind.api.global.exception.entity.ExceptionReponse;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.MessageSource;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindException;
@@ -15,6 +17,8 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.Locale;
 
 @Slf4j
@@ -80,6 +84,14 @@ public class ControllerExceptionAdvice {
         String message = messageSource.getMessage(filter(ex.getMessage()), null, Locale.KOREA);
         ExceptionReponse response = ExceptionReponse.from("E0001", message);
         return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(AccessException.class)
+    protected ResponseEntity<Object> customAccessExceptionHandle(AccessException ex) throws URISyntaxException {
+        URI redirectUri = new URI(ex.getRedirectUrl());
+        HttpHeaders httpHeaders = new HttpHeaders();
+        httpHeaders.setLocation(redirectUri);
+        return new ResponseEntity<>(httpHeaders, HttpStatus.SEE_OTHER);
     }
 
     private String filter(String message){
