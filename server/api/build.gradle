@@ -91,4 +91,7 @@ dependencies {
 
 	/*yml파일 상수 가져오기*/
 	annotationProcessor "org.springframework.boot:spring-boot-configuration-processor"
+
+	/* semaphore */
+	implementation 'org.apache.commons:commons-lang3:3.12.0'
 }

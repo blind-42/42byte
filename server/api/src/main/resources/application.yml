@@ -1,31 +1,26 @@
 spring:
-  # 데이터 소스 설정
-  datasource:
-#    url: jdbc:mysql://localhost:3306/TEST?serverTimezone=Asia/Seoul&characterEncoding=UTF-8
-#    driverClassName: com.mysql.cj.jdbc.Driver
-#    username: root
-#    password: blind42blind42
-     url: jdbc:mysql://172.27.0.52:3306/TEST?serverTimezone=Asia/Seoul&characterEncoding=UTF-8
-     driverClassName: com.mysql.cj.jdbc.Driver
-     username: root
-     password: Blind$242
-  jpa:
-    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
-    hibernate:
-      ddl-auto: none
-    properties:
-      hibernate:
-        show_sql: true
-        format_sql: false
-        use_sql_comments: false
-    logging:
-      level:
-        org.hibernate.SQL: debug
+  profiles:
+    active: proc
+
+  # Security OAuth
+  security:
+    oauth2.client:
+      registration:
+        42:
+          redirect-uri: "{baseUrl}/{action}/oauth2/code/{registrationId}"
+          authorization-grant-type: authorization_code
+          scope: public
+      provider:
+        42:
+          authorization-uri: "https://api.intra.42.fr/oauth/authorize"
+          token-uri: "https://api.intra.42.fr/oauth/token"
+          user-info-uri: "https://api.intra.42.fr/v2/me"
+          user-name-attribute: id
 
   thymeleaf:
-    prefix : classpath:templates/
-    suffix : .html
-    cache : false
+    prefix: classpath:templates/
+    suffix: .html
+    cache: false
 
   # pageable
   data:
@@ -34,33 +29,14 @@ spring:
         default-page-size: 24
         one-indexed-parameters: true
 
-      #sort = "id", direction = Sort.Direction.DESC)
-  # Security OAuth
-  security:
-    requir-ssl: true
-    oauth2.client:
-        registration:
-          42:
-#            client-id: "aa9c83987ce3e0dc4b79cc7c2d9c80147ec532ec4ce6cb5df032338272d54df5"
-#            client-secret: "abaefa17bb4af72ff5dbdcf2fb39c1353d0dc3f9bcc61d6daec8e6939eebe7ca"
-            client-id: "7b753e06873caf84820ba1f794ea93de33f2472495ff0e5a060bfcbcd2163ba8"
-            client-secret: "48f245c07bfaf5f470a3002e282f8a2fda269b0469079950bdf3a24069a18990"
-            redirect-uri: "{baseUrl}/{action}/oauth2/code/{registrationId}"
-            authorization-grant-type: authorization_code
-            scope: public
-        # Provider 설정
-        provider:
-          42:
-            authorization-uri: "https://api.intra.42.fr/oauth/authorize"
-            token-uri: "https://api.intra.42.fr/oauth/token"
-            user-info-uri: "https://api.intra.42.fr/v2/me"
-            user-name-attribute: id
-# Swagger 설정
+  # Swagger 설정
   mvc:
     pathmatch:
       matching-strategy: ant_path_matcher
+
+  # Message 설정
   messages:
-    basename: 'messages/validation'
+    basename: 'messages/validaion'
     encoding: UTF-8
 
 # cors 설정
@@ -78,19 +54,12 @@ app:
   oauth2:
     authorizedRedirectUris:
       - http://localhost:3000/oauth/redirect
-
+      -
 # jwt secret key 설정
 jwt.secret: a2f6abd304bcd1d2ff9691bb0e7c1bab1010d0466c628d23b49550fb932300a43054a6030811f6118eb8129d9033cf5e2b63b762c5bd7bee246f63d34ee04fd3
 
-van:
-  blame: 5
-
-#server:
-#  ssl:
-#    enabled: true
-##    key-store: keystore.p12
-#    key-store: keystore.p12
-#    key-store-password: 42byte
-#    key-store-type: PKCS12
-#    key-alias: bns-ssl
-#  port: 8080
+info:
+  web:
+    frontUrl: 'http://localhost:3000'
+  van:
+    blame: 5

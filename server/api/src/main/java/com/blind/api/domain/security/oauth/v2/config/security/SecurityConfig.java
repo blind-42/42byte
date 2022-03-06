@@ -13,6 +13,7 @@ import com.blind.api.domain.security.oauth.v2.service.CustomOAuth2UserService;
 import com.blind.api.domain.security.oauth.v2.service.CustomUserDetailsService;
 import com.blind.api.domain.security.oauth.v2.token.AuthTokenProvider;
 import com.blind.api.domain.user.v2.service.UserService;
+import com.blind.api.global.utils.ApplicationYmlRead;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -39,6 +40,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private final TokenAccessDeniedHandler tokenAccessDeniedHandler;
     private final UserRefreshTokenRepository userRefreshTokenRepository;
     private final UserService userService;
+    private final ApplicationYmlRead applicationYmlRead;
     /*
      * UserDetailsService 설정
      * */
@@ -133,9 +135,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
      * */
     @Bean
     public OAuthAuthenticationFailureHandler oAuth2AuthenticationFailureHandler() {
-        return new OAuthAuthenticationFailureHandler(oAuth2AuthorizationRequestBasedOnCookieRepository());
+        return new OAuthAuthenticationFailureHandler(oAuth2AuthorizationRequestBasedOnCookieRepository(), applicationYmlRead);
     }
-
     /*
      * Cors 설정
      * */

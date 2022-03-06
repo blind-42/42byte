@@ -5,5 +5,6 @@ import com.blind.api.domain.user.v2.domain.User;
 
 public interface TokenService {
     User findUserByAccessToken(String accessToken);
+    User findAdminByAccessToken(String accessToken);
     Token findByAccessToken(String accessToken);
 }

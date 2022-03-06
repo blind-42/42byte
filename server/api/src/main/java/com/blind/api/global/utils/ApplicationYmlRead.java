@@ -1,19 +1,24 @@
 package com.blind.api.global.utils;
 
+import lombok.Setter;
 import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.stereotype.Component;
+
+import java.util.Map;
 
 @Configuration
-@ConfigurationProperties(prefix = "van")
+@Setter
+@ConfigurationProperties(prefix = "info")
 public class ApplicationYmlRead {
-    private String blame;
+    private Map<String,String> van;
+    private Map<String,String> web;
 
     public String getBlame() {
-        return blame;
+        return van.get("blame");
     }
 
-    public void setBlame(String blame) {
-        this.blame = blame;
+    public String getFrontUrl() {
+        return web.get("frontUrl");
     }
 }
