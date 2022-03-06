@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import { PageName, Squares, TopBar } from 'styles/styled'
 import { ModalBackdrop, ModalContainer, ContentContainer
-				, LoginImg, TextWrap, Buttons } from './styled'
+				, ModalImg, TextWrap, Buttons } from './styled'
 
 type Props = {
 	openLoginModalHandler: () => void
@@ -21,9 +21,9 @@ function LoginModal({openLoginModalHandler}: Props) {
 				</Squares>
 			</TopBar>
 			<ContentContainer>
-				<LoginImg>
+				<ModalImg>
 					<img src="/images/ghost.png" alt='Loginimg' />
-				</LoginImg>
+				</ModalImg>
 				<TextWrap>로그인이 필요합니다.</TextWrap>
 				<Buttons>
 					<Link to='/login'>

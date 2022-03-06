@@ -54,7 +54,7 @@ export const ContentContainer = styled.div`
 	justify-content: space-evenly;
 `;
 
-export const LoginImg = styled.div`
+export const ModalImg = styled.div`
 	img {
 		height: 5rem;
 	}

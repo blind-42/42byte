@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import { PageName, Squares, TopBar } from 'styles/styled'
 import { ModalBackdrop, ModalContainer, ContentContainer
-				, LoginImg, TextWrap, Buttons } from './styled'
+				, ModalImg, TextWrap, Buttons } from './styled'
 
 type Props = {
 	clickModalHandler: () => void;
@@ -22,9 +22,9 @@ function DeleteModal({ clickModalHandler, deleteHandler }: Props) {
 				</Squares>
 			</TopBar>
 			<ContentContainer>
-				<LoginImg>
-				<img src="/images/delete_저작권_임시.png" alt='deleteimg' />
-				</LoginImg>
+				<ModalImg>
+				<img src="/images/delete!.png" alt='Deleteimg' />
+				</ModalImg>
 				<TextWrap>정말 삭제하시겠습니까?</TextWrap>
 				<Buttons>
 					{/* 클릭시 삭제 구현 */}
