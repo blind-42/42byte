@@ -87,11 +87,20 @@ export const Logo = styled.div`
 export const Clock = styled.div`
 	display: flex;
 	align-items: center;
+	justify-content: center;
 	border-top: solid 2px #000;
 	border-left: solid 2px #000;
 	border-right: solid 2px #fff;
 	border-bottom: solid 2px #fff;
-	padding: 0.3rem 0.5rem;
+	width: 7rem;
+	font-size: 1rem;
 	font-family: 'Press Start 2P', cursive;
-	font-size: 0.8rem;
+	${({theme}) => theme.media.tablet`
+		width: 6rem;
+		font-size: 0.8rem;
+	`}
+	${({theme}) => theme.media.desktop`
+		width: 5.5rem;
+		font-size: 0.8rem;
+	`}
 `;
