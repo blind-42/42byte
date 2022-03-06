@@ -5,6 +5,7 @@
 
 <div align=center>
 <!-- Title -->
+  <p> 간단한 소개글 </p>
 <!-- Content -->
   
 <!-- Tech Stack -->
