@@ -78,7 +78,7 @@ export default function PostEditor({ detailData, boardId }: PostDataType) {
     }
   };
 
-  const titleHandler = (event: { target: { value: string } }) => {
+  const titleHandler = (event : React.ChangeEvent<HTMLInputElement>) => {
     setTitle(event.target.value);
   };
   const contentHandler = () => {
@@ -94,6 +94,7 @@ export default function PostEditor({ detailData, boardId }: PostDataType) {
               type="text"
               placeholder="제목을 입력해 주세요."
               value={title}
+							maxLength={24}
             />
           </Title>
           <UploadButton>
