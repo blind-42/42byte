@@ -23,7 +23,6 @@ export const PreviewContainer = styled.div<{state?: boolean;}>`
 		div:last-child {
 			margin: 0 0.5rem;
 			color: #BF2D2D;
-			letter-spacing: 0.05rem;
 			font-weight: ${(props) => props.state === true ? '700' : '600'};
 		}
 	}
