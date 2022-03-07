@@ -34,10 +34,11 @@ export const CommentInputWrap = styled.form`
 			border-left: solid 2px #fff;
 			border-right: solid 2px #000;
 			border-bottom: solid 2px #000;
-			padding: 0.2rem 0.8rem;
+			width: 4.3rem;
+			height: 2.3rem;
 			font-size: 1.2rem;
 			font-weight: 700;
-			letter-spacing: 0.2rem;
+			letter-spacing: 0.1rem;
 			color: #fff;
 		}
 }
@@ -51,7 +52,9 @@ export const CommentInputWrap = styled.form`
 				font-size: 0.8rem;
 			}
 			input {
-				font-size: 1rem;
+				width: 3.5rem;
+				height: 1.8rem;
+				font-size: 0.9rem;
 			}
 		}
 	`}
@@ -65,7 +68,9 @@ export const CommentInputWrap = styled.form`
 				font-size: 0.8rem;
 			}
 			input {
-				font-size: 1rem;
+				width: 3.5rem;
+				height: 1.8rem;
+				font-size: 0.9rem;
 			}
 		}
 	`}

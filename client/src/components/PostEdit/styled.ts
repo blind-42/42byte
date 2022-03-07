@@ -57,6 +57,7 @@ export const UploadButton = styled.div`
 		font-weight: 700;
 		height: 3rem;
 		width: 5rem;
+		letter-spacing: 0.1rem;
 		border-top: solid 2px #fff;
 		border-left: solid 2px #fff;
 		border-right: solid 2px #000;
@@ -85,5 +86,4 @@ export const EditorWrap = styled.div`
 	border-bottom: solid 2px #fff;
 	background: #D5D5D5;
 	overflow-y: scroll;
-	height: 
 `;
