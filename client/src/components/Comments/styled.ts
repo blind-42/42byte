@@ -78,7 +78,6 @@ export const Content = styled.div`
 `;
 
 export const CommentBottom = styled.div`
-	cursor: pointer;
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
@@ -89,6 +88,7 @@ export const CommentBottom = styled.div`
 `;
 
 export const ReCommentBox = styled.div<{openReCmt: boolean}>`
+	cursor: pointer;
 	display: flex;
 	justify-content: space-evenly;
 	align-items: center;
