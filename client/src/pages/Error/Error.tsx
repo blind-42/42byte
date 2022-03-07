@@ -20,7 +20,7 @@ function Error() {
 				</TopBar>
 				<AlertContentWrap>
 					<ErrorImg>
-						<img src="/images/fire_저작권_임시.png" alt='Errorimg' />
+						<img src="/images/error!.png" alt='Errorimg' />
 					</ErrorImg>
 					<AlertTextWrap>
 						404<br />
