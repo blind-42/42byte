@@ -35,10 +35,10 @@ export const Topbar = styled.div`
 		justify-content: center;
 		align-items: center;
 		background: #C4C4C4;
-		font-size: 1.5rem;
+		font-size: 1.2rem;
 		font-weight: 900;
-		width: 2rem;
-		height: 2rem;
+		width: 1.5rem;
+		height: 1.5rem;
 		text-align: center;
 		margin: 3px;
 		border-top: solid 2px #fff;
@@ -49,16 +49,16 @@ export const Topbar = styled.div`
 	}
 	${({theme}) => theme.media.tablet`
 		div {
-			font-size: 1.2rem;
-			width: 1.5rem;
-			height: 1.5rem;
+			font-size: 1rem;
+			width: 1.3rem;
+			height: 1.3rem;
 		}
 	`}
 	${({theme}) => theme.media.desktop`
 		div {
 			font-size: 1rem;
-			width: 1.2rem;
-			height: 1.2rem;
+			width: 1.3rem;
+			height: 1.3rem;
 		}
 	`}
 `;
