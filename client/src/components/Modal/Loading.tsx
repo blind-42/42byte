@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import { AlertPageWrap, TopBar, AlertPageName, Squares
 				, AlertContentWrap, AlertTextWrap } from 'styles/styled'
-import { LoadingModalBackdrop, ModalImg, LoadingBar } from './styled'
+import { LoadingModalBackdrop, LoadingBar } from './styled'
 
 
 function Loading() {
@@ -21,9 +21,6 @@ function Loading() {
 					</Squares>
 				</TopBar>
 				<AlertContentWrap>
-					<ModalImg>
-						<img src="" alt='Logoimg' />
-					</ModalImg>
 					<LoadingBar>
 						<div></div>
 						<div></div>
@@ -32,10 +29,13 @@ function Loading() {
 						<div></div>
 						<div></div>
 						<div></div>
+						<div></div>
+						<div className='last'></div>
+						<div className='last'></div>
 						<div className='last'></div>
 					</LoadingBar>
 					<AlertTextWrap>
-						Loading . . .
+						Loading ...
 					</AlertTextWrap>
 				</AlertContentWrap>
 			</AlertPageWrap>
