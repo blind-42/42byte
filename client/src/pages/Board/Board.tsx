@@ -5,7 +5,7 @@ import Header from 'components/Header/Header';
 import Footer from 'components/Footer/Footer';
 import PostPreview from 'components/Postpreview/Postpreview';
 import PageNation from 'components/PageNation/PageNation';
-// import Loading from 'pages/Loading/Loading';
+import Loading from 'components/Modal/Loading';
 import Error from 'pages/Error/Error';
 import instance from 'utils/functions/axios';
 import { BoardData, PostPre } from 'utils/functions/type';
@@ -45,7 +45,7 @@ export default function Board() {
   const navigate = useNavigate();
   const scrollRef = useRef<HTMLDivElement>(null);
 
-  const { error, data } = useQuery(
+  const { isLoading, error, data } = useQuery(
     ['board_key', boardUrl, pageUrl],
     () => {
       instance
@@ -113,27 +113,30 @@ export default function Board() {
                   </Link>
                 </WritingButton>
               </UtilWrap>
-              <PostContainer>
-                <Category ref={scrollRef}>
-                  <div></div>
-                  <div>제목</div>
-                  <div>조회</div>
-                  <div>추천</div>
-                  <div>작성일</div>
-                </Category>
-                <ContentWrap>
-                  <PostWrap>
-                    {contents.map((el: PostPre, idx) => {
-                      return <PostPreview key={idx} postData={el} />;
-                    })}
-                  </PostWrap>
-                </ContentWrap>
-                <PageNation
-                  curPage={page}
-                  totalPages={pages}
-                  pageChangeHandler={pageChangeHandler}
-                />
-              </PostContainer>
+							{isLoading 
+							? <Loading /> 
+							: <PostContainer>
+									<Category ref={scrollRef}>
+										<div></div>
+										<div>제목</div>
+										<div>조회</div>
+										<div>추천</div>
+										<div>작성일</div>
+									</Category>
+									<ContentWrap>
+										<PostWrap>
+											{contents.map((el: PostPre, idx) => {
+												return <PostPreview key={idx} postData={el} />;
+											})}
+										</PostWrap>
+									</ContentWrap>
+									<PageNation
+										curPage={page}
+										totalPages={pages}
+										pageChangeHandler={pageChangeHandler}
+									/>
+								</PostContainer>
+								}
             </UtilPostWrap>
             <Footer />
           </ContentFooterWrap>

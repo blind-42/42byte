@@ -10,7 +10,6 @@ import Detail from './pages/Detail/Detail';
 import Mypage from './pages/Mypage/Mypage';
 import Notice from './pages/Notice/Notice';
 import Error from './pages/Error/Error';
-import Loading from './pages/Loading/Loading';
 import Admin from 'pages/Admin/Admin';
 import { GlobalStyle } from './styles/global-style';
 
@@ -33,7 +32,6 @@ export default function App() {
               <Route path="/mypage" element={<Mypage />} />
               <Route path="/notice" element={<Notice />} />
               <Route path="/error" element={<Error />} />
-              <Route path="/loading" element={<Loading />} />
               <Route path="/admin" element={<Admin />} />
             </Routes>
           </Router>

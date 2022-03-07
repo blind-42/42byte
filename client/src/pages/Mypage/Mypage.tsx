@@ -6,7 +6,7 @@ import Footer from 'components/Footer/Footer';
 import PageNation from 'components/PageNation/PageNation';
 import PostPreview from 'components/Postpreview/Postpreview';
 import CommentPreview from 'components/CommentPreview/CommentPreview';
-import Loading from 'pages/Loading/Loading';
+import Loading from 'components/Modal/Loading';
 import Error from 'pages/Error/Error';
 import instance from 'utils/functions/axios';
 import { PostPre, CommentPre } from 'utils/functions/type';
@@ -21,7 +21,7 @@ export default function Mypage() {
 	const pageNumber = currentUrl.split('&page=')[1];
 	const navigate = useNavigate();
 
-	const { error, data  } = useQuery(['mypage_key', pageName, pageNumber], 
+	const { isLoading, error, data  } = useQuery(['mypage_key', pageName, pageNumber], 
 		() => {
 			instance
 			.get(`/mypage/${pageName}?page=${pageNumber}`)
@@ -71,7 +71,9 @@ export default function Mypage() {
 									<button onClick={switchToComment}>내가 쓴 댓글</button>
 								</CommentMenu>
 							</MenuWrap>
-							<PostContainer>
+							{isLoading 
+							? <Loading /> 
+							: <PostContainer>
 								{pageName === 'post'
 									?	<Category state={pageName}>
 											<div></div>
@@ -102,6 +104,7 @@ export default function Mypage() {
 									pageChangeHandler={pageChangeHandler}
 								/>
 							</PostContainer>
+							}
 						</MenuPostWrap>
 						<Footer />
 					</ContentFooterWrap>

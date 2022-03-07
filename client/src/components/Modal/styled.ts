@@ -13,6 +13,16 @@ export const ModalBackdrop = styled.div`
   background-color: rgba(0, 0, 0, 0.5);
 `;
 
+export const LoadingModalBackdrop = styled.div`
+  top: 0;
+  left: 0;
+  z-index: var(--modal-index);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.2);
+`;
+
 export const ModalContainer = styled.div`
 	position: relative;
 	display: flex;
@@ -211,4 +221,26 @@ export const ReportList = styled.div`
 			}
 		}
 	`}
+`;
+
+export const LoadingBar = styled.div`
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	margin: 0 1rem;
+	border-top: solid 2px #000;
+	border-left: solid 2px #000;
+	border-right: solid 2px #fff;
+	border-bottom: solid 2px #fff;
+	padding: 0.3rem;
+	div {
+		height: 2.2rem;
+		width: 1.7rem;
+		background: #518EDB;
+	}
+	.last {
+		height: 2.2rem;
+		width: 1.7rem;
+		background: #c4c4c4;
+	}
 `;

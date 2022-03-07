@@ -1,14 +1,14 @@
 import { Link } from 'react-router-dom';
-import { AlertContainer, AlertPageWrap, TopBar, AlertPageName, Squares
+import { AlertPageWrap, TopBar, AlertPageName, Squares
 				, AlertContentWrap, AlertTextWrap } from 'styles/styled'
-import { LogoImg, LoadingBar } from './styled'
+import { LoadingModalBackdrop, ModalImg, LoadingBar } from './styled'
 
 
 function Loading() {
 
   return (
 		<>
-		<AlertContainer>
+		<LoadingModalBackdrop>
 			<AlertPageWrap>
 				<TopBar>
 					<AlertPageName>Loading...</AlertPageName>
@@ -21,9 +21,9 @@ function Loading() {
 					</Squares>
 				</TopBar>
 				<AlertContentWrap>
-					<LogoImg>
+					<ModalImg>
 						<img src="" alt='Logoimg' />
-					</LogoImg>
+					</ModalImg>
 					<LoadingBar>
 						<div></div>
 						<div></div>
@@ -32,14 +32,14 @@ function Loading() {
 						<div></div>
 						<div></div>
 						<div></div>
-						<div></div>
+						<div className='last'></div>
 					</LoadingBar>
 					<AlertTextWrap>
 						Loading . . .
 					</AlertTextWrap>
 				</AlertContentWrap>
 			</AlertPageWrap>
-		</AlertContainer>
+		</LoadingModalBackdrop>
 		</>
 	);
 }

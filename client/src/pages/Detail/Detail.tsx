@@ -8,6 +8,7 @@ import Footer from 'components/Footer/Footer';
 import CommentInput from 'components/CommentInput/CommentInput';
 import Comments from 'components/Comments/Comments';
 import PostEditor from 'components/PostEdit/PostEditor';
+import Loading from 'components/Modal/Loading';
 import Error from 'pages/Error/Error';
 import DropdownMenu from 'components/DropdownMenu/DropdownMenu';
 import { PostData, CommentData } from 'utils/functions/type';
@@ -100,6 +101,7 @@ function Detail() {
 			keepPreviousData: true
 		}
 	]);
+	const isLoading = results.some(result => result.isLoading);
 	const error = results.some(result => result.error);
 
 	const uploadCmtHandler = (comment: string) => {
@@ -178,7 +180,9 @@ function Detail() {
 						</Squares>
 					</TopBar>
 					<ContentFooterWrap>
-						<PostContainer>
+					{isLoading 
+					? <Loading /> 
+					: <PostContainer>
 						{openEditor
 						?	<PostEditor detailData={detailData} boardId={boardId}/>
 						:	<DetailContainer>
@@ -219,6 +223,7 @@ function Detail() {
 							</DetailContainer>}
               <div ref={scrollRef}/>
 						</PostContainer>
+						}
 						<Footer />
 					</ContentFooterWrap>
 				</PageContainer>
