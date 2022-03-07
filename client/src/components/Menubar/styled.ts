@@ -29,8 +29,8 @@ export const Topbar = styled.div`
 	align-items: flex-start;
 	justify-content: flex-end;
 	background: #518EDB;
-	cursor: pointer;
 	div {
+		cursor: pointer;
 		display: flex;
 		justify-content: center;
 		align-items: center;
