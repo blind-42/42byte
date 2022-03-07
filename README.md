@@ -6,6 +6,7 @@
 <div align=center>
 <!-- Title -->
   <p> 간단한 소개글 </p>
+  배포주소 : https://42byte.kr
 <!-- Content -->
   
 <!-- Tech Stack -->
@@ -14,7 +15,7 @@
 
 |<img src="https://user-images.githubusercontent.com/90084199/156928347-0f33c409-22b0-440a-ba2e-b499adb9ce60.gif" width=100 height=100>|<img src="https://user-images.githubusercontent.com/90084199/156928743-e23197c1-b902-4a22-b617-0c15b02f9802.gif" width=100 height=100>|<img src="https://user-images.githubusercontent.com/90084199/156929132-d7303470-ebb3-42f8-86fe-a6b15ec839b9.png" width=100 height=100>|<img src="https://user-images.githubusercontent.com/90181905/156929812-8d1b6078-9b2b-4bd5-9da3-7aa868e067e0.png" width=100 height=100>|그리는중|
 |------|---|---|---|---|
-|<a href="">@jabae</a>|<a href="">@jihyukim</a>|<a href="">@jinhyupa</a>|<a href="">@nheo</a>|<a href="">@donghyuk</a>|
+|<a href="https://github.com/pearpearB">@jabae</a>|<a href="https://github.com/tamagoyakii">@jihyukim</a>|<a href="https://github.com/developerjhp">@jinhyupa</a>|<a href="https://github.com/nheo9143">@nheo</a>|<a href="https://github.com/reg0145">@donghyuk</a>|
 |한마디|한마디|한마디|한마디|한마디|
 
 <br>
