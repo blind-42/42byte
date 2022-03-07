@@ -234,13 +234,13 @@ export const LoadingBar = styled.div`
 	border-bottom: solid 2px #fff;
 	padding: 0.3rem;
 	div {
-		height: 2.2rem;
-		width: 1.7rem;
+		height: 1.2rem;
+		width: 1rem;
 		background: #518EDB;
 	}
 	.last {
-		height: 2.2rem;
-		width: 1.7rem;
+		height: 1.2rem;
+		width: 1rem;
 		background: #c4c4c4;
 	}
 `;
