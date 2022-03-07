@@ -51,7 +51,7 @@ export const TopBar = styled.div<{err?: boolean;}>`
 
 export const PageName = styled.div`
 	color: #fff;
-	font-size: 1.3rem;
+	font-size: 1.2rem;
 	font-weight: 550;
 	margin: 0 0.7rem;
 	display: flex;
@@ -60,8 +60,8 @@ export const PageName = styled.div`
 		color: #fff
 	}
 	${({theme}) => theme.media.tablet`
-		font-size: 1.1rem;
-		margin: 0 0.7rem;
+		font-size: 0.9rem;
+		margin: 0 0.6rem;
 	`}
 	${({theme}) => theme.media.desktop`
 		font-size: 0.9rem;
@@ -77,9 +77,9 @@ export const Squares = styled.div`
 		align-items: center;
 		background: #C4C4C4;
 		font-weight: 900;
-		font-size: 1.5rem;
-		width: 2rem;
-		height: 2rem;
+		font-size: 1.2rem;
+		width: 1.5rem;
+		height: 1.5rem;
 		text-align: center;
 		margin: 3px;
 		margin-left: 0;
@@ -94,9 +94,9 @@ export const Squares = styled.div`
 	}
 	${({theme}) => theme.media.tablet`
 		div {
-			font-size: 1.2rem;
-			width: 1.5rem;
-			height: 1.5rem;
+			font-size: 1rem;
+			width: 1.3rem;
+			height: 1.3rem;
 		}
 	`}
 	${({theme}) => theme.media.desktop`

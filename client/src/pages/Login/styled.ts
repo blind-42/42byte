@@ -6,33 +6,27 @@ export const AppContainer = styled.div`
 	align-items: center;
 	height: 100vh;
 	width: 100vw;
-	background: #929191;
+	// background: #6BB8F0; 
+	background-image: url('images/background_cloud.png');
 `;
 
 export const PageContainer = styled.div`
 	display: flex;
 	flex-direction: column;
 	align-items: stretch;
-	width: 35vh;
+	width: 26rem;
 	background: #C4C4C4;
 	border-top: solid 2px #fff;
 	border-left: solid 2px #fff;
 	border-right: solid 2px #000;
 	border-bottom: solid 2px #000;
 	padding: 3px;
-	@media screen and (min-width: 768px) {
-		width: 45vh;
-	}
-`;
-
-export const TopBar = styled.div`
-	display: flex;
-	align-items: center;
-	justify-content: space-between;
-	background: #518EDB;
-	margin-bottom: 3px;
-	@media screen and (min-width: 768px) {
-	}
+	${({theme}) => theme.media.tablet`
+		width: 23rem;
+	`}
+	${({theme}) => theme.media.desktop`
+		width: 23rem;
+	`}
 `;
 
 export const ContentContainer = styled.div`
@@ -40,47 +34,89 @@ export const ContentContainer = styled.div`
 	display: flex;
 	flex-direction: column;
 	justify-content: space-evenly;
-	margin: 1.5rem 0;
+	height: 29rem;
+	padding: 0.8rem 0;
+	${({theme}) => theme.media.tablet`
+		height: 25rem;
+		padding: 0.5rem 0;
+	`}
+	${({theme}) => theme.media.desktop`
+		height: 25rem;
+		padding: 0.5rem 0;
+	`}
 `;
 
 export const SeoulImg = styled.div`
-	margin: 1.5rem 0;
-	height: 6rem;
 	img {
-		height: 8rem;
+		height: 10rem;
 	}
+	${({theme}) => theme.media.tablet`
+		img {
+			height: 9rem;
+		}
+	`}
+	${({theme}) => theme.media.desktop`
+		img {
+			height: 9rem;
+		}
+	`}
 `;
 
 export const TextWrap = styled.div`
 	div:nth-child(1) {
-		margin: 1.5rem 0;
+		margin-bottom: 1rem;
 		font-weight: 700;
-		font-size: 1.5rem;
+		font-size: 1.7rem;
 	}
 	div:nth-child(2) {
 		line-height: 150%;
-		font-size: 1.1rem;
+		font-size: 1.2rem;
 	}
+	${({theme}) => theme.media.tablet`
+		div:nth-child(1) {
+			font-size: 1.5rem;
+		}
+		div:nth-child(2) {
+			font-size: 1rem;
+		}
+	`}
+	${({theme}) => theme.media.desktop`
+		div:nth-child(1) {
+			font-size: 1.5rem;
+		}
+		div:nth-child(2) {
+			font-size: 1rem;
+		}
+	`}
 `;
 
 export const LoginButtonWrap = styled.div`
-	margin: 1.5rem;
+	// margin: 1.5rem 0;
 	button {
 		cursor: pointer;
-		padding: 1rem 3rem;
 		background: #518EDB;
 		color: #fff;
-		font-size: 1.4rem;
-		font-weight: 700;
+		width: 7rem;
+		height: 3.5rem;
+		font-size: 1.3rem;
+		font-weight: 600;
 		border-top: solid 2px #fff;
 		border-left: solid 2px #fff;
 		border-right: solid 2px #000;
 		border-bottom: solid 2px #000;
 	}
-	@media screen and (min-width: 768px) {
+	${({theme}) => theme.media.tablet`
 		button {
-			padding: 0.8rem 2.2rem;
 			font-size: 1.1rem;
+			width: 5.8rem;
+			height: 2.8rem;
 		}
-	}
+	`}
+	${({theme}) => theme.media.desktop`
+		button {
+			font-size: 1.1rem;
+			width: 5.8rem;
+			height: 2.8rem;
+		}
+	`}
 `;

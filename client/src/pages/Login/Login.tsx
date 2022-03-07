@@ -1,9 +1,12 @@
 import { Link } from 'react-router-dom';
-import { PageName, Squares } from 'styles/styled';
+import { 
+	TopBar,
+	PageName,
+	Squares,
+} from 'styles/styled';
 import {
   AppContainer,
   PageContainer,
-  TopBar,
   ContentContainer,
   SeoulImg,
   TextWrap,
@@ -17,7 +20,7 @@ function Login() {
 			<AppContainer>
 				<PageContainer>
 					<TopBar>
-						<PageName>login</PageName>
+						<PageName>Login</PageName>
 						<Squares>
 							<div>&#9866;</div>
 							<div>&#10064;</div>
@@ -33,7 +36,7 @@ function Login() {
 						<TextWrap>
 							<div>Born to Code?</div>
 							<div>
-								42seoul 카뎃만 참여할 수 있습니다.<br/>
+								42Seoul 카뎃만 참여할 수 있습니다.<br/>
 								계정이 존재하는 지 확인해주세요.
 							</div>
 						</TextWrap>
