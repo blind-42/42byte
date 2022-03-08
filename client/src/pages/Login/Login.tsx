@@ -31,7 +31,7 @@ function Login() {
 					</TopBar>
 					<ContentContainer>
 						<SeoulImg>
-							<img src="/images/logo42.png" alt='42img' />
+							<img src="images/42seoulLogo.png" alt='42img' />
 						</SeoulImg>
 						<TextWrap>
 							<div>Born to Code?</div>

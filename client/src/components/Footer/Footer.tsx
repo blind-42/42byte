@@ -10,13 +10,13 @@ function Footer() {
           <div>
 						<a href='https://github.com/blind-42/Blind42/wiki/정책-정의서(1.3-update)'>
 							{/* <AiFillAlert /> */}
-							<img src='images/rulesImg.png' />
+							<img src='images/scroll.png' />
 						</a>
 					</div>
           <div>
 						<a href='https://github.com/blind-42/Blind42'>
 							{/* <FaGithubAlt /> */}
-							<img src='images/githubImg.png' />
+							<img src='images/githubLogo.png' />
 						</a>
 					</div>
         </GitLink>
