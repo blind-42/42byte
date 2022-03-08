@@ -15,7 +15,7 @@ export const MenubarContainer = styled.div`
 	border-right: solid 2px #000;
 	border-bottom: solid 2px #000;
 	${({theme}) => theme.media.tablet`
-		width: 21rem;
+		width: 18em;
 		bottom: 2.5rem;
   `}
 	${({theme}) => theme.media.desktop`
@@ -66,14 +66,11 @@ export const Topbar = styled.div`
 export const ContentContainer = styled.div`
 	display: grid;
 	grid-template-rows: 1fr 9rem 3.5rem;
-	/* height: 80vh; */
 	${({theme}) => theme.media.tablet`
 		grid-template-rows: 1fr 7rem 2.5rem;
-		// height: 70vh;
 	`}
 	${({theme}) => theme.media.desktop`
 		grid-template-rows: 1fr 6rem 2.5rem;
-		// height: 75vh;
 	`}
 `;
 export const UserProfileWrap = styled.div`
@@ -86,37 +83,37 @@ export const Profile = styled.div`
 	display: flex;
 	flex-direction: column;
 	align-items: center;
-	justify-content: center;
+	justify-content: space-between;
+	padding: 12px 0 6px 0;
 `;
 
-export const UserImg = styled.div`
+export const UserImg = styled.div<{state?: boolean;}>`
   display: flex;
   align-items: center;
-	margin-bottom: 1.2rem;
   img {
-    border-radius: 50%;
-    height: 4rem;
-		border: solid 1px #fff;
+    height: 5.3rem;
+		border: solid 2px #929191;
   }
 	${({theme}) => theme.media.tablet`
-		margin-bottom: 0.7rem;
 		img {
-			height: 3rem;
+			height: 4rem;
 		}
 	`}
 	${({theme}) => theme.media.desktop`
-		margin-bottom: 0.7rem;
 		img {
-			height: 2.5rem;
+			height: 3.5rem;
 		}
 	`}
 `;
 
 export const UserName = styled.div`
-  display: flex;
-  align-items: center;
   font-size: 1.5rem;
-	font-weight: 700;
+	font-weight: 600;
+	div {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+	}
 	${({theme}) => theme.media.tablet`
 		font-size: 1.1rem;
 	`}
@@ -129,18 +126,17 @@ export const UserMenu = styled.div`
 	display: flex;
 	flex-direction: column;
 	justify-content: space-between;
-	align-items: stretch;
 	padding-top: 1.5rem;
 	span {
 		padding-left: 1.7rem;
-		font-size: 1.4rem; 
+		font-size: 1.4rem;
+		font-weight: 500;
 		cursor: pointer;
 	}
 	${({theme}) => theme.media.tablet`
 		padding-top: 1rem;	
 		span {
 			padding-left: 1rem;
-			margin: 0 0.5rem;
 			font-size: 1.1rem;
 		}
 	`}
@@ -148,7 +144,6 @@ export const UserMenu = styled.div`
 		padding-top: 0.8rem;
 		span {
 			padding-left: 1rem;
-			margin: 0 0.5rem;
 			font-size: 0.9rem;
 		}
 	`}
@@ -168,7 +163,7 @@ export const WritingBtn = styled.div`
 		border-left: solid 2px #fff;
 		border-right: solid 2px #000;
 		border-bottom: solid 2px #000;
-		font-weight: 600;
+		font-weight: 700;
 		font-size: 1.3rem;
 		color: #fff;
 	}
@@ -218,6 +213,7 @@ export const Search = styled.div`
 			display: flex;
 			padding-left: 0.3rem;
 			border: none;
+			background: none;
 		}
 		button {
 			cursor: pointer;
@@ -243,7 +239,7 @@ export const Search = styled.div`
 		form {
 			input {
 				font-size: 1rem;
-				width: 17rem;
+				width: 13rem;
 			}
 			button {
 				height: 1.8rem;
@@ -292,22 +288,22 @@ export const WrapTitle = styled.div`
 	font-weight: 500;
 	img {
 		height: 2rem;
-		margin: 0.5rem;
+		margin: 0 0.5rem;
 	}
 	${({theme}) => theme.media.tablet`
 		height: 1.8rem;
-		font-size: 1.1rem;
+		font-size: 0.9rem;
 		img {
 			height: 1.4rem;
-			margin: 0.5rem;
+			margin: 0 0.3rem;
 		}
 	`}
 	${({theme}) => theme.media.desktop`
-		height: 1.5rem;
+		height: 1.7rem;
 		font-size: 0.8rem;
 		img {
-			height: 1.1rem;
-			margin: 0.5rem;
+			height: 1.3rem;
+			margin: 0 0.3rem;
 		}
 	`}
 `;
@@ -316,26 +312,39 @@ export const BoardNames = styled.div`
 	display: flex;
 	flex-direction: column;
 	align-items: center;
-	margin: 2rem 0;
+	justify-content: space-evenly;
+	height: 23rem;
+	padding: 0.5rem 0;
 	div {
-		width: 18rem;
 		cursor: pointer;
+		display: flex;
+		align-items: center;
+		width: 18rem;
 		font-size: 1.5rem;
-		font-weight: 400;
-		margin-bottom: 1.5rem;
+		font-weight: 450;
+		img {
+			height: 1.6rem;
+			margin-right: 0.5rem;
+		}
 	}
 	${({theme}) => theme.media.tablet`
-	div {
-		width: 14rem;
-		font-size: 1.1rem;
-		margin-bottom: 1.1rem;
-	}
+		height: 16rem;
+		div {
+			width: 13rem;
+			font-size: 1rem;
+			img {
+				height: 1.2rem;
+			}
+		}
 	`}
 	${({theme}) => theme.media.desktop`
-	div {
-		width: 13rem;
-		font-size: 0.9rem;
-		margin-bottom: 0.9rem;
-	}
+		height: 16rem;
+		div {
+			width: 13rem;
+			font-size: 0.9rem;
+			img {
+				height: 1.1rem;
+			}
+		}
 	`}
 `;

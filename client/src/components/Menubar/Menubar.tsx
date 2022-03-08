@@ -91,7 +91,7 @@ export default function Menubar({ menubarHandler }: GreetingProps) {
           <BoardListWrap>
             <WrapTitle>
               {isLoggedIn ? 'welcome!' : 'Join us? '}
-              <img src="/images/dogfoot.png" alt="footimg" />
+              <img src="images/dogPaws.png" alt="footimg" />
             </WrapTitle>
             <BoardNames>
               {contents.map((el: BoardPre, idx) => {
@@ -99,7 +99,7 @@ export default function Menubar({ menubarHandler }: GreetingProps) {
                   !el.isDel && (
                     <Link to={`/board?=boardId=${el.id}`} key={idx}>
                       <div onClick={menubarHandler}>
-                        <AiFillFolderOpen /> {stringLimit(el.name, 10)}
+												<img src='images/folder.png' /> {stringLimit(el.name, 10)}
                       </div>
                     </Link>
                   )
@@ -109,27 +109,29 @@ export default function Menubar({ menubarHandler }: GreetingProps) {
           </BoardListWrap>
           <UserProfileWrap>
             <Profile>
-              <UserImg>
-                <img src="/images/egg.png" alt="pfimg" />
+              <UserImg state={isLoggedIn}>
+								{isLoggedIn
+								?<img src="images/pf_bichon.png" alt="pfimg" />
+								:<img src="images/pf_questionMark.png" alt="pfimg" />}
               </UserImg>
               <UserName>
                 {isLoggedIn ? (
-                  <div>
-                    <strong>카뎃</strong>
-                  </div>
+                  <div>카뎃</div>
                 ) : (
-                  <Link to="/login">로그인</Link>
+                  <Link to="/login">
+										<div>로그인</div>
+									</Link>
                 )}
               </UserName>
             </Profile>
             {isLoggedIn && (
               <UserMenu>
-                <Link to="/mypage?=post&page=1">
-                  <span>마이페이지</span>
-                </Link>
-                <Link to="/" onClick={logoutHandler}>
-                  <span>로그아웃</span>
-                </Link>
+								<Link to="/mypage?=post&page=1">
+									<span>마이페이지</span>
+								</Link>
+								<Link to="/" onClick={logoutHandler}>
+									<span>로그아웃</span>
+								</Link>
                 <WritingBtn>
                   {isLoggedIn ? (
                     <Link to="/writing">
@@ -147,7 +149,6 @@ export default function Menubar({ menubarHandler }: GreetingProps) {
             )}
           </UserProfileWrap>
           <UtilWrap>
-            {/* {isLoggedIn ? ( */}
             <Search>
               <form name="searchForm" onSubmit={searchHandeler}>
                 <input
@@ -162,18 +163,6 @@ export default function Menubar({ menubarHandler }: GreetingProps) {
                 </button>
               </form>
             </Search>
-            {/* ) : (
-              <Search onClick={openLoginModalHandler}>
-                <form name="searchForm">
-                  <input type="text" placeholder="검색어를 입력하세요" />
-                  <button>
-                    <div>
-                      <GoSearch />
-                    </div>
-                  </button>
-                </form>
-              </Search>
-            )} */}
           </UtilWrap>
         </ContentContainer>
       </MenubarContainer>
