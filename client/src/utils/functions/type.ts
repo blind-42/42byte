@@ -26,7 +26,9 @@ export interface PostPre {
   viewCnt: number
   likeCnt: number
   isNotice: boolean
-  blameCnt: number
+	isDel: number
+	type: string
+	isImage: number
   createdDate: string
   modifiedDate: string
 }
