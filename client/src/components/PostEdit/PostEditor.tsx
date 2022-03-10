@@ -22,7 +22,7 @@ type PostDataType = {
 export default function PostEditor({ detailData, boardId }: PostDataType) {
   const [title, setTitle] = useState<string>('');
   const [content, setContent] = useState<string>('');
-	const [isImage, setIsImage] = useState<number>(0);
+  const [isImage, setIsImage] = useState<number>(0);
   const editorRef = useRef<Editor>(null);
   const currentUrl = window.location.href;
   const urlId = currentUrl.split('&postId=')[1];
@@ -34,6 +34,22 @@ export default function PostEditor({ detailData, boardId }: PostDataType) {
       setContent(detailData.content);
     }
   }, []);
+
+  useEffect(() => {
+    const editorContentNode = document.getElementsByClassName(
+      'toastui-editor-contents',
+    )[0];
+    let contentChildNodes = editorContentNode.childNodes[0]?.childNodes;
+    let arr: string[] = [];
+    contentChildNodes?.forEach((el) => {
+      arr.push(el.nodeName);
+    });
+    if (arr.includes('IMG')) {
+      setIsImage(1);
+    } else {
+      setIsImage(0);
+    }
+  });
 
   useEffect(() => {
     if (editorRef.current) {
@@ -51,7 +67,7 @@ export default function PostEditor({ detailData, boardId }: PostDataType) {
           const ReactS3Client = new S3(s3config);
           ReactS3Client.uploadFile(blob, uuidv4())
             .then((data) => callback(data.location, 'imageURL'))
-            .catch((err) => (window.location.href = '/error'));
+            .catch(() => (window.location.href = '/error'));
         });
     }
   }, []);
@@ -59,7 +75,11 @@ export default function PostEditor({ detailData, boardId }: PostDataType) {
   const uploadHandler = () => {
     if (window.location.pathname === '/writing') {
       instance
-        .post(`/post?boardId=${boardId}`, { title: title, content: content, isImage: isImage })
+        .post(`/post?boardId=${boardId}`, {
+          title: title,
+          content: content,
+          isImage: isImage,
+        })
         .then(
           (res) =>
             (window.location.href = `/detail?boardId=${boardId}&postId=${res.data.id}`),
@@ -70,6 +90,7 @@ export default function PostEditor({ detailData, boardId }: PostDataType) {
         .put(`/post?boardId=${boardId}&postId=${detailData?.id}`, {
           title: title,
           content: content,
+          isImage: isImage,
         })
         .then(
           () =>
@@ -79,7 +100,7 @@ export default function PostEditor({ detailData, boardId }: PostDataType) {
     }
   };
 
-  const titleHandler = (event : React.ChangeEvent<HTMLInputElement>) => {
+  const titleHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
     setTitle(event.target.value);
   };
   const contentHandler = () => {
@@ -95,7 +116,7 @@ export default function PostEditor({ detailData, boardId }: PostDataType) {
               type="text"
               placeholder="제목을 입력해 주세요."
               value={title}
-							maxLength={24}
+              maxLength={24}
             />
           </Title>
           <UploadButton>
