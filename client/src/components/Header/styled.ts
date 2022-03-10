@@ -85,7 +85,7 @@ export const Logo = styled.div`
 	`}
 `;
 
-export const Clock = styled.div`
+export const TimeBox = styled.div`
 	display: flex;
 	align-items: center;
 	justify-content: center;
