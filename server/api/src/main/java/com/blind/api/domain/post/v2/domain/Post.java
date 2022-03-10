@@ -54,6 +54,8 @@ public class Post extends BaseTimeEntity {
     @Column(name = "is_del", columnDefinition = "Integer default 0")
     private Integer isDel;
 
+    @Column(name = "is_image")
+    private Boolean isImage;
 
     @ManyToOne
     @JsonIgnore
@@ -61,10 +63,11 @@ public class Post extends BaseTimeEntity {
     private Board board;
 
     @Builder
-    public Post(Board board, String title, String content, Long authorId) {
+    public Post(Board board, String title, String content, Long authorId, Boolean isImage) {
         this.board = board;
         this.title = title;
         this.content = content;
         this.authorId = authorId;
+        this.isImage = isImage;
     }
 }

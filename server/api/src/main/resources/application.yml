@@ -1,6 +1,6 @@
 spring:
   profiles:
-    active: proc
+    active: prod
 
   # Security OAuth
   security:
@@ -41,7 +41,7 @@ spring:
 
 # cors 설정
 cors:
-  allowed-origins: 'http://localhost:3000'
+  allowed-origins: 'https://42byte.kr'
   allowed-methods: GET,POST,PUT,DELETE,OPTIONS,PATCH
   allowed-headers: '*'
   max-age: 3600
@@ -53,13 +53,13 @@ app:
     refreshTokenExpiry: 604800000
   oauth2:
     authorizedRedirectUris:
-      - http://localhost:3000/oauth/redirect
+      - https://42byte.kr/oauth/redirect
       -
 # jwt secret key 설정
 jwt.secret: a2f6abd304bcd1d2ff9691bb0e7c1bab1010d0466c628d23b49550fb932300a43054a6030811f6118eb8129d9033cf5e2b63b762c5bd7bee246f63d34ee04fd3
 
 info:
   web:
-    frontUrl: 'http://localhost:3000'
+    frontUrl: 'https://42byte.kr'
   van:
     blame: 5

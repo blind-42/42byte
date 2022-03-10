@@ -13,7 +13,7 @@ spring:
   jpa:
     database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
     hibernate:
-      ddl-auto: none
+      ddl-auto: update
     properties:
       hibernate:
         show_sql: true
@@ -28,8 +28,8 @@ spring:
     oauth2.client:
       registration:
         42:
-          client-id: "ec8a6ce5eb83c2ae14f77cc3068d19eec7556d6feae19301c2b771394870c116"
-          client-secret: "73fdaea19d7872e6fb1d11f46e5ff4aa763af7ea115cee0dbf1ccb52f9e4a116"
+          client-id: "f51e70e8a1d30c2377f7b0dbbef0e4f7a22ae2ddf7f3c13b7d57eaa256c18698"
+          client-secret: "5cd4e8c8ce181f03d2fbed9090f46491aa072e9fc870eb2ae14e0578e69ade42"
 
 server:
   ssl:
