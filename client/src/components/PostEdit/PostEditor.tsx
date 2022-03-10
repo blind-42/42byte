@@ -22,6 +22,7 @@ type PostDataType = {
 export default function PostEditor({ detailData, boardId }: PostDataType) {
   const [title, setTitle] = useState<string>('');
   const [content, setContent] = useState<string>('');
+	const [isImage, setIsImage] = useState<number>(0);
   const editorRef = useRef<Editor>(null);
   const currentUrl = window.location.href;
   const urlId = currentUrl.split('&postId=')[1];
@@ -58,7 +59,7 @@ export default function PostEditor({ detailData, boardId }: PostDataType) {
   const uploadHandler = () => {
     if (window.location.pathname === '/writing') {
       instance
-        .post(`/post?boardId=${boardId}`, { title: title, content: content })
+        .post(`/post?boardId=${boardId}`, { title: title, content: content, isImage: isImage })
         .then(
           (res) =>
             (window.location.href = `/detail?boardId=${boardId}&postId=${res.data.id}`),

@@ -11,7 +11,7 @@ type GreetingProps = {
 }
 
 function PostPreview({ postData }: GreetingProps) {
-	const { id, title, commentCnt, viewCnt, likeCnt, isNotice, blameCnt, createdDate, modifiedDate } = postData;
+	const { id, title, commentCnt, viewCnt, likeCnt, isNotice, isDel, type, isImage, createdDate, modifiedDate } = postData;
 
   const isMobile = useMediaQuery({
     query : "(max-width:767px)"
@@ -21,14 +21,20 @@ function PostPreview({ postData }: GreetingProps) {
 		<>
 			<Link to={`/detail?boardId=1&postId=${id}`}> 
 				<PreviewContainer state={isNotice}>
-					{isNotice
-						? <NoticeMark>공지</NoticeMark>
-						: <div>{id}</div>
-					}
+					{isNotice ? (
+						<NoticeMark>공지</NoticeMark>
+					) : (
+						<div>{id}</div>
+					)}
 					<div>
-						{isMobile
-						? <h3>{stringLimit(title, 12)}</h3>
-						: <h3>{stringLimit(title, 22)}</h3>}
+						{isMobile ? (
+							<h3>{stringLimit(title, 12)}</h3>
+						) : (
+							<h3>{stringLimit(title, 22)}</h3>
+						)}
+						{isImage && (
+							<div><img src='images/image.png'/></div>
+						)}
 						<div>[{commentCnt}]</div>
 					</div>
 					<div>{viewCnt}</div>
