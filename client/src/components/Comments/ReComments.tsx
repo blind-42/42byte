@@ -1,14 +1,24 @@
-import React from 'react';
 import { useState } from 'react';
-import { useQuery,  useQueryClient, useMutation } from 'react-query';
+import { useQueryClient, useMutation } from 'react-query';
 import instance from 'utils/functions/axios';
 import DropdownMenu from 'components/DropdownMenu/DropdownMenu';
 import CommentInput from 'components/CommentInput/CommentInput';
 import { RecommentData } from 'utils/functions/type';
 import { timeForToday, isDelOption, whoIsWriter } from 'utils/functions/functions';
 import { GrLike } from "react-icons/gr";
-import { RecommentContainer, ReCommentWrap, ModifyCommentWrap, CommentTop, Info, Modify, Content, 
-	CommentBottom, ReCommentBox, LikesBox, GLine, FLine } from './styled'
+import {
+	RecommentContainer, 
+	ReCommentWrap, 
+	ModifyCommentWrap, 
+	CommentTop, 
+	Info, 
+	Modify, 
+	Content, 
+	CommentBottom, 
+	ReCommentBox, 
+	LikesBox, 
+	GLine, 
+	FLine } from './styled'
 
 type GreetingProps = {
 	recomment: RecommentData
@@ -16,7 +26,7 @@ type GreetingProps = {
 }
 
 function ReComments({ recomment, commentsUserList }: GreetingProps) {
-	const {authorId, blameCnt, content, createdDate, id, isAuthor, isDel, isLiked, isUsers, likeCnt, modifiedDate, postId, targetAuthorId } = recomment;
+	const { authorId, blameCnt, content, createdDate, id, isAuthor, isDel, isLiked, isUsers, likeCnt, modifiedDate, postId, targetAuthorId } = recomment;
 	const [boxState, setBoxState] = useState<boolean>(isLiked);
 	const [openEditor, setOpenEditor] = useState<boolean>(false);
 	const [openReReCmt, setOpenReReCmt] = useState<boolean>(false);
@@ -30,53 +40,77 @@ function ReComments({ recomment, commentsUserList }: GreetingProps) {
 	const mutationPut = useMutation(
 		({ path, data }: { path: string; data?: object }) => instance.put(path, data));
 
-	const modifyCmtHandler = () => { setOpenEditor(!openEditor); }
+	const modifyCmtHandler = () => { 
+		setOpenEditor(!openEditor); 
+	}
 
-	const openReReCmtHandler = () => { setOpenReReCmt(!openReReCmt); }
+	const openReReCmtHandler = () => { 
+		setOpenReReCmt(!openReReCmt); 
+	}
 
 	const updateCmtHandler = (comment: string) => {
 		mutationPut.mutate({path: `/comment?commentId=${id}`, data: {content: comment}},
-		{ onSuccess: () => {
+		{ 
+			onSuccess: () => {
 				queryClient.invalidateQueries(['comment_key']);
-				setOpenEditor(!openEditor);},
-			onError: () => {window.location.href = '/error';}
+				setOpenEditor(!openEditor);
+			},
+			onError: () => {
+				window.location.href = '/error';
+			}
 		})
 	}
 
 	const uploadReReCmtHandler = (comment: string) => {
 		mutationPost.mutate({path: `recomment?commentId=${id}`, data: {content: comment}},
-		{ onSuccess: () => {
+		{ 
+			onSuccess: () => {
 				queryClient.invalidateQueries(['comment_key']);
-				setOpenReReCmt(!openReReCmt);},
-			onError: () => {window.location.href = '/error';}
+				setOpenReReCmt(!openReReCmt);
+			},
+			onError: () => {
+				window.location.href = '/error';
+			}
 		});
 	}
 
 	const deleteCmtHandler = () => {
 		mutationDelete.mutate({path: `/comment?commentId=${id}`},
-		{ onSuccess: () => {
-				queryClient.invalidateQueries(['comment_key']);},
-			onError: () => {window.location.href = '/error';}
+		{ 
+			onSuccess: () => {
+				queryClient.invalidateQueries(['comment_key']);
+			},
+			onError: () => {
+				window.location.href = '/error';
+			}
 		});
 	}
 
 	const reportHandler = (reportIssue: string) => {
 		if (reportIssue) {
-			mutationPost.mutate({ path: `/post/blame?postId=${id}`, data: { issue: reportIssue } }, {
+			mutationPost.mutate({ path: `/post/blame?postId=${id}`, data: { issue: reportIssue } }, 
+			{
 				onSuccess: () => { 
 					alert('신고가 정상적으로 처리되었습니다.');
-					window.location.href='/blindboard?page=1';},
-				onError: () => { window.location.href = '/error'; }
+					window.location.href='/blindboard?page=1';
+				},
+				onError: () => { 
+					window.location.href = '/error'; 
+				}
 			});
 		}
 	}
 
 	const boxcolorHandler = () => {
-		mutationPost.mutate({path: `/comment/like?postId=${postId}&commentId=${id}`, data: undefined},
-		{ onSuccess: () => {
+		mutationPost.mutate({ path: `/comment/like?postId=${postId}&commentId=${id}`, data: undefined},
+		{ 
+			onSuccess: () => {
 				queryClient.invalidateQueries(['comment_key']);
-				setBoxState(!boxState);},
-			onError: () => {window.location.href = '/error';}
+				setBoxState(!boxState);
+			},
+			onError: () => {
+				window.location.href = '/error';
+			}
 		});
 	}
 
@@ -108,8 +142,12 @@ function ReComments({ recomment, commentsUserList }: GreetingProps) {
 								<h3>{writer}</h3>
 								<div>{timeForToday(createdDate)} {(createdDate !== modifiedDate) && '수정됨'}</div>
 							</Info>
-							{!isDel && <DropdownMenu isPost={false} isUsers={isUsers} modifyHandler={modifyCmtHandler} 
-								deleteHandler={deleteCmtHandler} reportHandler={reportHandler} />}
+							{!isDel && <DropdownMenu  isPost={false} 
+																				isUsers={isUsers} 
+																				modifyHandler={modifyCmtHandler} 
+																				deleteHandler={deleteCmtHandler} 
+																				reportHandler={reportHandler} />
+																				}
 						</CommentTop>
 						<Content>
 							{isDel
@@ -119,7 +157,8 @@ function ReComments({ recomment, commentsUserList }: GreetingProps) {
 							: <div>
 									<span>
 										{commentsUserList.indexOf(targetAuthorId) < 0
-										? '@작성자 ' : `@카뎃${commentsUserList.indexOf(targetAuthorId) + 1} `}
+										? '@작성자 ' 
+										: `@카뎃${commentsUserList.indexOf(targetAuthorId) + 1} `}
 									</span>
 									{content}
 								</div>}
@@ -136,16 +175,17 @@ function ReComments({ recomment, commentsUserList }: GreetingProps) {
 				</ReCommentWrap>
 				}
 			</RecommentContainer>
-			{openReReCmt
-			&& <>
-				<GLine/>
-				<FLine/>
-				<RecommentContainer>
-					<span>&#8627;</span>
-					<ReCommentWrap>
-						<CommentInput submitCmtHandler={uploadReReCmtHandler} placeholder={`${writer} 에게 댓글을 입력하세요.`} />
-					</ReCommentWrap>
-				</RecommentContainer>
+			{openReReCmt &&
+				<>
+					<GLine/>
+					<FLine/>
+					<RecommentContainer>
+						<span>&#8627;</span>
+						<ReCommentWrap>
+							<CommentInput submitCmtHandler={uploadReReCmtHandler} 
+														placeholder={`${writer} 에게 댓글을 입력하세요.`} />
+						</ReCommentWrap>
+					</RecommentContainer>
 				</>
 			}
 		</>
