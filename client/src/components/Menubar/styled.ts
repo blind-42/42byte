@@ -209,8 +209,10 @@ export const Search = styled.div`
 		align-items: center;
 		input {
 			font-size: 1.2rem;
+			line-height: 1.2rem;
 			width: 20rem;
 			display: flex;
+			margin: 2px;
 			padding-left: 0.3rem;
 			border: none;
 			background: none;
@@ -268,6 +270,42 @@ export const Search = styled.div`
 	`}
 `;
 
+
+export const WritingButton = styled.div`
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	margin-left: 3px;
+	input {
+		cursor: pointer;
+		background: #518EDB;
+		border-top: solid 2px #fff;
+		border-left: solid 2px #fff;
+		border-right: solid 2px #000;
+		border-bottom: solid 2px #000;
+		font-size: 1.2rem;
+		font-weight: 600;
+		height: 2.4rem;
+		width: 6.5rem;
+		color: #fff;
+	}
+	${({theme}) => theme.media.tablet`
+		input {
+			font-size: 0.9rem;
+			font-weight: 700;
+			height: 1.6rem;
+			width: 5rem;
+		}
+	`}
+	${({theme}) => theme.media.desktop`
+		input {
+			font-size: 0.9rem;
+			font-weight: 700;
+			height: 1.6rem;
+			width: 5rem;
+		}
+	`}
+`;
 export const BoardListWrap = styled.div`
 	display: flex;
 	flex-direction: column;

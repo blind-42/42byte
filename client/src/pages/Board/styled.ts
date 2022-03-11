@@ -33,9 +33,11 @@ export const Search = styled.div`
 		align-items: center;
 		input {
 			font-size: 1.1rem;
+			line-height: 1.1rem;
 			width: 15rem;
 			display: flex;
-			padding-left: 0.3rem;
+			margin: 2px;
+			padding: 0 0 0 0.3rem;
 			border: none;
 		}
 		button {
