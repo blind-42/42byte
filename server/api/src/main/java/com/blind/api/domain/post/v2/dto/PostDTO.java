@@ -19,6 +19,7 @@ public class PostDTO {
     private Boolean isNotice;
     private Integer isDel;
     private RoleType type;
+    private Boolean isImage;
     private LocalDateTime createdDate;
     private LocalDateTime modifiedDate;
 
@@ -32,13 +33,14 @@ public class PostDTO {
                 .isNotice(post.getIsNotice())
                 .isDel(post.getIsDel())
                 .type(type)
+                .isImage(post.getIsImage())
                 .createdDate(post.getCreatedDate())
                 .modifiedDate(post.getModifiedDate())
                 .build();
     }
 
     @Builder
-    private PostDTO(Long id, String title, Long commentCnt, Long viewCnt, Long likeCnt, Boolean isNotice, Integer isDel, RoleType type, LocalDateTime createdDate, LocalDateTime modifiedDate) {
+    private PostDTO(Long id, String title, Long commentCnt, Long viewCnt, Long likeCnt, Boolean isNotice, Integer isDel, RoleType type, Boolean isImage, LocalDateTime createdDate, LocalDateTime modifiedDate) {
         this.id = id;
         this.title = title;
         this.commentCnt = commentCnt;
@@ -47,6 +49,7 @@ public class PostDTO {
         this.isNotice = isNotice;
         this.isDel = isDel;
         this.type = type;
+        this.isImage = isImage;
         this.createdDate = createdDate;
         this.modifiedDate = modifiedDate;
     }

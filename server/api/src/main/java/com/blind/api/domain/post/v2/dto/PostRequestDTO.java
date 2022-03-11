@@ -13,4 +13,6 @@ public class PostRequestDTO {
     @Size(max = 65535, message = "{invalid.request}")
     @NotBlank(message = "{invalid.request.NotNull}")
     private String content;
+    @NotBlank
+    private Boolean isImage;
 }

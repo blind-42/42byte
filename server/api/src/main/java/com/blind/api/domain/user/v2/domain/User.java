@@ -3,6 +3,7 @@ package com.blind.api.domain.user.v2.domain;
 import com.blind.api.global.entity.BaseTimeEntity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.sun.istack.NotNull;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -36,11 +37,14 @@ public class User extends BaseTimeEntity implements Serializable {
     @Enumerated(EnumType.STRING)
     private RoleType roleType;
 
+    @Builder
     public User(
             @NotNull String hashId,
-            @NotNull RoleType roleType
+            @NotNull RoleType roleType,
+            @NotNull String profileImageUrl
     ) {
         this.hashId = hashId;
         this.roleType = roleType;
+        this.profileImageUrl = profileImageUrl;
     }
 }

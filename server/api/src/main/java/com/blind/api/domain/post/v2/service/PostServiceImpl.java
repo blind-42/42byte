@@ -76,9 +76,10 @@ public class PostServiceImpl implements PostService {
 
     @Override
     @Transactional
-    public void updatePost(Post post, String title, String content) {
+    public void updatePost(Post post, String title, String content, Boolean isImage) {
         post.setTitle(title);
         post.setContent(content);
+        post.setIsImage(isImage);
     }
 
     @Override

@@ -15,7 +15,7 @@ public interface PostService {
     Page<Post> search(Long boardId, User user, String keyword, Pageable pageable);
     void updateLike(Long postId, Long add);
     void updateView(Long postId);
-    void updatePost(Post post, String title, String content);
+    void updatePost(Post post, String title, String content, Boolean isImage);
     void deletePost(Post post);
     void delete(Post post, Integer type);
     Page<Post> findPostByIdIn(User user, Pageable pageable);

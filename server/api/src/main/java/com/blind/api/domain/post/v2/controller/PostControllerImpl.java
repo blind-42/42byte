@@ -112,7 +112,7 @@ public class PostControllerImpl implements PostController{
         Long userId = tokenService.findUserByAccessToken(HeaderUtil.getAccessToken(request)).getId();
         if (userId.equals(post.getAuthorId()) != true)
             throw new BusinessException("{invalid.request}");
-        postService.updatePost(post, requestDTO.getTitle(), requestDTO.getContent());
+        postService.updatePost(post, requestDTO.getTitle(), requestDTO.getContent(), requestDTO.getIsImage());
     }
 
     /*게시글 삭제 및 차단 */

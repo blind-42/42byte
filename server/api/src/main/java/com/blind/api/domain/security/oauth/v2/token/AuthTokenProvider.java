@@ -49,7 +49,7 @@ public class AuthTokenProvider {
                             .collect(Collectors.toList());
 
             log.debug("claims subject := [{}]", claims.getSubject());
-            User principal = new User(claims.getSubject(), RoleType.USER);
+            User principal = new User(claims.getSubject(), RoleType.USER, "1.jpg");
 
             return new UsernamePasswordAuthenticationToken(principal, authToken, authorities);
         } else {
