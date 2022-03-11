@@ -118,7 +118,9 @@ export default function Menubar({ menubarHandler }: GreetingProps) {
 								{isLoggedIn ? (
 									<img src={`images/${localStorage.getItem('4242-profile')}`} alt="pfimg" />
 								) : (
-								<img src="images/pf_questionMark.png" alt="pfimg" />
+								<Link to="/login">
+									<img src="images/pf_questionMark.png" alt="pfimg" />
+								</Link>
 								)}
               </UserImg>
               <UserName>
