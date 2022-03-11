@@ -93,7 +93,7 @@ export const ReCommentBox = styled.div<{openReCmt: boolean}>`
 	justify-content: space-evenly;
 	align-items: center;
 	border: solid 1.5px #929191;
-	width: 3.2rem;
+	padding: 0 0.6rem;
 	height: 2.1rem;
 	text-align: center;
 	line-height: 0.9rem;
@@ -101,7 +101,7 @@ export const ReCommentBox = styled.div<{openReCmt: boolean}>`
 	color: ${(props) => props.openReCmt && '#fff'};
 	background: ${(props) => props.openReCmt && '#929191'};
 	@media screen and (min-width: 768px) {
-		width: 2.4rem;
+		padding: 0 0.4rem;
 		height: 1.6rem;
 		font-size: 0.7rem;
 	}
@@ -110,13 +110,11 @@ export const ReCommentBox = styled.div<{openReCmt: boolean}>`
 export const LikesBox = styled.div<{boxState: boolean;}>`
 	cursor: pointer;
 	display: flex;
-	justify-content: space-evenly;
 	align-items: center;
-	/* margin-left: auto; */
 	border: solid 1.5px #518EDB;
-	width: 3.2rem;
+	padding: 0 0.6rem;
 	height: 2.1rem;
-	font-size: 0.4rem;
+	font-size: 0.9rem;
 	font-weight: 600;
 	color: ${(props) => props.boxState ? '#fff' : '#518EDB'};
 	background: ${(props) => props.boxState && '#518EDB'};
@@ -124,13 +122,15 @@ export const LikesBox = styled.div<{boxState: boolean;}>`
     stroke: ${(props) => props.boxState ? '#fff' : '#518EDB'};
 	}
 	div:nth-child(1) {
+		margin-right: 0.5rem;
 		font-size: 0.9rem;
 	}
 	@media screen and (min-width: 768px) {
-		width: 2.7rem;
+		padding: 0 0.4rem;
 		height: 1.6rem;
-		font-size: 0.8rem;
+		font-size: 0.7rem;
 		div:nth-child(1) {
+			margin-right: 0.4rem;
 			font-size: 0.7rem;
 		}
 	}
