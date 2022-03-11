@@ -4,7 +4,6 @@ import { useRecoilState } from 'recoil';
 import { Link } from 'react-router-dom';
 import { LoggedinState } from 'States/LoginState';
 import { GoSearch } from 'react-icons/go';
-import { AiFillFolderOpen } from 'react-icons/ai';
 import Error from 'pages/Error/Error';
 import LoginModal from 'components/Modal/LoginModal';
 import instance from 'utils/functions/axios';
@@ -90,19 +89,25 @@ export default function Menubar({ menubarHandler }: GreetingProps) {
         <ContentContainer>
           <BoardListWrap>
             <WrapTitle>
-              {isLoggedIn ? 'welcome!' : 'Join us? '}
+              {isLoggedIn ? 'welcome!' : 'Join us?'}
               <img src="images/dogPaws.png" alt="footimg" />
             </WrapTitle>
             <BoardNames>
               {contents.map((el: BoardPre, idx) => {
                 return (
                   !el.isDel && (
+										isLoggedIn ? (
                     <Link to={`/board?=boardId=${el.id}`} key={idx}>
                       <div onClick={menubarHandler}>
-												<img src='images/folder.png' /> {stringLimit(el.name, 10)}
+												<img src="images/folder.png" /> {stringLimit(el.name, 10)}
                       </div>
                     </Link>
-                  )
+										) : (
+											<div onClick={openLoginModalHandler}>
+												<img src="images/folder.png" /> {stringLimit(el.name, 10)}
+											</div>
+										)
+									)
                 );
               })}
             </BoardNames>
@@ -110,9 +115,11 @@ export default function Menubar({ menubarHandler }: GreetingProps) {
           <UserProfileWrap>
             <Profile>
               <UserImg state={isLoggedIn}>
-								{isLoggedIn
-								?<img src="images/pf_bichon.png" alt="pfimg" />
-								:<img src="images/pf_questionMark.png" alt="pfimg" />}
+								{isLoggedIn ? (
+									<img src={`images/${localStorage.getItem('4242-profile')}`} alt="pfimg" />
+								) : (
+								<img src="images/pf_questionMark.png" alt="pfimg" />
+								)}
               </UserImg>
               <UserName>
                 {isLoggedIn ? (
