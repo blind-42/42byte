@@ -90,7 +90,7 @@ export default function Menubar({ menubarHandler }: GreetingProps) {
         <ContentContainer>
           <BoardListWrap>
             <WrapTitle>
-              {isLoggedIn ? 'welcome!' : 'Join us? '}
+              {isLoggedIn ? 'welcome!' : 'Join us?'}
               <img src="images/dogPaws.png" alt="footimg" />
             </WrapTitle>
             <BoardNames>
@@ -110,9 +110,11 @@ export default function Menubar({ menubarHandler }: GreetingProps) {
           <UserProfileWrap>
             <Profile>
               <UserImg state={isLoggedIn}>
-								{isLoggedIn
-								?<img src="images/pf_bichon.png" alt="pfimg" />
-								:<img src="images/pf_questionMark.png" alt="pfimg" />}
+								{isLoggedIn ? (
+									<img src={`images/${localStorage.getItem('4242-profile')}`} alt="pfimg" />
+								) : (
+								<img src="images/pf_questionMark.png" alt="pfimg" />
+								)}
               </UserImg>
               <UserName>
                 {isLoggedIn ? (

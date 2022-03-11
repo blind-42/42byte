@@ -22,8 +22,9 @@ function Main() {
     profileImageUrl: '',
     roleType: '',
   });
-  const { createdDate, modifiedDate, hashId, roleType } = userData;
+  const { createdDate, modifiedDate, hashId, profileImageUrl, roleType } = userData;
   const navigate = useNavigate();
+	
 
   useEffect(() => {
     if (token) localStorage.setItem('4242-token', token);
@@ -40,7 +41,10 @@ function Main() {
   useEffect(() => {
     instance
       .get('/user')
-      .then((res) => setUserData(res.data))
+      .then((res) => {
+				setUserData(res.data)
+				localStorage.setItem('4242-profile', res.data.profileImageUrl);
+			})
       .catch((err) => console.log(err));
   }, []);
 
@@ -52,7 +56,7 @@ function Main() {
     <AppContainer>
       <Header />
 			<LogoImg>
-				<img src="/images/42byteLogo.png" />
+				<img src="images/42byteLogo.png" />
 			</LogoImg>
 			{roleType === 'ADMIN' && (
 				<SettingsBtn onClick={adminpage}>
