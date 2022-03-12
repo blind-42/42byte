@@ -39,7 +39,7 @@ import {
 } from './styled';
 
 interface CommentTotal {
-	commentData: CommentData
+	contents: CommentData
 	total: number
 }
 
@@ -63,6 +63,7 @@ function Detail() {
 	const { boardId, boardName, commentCnt, content, createdDate, id, isLiked, isNotice, isUsers, likeCnt, modifiedDate, title, type, viewCnt } = detailData;
 	const [commentData, setCommentData] = useState([]);
   const [commentsUserList, setCommentsUserList] = useState([-1]);
+	const [commentTotalCnt, setCommentTotalCnt] = useState(0);
 	const [boxState, setBoxState] = useState(isLiked);
   const [openEditor, setOpenEditor] = useState(false);
 	const currentUrl = window.location.href;
@@ -97,8 +98,9 @@ function Detail() {
 				instance
 				.get(`/comment?boardId=${boardUrl}&postId=${postUrl}`)
 				.then((res) => {
-					setCommentData(res.data.commentData);
-					setCommentsUserList(makeCommentUserList(res.data.commentData))
+					setCommentData(res.data.contents);
+					setCommentsUserList(makeCommentUserList(res.data.contents));
+					setCommentTotalCnt(res.data.total);
 				})},
 			retry: 0, 
 			refetchOnWindowFocus: false,
@@ -113,7 +115,9 @@ function Detail() {
 			mutationPost.mutate({ path: `/comment?boardId=${boardId}&postId=${postUrl}`, data: { content: comment } }, {
 				onSuccess: () => {
 					queryClient.invalidateQueries(['comment_key']);
-					setTimeout(() => scrollRef.current?.scrollIntoView({ behavior: "smooth", block: "end", inline: "nearest" }), 550);},
+					setTimeout(() => 
+						scrollRef.current?.scrollIntoView({ behavior: "smooth", block: "end", inline: "nearest" }), 550);
+					},
 				onError: () => { window.location.href = '/error'; }
 			});
 		}
@@ -136,7 +140,8 @@ function Detail() {
 			mutationPost.mutate({ path: `/post/blame?postId=${id}`, data: { issue: reportIssue } }, {
 				onSuccess: () => { 
 					alert('신고가 정상적으로 처리되었습니다.');
-					window.location.href = `/board?boardId=${boardId}&page=1`;},
+					window.location.href = `/board?boardId=${boardId}&page=1`;
+				},
 				onError: () => { window.location.href = '/error'; }
 			});
 		}
@@ -201,13 +206,20 @@ function Detail() {
 										<div>{shortDate} {(createdDate !== modifiedDate) && '수정됨'}</div>
 										<div>조회 {Number(viewCnt) + 1}</div>
 									</Info>
-									<DropdownMenu isPost={true} isUsers={isUsers} isNotice={isNotice} roleType={type} modifyHandler={modifyPostHandler}
-										deleteHandler={deletePostHandler} reportHandler={reportHandler} noticeHandler={noticeHandler} />
+									<DropdownMenu isPost={true} 
+																isUsers={isUsers} 
+																isNotice={isNotice} 
+																roleType={type} 
+																modifyHandler={modifyPostHandler}
+																deleteHandler={deletePostHandler} 
+																reportHandler={reportHandler} 
+																noticeHandler={noticeHandler} />
 								</Specific>
 								{content &&
 								<ContentWrap>
 									<Viewer initialValue={content}/>
-								</ContentWrap>}
+								</ContentWrap>
+								}
 								<LikeWrap>
 									<LikesBox boxState={isLiked} onClick={likeBoxHandler}>
 										<div><GrLike /></div>
@@ -215,16 +227,19 @@ function Detail() {
 									</LikesBox>
 								</LikeWrap>
 								<CommentContainer>
-									<CommentCount>댓글 {commentCnt}</CommentCount>
+									<CommentCount>댓글 {commentTotalCnt}</CommentCount>
 									<CommentInput submitCmtHandler={uploadCmtHandler} placeholder={'댓글을 입력하세요.'} />
 									<FLine />
 									<CommentListWrap>
 										{commentData.map((el: CommentData) => {
-											return (<Comments key={el.id} comment={el} commentsUserList={commentsUserList} />)
+											return (
+												<Comments key={el.id} comment={el} commentsUserList={commentsUserList} />
+												);
 										})}
 									</CommentListWrap>
 								</CommentContainer>
-							</DetailContainer>}
+							</DetailContainer>
+							}
               <div ref={scrollRef}/>
 						</PostContainer>
 						}
