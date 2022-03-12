@@ -20,7 +20,6 @@ import {
 	LikesBox, 
 	GLine,
 	FLine,
-	ReCommentListWrap,
 	ReCommentWrap,
 	RecommentContainer
 } from './styled'
@@ -160,7 +159,6 @@ function Comments({ comment, commentsUserList }: GreetingProps) {
 					</CommentBottom>
 				</CommentWrap>
 				}
-			<ReCommentListWrap>
 				{openReCmt &&
 					<>
 						<GLine/>
@@ -180,7 +178,6 @@ function Comments({ comment, commentsUserList }: GreetingProps) {
 																		commentsUserList={commentsUserList} />
 																		)
 					})}
-			</ReCommentListWrap>
 			<GLine/>
 			<FLine/>
 		</>
