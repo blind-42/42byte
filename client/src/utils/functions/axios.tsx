@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 // const baseURL = 'http://api-42byte.shop';
-const baseURL = 'http://211.253.31.22:7070';
+const baseURL = 'https://api-42byte.shop';
 
 const instance = axios.create({ baseURL });
 
