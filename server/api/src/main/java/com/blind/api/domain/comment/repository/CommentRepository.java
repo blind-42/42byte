@@ -15,7 +15,7 @@ import java.util.Optional;
 
 @Repository
 public interface CommentRepository extends JpaRepository<Comment, Long> {
-    List<Comment> findAllByBoardIdAndPostId(Long boardId, Long postId);
+    List<Comment> findAllByPostId(Long postId);
     Page<Comment> findCommentByAuthorIdAndIsDelEqualsAndBlameCntLessThan(Long userId, Integer isDel, Long blameCnt, Pageable pageable);
     void deleteCommentByPostId(Long postId);
     @Modifying
@@ -31,4 +31,8 @@ public interface CommentRepository extends JpaRepository<Comment, Long> {
     Page<Comment> findAllByIsDelEquals(Integer isDel, Pageable pageable);
     Page<Comment> findAllByBlameCntGreaterThanEqual(Long blameCnt, Pageable pageable);
     Page<Comment> findAllByBlameCntGreaterThanEqualOrIsDelGreaterThanEqual(Long blameCnt, Integer isDel, Pageable pageable);
+
+
+    @Query(nativeQuery = true, value = "select * from comment where post_id=:postId and id not in (select comment_id as id from comment_like where user_id = :userId)")
+    List<Comment> findByPostIdAndUserId(@Param("postId") Long postId, @Param("userId") Long userId);
 }

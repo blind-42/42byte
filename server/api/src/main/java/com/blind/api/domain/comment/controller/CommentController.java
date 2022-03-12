@@ -1,6 +1,7 @@
 package com.blind.api.domain.comment.controller;
 
 import com.blind.api.domain.comment.domain.Comment;
+import com.blind.api.domain.comment.dto.CommentListResponseDTO;
 import com.blind.api.domain.comment.dto.CommentRequestDTO;
 import com.blind.api.domain.comment.dto.CommentResponseDTO;
 import org.springframework.data.domain.Pageable;
@@ -31,5 +32,5 @@ public interface CommentController {
 
     CommentResponseDTO findCommentByUserId (@SortDefault.SortDefaults({@SortDefault(sort = "id", direction = Sort.Direction.DESC)}) Pageable pageable,
                                                    HttpServletRequest request);
-    List findCommentByPost (@RequestParam("boardId") @Positive (message = "{invalid.request}")Long boardId, @RequestParam("postId") @Positive (message = "{invalid.request}")Long postId, HttpServletRequest request);
+    CommentListResponseDTO findCommentByPost (@RequestParam("boardId") @Positive (message = "{invalid.request}")Long boardId, @RequestParam("postId") @Positive (message = "{invalid.request}")Long postId, HttpServletRequest request);
     }

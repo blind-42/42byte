@@ -43,12 +43,13 @@ public class PostServiceImpl implements PostService {
 
     @Override
     @Transactional
-    public Post save(Board board, User user, String title, String content) {
+    public Post save(Board board, User user, String title, String content, Boolean isImage) {
         Post post = Post.builder()
                 .board(board)
                 .title(title)
                 .content(content)
                 .authorId(user.getId())
+                .isImage(isImage)
                 .build();
         return postRepository.save(post);
     }

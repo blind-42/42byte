@@ -85,7 +85,7 @@ public class PostControllerImpl implements PostController{
     public Post savePost(Long boardId, PostRequestDTO requestDTO, HttpServletRequest request){
         Board board = boardService.findById(boardId);
         User user = tokenService.findUserByAccessToken(HeaderUtil.getAccessToken(request));
-        return postService.save(board, user, requestDTO.getTitle(), requestDTO.getContent());
+        return postService.save(board, user, requestDTO.getTitle(), requestDTO.getContent(), requestDTO.getIsImage());
     }
 
     /*게시글 상세조회 페이지*/

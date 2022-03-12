@@ -2,11 +2,9 @@ package com.blind.api.domain.comment.controller;
 
 import com.blind.api.domain.board.v1.domain.Board;
 import com.blind.api.domain.comment.domain.Comment;
-import com.blind.api.domain.comment.dto.CommentDTO;
-import com.blind.api.domain.comment.dto.CommentRequestDTO;
-import com.blind.api.domain.comment.dto.CommentResponseDTO;
-import com.blind.api.domain.comment.dto.ReCommentDTO;
+import com.blind.api.domain.comment.dto.*;
 import com.blind.api.domain.comment.service.CommentService;
+import com.blind.api.domain.like.domain.CommentLike;
 import com.blind.api.domain.like.service.LikeService;
 import com.blind.api.domain.post.v2.domain.Post;
 import com.blind.api.domain.post.v2.service.PostService;
@@ -39,6 +37,8 @@ public class CommentControllerImpl implements CommentController {
     public void saveComment(Long boardId, Long postId, CommentRequestDTO requestDTO, HttpServletRequest request){
         User user = tokenService.findUserByAccessToken(HeaderUtil.getAccessToken(request));
         Post post = postService.findById(postId);
+        if (post.getCommentCnt() >= 1000)
+            throw new BusinessException("{invalid.request}");
         commentService.save(boardId,post, user, requestDTO.getContent());
         postService.updateComment(postId, 1L);
     }
@@ -75,27 +75,29 @@ public class CommentControllerImpl implements CommentController {
     }
 
     @RequestMapping(value={"/comment"}, method = RequestMethod.GET)
-    public List<CommentDTO> findCommentByPost (Long boardId, Long postId, HttpServletRequest request){
+    public CommentListResponseDTO findCommentByPost (Long boardId, Long postId, HttpServletRequest request){
         Post post = postService.findById(postId);
         User user = tokenService.findUserByAccessToken(HeaderUtil.getAccessToken(request));
-        HashMap<Long, CommentDTO> commentDTOHashMap = new LinkedHashMap<>();
+        HashMap<Long, CommentDTO> commentDTOHashMap = new LinkedHashMap<>(1001, 1);
         List<ReCommentDTO> reCommentList = new ArrayList<>();
 
-        List<Comment> commentList = commentService.findAllComment(post.getBoard().getId(), postId);
+        List<Comment> commentList = commentService.findAllComment(postId);
+        List<Comment> userCommentList = commentService.findByPost(postId, user.getId());
+
             commentList.stream().forEach(
                     (comment -> {
             Long rooCmmtId = comment.getRootCommentId();
             if (rooCmmtId == null) {
                 CommentDTO commentDTO = CommentDTO.from(comment);
                 commentDTO.setIsUsers(StringUtils.equals(comment.getAuthorId(), user.getId()));
-                commentDTO.setIsLiked(likeService.checkCommentLike(comment, user));
+                commentDTO.setIsLiked(!userCommentList.contains(comment));
                 commentDTOHashMap.put(commentDTO.getId(), commentDTO);
             }
             else
             {
                 ReCommentDTO reCommentDTO = ReCommentDTO.from(comment);
                 reCommentDTO.setIsUsers(StringUtils.equals(comment.getAuthorId(), user.getId()));
-                reCommentDTO.setIsLiked(likeService.checkCommentLike(comment, user));
+                reCommentDTO.setIsLiked(!userCommentList.contains(comment));
                 reCommentList.add(reCommentDTO);
             }
         }));
@@ -107,7 +109,11 @@ public class CommentControllerImpl implements CommentController {
                 commentDTO.getRecomments().add(reCommentDTO);
             });
         List<CommentDTO> result = new LinkedList<>(commentDTOHashMap.values());
-        return result;
+
+        CommentListResponseDTO dtoList = new CommentListResponseDTO();
+        dtoList.setContents(result);
+        dtoList.setTotal(post.getCommentCnt());
+        return dtoList;
     }
 
     RoleType setRoleType(User user, Board board) {
