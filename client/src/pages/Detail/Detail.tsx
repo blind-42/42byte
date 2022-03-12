@@ -38,6 +38,10 @@ import {
 	FLine
 } from './styled';
 
+interface CommentTotal {
+	commentData: CommentData
+	total: number
+}
 
 function Detail() {
 	const [detailData, setDetailData] = useState<PostData>({
@@ -93,8 +97,8 @@ function Detail() {
 				instance
 				.get(`/comment?boardId=${boardUrl}&postId=${postUrl}`)
 				.then((res) => {
-					setCommentData(res.data);
-					setCommentsUserList(makeCommentUserList(res.data))
+					setCommentData(res.data.commentData);
+					setCommentsUserList(makeCommentUserList(res.data.commentData))
 				})},
 			retry: 0, 
 			refetchOnWindowFocus: false,

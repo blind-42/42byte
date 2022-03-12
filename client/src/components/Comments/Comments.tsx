@@ -32,7 +32,7 @@ type GreetingProps = {
 }
 
 function Comments({ comment, commentsUserList }: GreetingProps) {
-	const { boardId, postId, id, authorId, content, likeCnt, blameCnt, isUsers, isAuthor, isLiked, isDel, createdDate, modifiedDate, recomments } = comment;
+	const { postId, id, authorId, content, likeCnt, blameCnt, isUsers, isAuthor, isLiked, isDel, createdDate, modifiedDate, recomments } = comment;
 	const [boxState, setBoxState] = useState<boolean>(isLiked);
 	const [openEditor, setOpenEditor] = useState<boolean>(false);
 	const [openReCmt, setOpenReCmt] = useState<boolean>(false);
