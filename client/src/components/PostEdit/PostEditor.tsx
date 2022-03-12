@@ -130,7 +130,6 @@ export default function PostEditor({ detailData, boardId }: PostDataType) {
             height="70vh"
             initialEditType="markdown"
             useCommandShortcut={true}
-            // hooks={{addImageBlobHook: }}
             onChange={contentHandler}
             ref={editorRef}
           />
