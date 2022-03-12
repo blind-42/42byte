@@ -41,7 +41,7 @@ function Login() {
 							</div>
 						</TextWrap>
 						<LoginButtonWrap>
-							<a href='https://api-42byte.shop/oauth2/authorization/42'>
+							<a href={`${process.env.REACT_APP_SERVERIP}/oauth2/authorization/42`}>
 								<button>로그인</button>
 							</a>
 						</LoginButtonWrap>
