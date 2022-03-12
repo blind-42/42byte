@@ -1,23 +1,23 @@
 import styled from 'styled-components';
 
 export const PageContainer = styled.div`
-	display: flex;
-	flex-direction: column;
-	justify-content: center;
-	align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 `;
 
 export const PageNationWrap = styled.div`
-	.pagination {
-		cursor: pointer;
+  .pagination {
+    cursor: pointer;
     display: flex;
     justify-content: center;
     margin: 1rem 0;
-		background: #C4C4C4;
-		border-top: solid 1px #000;
-		border-left: solid 1px #000;
-		border-right: solid 1px #fff;
-		border-bottom: solid 1px #fff;
+    background: #c4c4c4;
+    border-top: solid 1px #000;
+    border-left: solid 1px #000;
+    border-right: solid 1px #fff;
+    border-bottom: solid 1px #fff;
   }
   ul {
     list-style: none;
@@ -32,11 +32,11 @@ export const PageNationWrap = styled.div`
     justify-content: center;
     align-items: center;
     font-size: 1rem;
-    background: #C4C4C4;
-		border-top: solid 2px #fff;
-		border-left: solid 2px #fff;
-		border-right: solid 2px #000;
-		border-bottom: solid 2px #000;
+    background: #c4c4c4;
+    border-top: solid 2px #fff;
+    border-left: solid 2px #fff;
+    border-right: solid 2px #000;
+    border-bottom: solid 2px #000;
     transition: all 0.5s;
   }
   ul.pagination li a {
@@ -50,7 +50,7 @@ export const PageNationWrap = styled.div`
     color: var(--color-black);
   }
   ul.pagination li.active {
-    background-color: #C4C4C4;
+    background-color: #c4c4c4;
     // border: 1px solid var(--color-black);
   }
   ul.pagination li a:hover,
@@ -62,14 +62,14 @@ export const PageNationWrap = styled.div`
     height: 30px;
     color: #337ab7;
   }
-	@media screen and (min-width: 768px) {
-		ul.pagination li {
-			width: 1.8rem;
-			height: 1.8rem;
-			font-size: 0.9rem;
-		}
-		ul.pagination li a {
-			font-size: 0.9rem;
-		}
-	}
+  @media screen and (min-width: 768px) {
+    ul.pagination li {
+      width: 1.8rem;
+      height: 1.8rem;
+      font-size: 0.9rem;
+    }
+    ul.pagination li a {
+      font-size: 0.9rem;
+    }
+  }
 `;

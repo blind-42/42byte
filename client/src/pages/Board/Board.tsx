@@ -113,30 +113,31 @@ export default function Board() {
                   </Link>
                 </WritingButton>
               </UtilWrap>
-							{isLoading 
-							? <Loading /> 
-							: <PostContainer>
-									<Category ref={scrollRef}>
-										<div></div>
-										<div>제목</div>
-										<div>조회</div>
-										<div>추천</div>
-										<div>작성일</div>
-									</Category>
-									<ContentWrap>
-										<PostWrap>
-											{contents.map((el: PostPre, idx) => {
-												return <PostPreview key={idx} postData={el} />;
-											})}
-										</PostWrap>
-									</ContentWrap>
-									<PageNation
-										curPage={page}
-										totalPages={pages}
-										pageChangeHandler={pageChangeHandler}
-									/>
-								</PostContainer>
-								}
+              {isLoading ? (
+                <Loading />
+              ) : (
+                <PostContainer>
+                  <Category ref={scrollRef}>
+                    <div></div>
+                    <div>제목</div>
+                    <div>조회</div>
+                    <div>추천</div>
+                    <div>작성일</div>
+                  </Category>
+                  <ContentWrap>
+                    <PostWrap>
+                      {contents.map((el: PostPre, idx) => {
+                        return <PostPreview key={idx} postData={el} />;
+                      })}
+                    </PostWrap>
+                  </ContentWrap>
+                  <PageNation
+                    curPage={page}
+                    totalPages={pages}
+                    pageChangeHandler={pageChangeHandler}
+                  />
+                </PostContainer>
+              )}
             </UtilPostWrap>
             <Footer />
           </ContentFooterWrap>

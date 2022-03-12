@@ -7,21 +7,20 @@ interface IUseInterval {
 }
 
 export default function Clock() {
-	const [nowTime, setNowTime] = useState(Date.now());
+  const [nowTime, setNowTime] = useState(Date.now());
   const [delay, setDelay] = useState(1000);
 
-	useInterval(() => {
+  useInterval(() => {
     setNowTime(Date.now());
   }, delay);
 
-	return (
-		<>
-		<TimeBox>
-			<Moment format="HH:mm">{nowTime}</Moment>
-		</TimeBox>
-		</>
-	);
-
+  return (
+    <>
+      <TimeBox>
+        <Moment format="HH:mm">{nowTime}</Moment>
+      </TimeBox>
+    </>
+  );
 }
 
 const useInterval: IUseInterval = (callback, delay) => {

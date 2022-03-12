@@ -1,43 +1,43 @@
 import styled from 'styled-components';
 
 export const EditorContainer = styled.div`
-	display: grid;
-	grid-template-rows: 3.5rem auto;
-	${({theme}) => theme.media.tablet`
+  display: grid;
+  grid-template-rows: 3.5rem auto;
+  ${({ theme }) => theme.media.tablet`
 		grid-template-rows: 2.5rem auto;
 	`}
-	${({theme}) => theme.media.desktop`
+  ${({ theme }) => theme.media.desktop`
 		grid-template-rows: 2.5rem auto;
 	`}
 `;
 
 export const TitleUploadWrap = styled.div`
-	align-self: center;
-	display: flex;
-	justify-content: space-between;
-	margin-bottom: 3px;
+  align-self: center;
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 3px;
 `;
 
 export const Title = styled.div`
-	input {
-		font-size: 1.2rem;
-		background: #D5D5D5;
-		height: 3rem;
-		width: 20rem;
-		border-top: solid 2px #000;
-		border-left: solid 2px #000;
-		border-right: solid 2px #fff;
-		border-bottom: solid 2px #fff;
-		padding: 0 1rem;
-	}
-	${({theme}) => theme.media.tablet`
+  input {
+    font-size: 1.2rem;
+    background: #d5d5d5;
+    height: 3rem;
+    width: 20rem;
+    border-top: solid 2px #000;
+    border-left: solid 2px #000;
+    border-right: solid 2px #fff;
+    border-bottom: solid 2px #fff;
+    padding: 0 1rem;
+  }
+  ${({ theme }) => theme.media.tablet`
 		input {
 			font-size: 0.9rem;
 			height: 2rem;
 			width: 30rem;
 		}
 	`}
-	${({theme}) => theme.media.desktop`
+  ${({ theme }) => theme.media.desktop`
 		input {
 			font-size: 0.9rem;
 			height: 2rem;
@@ -47,30 +47,30 @@ export const Title = styled.div`
 `;
 
 export const UploadButton = styled.div`
-	display: flex;
-	justify-content: flex-end;
-	button {
-		cursor: pointer;
-		background: #518EDB;
-		color: #fff;
-		font-size: 1.2rem;
-		font-weight: 700;
-		height: 3rem;
-		width: 5rem;
-		letter-spacing: 0.1rem;
-		border-top: solid 2px #fff;
-		border-left: solid 2px #fff;
-		border-right: solid 2px #000;
-		border-bottom: solid 2px #000;
-	}
-	${({theme}) => theme.media.tablet`
+  display: flex;
+  justify-content: flex-end;
+  button {
+    cursor: pointer;
+    background: #518edb;
+    color: #fff;
+    font-size: 1.2rem;
+    font-weight: 700;
+    height: 3rem;
+    width: 5rem;
+    letter-spacing: 0.1rem;
+    border-top: solid 2px #fff;
+    border-left: solid 2px #fff;
+    border-right: solid 2px #000;
+    border-bottom: solid 2px #000;
+  }
+  ${({ theme }) => theme.media.tablet`
 		button {
 			font-size: 0.9rem;
 			height: 2rem;
 			width: 4rem;
 		}
 	`}
-	${({theme}) => theme.media.desktop`
+  ${({ theme }) => theme.media.desktop`
 		button {
 			font-size: 0.9rem;
 			height: 2rem;
@@ -80,10 +80,10 @@ export const UploadButton = styled.div`
 `;
 
 export const EditorWrap = styled.div`
-	border-top: solid 2px #000;
-	border-left: solid 2px #000;
-	border-right: solid 2px #fff;
-	border-bottom: solid 2px #fff;
-	background: #D5D5D5;
-	overflow-y: scroll;
+  border-top: solid 2px #000;
+  border-left: solid 2px #000;
+  border-right: solid 2px #fff;
+  border-bottom: solid 2px #fff;
+  background: #d5d5d5;
+  overflow-y: scroll;
 `;

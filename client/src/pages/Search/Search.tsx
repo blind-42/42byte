@@ -41,9 +41,7 @@ export default function Board() {
   const [keyword, setKeyword] = useState(
     decodeURI(window.location.search.split('keyword=')[1]),
   );
-  const currentUrl = window.location.search;
   const boardUrl = window.location.search.split('&')[0].split('=')[1];
-  // const pageUrl = currentUrl.split('&page=')[1];
   const navigate = useNavigate();
   const scrollRef = useRef<HTMLDivElement>(null);
 
@@ -52,11 +50,7 @@ export default function Board() {
   );
 
   const { error, data } = useQuery(
-    [
-      'search_key',
-      boardUrl,
-      //  pageUrl
-    ],
+    ['search_key', boardUrl],
     () => {
       instance
         .get(`/board/search?boardId=${boardUrl}&keyword=${keyword}`)

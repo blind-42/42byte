@@ -7,10 +7,7 @@ import { LoggedinState } from 'States/LoginState';
 import instance from 'utils/functions/axios';
 import { UserData } from 'utils/functions/type';
 import { AppContainer } from 'styles/styled';
-import {
-	LogoImg,
-	SettingsBtn
-} from './styled';
+import { LogoImg, SettingsBtn } from './styled';
 
 function Main() {
   const [isLoggedIn, setIsLoggedIn] = useRecoilState(LoggedinState);
@@ -22,9 +19,9 @@ function Main() {
     profileImageUrl: '',
     roleType: '',
   });
-  const { createdDate, modifiedDate, hashId, profileImageUrl, roleType } = userData;
+  const { createdDate, modifiedDate, hashId, profileImageUrl, roleType } =
+    userData;
   const navigate = useNavigate();
-	
 
   useEffect(() => {
     if (token) localStorage.setItem('4242-token', token);
@@ -42,33 +39,36 @@ function Main() {
     instance
       .get('/user')
       .then((res) => {
-				setUserData(res.data)
-				localStorage.setItem('4242-profile', res.data.profileImageUrl);
-			})
+        setUserData(res.data);
+        localStorage.setItem('4242-profile', res.data.profileImageUrl);
+      })
       .catch((err) => console.log(err));
   }, []);
 
-	const moveToAdmin = () => {
-		instance
-			.get('/admin')
-			.then(() => window.location.href=`${process.env.REACT_APP_SERVERIP}/admin`)
-			.catch(() => alert('꺼지3'))
-	}
+  const moveToAdmin = () => {
+    instance
+      .get('/admin')
+      .then(
+        () =>
+          (window.location.href = `${process.env.REACT_APP_SERVERIP}/admin`),
+      )
+      .catch(() => alert('꺼지3'));
+  };
 
   return (
     <AppContainer>
       <Header />
-			<LogoImg>
-				<img src="images/42byteLogo.png" />
-			</LogoImg>
-			{roleType === 'ADMIN' && (
-				<SettingsBtn onClick={moveToAdmin}>
-					<div>
-						<AiFillSetting />
-					</div>
-					<div>Settings</div>
-				</SettingsBtn>
-			)}
+      <LogoImg>
+        <img src="images/42byteLogo.png" />
+      </LogoImg>
+      {roleType === 'ADMIN' && (
+        <SettingsBtn onClick={moveToAdmin}>
+          <div>
+            <AiFillSetting />
+          </div>
+          <div>Settings</div>
+        </SettingsBtn>
+      )}
     </AppContainer>
   );
 }

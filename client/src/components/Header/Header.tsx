@@ -28,7 +28,7 @@ export default function Header() {
             </Link>
           </Logo>
         </MenubarLogoWrap>
-				<Clock />
+        <Clock />
       </HeaderContainer>
     </>
   );

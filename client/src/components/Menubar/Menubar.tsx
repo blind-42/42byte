@@ -95,19 +95,19 @@ export default function Menubar({ menubarHandler }: GreetingProps) {
             <BoardNames>
               {contents.map((el: BoardPre, idx) => {
                 return (
-                  !el.isDel && (
-										isLoggedIn ? (
+                  !el.isDel &&
+                  (isLoggedIn ? (
                     <Link to={`/board?=boardId=${el.id}`} key={idx}>
                       <div onClick={menubarHandler}>
-												<img src="images/folder.png" /> {stringLimit(el.name, 10)}
+                        <img src="images/folder.png" />{' '}
+                        {stringLimit(el.name, 10)}
                       </div>
                     </Link>
-										) : (
-											<div onClick={openLoginModalHandler}>
-												<img src="images/folder.png" /> {stringLimit(el.name, 10)}
-											</div>
-										)
-									)
+                  ) : (
+                    <div onClick={openLoginModalHandler}>
+                      <img src="images/folder.png" /> {stringLimit(el.name, 10)}
+                    </div>
+                  ))
                 );
               })}
             </BoardNames>
@@ -115,32 +115,35 @@ export default function Menubar({ menubarHandler }: GreetingProps) {
           <UserProfileWrap>
             <Profile>
               <UserImg state={isLoggedIn}>
-								{isLoggedIn ? (
-									<img src={`images/${localStorage.getItem('4242-profile')}`} alt="pfimg" />
-								) : (
-								<Link to="/login">
-									<img src="images/pf_questionMark.png" alt="pfimg" />
-								</Link>
-								)}
+                {isLoggedIn ? (
+                  <img
+                    src={`images/${localStorage.getItem('4242-profile')}`}
+                    alt="pfimg"
+                  />
+                ) : (
+                  <Link to="/login">
+                    <img src="images/pf_questionMark.png" alt="pfimg" />
+                  </Link>
+                )}
               </UserImg>
               <UserName>
                 {isLoggedIn ? (
                   <div>카뎃</div>
                 ) : (
                   <Link to="/login">
-										<div>로그인</div>
-									</Link>
+                    <div>로그인</div>
+                  </Link>
                 )}
               </UserName>
             </Profile>
             {isLoggedIn && (
               <UserMenu>
-								<Link to="/mypage?=post&page=1">
-									<span>마이페이지</span>
-								</Link>
-								<Link to="/" onClick={logoutHandler}>
-									<span>로그아웃</span>
-								</Link>
+                <Link to="/mypage?=post&page=1">
+                  <span>마이페이지</span>
+                </Link>
+                <Link to="/" onClick={logoutHandler}>
+                  <span>로그아웃</span>
+                </Link>
                 <WritingBtn>
                   {isLoggedIn ? (
                     <Link to="/writing">

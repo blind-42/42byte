@@ -25,7 +25,7 @@ export default function ReportModal ({ clickModalHandler, reportHandler }: Greet
 		setReportIssue('');
 	}
 
-	const report = () => {
+	const submitReportAndCloseModal = () => {
 		reportHandler(reportIssue);
 		clickModalHandler();
 	}
@@ -58,7 +58,6 @@ export default function ReportModal ({ clickModalHandler, reportHandler }: Greet
 									<div><input type="radio" onChange={issueHandler} name="issue" value="불법정보"/>불법정보를 포함하고 있습니다.</div>
 									<div><input type="radio" onChange={issueHandler} name="issue" value="스팸/도배"/>스팸홍보/도배글입니다.</div>
 									<div><input type="radio" onChange={issueHandler} name="issue" value="분탕"/>지나친 분란을 유도합니다.</div>
-									{/* <div><input type="radio" onChange={issueHandler} name="issue" value="기타"/>기타</div> */}
 									<div><input type="radio" onClick={openIssueHandler} name="issue" value="기타"/>직접입력</div>
 									{openIssue && 
 										<div><textarea placeholder={'신고사유를 입력해주세요.'} onChange={issueInputHandler} value={reportIssue} maxLength={300} /></div>
@@ -68,7 +67,7 @@ export default function ReportModal ({ clickModalHandler, reportHandler }: Greet
 						</ReportBox>
 						<Buttons>
 							<form >
-								<input type="button" onClick={report} value="신고" />
+								<input type="button" onClick={submitReportAndCloseModal} value="신고" />
 							</form>
 						</Buttons>
 					</ContentContainer>
