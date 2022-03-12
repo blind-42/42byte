@@ -48,9 +48,10 @@ export default function Board() {
   const { isLoading, error, data } = useQuery(
     ['board_key', boardUrl, pageUrl],
     () => {
-      instance
-        .get(`/board?boardId=${boardUrl}&page=${pageUrl}`)
-        .then((res) => setBoardData(res.data));
+      instance.get(`/board?boardId=${boardUrl}&page=${pageUrl}`).then((res) => {
+        setBoardData(res.data);
+        scrollRef.current?.scrollIntoView(true);
+      });
     },
     {
       retry: 0,
@@ -61,7 +62,6 @@ export default function Board() {
 
   const pageChangeHandler = (page: number) => {
     navigate(`/board?boardId=${id}&page=${page}`);
-    scrollRef.current?.scrollIntoView(true);
   };
 
   const keywordHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
