@@ -48,8 +48,11 @@ function Main() {
       .catch((err) => console.log(err));
   }, []);
 
-	const adminpage = () => {
-		window.location.href='http://api-42byte.shop/admin';
+	const moveToAdmin = () => {
+		instance
+			.get('/admin')
+			.then(() => window.location.href=`${process.env.REACT_APP_SERVERIP}/admin`)
+			.catch(() => alert('꺼지3'))
 	}
 
   return (
@@ -59,7 +62,7 @@ function Main() {
 				<img src="images/42byteLogo.png" />
 			</LogoImg>
 			{roleType === 'ADMIN' && (
-				<SettingsBtn onClick={adminpage}>
+				<SettingsBtn onClick={moveToAdmin}>
 					<div>
 						<AiFillSetting />
 					</div>

@@ -1,7 +1,6 @@
 import axios from 'axios';
 
-// const baseURL = 'http://api-42byte.shop';
-const baseURL = 'https://api-42byte.shop';
+const baseURL = process.env.REACT_APP_SERVERIP;
 
 const instance = axios.create({ baseURL });
 
