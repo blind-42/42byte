@@ -16,28 +16,26 @@ export const PostContainer = styled.div`
 export const DetailContainer = styled.div`
 	margin: 0.5rem;
 	word-spacing: 0.02rem;
-	line-height: 150%;
 `;
 
-export const Title = styled.div`
+export const Title = styled.div<{state?: boolean}>`
 	display: flex;
 	align-items: center;
+	padding-left: ${(props) => props.state ? '0.7rem' : '0'};
 	div:last-child {
 		font-size: 1.6rem;
 		font-weight: 600;
 		color: #000;
-		padding: 0 1rem 0.5rem 1rem;
+		padding: 0 0 0.2rem 0.7rem;
 	}
 	${({theme}) => theme.media.tablet`
 		div:last-child {
 			font-size: 1.2rem;
-			padding: 0 0.6rem 0.2rem 0.6rem;
 		}
 	`}
 	${({theme}) => theme.media.desktop`
 		div:last-child {
 			font-size: 1.2rem;
-			padding: 0 0.6rem 0.2rem 0.6rem;
 		}
 	`}
 `;
@@ -45,37 +43,48 @@ export const Title = styled.div`
 export const Specific = styled.div`
 	display: flex;
 	justify-content: space-between;
-	padding: 0 1rem 0.3rem 1rem;
+	padding: 0.5rem 0.7rem;
 	border-bottom: solid 2px #929191;
 	font-size: 1.1rem;
 	${({theme}) => theme.media.tablet`
 		font-size: 0.8rem;
-		padding: 0 0.6rem 0.2rem 0.6rem;
+		padding: 0.4rem 0.7rem;
 	`}
 	${({theme}) => theme.media.desktop`
 		font-size: 0.8rem;
-		padding: 0 0.6rem 0.2rem 0.6rem;
+		padding: 0.4rem 0.7rem;
 	`}
 `;
 
 export const Info = styled.div`
 	display: flex;
+	align-items: center;
 	div {
 		margin-right: 1rem;
 	}
+	${({theme}) => theme.media.tablet`
+		div {
+			margin-right: 0.8rem;
+		}
+	`}
+	${({theme}) => theme.media.desktop`
+		div {
+			margin-right: 0.8rem;
+		}
+	`}
 `;
 
 export const ContentWrap = styled.div`
 	border-top: solid 1px #fff;
 	padding: 1.5rem;
-	font-size: 1.2rem;
-	color: #000;
-	${({theme}) => theme.media.tablet`
-		font-size: 0.9rem;
-	`}
-	${({theme}) => theme.media.desktop`
-		font-size: 0.9rem;
-	`}
+	// font-size: 1.2rem;
+	// color: #000;
+	// ${({theme}) => theme.media.tablet`
+	// 	font-size: 0.9rem;
+	// `}
+	// ${({theme}) => theme.media.desktop`
+	// 	font-size: rem;
+	// `}
 `;
 
 export const LikeWrap = styled.div`
@@ -84,39 +93,42 @@ export const LikeWrap = styled.div`
 	border-bottom: solid 2px #929191;
 `;
 
-export const LikesBox = styled.div<{boxState?: boolean;}>`
+export const LikesBox = styled.div<{boxState?: boolean}>`
 	cursor: pointer;
 	display: flex;
-	justify-content: space-evenly;
+	justify-content: center;
 	align-items: center;
 	margin: 2rem 0;
 	border: solid 2px #518EDB;
 	width: 6rem;
 	height: 3.5rem;
-	font-size: 1.2rem;
-	font-weight: 700;
+	font-size: 1.5rem;
+	font-weight: 600;
 	color: ${(props) => props.boxState ? '#fff' : '#518EDB'};
 	background: ${(props) => props.boxState && '#518EDB' };
 	svg path {
     stroke: ${(props) => props.boxState ? '#fff' : '#518EDB'};
 	}
 	div:nth-child(1) {
-		font-size: 1.8rem;
+		margin: 0.1rem 0.6rem 0 0;
+		font-size: 1.6rem;
 	}
 	${({theme}) => theme.media.tablet`
-		width: 5rem;
-		height: 3rem;
+		width: 4.8rem;
+		height: 2.5rem;
 		font-size: 1rem;
 		div:nth-child(1) {
-			font-size: 1.5rem;
+			margin: 0.1rem 0.5rem 0 0;
+			font-size: 1.1rem;
 		}
 	`}
 	${({theme}) => theme.media.desktop`
-		width: 5rem;
-		height: 3rem;
+		width: 4.8rem;
+		height: 2.5rem;
 		font-size: 1rem;
 		div:nth-child(1) {
-			font-size: 1.5rem;
+			margin: 0.1rem 0.5rem 0 0;
+			font-size: 1.1rem;
 		}
 	`}
 `;
@@ -127,9 +139,9 @@ export const CommentContainer = styled.div`
 `;
 
 export const CommentCount = styled.div`
-	margin: 10px 5px 0;
+	margin: 10px 5px;
 	font-size: 1.2rem;
-	font-weight: 600;
+	font-weight: 500;
 	color: black;
 	${({theme}) => theme.media.tablet`
 		font-size: 0.9rem;

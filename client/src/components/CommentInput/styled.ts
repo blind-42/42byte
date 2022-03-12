@@ -12,7 +12,7 @@ export const CommentInputWrap = styled.form`
 	background: #fff;
 	font-size: 1.2rem;
 	textarea {
-		margin: 0.2rem 0;
+		margin-bottom: 0.2rem;
 		resize: none;
 		border: none;
 		height: 4rem;
@@ -25,7 +25,7 @@ export const CommentInputWrap = styled.form`
 			text-align: start;
 			font-size: 1rem;
 			color: #929191;
-			padding: 0 2px;
+			padding: 3px;
 		}
 		input {
 			cursor: pointer;

@@ -6,7 +6,7 @@ export const PreviewContainer = styled.div<{state?: boolean;}>`
 	justify-items: space-between;
 	border-bottom: solid 1px #929191;
 	font-size: 1.1rem;
-	height: 2.5rem;
+	height: 3rem;
 	background: ${(props) => props.state === true ? '#DEDEDE' : 'none'};
 	div {
 		place-self: center center;
@@ -32,11 +32,11 @@ export const PreviewContainer = styled.div<{state?: boolean;}>`
 		}
 	}
 	${({theme}) => theme.media.tablet`
-		height: 2.3rem;
+		height: 2.5rem;
 		font-size: 0.9rem;
 	`}
 	${({theme}) => theme.media.desktop`
-		height: 2.3rem;
+		height: 2.5rem;
 		font-size: 0.9rem;
 		div:nth-child(2) {
 			img {
