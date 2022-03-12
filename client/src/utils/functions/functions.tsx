@@ -41,14 +41,14 @@ export const timeForToday = (value: string) => {
 }
 
 export const isDelOption = (value: number) => {
-	if (value === 1) return '작성자';
+	if (value === 1) return '글쓴이';
 	if (value === 2) return '매니저';
 	else return '관리자';
 }
 
 export const whoIsWriter = (isAuthor: boolean, commentsUserList: number[], authorId: number) => {
 	if (isAuthor)
-			return ('작성자');
+			return ('글쓴이');
 	else
 		return (`카뎃${commentsUserList.indexOf(authorId) + 1}`);
 }

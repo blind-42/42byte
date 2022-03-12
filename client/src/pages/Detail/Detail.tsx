@@ -195,7 +195,7 @@ function Detail() {
 						{openEditor
 						?	<PostEditor detailData={detailData} boardId={boardId}/>
 						:	<DetailContainer>
-								<Title>
+								<Title state={isNotice}>
 									{isNotice && 
 									<NoticeMark>공지</NoticeMark>}
 									<div>{title}</div>
