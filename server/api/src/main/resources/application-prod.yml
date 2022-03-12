@@ -1,0 +1,53 @@
+spring:
+  config:
+    activate:
+      on-profile: prod
+
+  # 데이터 소스 설정
+  datasource:
+    url: jdbc:mysql://172.27.0.52:3306/MAIN?serverTimezone=Asia/Seoul&characterEncoding=UTF-8
+    driverClassName: com.mysql.cj.jdbc.Driver
+    username: root
+    password: Blind$242
+
+  jpa:
+    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        show_sql: true
+        format_sql: false
+        use_sql_comments: false
+    logging:
+      level:
+        org.hibernate.SQL: debug
+
+  # Security OAuth
+  security:
+    oauth2.client:
+      registration:
+        42:
+          client-id: "f51e70e8a1d30c2377f7b0dbbef0e4f7a22ae2ddf7f3c13b7d57eaa256c18698"
+          client-secret: "5cd4e8c8ce181f03d2fbed9090f46491aa072e9fc870eb2ae14e0578e69ade42"
+# cors 설정
+cors:
+  allowed-origins: 'https://42byte.kr'
+  allowed-methods: GET,POST,PUT,DELETE,OPTIONS,PATCH
+  allowed-headers: '*'
+  max-age: 3600
+
+info:
+  web:
+    frontUrl: 'https://42byte.kr'
+  van:
+    blame: 5
+
+server:
+  ssl:
+    enabled: true
+    key-store: classpath:ssl/keystore.p12
+    key-store-password: seoul42$2
+    key-store-type: PKCS12
+  port: 8443
+

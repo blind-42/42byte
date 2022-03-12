@@ -17,6 +17,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
+import java.util.List;
 
 @Service
 @AllArgsConstructor
@@ -54,6 +55,11 @@ public class LikeServiceImpl implements LikeService{
     @Transactional
     public boolean checkCommentLike(Comment comment, User user) {
         return commentLikeRepository.findByCommentAndUser(comment, user) != null ? true : false;
+    }
+
+    @Transactional
+    public List<CommentLike> getCommentLikeInPost(Post post, User user) {
+        return commentLikeRepository.findAllByPostAndUser(post, user);
     }
 
     @Override

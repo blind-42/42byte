@@ -13,7 +13,6 @@ import java.util.List;
 @Setter
 public class CommentDTO {
     private Long id;
-    private Long boardId;
     private Long postId;
     private Long authorId;
     private String content;
@@ -30,7 +29,6 @@ public class CommentDTO {
     public static CommentDTO from(Comment comment) {
         return CommentDTO.builder()
                 .id(comment.getId())
-                .boardId(comment.getBoardId())
                 .postId(comment.getPost().getId())
                 .authorId(comment.getAuthorId())
                 .content(comment.getContent())
@@ -44,9 +42,8 @@ public class CommentDTO {
     }
 
     @Builder
-    private CommentDTO(Long id, Long boardId, Long postId, Long authorId, String content, Long likeCnt, Boolean isAuthor, Integer isDel, Boolean isLiked, Long blameCnt, LocalDateTime createdDate, LocalDateTime modifiedDate) {
+    private CommentDTO(Long id, Long postId, Long authorId, String content, Long likeCnt, Boolean isAuthor, Integer isDel, Boolean isLiked, Long blameCnt, LocalDateTime createdDate, LocalDateTime modifiedDate) {
         this.id = id;
-        this.boardId = boardId;
         this.postId = postId;
         this.authorId = authorId;
         this.content = content;

@@ -100,7 +100,8 @@ public class OAuthAuthenticationSuccessHandler extends SimpleUrlAuthenticationSu
         CookieUtil.deleteCookie(request, response, REFRESH_TOKEN);
         CookieUtil.addCookie(response, REFRESH_TOKEN, refreshToken.getToken(), cookieMaxAge);
 
-        return UriComponentsBuilder.fromUriString("https://42byte.kr")
+//        return UriComponentsBuilder.fromUriString("http://localhost:3000")
+                return UriComponentsBuilder.fromUriString("https://42byte.kr")
                 .queryParam("token", userRefreshToken == null ? accessToken.getToken() : userRefreshToken.getAccessToken())
                 .build().toUriString();
     }

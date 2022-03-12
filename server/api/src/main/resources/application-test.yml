@@ -1,0 +1,45 @@
+spring:
+  config:
+    activate:
+      on-profile: test
+
+  # 데이터 소스 설정
+  datasource:
+    url: jdbc:mysql://172.27.0.52:3306/TEST?serverTimezone=Asia/Seoul&characterEncoding=UTF-8
+    driverClassName: com.mysql.cj.jdbc.Driver
+    username: root
+    password: Blind$242
+
+  jpa:
+    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
+    hibernate:
+      ddl-auto: none
+    properties:
+      hibernate:
+        show_sql: true
+        format_sql: false
+        use_sql_comments: false
+    logging:
+      level:
+        org.hibernate.SQL: debug
+
+  # Security OAuth
+  security:
+    oauth2.client:
+      registration:
+        42:
+          client-id: "02bb3afba4df6c087b0f86c55dc43a6305203d4cbb3202caf8d36d9bbb06aae0"
+          client-secret: "005879d265e66ccea8d98f90cf7b4cfb575119706245fad599ce9328d57a594d"
+
+# cors 설정
+cors:
+  allowed-origins: 'http://localhost:3000'
+  allowed-methods: GET,POST,PUT,DELETE,OPTIONS,PATCH
+  allowed-headers: '*'
+  max-age: 3600
+
+info:
+  web:
+    frontUrl: 'http://localhost:3000'
+  van:
+    blame: 5

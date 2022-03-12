@@ -11,7 +11,7 @@ import java.util.List;
 public interface PostService {
     Page<Post> findAllByBoardId(Long boardId, User user, Pageable pageable);
     Post findById(Long postId);
-    Post save(Board board, User user, String title, String content);
+    Post save(Board board, User user, String title, String content, Boolean isImage);
     Page<Post> search(Long boardId, User user, String keyword, Pageable pageable);
     void updateLike(Long postId, Long add);
     void updateView(Long postId);

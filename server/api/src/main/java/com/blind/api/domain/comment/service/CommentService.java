@@ -15,7 +15,7 @@ public interface CommentService {
 
     void update(Comment comment, String content);
 
-    List<Comment> findAllComment(Long boardId, Long postId);
+    List<Comment> findAllComment(Long postId);
 
     void delete(Comment comment, Integer type);
 
@@ -39,4 +39,6 @@ public interface CommentService {
 
     void restoreComment(Comment comment);
 
-}
+    List<Comment> findByPost(Long postId, Long userId);
+
+    }

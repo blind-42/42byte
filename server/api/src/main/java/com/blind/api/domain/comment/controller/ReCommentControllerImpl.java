@@ -4,6 +4,7 @@ import com.blind.api.domain.comment.domain.Comment;
 import com.blind.api.domain.comment.dto.CommentRequestDTO;
 import com.blind.api.domain.comment.service.CommentService;
 import com.blind.api.domain.comment.service.ReCommentService;
+import com.blind.api.domain.post.v2.service.PostService;
 import com.blind.api.domain.security.jwt.v1.service.TokenService;
 import com.blind.api.global.utils.HeaderUtil;
 import lombok.AllArgsConstructor;
@@ -20,6 +21,7 @@ public class ReCommentControllerImpl implements ReCommentController {
     private final ReCommentService reCommentService;
     private final CommentService commentService;
     private final TokenService tokenService;
+    private final PostService postService;
 
     @RequestMapping(value = "/recomment" , method = RequestMethod.POST)
     public void createReComment(Long targetCmmtId, CommentRequestDTO requestDTO, HttpServletRequest request){
@@ -30,5 +32,6 @@ public class ReCommentControllerImpl implements ReCommentController {
         Long userId = tokenService.findUserByAccessToken(HeaderUtil.getAccessToken(request)).getId();
         Long rootCmmtId = rootCmmt.getId();
         reCommentService.save(targetCmmt, rootCmmtId, userId, requestDTO.getContent());
+        postService.updateComment(rootCmmt.getPost().getId(), 1L);
     }
 }

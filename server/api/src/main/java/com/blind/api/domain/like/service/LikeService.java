@@ -11,6 +11,8 @@ import com.blind.api.domain.user.v2.domain.User;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
+import java.util.List;
+
 public interface LikeService {
     public void PostLike(Post post, User user, Long num);
     public void CommentLike(Post post, Comment comment, User user, Long num);
@@ -19,4 +21,6 @@ public interface LikeService {
     public Page<CommentLike> findLikeCommentByUserId(Long userId, Pageable pageable);
     public boolean checkPostLike(Post post, User user);
     public boolean checkCommentLike(Comment comment, User user);
+    public List<CommentLike> getCommentLikeInPost(Post post, User user);
+
     }
