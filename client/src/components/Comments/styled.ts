@@ -144,10 +144,6 @@ export const FLine = styled.div`
 	border-top: solid 1px #fff;
 `;
 
-export const ReCommentListWrap = styled.div`
-	margin-left: 2rem;
-`;
-
 ///////Recomment.tsx
 
 export const RecommentContainer = styled.div`
@@ -168,10 +164,10 @@ export const RecommentContainer = styled.div`
 export const ReCommentWrap = styled.div`
 	flex: 9.5;
 	margin-left: 0.5rem;
-	padding: 1rem 1rem 0.5rem;
+	padding: 1rem 0.5rem 0.5rem 1rem;
 	background: #DBDBDB;
 	@media screen and (min-width: 768px) {
 		margin-left: 0;
-		padding: 0.5rem 1rem;
+		padding: 0.5rem 0.5rem 0.5rem 1rem;
 	}
 `;
