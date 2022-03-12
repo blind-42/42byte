@@ -51,7 +51,6 @@ export interface PostData {
 }
 
 export interface CommentData {
-	boardId: number
 	postId: number
   id: number
   authorId: number
