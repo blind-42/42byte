@@ -157,7 +157,7 @@ function ReComments({ recomment, commentsUserList }: GreetingProps) {
 							: <div>
 									<span>
 										{commentsUserList.indexOf(targetAuthorId) < 0
-										? '@작성자 ' 
+										? '@글쓴이 ' 
 										: `@카뎃${commentsUserList.indexOf(targetAuthorId) + 1} `}
 									</span>
 									{content}
