@@ -7,6 +7,9 @@ export const CommentPreviewContainer = styled.div`
   border-bottom: solid 1px #929191;
   padding: 0.5rem 1.5rem;
   height: 5.5rem;
+  ${({ theme }) => theme.media.tablet`
+    height: 4.3rem;
+  `}
   ${({ theme }) => theme.media.desktop`
     height: 4.3rem;
   `}
@@ -21,6 +24,12 @@ export const CommentWrap = styled.div`
     font-size: 1.2rem;
     font-weight: 400;
   }
+  ${({ theme }) => theme.media.tablet`
+		font-size: 0.9rem;
+		div:nth-child(2) {
+			font-size: 0.9rem;
+		}
+	`}
   ${({ theme }) => theme.media.desktop`
     font-size: 0.9rem;
     div:nth-child(2) {
@@ -39,6 +48,9 @@ export const OriginalPost = styled.div`
     color: #bf2d2d;
     font-weight: 600;
   }
+  ${({ theme }) => theme.media.tablet`
+		font-size: 0.85rem;
+	`}
   ${({ theme }) => theme.media.desktop`
     font-size: 0.85rem;
   `}
