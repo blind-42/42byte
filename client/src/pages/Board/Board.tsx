@@ -44,14 +44,17 @@ export default function Board() {
   const boardUrl = currentUrl.split('&page=')[0].split('boardId=')[1];
   const pageUrl = currentUrl.split('&page=')[1];
   const navigate = useNavigate();
-  const scrollRef = useRef<HTMLDivElement>(null);
-
+  const innerScrollRef = useRef<HTMLDivElement>(null);
+  const outerScrollRef = useRef<HTMLDivElement>(null);
+  // const
+  console.log('test');
   const { isLoading, error, data } = useQuery(
     ['board_key', boardUrl, pageUrl],
     () => {
       instance.get(`/board?boardId=${boardUrl}&page=${pageUrl}`).then((res) => {
         setBoardData(res.data);
-        scrollRef.current?.scrollIntoView(true);
+        innerScrollRef.current?.scrollIntoView(true);
+        outerScrollRef.current?.scrollIntoView(true);
       });
     },
     {
@@ -82,7 +85,7 @@ export default function Board() {
 
   return (
     <>
-      <AppContainer>
+      <AppContainer ref={outerScrollRef}>
         <Header />
         <PageContainer>
           <TopBar>
@@ -120,7 +123,7 @@ export default function Board() {
                 <Loading />
               ) : (
                 <PostContainer>
-                  <Category ref={scrollRef}>
+                  <Category ref={innerScrollRef}>
                     <div></div>
                     <div>제목</div>
                     <div>조회</div>
