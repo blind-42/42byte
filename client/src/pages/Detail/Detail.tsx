@@ -130,6 +130,7 @@ function Detail() {
       keepPreviousData: true,
     },
   ]);
+  const isFetching = results.some((result) => result.isFetching);
   const isLoading = results.some((result) => result.isLoading);
   const error = results.some((result) => result.error);
 
@@ -252,75 +253,86 @@ function Detail() {
             </Squares>
           </TopBar>
           <ContentFooterWrap>
-            {isLoading ? (
+            {isFetching || isLoading ? (
               <Loading />
             ) : (
-              <PostContainer>
+              <>
+                {/* <PostContainer> */}
                 {openEditor ? (
-                  <PostEditor detailData={detailData} boardId={boardId} />
+                  <PostEditor
+                    state={'edit'}
+                    detailData={detailData}
+                    boardId={boardId}
+                  />
                 ) : (
-                  <DetailContainer>
-                    <Title state={isNotice}>
-                      {isNotice && <NoticeMark>공지</NoticeMark>}
-                      <div>{title}</div>
-                    </Title>
-                    <Specific>
-                      <Info>
-                        <div>카뎃</div>
-                        <div>
-                          {shortDate} {createdDate !== modifiedDate && '수정됨'}
-                        </div>
-                        <div>조회 {Number(viewCnt) + 1}</div>
-                      </Info>
-                      <DropdownMenu
-                        isPost={true}
-                        isUsers={isUsers}
-                        isNotice={isNotice}
-                        roleType={type}
-                        modifyHandler={modifyPostHandler}
-                        deleteHandler={deletePostHandler}
-                        reportHandler={reportHandler}
-                        noticeHandler={noticeHandler}
-                      />
-                    </Specific>
-                    {content && (
-                      <ContentWrap>
-                        <Viewer initialValue={content} />
-                      </ContentWrap>
-                    )}
-                    <LikeWrap>
-                      <LikesBox boxState={isLiked} onClick={likeBoxHandler}>
-                        <div>
-                          <GrLike />
-                        </div>
-                        <div>{likeCnt}</div>
-                      </LikesBox>
-                    </LikeWrap>
-                    <CommentContainer>
-                      <CommentCount>댓글 {commentTotalCnt}</CommentCount>
-                      <CommentInput
-                        submitCmtHandler={uploadCmtHandler}
-                        placeholder={'댓글을 입력하세요.'}
-                      />
-                      <FLine />
-                      <CommentListWrap>
-                        {commentData.map((el: CommentData) => {
-                          return (
-                            <Comments
-                              key={el.id}
-                              comment={el}
-                              commentsUserList={commentsUserList}
-                            />
-                          );
-                        })}
-                      </CommentListWrap>
-                    </CommentContainer>
-                  </DetailContainer>
+                  <PostContainer>
+                    <DetailContainer>
+                      <Title state={isNotice}>
+                        {isNotice && <NoticeMark>공지</NoticeMark>}
+                        <div>{title}</div>
+                      </Title>
+                      <Specific>
+                        <Info>
+                          <div>카뎃</div>
+                          <div>
+                            {shortDate}{' '}
+                            {createdDate !== modifiedDate && '수정됨'}
+                          </div>
+                          <div>조회 {Number(viewCnt) + 1}</div>
+                        </Info>
+                        <DropdownMenu
+                          isPost={true}
+                          isUsers={isUsers}
+                          isNotice={isNotice}
+                          roleType={type}
+                          modifyHandler={modifyPostHandler}
+                          deleteHandler={deletePostHandler}
+                          reportHandler={reportHandler}
+                          noticeHandler={noticeHandler}
+                        />
+                      </Specific>
+                      {content && (
+                        <ContentWrap>
+                          <Viewer initialValue={content} />
+                        </ContentWrap>
+                      )}
+                      <LikeWrap>
+                        <LikesBox boxState={isLiked} onClick={likeBoxHandler}>
+                          <div>
+                            <GrLike />
+                          </div>
+                          <div>{likeCnt}</div>
+                        </LikesBox>
+                      </LikeWrap>
+                      <CommentContainer>
+                        <CommentCount>댓글 {commentTotalCnt}</CommentCount>
+                        <CommentInput
+                          submitCmtHandler={uploadCmtHandler}
+                          placeholder={'댓글을 입력하세요.'}
+                        />
+                        <FLine />
+                        <CommentListWrap>
+                          {commentData.map((el: CommentData) => {
+                            return (
+                              <Comments
+                                key={el.id}
+                                comment={el}
+                                commentsUserList={commentsUserList}
+                              />
+                            );
+                          })}
+                        </CommentListWrap>
+                      </CommentContainer>
+                    </DetailContainer>
+                  </PostContainer>
                 )}
+                {!isMobile && !openEditor && <Footer />}
                 <div ref={scrollRef} />
-              </PostContainer>
+                {/* </PostContainer> */}
+              </>
             )}
-            {!isMobile && <Footer />}
+            {/* {!isMobile && !openEditor && <Footer />} */}
+            {/* {!isMobile && <Footer />} */}
           </ContentFooterWrap>
         </PageContainer>
       </AppContainer>
