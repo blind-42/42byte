@@ -36,7 +36,7 @@ export default function PostEditor({ detailData, boardId }: PostDataType) {
   });
 
   let editorHeight = 78;
-  if (isTablet) editorHeight = 65;
+  if (isTablet) editorHeight = 62;
   if (isPc) editorHeight = 70;
 
   useEffect(() => {
