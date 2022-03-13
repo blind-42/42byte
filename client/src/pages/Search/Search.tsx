@@ -39,9 +39,10 @@ export default function Board() {
   });
   const { id, name, contents, page, pages } = boardData;
   const [keyword, setKeyword] = useState(
-    decodeURI(window.location.search.split('keyword=')[1]),
+    decodeURI(window.location.search.split('keyword=')[1].split('&page=')[0]),
   );
   const boardUrl = window.location.search.split('&')[0].split('=')[1];
+  const pageUrl = window.location.search.split('&page=')[1];
   const navigate = useNavigate();
   const innerScrollRef = useRef<HTMLDivElement>(null);
   const outerScrollRef = useRef<HTMLDivElement>(null);
@@ -51,10 +52,12 @@ export default function Board() {
   );
 
   const { error, data } = useQuery(
-    ['search_key', boardUrl],
+    ['search_key', boardUrl, pageUrl],
     () => {
       instance
-        .get(`/board/search?boardId=${boardUrl}&keyword=${keyword}`)
+        .get(
+          `/board/search?boardId=${boardUrl}&keyword=${keyword}&page=${pageUrl}`,
+        )
         .then((res) => {
           setBoardData(res.data);
           innerScrollRef.current?.scrollIntoView(true);
@@ -69,7 +72,7 @@ export default function Board() {
   );
 
   const pageChangeHandler = (page: number) => {
-    navigate(`/board?boardId=${id}&page=${page}`);
+    navigate(`/search?boardId=${id}&keyword=${keyword}&page=${page}`); //
   };
 
   const keywordHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
