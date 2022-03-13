@@ -1,9 +1,9 @@
 import { Link } from 'react-router-dom';
+import { useMediaQuery } from 'react-responsive';
 import { PostPre } from 'utils/functions/type';
 import { stringLimit, timeForToday } from 'utils/functions/functions';
 import { NoticeMark } from 'styles/styled';
 import { PreviewContainer } from './styled';
-import { useMediaQuery } from 'react-responsive';
 
 type GreetingProps = {
   postData: PostPre;
