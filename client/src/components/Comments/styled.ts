@@ -191,7 +191,7 @@ export const FLine = styled.div`
   border-top: solid 1px #fff;
 `;
 
-///////Recomment.tsx
+// <-------- Recomment.tsx -------->
 
 export const RecommentContainer = styled.div`
   display: flex;
@@ -220,10 +220,10 @@ export const ReCommentWrap = styled.div`
   background: #dbdbdb;
   ${({ theme }) => theme.media.tablet`
 		margin-left: 0;
-		padding: 0.5rem 1rem;
+		padding: 0.8rem 1rem;
 	`}
   ${({ theme }) => theme.media.desktop`
 		margin-left: 0;
-		padding: 0.5rem 1rem;
+		padding: 0.8rem 1rem;
 	`}
 `;
