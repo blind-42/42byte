@@ -1,6 +1,7 @@
 import { Link, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import { useQuery } from 'react-query';
+import { useMediaQuery } from 'react-responsive';
 import Header from 'components/Header/Header';
 import Footer from 'components/Footer/Footer';
 import PageNation from 'components/PageNation/PageNation';
@@ -54,6 +55,10 @@ export default function Mypage() {
       keepPreviousData: true,
     },
   );
+
+  const isMobile = useMediaQuery({
+    query: '(max-width:767px)',
+  });
 
   const switchToComment = () => {
     navigate('/mypage?=comment&page=1');
@@ -134,7 +139,7 @@ export default function Mypage() {
                 </PostContainer>
               )}
             </MenuPostWrap>
-            <Footer />
+            {!isMobile && <Footer />}
           </ContentFooterWrap>
         </PageContainer>
       </AppContainer>
