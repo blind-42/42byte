@@ -79,10 +79,42 @@ export const CommentMenu = styled.div<{ state?: string }>`
 	`}
 `;
 
+export const LikeMenu = styled.div<{ state?: string }>`
+  button {
+    background: ${(props) =>
+      props.state === 'post/like' ? '#D5D5D5' : 'none'};
+    border-top: solid 2px
+      ${(props) => (props.state === 'post/like' ? '#000' : '#C4C4C4')};
+    border-left: solid 2px
+      ${(props) => (props.state === 'post/like' ? '#000' : '#C4C4C4')};
+    border-right: solid 2px
+      ${(props) => (props.state === 'post/like' ? '#fff' : '#C4C4C4')};
+    border-bottom: solid 2px
+      ${(props) => (props.state === 'post/like' ? '#fff' : '#C4C4C4')};
+    font-size: 1.2rem;
+    width: 8rem;
+    height: 2.3rem;
+  }
+  ${({ theme }) => theme.media.tablet`
+		button {
+			font-size: 0.9rem;
+			width: 6rem;
+			height: 1.6rem;
+		}
+	`}
+  ${({ theme }) => theme.media.desktop`
+		button {
+			font-size: 0.9rem;
+			width: 6rem;
+			height: 1.6rem;
+		}
+	`}
+`;
+
 export const Category = styled.div<{ state?: string }>`
   display: grid;
   grid-template-columns: ${(props) =>
-    props.state === 'post' ? '1.2fr 6fr 1fr 1fr 2fr' : '1fr'};
+    props.state !== 'comment' ? '1.2fr 6fr 1fr 1fr 2fr' : '1fr'};
   border-bottom: solid 2px #929191;
   font-size: 1.2rem;
   font-weight: 600;

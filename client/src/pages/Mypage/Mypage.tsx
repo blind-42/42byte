@@ -1,5 +1,5 @@
-import { useNavigate } from 'react-router-dom';
 import { useState, useRef } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useQuery } from 'react-query';
 import { useMediaQuery } from 'react-responsive';
 import Header from 'components/Header/Header';
@@ -19,9 +19,10 @@ import {
   Squares,
   PostContainer,
   ContentFooterWrap,
-} from '../../styles/styled';
+} from 'styles/styled';
 import {
   MenuWrap,
+  LikeMenu,
   PostMenu,
   CommentMenu,
   MenuPostWrap,
@@ -64,12 +65,8 @@ export default function Mypage() {
     query: '(max-width:767px)',
   });
 
-  const switchToComment = () => {
-    navigate('/mypage?=comment&page=1');
-  };
-
-  const switchToPost = () => {
-    navigate('/mypage?=post&page=1');
+  const switchToMenu = (menu: string) => {
+    navigate(`/mypage?=${menu}&page=1`);
   };
 
   const pageChangeHandler = (page: number) => {
@@ -99,17 +96,26 @@ export default function Mypage() {
             <MenuPostWrap>
               <MenuWrap>
                 <PostMenu state={pageName}>
-                  <button onClick={switchToPost}>내가 쓴 글</button>
+                  <button onClick={() => switchToMenu('post')}>
+                    내가 쓴 글
+                  </button>
                 </PostMenu>
                 <CommentMenu state={pageName}>
-                  <button onClick={switchToComment}>내가 쓴 댓글</button>
+                  <button onClick={() => switchToMenu('comment')}>
+                    내가 쓴 댓글
+                  </button>
                 </CommentMenu>
+                <LikeMenu state={pageName}>
+                  <button onClick={() => switchToMenu('post/like')}>
+                    좋아요한 글
+                  </button>
+                </LikeMenu>
               </MenuWrap>
               {isLoading ? (
                 <Loading />
               ) : (
                 <PostContainer>
-                  {pageName === 'post' ? (
+                  {pageName !== 'comment' ? (
                     <Category state={pageName} ref={innerScrollRef}>
                       <div></div>
                       <div>제목</div>
@@ -124,7 +130,7 @@ export default function Mypage() {
                   )}
                   <ContentWrap>
                     <PostWrap>
-                      {pageName === 'post'
+                      {pageName !== 'comment'
                         ? contents.map((el: PostPre, idx) => {
                             return <PostPreview key={idx} postData={el} />;
                           })
