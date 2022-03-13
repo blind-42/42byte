@@ -86,6 +86,9 @@ export default function DropdownMenu({
                     {isNotice ? '공지 내리기' : '공지'}
                   </div>
                 )}
+                {roleType !== 'user' && (
+                  <div onClick={deleteModalHandler}>삭제</div>
+                )}
               </MenuList>
             )}
           </DropdownBox>
