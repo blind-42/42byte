@@ -43,7 +43,8 @@ export default function Board() {
   );
   const boardUrl = window.location.search.split('&')[0].split('=')[1];
   const navigate = useNavigate();
-  const scrollRef = useRef<HTMLDivElement>(null);
+  const innerScrollRef = useRef<HTMLDivElement>(null);
+  const outerScrollRef = useRef<HTMLDivElement>(null);
 
   const mutationSearchData = useMutation(({ path }: { path: string }) =>
     instance.get(path),
@@ -54,7 +55,11 @@ export default function Board() {
     () => {
       instance
         .get(`/board/search?boardId=${boardUrl}&keyword=${keyword}`)
-        .then((res) => setBoardData(res.data));
+        .then((res) => {
+          setBoardData(res.data);
+          innerScrollRef.current?.scrollIntoView(true);
+          outerScrollRef.current?.scrollIntoView(true);
+        });
     },
     {
       retry: 0,
@@ -65,7 +70,6 @@ export default function Board() {
 
   const pageChangeHandler = (page: number) => {
     navigate(`/board?boardId=${id}&page=${page}`);
-    scrollRef.current?.scrollIntoView(true);
   };
 
   const keywordHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -89,7 +93,7 @@ export default function Board() {
 
   return (
     <>
-      <AppContainer>
+      <AppContainer ref={outerScrollRef}>
         <Header />
         <PageContainer>
           <TopBar>
@@ -124,7 +128,7 @@ export default function Board() {
                 </WritingButton>
               </UtilWrap>
               <PostContainer>
-                <Category ref={scrollRef}>
+                <Category ref={innerScrollRef}>
                   <div></div>
                   <div>제목</div>
                   <div>조회</div>
