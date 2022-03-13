@@ -1,16 +1,16 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
+import { LoginState } from 'States/LoginState';
 import { AiFillSetting } from 'react-icons/ai';
 import Header from '../../components/Header/Header';
-import { LoggedinState } from 'States/LoginState';
 import instance from 'utils/functions/axios';
 import { UserData } from 'utils/functions/type';
 import { AppContainer } from 'styles/styled';
 import { LogoImg, SettingsBtn } from './styled';
 
 function Main() {
-  const [isLoggedIn, setIsLoggedIn] = useRecoilState(LoggedinState);
+  const [isLoggedIn, setIsLoggedIn] = useRecoilState(LoginState);
   const token = window.location.href.split('?token=')[1];
   const [userData, setUserData] = useState<UserData>({
     createdDate: '',

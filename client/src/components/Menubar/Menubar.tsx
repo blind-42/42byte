@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useQuery } from 'react-query';
 import { useRecoilState } from 'recoil';
 import { Link } from 'react-router-dom';
-import { LoggedinState } from 'States/LoginState';
+import { LoginState } from 'States/LoginState';
 import { GoSearch } from 'react-icons/go';
 import Error from 'pages/Error/Error';
 import LoginModal from 'components/Modal/LoginModal';
@@ -31,7 +31,7 @@ type GreetingProps = {
 };
 
 export default function Menubar({ menubarHandler }: GreetingProps) {
-  const [isLoggedIn, setIsLoggedIn] = useRecoilState(LoggedinState);
+  const [isLoggedIn, setIsLoggedIn] = useRecoilState(LoginState);
   const [openLoginModal, setOpenLoginModal] = useState<boolean>(false);
   const [keyword, setKeyword] = useState('');
   const [boardList, setBoardList] = useState<BoardList>({
