@@ -1,5 +1,6 @@
 import React, { useState, useRef } from 'react';
 import { useQuery } from 'react-query';
+import { useMediaQuery } from 'react-responsive';
 import { Link, useNavigate } from 'react-router-dom';
 import Header from 'components/Header/Header';
 import Footer from 'components/Footer/Footer';
@@ -59,6 +60,10 @@ export default function Board() {
       keepPreviousData: true,
     },
   );
+
+  const isMobile = useMediaQuery({
+    query: '(max-width:767px)',
+  });
 
   const pageChangeHandler = (page: number) => {
     navigate(`/board?boardId=${id}&page=${page}`);
@@ -139,7 +144,7 @@ export default function Board() {
                 </PostContainer>
               )}
             </UtilPostWrap>
-            <Footer />
+            {!isMobile && <Footer />}
           </ContentFooterWrap>
         </PageContainer>
       </AppContainer>

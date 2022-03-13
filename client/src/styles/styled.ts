@@ -1,9 +1,6 @@
 import styled from 'styled-components';
 
 export const AppContainer = styled.div`
-  // display: flex;
-  // flex-direction: column;
-  // align-items: center;
   display: grid;
   grid-template-rows: 1fr 3rem;
   justify-items: center;
@@ -18,6 +15,7 @@ export const AppContainer = styled.div`
 `;
 
 export const PageContainer = styled.div`
+  height: 100vh;
   width: 100vw;
   background: #c4c4c4;
   padding: 3px;
@@ -108,6 +106,18 @@ export const Squares = styled.div`
 	`}
 `;
 
+export const ContentFooterWrap = styled.div`
+  display: grid;
+  align-items: stretch;
+  grid-template-rows: 90vh;
+  ${({ theme }) => theme.media.tablet`
+		grid-template-rows: 67vh 8vh;
+	`}
+  ${({ theme }) => theme.media.desktop`
+		grid-template-rows: 76vh 9vh;
+	`}
+`;
+
 export const PostContainer = styled.div`
   overflow-y: scroll;
   background: #c4c4c4;
@@ -136,18 +146,6 @@ export const Category = styled.div`
   ${({ theme }) => theme.media.desktop`
 		font-size: 0.9rem;
 		height: 2.2rem;
-	`}
-`;
-
-export const ContentFooterWrap = styled.div`
-  display: grid;
-  align-items: stretch;
-  grid-template-rows: 80vh 10vh;
-  ${({ theme }) => theme.media.tablet`
-		grid-template-rows: 67vh 8vh;
-	`}
-  ${({ theme }) => theme.media.desktop`
-		grid-template-rows: 77vh 8vh;
 	`}
 `;
 
