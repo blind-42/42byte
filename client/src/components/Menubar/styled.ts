@@ -356,7 +356,7 @@ export const BoardNames = styled.div`
     cursor: pointer;
     display: flex;
     align-items: center;
-    width: 18rem;
+    width: 19rem;
     font-size: 1.5rem;
     font-weight: 450;
     img {
@@ -367,7 +367,7 @@ export const BoardNames = styled.div`
   ${({ theme }) => theme.media.tablet`
 		height: 16rem;
 		div {
-			width: 13rem;
+			width: 14rem;
 			font-size: 1rem;
 			img {
 				height: 1.2rem;
