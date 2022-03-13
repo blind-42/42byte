@@ -1,6 +1,7 @@
 import { useState, useRef } from 'react';
 import { useQueryClient, useMutation, useQueries } from 'react-query';
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+import { useMediaQuery } from 'react-responsive';
 import { Viewer } from '@toast-ui/react-editor';
 import instance from 'utils/functions/axios';
 import Header from 'components/Header/Header';
@@ -85,6 +86,7 @@ function Detail() {
   const boardUrl = currentUrl.split('&postId=')[0].split('boardId=')[1];
   const postUrl = currentUrl.split('&postId=')[1];
   const shortDate = createdDate?.slice(0, 16).replace('T', ' ');
+  const navigate = useNavigate();
   const scrollRef = useRef<HTMLDivElement>(null);
 
   const queryClient = useQueryClient();
@@ -130,6 +132,10 @@ function Detail() {
   ]);
   const isLoading = results.some((result) => result.isLoading);
   const error = results.some((result) => result.error);
+
+  const isMobile = useMediaQuery({
+    query: '(max-width:767px)',
+  });
 
   const uploadCmtHandler = (comment: string) => {
     if (comment) {
@@ -234,17 +240,13 @@ function Detail() {
         <PageContainer>
           <TopBar>
             <PageName>
-              <Link to={`/board?=boardId=${boardId}`}>
-                <div>{boardName}</div>
-              </Link>
-              <div>&nbsp;&#10095; #{id}</div>
+              <div onClick={() => navigate(-1)}>{boardName}</div>
+              <div>&nbsp;&#10095;&nbsp;#{id}</div>
             </PageName>
             <Squares>
               <div>&#9866;</div>
               <div>&#10064;</div>
-              <Link to={`/board?=boardId=${boardId}`}>
-                <div>&times;</div>
-              </Link>
+              <div onClick={() => navigate(-1)}>&times;</div>
             </Squares>
           </TopBar>
           <ContentFooterWrap>
@@ -316,7 +318,7 @@ function Detail() {
                 <div ref={scrollRef} />
               </PostContainer>
             )}
-            <Footer />
+            {!isMobile && <Footer />}
           </ContentFooterWrap>
         </PageContainer>
       </AppContainer>
