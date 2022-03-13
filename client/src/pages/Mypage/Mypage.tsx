@@ -84,9 +84,7 @@ export default function Mypage() {
             <Squares>
               <div>&#9866;</div>
               <div>&#10064;</div>
-              <Link to="/">
-                <div>&times;</div>
-              </Link>
+              <div onClick={() => navigate(-1)}>&times;</div>
             </Squares>
           </TopBar>
           <ContentFooterWrap>

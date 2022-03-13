@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useQuery } from 'react-query';
 import '@toast-ui/editor/dist/toastui-editor.css';
 import Header from 'components/Header/Header';
 import PostEditor from 'components/PostEdit/PostEditor';
+import Error from 'pages/Error/Error';
 import instance from 'utils/functions/axios';
 import { RiArrowDownSFill } from 'react-icons/ri';
 import { BoardList, BoardPre } from 'utils/functions/type';
@@ -24,7 +25,9 @@ export default function Writing() {
   });
   const { contents, page, pages } = boardList;
   const [board, setBoard] = useState('1');
-  const { isFetching, isLoading, error, data } = useQuery(
+  const navigate = useNavigate();
+
+  const { isLoading, error, data } = useQuery(
     ['writing_key'],
     () => {
       instance.get('/board/list').then((res) => {
@@ -51,9 +54,7 @@ export default function Writing() {
     setBoard(event.target.value);
   };
 
-  // if (isFetching || isLoading) return <Loading />
-
-  // if (error) return <Error />
+  if (error) return <Error />;
 
   return (
     <>
@@ -65,9 +66,7 @@ export default function Writing() {
             <Squares>
               <div>&#9866;</div>
               <div>&#10064;</div>
-              <Link to="/">
-                <div>&times;</div>
-              </Link>
+              <div onClick={() => navigate(-1)}>&times;</div>
             </Squares>
           </TopBar>
           <ContentWrap>
