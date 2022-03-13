@@ -27,6 +27,7 @@ import {
   Search,
   WritingButton,
   PostWrap,
+  NoPost,
   ContentWrap,
 } from './styled';
 
@@ -46,8 +47,7 @@ export default function Board() {
   const navigate = useNavigate();
   const innerScrollRef = useRef<HTMLDivElement>(null);
   const outerScrollRef = useRef<HTMLDivElement>(null);
-  // const
-  console.log('test');
+
   const { isLoading, error, data } = useQuery(
     ['board_key', boardUrl, pageUrl],
     () => {
@@ -135,11 +135,20 @@ export default function Board() {
                     <div>작성일</div>
                   </Category>
                   <ContentWrap>
-                    <PostWrap>
-                      {contents.map((el: PostPre, idx) => {
-                        return <PostPreview key={idx} postData={el} />;
-                      })}
-                    </PostWrap>
+                    {contents.length ? (
+                      <PostWrap>
+                        {contents.map((el: PostPre, idx) => {
+                          return <PostPreview key={idx} postData={el} />;
+                        })}
+                      </PostWrap>
+                    ) : (
+                      <NoPost>
+                        <img src="images/ghostWithPencil.png" />
+                        등록된 게시글이 없습니다.
+                        <br />
+                        지금 바로 새로운 게시글을 등록해 보세요!
+                      </NoPost>
+                    )}
                   </ContentWrap>
                   <PageNation
                     curPage={page}
