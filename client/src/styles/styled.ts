@@ -15,15 +15,15 @@ export const AppContainer = styled.div`
 `;
 
 export const PageContainer = styled.div`
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -53%);
   height: 100vh;
   width: 100vw;
   background: #c4c4c4;
   padding: 3px;
   ${({ theme }) => theme.media.tablet`
+		position: fixed;
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%, -53%);
 		width: 90vw;
 		height: 80vh;
 		border-top: solid 2px #fff;
@@ -32,6 +32,10 @@ export const PageContainer = styled.div`
 		border-bottom: solid 2px #000;
 	`}
   ${({ theme }) => theme.media.desktop`
+		position: fixed;
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%, -53%);
 		width: 90vh;
 		height: 90vh;
 		border-top: solid 2px #fff;
