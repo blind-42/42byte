@@ -240,8 +240,10 @@ function Detail() {
         <PageContainer>
           <TopBar>
             <PageName>
-              <div onClick={() => navigate(-1)}>{boardName}</div>
-              <div>&nbsp;&#10095;&nbsp;#{id}</div>
+              <div onClick={() => navigate(`/board?boardId=${boardId}&page=1`)}>
+                {boardName}
+              </div>
+              <div>&nbsp;&nbsp;&#10095;&nbsp;&nbsp;#{id}</div>
             </PageName>
             <Squares>
               <div>&#9866;</div>

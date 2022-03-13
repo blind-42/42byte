@@ -89,11 +89,15 @@ export default function Board() {
         <Header />
         <PageContainer>
           <TopBar>
-            <PageName>{name}</PageName>
+            <PageName>
+              <div onClick={() => navigate(`/board?boardId=${id}&page=1`)}>
+                {name}
+              </div>
+            </PageName>
             <Squares>
               <div>&#9866;</div>
               <div>&#10064;</div>
-              <div onClick={() => navigate(-1)}>&times;</div>
+              <div onClick={() => navigate('/')}>&times;</div>
             </Squares>
           </TopBar>
           <ContentFooterWrap>

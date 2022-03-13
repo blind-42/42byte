@@ -84,11 +84,15 @@ export default function Mypage() {
         <Header />
         <PageContainer>
           <TopBar>
-            <PageName>마이페이지</PageName>
+            <PageName>
+              <div onClick={() => navigate('/mypage?=post&page=1')}>
+                마이페이지
+              </div>
+            </PageName>
             <Squares>
               <div>&#9866;</div>
               <div>&#10064;</div>
-              <div onClick={() => navigate(-1)}>&times;</div>
+              <div onClick={() => navigate('/')}>&times;</div>
             </Squares>
           </TopBar>
           <ContentFooterWrap>
