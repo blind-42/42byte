@@ -130,10 +130,45 @@ export const WritingButton = styled.div`
 `;
 
 export const ContentWrap = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
   border-top: solid 1px #fff;
   background: #d5d5d5;
 `;
 
 export const PostWrap = styled.div`
   border-bottom: solid 2px #fff;
+`;
+
+export const NoPost = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+  line-height: 150%;
+  height: 30rem;
+  font-size: 1.3rem;
+  img {
+    display: block;
+    margin: 0 auto;
+    height: 8rem;
+    width: 8rem;
+  }
+  ${({ theme }) => theme.media.tablet`
+		height: 20rem;
+		font-size: 0.9rem;
+		img {
+			height: 5rem;
+			width: 5rem;
+		}
+	`}
+  ${({ theme }) => theme.media.desktop`
+		height: 20rem;
+		font-size: 0.9rem;
+		img {
+			height: 5rem;
+			width: 5rem;
+		}
+	`}
 `;
