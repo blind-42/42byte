@@ -63,6 +63,9 @@ export const PageName = styled.div`
   div {
     color: #fff;
   }
+  div:nth-child(1) {
+    cursor: pointer;
+  }
   ${({ theme }) => theme.media.tablet`
 		font-size: 0.9rem;
 		margin: 0 0.6rem;
