@@ -1,5 +1,5 @@
-import { Link, useNavigate } from 'react-router-dom';
-import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useState, useRef } from 'react';
 import { useQuery } from 'react-query';
 import { useMediaQuery } from 'react-responsive';
 import Header from 'components/Header/Header';
@@ -41,13 +41,17 @@ export default function Mypage() {
   const pageName = currentUrl.split('&page=')[0].split('mypage?=')[1];
   const pageNumber = currentUrl.split('&page=')[1];
   const navigate = useNavigate();
+  const innerScrollRef = useRef<HTMLDivElement>(null);
+  const outerScrollRef = useRef<HTMLDivElement>(null);
 
   const { isLoading, error, data } = useQuery(
     ['mypage_key', pageName, pageNumber],
     () => {
-      instance
-        .get(`/mypage/${pageName}?page=${pageNumber}`)
-        .then((res) => setMypageData(res.data));
+      instance.get(`/mypage/${pageName}?page=${pageNumber}`).then((res) => {
+        setMypageData(res.data);
+        innerScrollRef.current?.scrollIntoView(true);
+        outerScrollRef.current?.scrollIntoView(true);
+      });
     },
     {
       retry: 0,
@@ -76,7 +80,7 @@ export default function Mypage() {
 
   return (
     <>
-      <AppContainer>
+      <AppContainer ref={outerScrollRef}>
         <Header />
         <PageContainer>
           <TopBar>
@@ -102,7 +106,7 @@ export default function Mypage() {
               ) : (
                 <PostContainer>
                   {pageName === 'post' ? (
-                    <Category state={pageName}>
+                    <Category state={pageName} ref={innerScrollRef}>
                       <div></div>
                       <div>제목</div>
                       <div>조회</div>
@@ -110,7 +114,7 @@ export default function Mypage() {
                       <div>작성일</div>
                     </Category>
                   ) : (
-                    <Category state={pageName}>
+                    <Category state={pageName} ref={innerScrollRef}>
                       <div>댓글</div>
                     </Category>
                   )}
