@@ -1,6 +1,7 @@
 import { useState, useRef, useEffect } from 'react';
 import S3 from 'react-aws-s3-typescript';
 import { v4 as uuidv4 } from 'uuid';
+import { useMediaQuery } from 'react-responsive';
 import { Editor } from '@toast-ui/react-editor';
 import instance from 'utils/functions/axios';
 import { PostData } from 'utils/functions/type';
@@ -26,6 +27,17 @@ export default function PostEditor({ detailData, boardId }: PostDataType) {
   const editorRef = useRef<Editor>(null);
   const currentUrl = window.location.href;
   const urlId = currentUrl.split('&postId=')[1];
+
+  const isTablet = useMediaQuery({
+    query: '(min-width : 768px) and (max-width :1024px)',
+  });
+  const isPc = useMediaQuery({
+    query: '(min-width : 1025px)',
+  });
+
+  let editorHeight = 78;
+  if (isTablet) editorHeight = 65;
+  if (isPc) editorHeight = 70;
 
   useEffect(() => {
     if (detailData) {
@@ -127,7 +139,7 @@ export default function PostEditor({ detailData, boardId }: PostDataType) {
           <Editor
             initialValue={content}
             previewStyle="tab"
-            height="70vh"
+            height={`${editorHeight}vh`}
             initialEditType="markdown"
             useCommandShortcut={true}
             onChange={contentHandler}
