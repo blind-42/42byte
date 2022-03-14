@@ -31,7 +31,6 @@ public class CommentControllerImpl implements CommentController {
     private final CommentService commentService;
     private final PostService postService;
     private final TokenService tokenService;
-    private final LikeService likeService;
 
     @RequestMapping(value={"/comment"}, method=RequestMethod.POST)
     public void saveComment(Long boardId, Long postId, CommentRequestDTO requestDTO, HttpServletRequest request){

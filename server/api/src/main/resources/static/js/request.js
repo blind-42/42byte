@@ -3,13 +3,14 @@ function js_request(form){
     let url = form['url'].value;
     let params = form['params'].value;
     let method = form['method'].value;
+    let token = form['token'].value;
 
     $.ajax({
         url: `${url}${params}`,
         type: `${method}`,
         contentType: 'application/json',
         headers: {
-            "Authorization": "Bearer " + "access"
+            "Authorization": "Bearer "+ token
         },
         async:false,
         error : function() {
@@ -30,6 +31,7 @@ function js_request_input(form){
     let input_message = form['input'].value;
     let params = form['params'].value;
     let method = form['method'].value;
+    let token = form['token'].value;
 
     /* 입력창 */
     let inputString = prompt(input_message, null);
@@ -41,7 +43,7 @@ function js_request_input(form){
         type: `${method}`,
         contentType: 'application/json',
         headers: {
-            "Authorization": "Bearer " + "access"
+            "Authorization": "Bearer " + token
         },
         async:false,
         error : function() {

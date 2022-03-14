@@ -10,7 +10,9 @@ import com.blind.api.domain.comment.domain.Comment;
 import com.blind.api.domain.comment.service.CommentService;
 import com.blind.api.domain.post.v2.domain.Post;
 import com.blind.api.domain.post.v2.service.PostService;
+import com.blind.api.domain.security.jwt.v1.domain.Token;
 import com.blind.api.domain.security.jwt.v1.service.TokenService;
+import com.blind.api.domain.security.oauth.v2.repository.UserRefreshTokenRepository;
 import com.blind.api.domain.user.v2.domain.RoleType;
 import com.blind.api.domain.user.v2.domain.User;
 import com.blind.api.domain.user.v2.service.UserService;
@@ -22,6 +24,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import java.util.*;
 
@@ -33,15 +36,19 @@ public class ManagementController {
     private final PostService postService;
     private final CommentService commentService;
     private final BlameService blameService;
+    private final UserRefreshTokenRepository userRefreshTokenRepository;
 
     /* 관리자 관리 */
     @GetMapping("/admin/admin")
     public String adminPage(Model model, HttpServletRequest request) {
         List<User> userList = userService.findAllByRoleType(RoleType.USER);
         List<User> adminList = userService.findAllByRoleType(RoleType.ADMIN);
+
+        Token token = userRefreshTokenRepository.findByUser((User) request.getSession().getAttribute("user"));
+
         model.addAttribute("adminList", adminList);
         model.addAttribute("userList", userList);
-        model.addAttribute("token", HeaderUtil.getAccessToken(request));
+        model.addAttribute("token", token.getAccessToken());
         return "admin_management";
     }
 
@@ -49,8 +56,11 @@ public class ManagementController {
     @GetMapping("/admin/manager")
     public String managerPage(Model model, HttpServletRequest request) {
         List<Board> boardList = boardService.findAllBoard(Pageable.unpaged()).getContent();
+
+        Token token = userRefreshTokenRepository.findByUser((User) request.getSession().getAttribute("user"));
+
         model.addAttribute("boardList", boardList);
-        model.addAttribute("token", HeaderUtil.getAccessToken(request));
+        model.addAttribute("token", token.getAccessToken());
         return "manager_management";
     }
 
@@ -58,8 +68,11 @@ public class ManagementController {
     @GetMapping("/admin/board")
     public String boardPage(Model model, HttpServletRequest request) {
         List<Board> boardList = boardService.findAllBoard(Pageable.unpaged()).getContent();
+
+        Token token = userRefreshTokenRepository.findByUser((User) request.getSession().getAttribute("user"));
+
         model.addAttribute("boardList", boardList);
-        model.addAttribute("token", HeaderUtil.getAccessToken(request));
+        model.addAttribute("token", token.getAccessToken());
         return "board_management";
     }
 
