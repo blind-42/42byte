@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 export const MenubarContainer = styled.div`
-  position: fixed;
+  position: absolute;
   bottom: 3rem;
   left: 0;
   padding: 3px;
