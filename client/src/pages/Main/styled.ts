@@ -1,5 +1,7 @@
 import styled from 'styled-components';
 
+export const PageContainer = styled.div``;
+
 export const LogoImg = styled.div`
   position: fixed;
   top: 50%;

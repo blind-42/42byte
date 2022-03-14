@@ -97,7 +97,6 @@ export default function Board() {
   return (
     <>
       <AppContainer ref={outerScrollRef}>
-        <Header />
         <PageContainer>
           <TopBar>
             <PageName>{name}</PageName>
@@ -155,6 +154,7 @@ export default function Board() {
             <Footer />
           </ContentFooterWrap>
         </PageContainer>
+        <Header />
       </AppContainer>
     </>
   );

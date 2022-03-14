@@ -45,7 +45,7 @@ interface CommentTotal {
   total: number;
 }
 
-function Detail() {
+export default function Detail() {
   const [detailData, setDetailData] = useState<PostData>({
     boardId: 0,
     boardName: '',
@@ -236,7 +236,6 @@ function Detail() {
   return (
     <>
       <AppContainer>
-        <Header />
         <PageContainer>
           <TopBar>
             <PageName>
@@ -332,9 +331,8 @@ function Detail() {
             )}
           </ContentFooterWrap>
         </PageContainer>
+        <Header />
       </AppContainer>
     </>
   );
 }
-
-export default Detail;
