@@ -14,15 +14,14 @@ import {
   Topbar,
   ContentContainer,
   UserProfileWrap,
-  Profile,
   UserImg,
-  UserName,
+  UserMenuWritingButtonWrap,
   UserMenu,
   UtilWrap,
-  WritingBtn,
+  WritingButton,
   Search,
   BoardListWrap,
-  WrapTitle,
+  WelcomePhrase,
   BoardNames,
 } from './styled';
 
@@ -88,10 +87,9 @@ export default function Menubar({ menubarHandler }: GreetingProps) {
         </Topbar>
         <ContentContainer>
           <BoardListWrap>
-            <WrapTitle>
+            <WelcomePhrase>
               {isLoggedIn ? 'welcome!' : 'Join us?'}
-              <img src="images/dogPaws.png" alt="footimg" />
-            </WrapTitle>
+            </WelcomePhrase>
             <BoardNames>
               {contents.map((el: BoardPre, idx) => {
                 return (
@@ -113,43 +111,41 @@ export default function Menubar({ menubarHandler }: GreetingProps) {
             </BoardNames>
           </BoardListWrap>
           <UserProfileWrap>
-            <Profile>
-              <UserImg state={isLoggedIn}>
-                {isLoggedIn ? (
-                  <img
-                    src={`images/${localStorage.getItem('4242-profile')}`}
-                    alt="pfimg"
-                  />
-                ) : (
-                  <Link to="/login">
-                    <img src="images/pf_questionMark.png" alt="pfimg" />
+            <UserImg state={isLoggedIn}>
+              {isLoggedIn ? (
+                <img
+                  src={`images/${localStorage.getItem('4242-profile')}`}
+                  alt="pfimg"
+                />
+              ) : (
+                <img src="images/ghost.png" alt="pfimg" />
+              )}
+            </UserImg>
+            {isLoggedIn ? (
+              <UserMenuWritingButtonWrap>
+                <UserMenu>
+                  <Link to="/mypage?=post&page=1">
+                    <span>마이페이지</span>
                   </Link>
-                )}
-              </UserImg>
-              <UserName>
-                {isLoggedIn ? (
-                  <div>카뎃</div>
-                ) : (
-                  <Link to="/login">
-                    <div>로그인</div>
+                  <Link to="/" onClick={logoutHandler}>
+                    <span>로그아웃</span>
                   </Link>
-                )}
-              </UserName>
-            </Profile>
-            {isLoggedIn && (
-              <UserMenu>
-                <Link to="/mypage?=post&page=1">
-                  <span>마이페이지</span>
-                </Link>
-                <Link to="/" onClick={logoutHandler}>
-                  <span>로그아웃</span>
-                </Link>
-                <WritingBtn>
+                </UserMenu>
+                <WritingButton>
                   <Link to="/writing">
                     <input type="button" value="새 글쓰기" />
                   </Link>
-                </WritingBtn>
-              </UserMenu>
+                </WritingButton>
+              </UserMenuWritingButtonWrap>
+            ) : (
+              <UserMenuWritingButtonWrap>
+                <UserMenu></UserMenu>
+                <WritingButton>
+                  <Link to="/login">
+                    <input type="button" value="로그인" />
+                  </Link>
+                </WritingButton>
+              </UserMenuWritingButtonWrap>
             )}
           </UserProfileWrap>
           <UtilWrap>

@@ -67,92 +67,155 @@ export const ContentContainer = styled.div`
   display: grid;
   grid-template-rows: 1fr 9rem 3.5rem;
   ${({ theme }) => theme.media.tablet`
-		grid-template-rows: 1fr 7rem 2.5rem;
+		grid-template-rows: 1fr 6rem 2.5rem;
 	`}
   ${({ theme }) => theme.media.desktop`
 		grid-template-rows: 1fr 6rem 2.5rem;
 	`}
 `;
+
+export const BoardListWrap = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  padding: 3px 0;
+  border-bottom: solid 2px #929191;
+`;
+
+export const WelcomePhrase = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #d5d5d5;
+  color: #000;
+  height: 2.5rem;
+  font-family: 'Press Start 2P', cursive;
+  font-size: 1.3rem;
+  font-weight: 500;
+  ${({ theme }) => theme.media.tablet`
+		height: 1.8rem;
+		font-size: 0.9rem;
+	`}
+  ${({ theme }) => theme.media.desktop`
+		height: 1.7rem;
+		font-size: 0.8rem;
+	`}
+`;
+
+export const BoardNames = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-evenly;
+  height: 23rem;
+  padding: 0.5rem 0;
+  div {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    width: 19rem;
+    font-size: 1.5rem;
+    font-weight: 450;
+    img {
+      height: 1.6rem;
+      margin-right: 0.5rem;
+    }
+  }
+  ${({ theme }) => theme.media.tablet`
+		height: 16rem;
+		div {
+			width: 14rem;
+			font-size: 1rem;
+			img {
+				height: 1.2rem;
+			}
+		}
+	`}
+  ${({ theme }) => theme.media.desktop`
+		height: 16rem;
+		div {
+			width: 13rem;
+			font-size: 0.9rem;
+			img {
+				height: 1.1rem;
+			}
+		}
+	`}
+`;
+
 export const UserProfileWrap = styled.div`
   display: grid;
   grid-template-columns: 2fr 3fr;
   border-top: solid 2px #fff;
 `;
 
-export const Profile = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: space-between;
-  padding: 12px 0 6px 0;
-`;
-
 export const UserImg = styled.div<{ state?: boolean }>`
-  display: flex;
-  align-items: center;
+  place-self: end center;
+  margin: 0 0 2px 12px;
   img {
-    height: 5.3rem;
-    border: solid 2px #929191;
+    border-top: solid 2px #000;
+    border-left: solid 2px #000;
+    border-right: solid 2px #fff;
+    border-bottom: solid 2px #fff;
+    object-fit: contain;
+    height: 7.8rem;
+    width: 7.8rem;
   }
   ${({ theme }) => theme.media.tablet`
+		margin: 0 0 2px 8px;
 		img {
-			height: 4rem;
+			height: 5rem;
+			width: 5rem;
 		}
 	`}
   ${({ theme }) => theme.media.desktop`
+		margin: 0 0 2px 8px;
 		img {
-			height: 3.5rem;
+			height: 5rem;
+			width: 5rem;
 		}
 	`}
 `;
 
-export const UserName = styled.div`
-  font-size: 1.5rem;
-  font-weight: 600;
-  div {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
+export const UserMenuWritingButtonWrap = styled.div`
+  display: grid;
+  grid-template-rows: 1fr 2.5rem;
+  margin: 3px 6px;
   ${({ theme }) => theme.media.tablet`
-		font-size: 1.1rem;
+		grid-template-rows: 1fr 1.8rem;
 	`}
   ${({ theme }) => theme.media.desktop`
-		font-size: 0.9rem;
+		grid-template-rows: 1fr 1.7rem;
 	`}
 `;
 
 export const UserMenu = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  padding-top: 1.5rem;
+  justify-content: space-evenly;
+  margin: 0.2rem 0 0.2rem 1.5rem;
   span {
-    padding-left: 1.7rem;
     font-size: 1.4rem;
     font-weight: 500;
     cursor: pointer;
   }
   ${({ theme }) => theme.media.tablet`
-		padding-top: 1rem;	
-		span {
-			padding-left: 1rem;
-			font-size: 1.1rem;
-		}
-	`}
+	margin: 0.1rem 0 0.1rem 0.7rem;
+	span {
+		font-size: 1rem;
+	}
+`}
   ${({ theme }) => theme.media.desktop`
-		padding-top: 0.8rem;
-		span {
-			padding-left: 1rem;
-			font-size: 0.9rem;
-		}
-	`}
+	margin: 0.1rem 0 0.1rem 0.6rem;
+	span {
+		font-size: 0.9rem;
+	}
+`}
 `;
 
-export const WritingBtn = styled.div`
+export const WritingButton = styled.div`
   display: flex;
   justify-content: flex-end;
-  margin: 3px 6px;
   padding: 0;
   input {
     cursor: pointer;
@@ -170,8 +233,8 @@ export const WritingBtn = styled.div`
   ${({ theme }) => theme.media.tablet`
 		input {
 			height: 1.8rem;
-			width: 12rem;
-			font-size: 1.2rem;
+			width: 10rem;
+			font-size: 1rem;
 		}
 	`}
   ${({ theme }) => theme.media.desktop`
@@ -265,122 +328,6 @@ export const Search = styled.div`
 				div {
 					font-size: 0.9rem; 
 				}
-			}
-		}
-	`}
-`;
-
-export const WritingButton = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin-left: 3px;
-  input {
-    cursor: pointer;
-    background: #518edb;
-    border-top: solid 2px #fff;
-    border-left: solid 2px #fff;
-    border-right: solid 2px #000;
-    border-bottom: solid 2px #000;
-    font-size: 1.2rem;
-    font-weight: 600;
-    height: 2.4rem;
-    width: 6.5rem;
-    color: #fff;
-  }
-  ${({ theme }) => theme.media.tablet`
-		input {
-			font-size: 0.9rem;
-			font-weight: 700;
-			height: 1.6rem;
-			width: 5rem;
-		}
-	`}
-  ${({ theme }) => theme.media.desktop`
-		input {
-			font-size: 0.9rem;
-			font-weight: 700;
-			height: 1.6rem;
-			width: 5rem;
-		}
-	`}
-`;
-export const BoardListWrap = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: stretch;
-  padding: 3px 0;
-  border-bottom: solid 2px #929191;
-`;
-
-export const WrapTitle = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: #d5d5d5;
-  color: #000;
-  height: 2.5rem;
-  font-family: 'Press Start 2P', cursive;
-  font-size: 1.3rem;
-  font-weight: 500;
-  img {
-    height: 2rem;
-    margin: 0 0.5rem;
-  }
-  ${({ theme }) => theme.media.tablet`
-		height: 1.8rem;
-		font-size: 0.9rem;
-		img {
-			height: 1.4rem;
-			margin: 0 0.3rem;
-		}
-	`}
-  ${({ theme }) => theme.media.desktop`
-		height: 1.7rem;
-		font-size: 0.8rem;
-		img {
-			height: 1.3rem;
-			margin: 0 0.3rem;
-		}
-	`}
-`;
-
-export const BoardNames = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: space-evenly;
-  height: 23rem;
-  padding: 0.5rem 0;
-  div {
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    width: 19rem;
-    font-size: 1.5rem;
-    font-weight: 450;
-    img {
-      height: 1.6rem;
-      margin-right: 0.5rem;
-    }
-  }
-  ${({ theme }) => theme.media.tablet`
-		height: 16rem;
-		div {
-			width: 14rem;
-			font-size: 1rem;
-			img {
-				height: 1.2rem;
-			}
-		}
-	`}
-  ${({ theme }) => theme.media.desktop`
-		height: 16rem;
-		div {
-			width: 13rem;
-			font-size: 0.9rem;
-			img {
-				height: 1.1rem;
 			}
 		}
 	`}
