@@ -26,11 +26,12 @@ import {
 } from './styled';
 
 type GreetingProps = {
+  roleType: string;
   recomment: RecommentData;
   commentsUserList: number[];
 };
 
-function ReComments({ recomment, commentsUserList }: GreetingProps) {
+function ReComments({ roleType, recomment, commentsUserList }: GreetingProps) {
   const {
     authorId,
     blameCnt,
@@ -190,6 +191,7 @@ function ReComments({ recomment, commentsUserList }: GreetingProps) {
                 <DropdownMenu
                   isPost={false}
                   isUsers={isUsers}
+                  roleType={roleType}
                   modifyHandler={modifyCmtHandler}
                   deleteHandler={deleteCmtHandler}
                   reportHandler={reportHandler}

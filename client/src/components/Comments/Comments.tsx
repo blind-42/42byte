@@ -29,12 +29,13 @@ import {
 } from './styled';
 
 type GreetingProps = {
+  roleType: string;
   comment: CommentData;
   commentsUserList: number[];
   // setReRender: React.Dispatch<React.SetStateAction<boolean>>
 };
 
-function Comments({ comment, commentsUserList }: GreetingProps) {
+function Comments({ roleType, comment, commentsUserList }: GreetingProps) {
   const {
     postId,
     id,
@@ -188,6 +189,7 @@ function Comments({ comment, commentsUserList }: GreetingProps) {
               <DropdownMenu
                 isPost={false}
                 isUsers={isUsers}
+                roleType={roleType}
                 modifyHandler={modifyCmtHandler}
                 deleteHandler={deleteCmtHandler}
                 reportHandler={reportHandler}
@@ -239,6 +241,7 @@ function Comments({ comment, commentsUserList }: GreetingProps) {
         return (
           <ReComments
             key={el.id}
+            roleType={roleType}
             recomment={el}
             commentsUserList={commentsUserList}
           />

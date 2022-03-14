@@ -38,6 +38,7 @@ import {
   CommentListWrap,
   FLine,
 } from './styled';
+import DeleteModal from 'components/Modal/DeleteModal';
 
 interface CommentTotal {
   contents: CommentData;
@@ -48,7 +49,6 @@ function Detail() {
   const [detailData, setDetailData] = useState<PostData>({
     boardId: 0,
     boardName: '',
-    commentCnt: 0,
     content: '',
     createdDate: '',
     id: 0,
@@ -58,13 +58,12 @@ function Detail() {
     likeCnt: 0,
     modifiedDate: '',
     title: '',
-    type: '',
+    roleType: '',
     viewCnt: 0,
   });
   const {
     boardId,
     boardName,
-    commentCnt,
     content,
     createdDate,
     id,
@@ -74,7 +73,7 @@ function Detail() {
     likeCnt,
     modifiedDate,
     title,
-    type,
+    roleType,
     viewCnt,
   } = detailData;
   const [commentData, setCommentData] = useState([]);
@@ -284,7 +283,7 @@ function Detail() {
                           isPost={true}
                           isUsers={isUsers}
                           isNotice={isNotice}
-                          roleType={type}
+                          roleType={roleType}
                           modifyHandler={modifyPostHandler}
                           deleteHandler={deletePostHandler}
                           reportHandler={reportHandler}
@@ -316,6 +315,7 @@ function Detail() {
                             return (
                               <Comments
                                 key={el.id}
+                                roleType={roleType}
                                 comment={el}
                                 commentsUserList={commentsUserList}
                               />

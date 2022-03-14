@@ -8,7 +8,7 @@ type GreetingProps = {
   isPost: boolean;
   isUsers: boolean;
   isNotice?: boolean;
-  roleType?: string;
+  roleType: string;
   modifyHandler: () => void;
   deleteHandler: () => void;
   reportHandler: (reportIssue: string) => void;
@@ -72,7 +72,7 @@ export default function DropdownMenu({
               <MenuList>
                 <div onClick={modifyHandler}>수정</div>
                 <div onClick={deleteModalHandler}>삭제</div>
-                {isPost && roleType !== 'user' && (
+                {isPost && roleType === 'ADMIN' && (
                   <div onClick={notice}>
                     {isNotice ? '공지 내리기' : '공지'}
                   </div>
@@ -81,13 +81,13 @@ export default function DropdownMenu({
             ) : (
               <MenuList>
                 <div onClick={reportModalHandler}>신고</div>
-                {isPost && roleType !== 'user' && (
+                {roleType === 'ADMIN' && (
+                  <div onClick={deleteModalHandler}>삭제</div>
+                )}
+                {isPost && roleType === 'ADMIN' && (
                   <div onClick={notice}>
                     {isNotice ? '공지 내리기' : '공지'}
                   </div>
-                )}
-                {roleType !== 'user' && (
-                  <div onClick={deleteModalHandler}>삭제</div>
                 )}
               </MenuList>
             )}
