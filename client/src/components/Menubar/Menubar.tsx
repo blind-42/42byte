@@ -69,7 +69,7 @@ export default function Menubar({ menubarHandler }: GreetingProps) {
     event.preventDefault();
     if (!isLoggedIn) {
       openLoginModalHandler();
-    } else {
+    } else if (keyword) {
       window.location.href = `/search?boardId=0&keyword=${keyword}`;
     }
   };

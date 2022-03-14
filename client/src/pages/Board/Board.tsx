@@ -80,7 +80,9 @@ export default function Board() {
 
   const searchHandeler = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    navigate(`/search?boardId=${boardUrl}&keyword=${keyword}`);
+    if (keyword) {
+      navigate(`/search?boardId=${boardUrl}&keyword=${keyword}`);
+    }
   };
 
   if (error) return <Error />;
