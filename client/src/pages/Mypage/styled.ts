@@ -2,12 +2,12 @@ import styled from 'styled-components';
 
 export const MenuPostWrap = styled.div`
   display: grid;
-  grid-template-rows: 4.8rem auto;
+  grid-template-rows: 4.9rem auto;
   ${({ theme }) => theme.media.tablet`
-		grid-template-rows: 3.7rem auto;
+		grid-template-rows: 3.8rem auto;
 	`}
   ${({ theme }) => theme.media.desktop`
-		grid-template-rows: 3.7rem auto;
+		grid-template-rows: 3.8rem auto;
 	`}
 `;
 
@@ -22,6 +22,11 @@ export const MenuWrap = styled.div`
 export const PostMenu = styled.div<{ state?: string }>`
   button {
     cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: end;
+    padding-bottom: 0.2rem;
     background: ${(props) => (props.state === 'post' ? '#D5D5D5' : 'none')};
     border-top: solid 2px
       ${(props) => (props.state === 'post' ? '#000' : '#C4C4C4')};
@@ -62,6 +67,11 @@ export const PostMenu = styled.div<{ state?: string }>`
 export const CommentMenu = styled.div<{ state?: string }>`
   button {
     cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: end;
+    padding-bottom: 0.2rem;
     background: ${(props) => (props.state === 'comment' ? '#D5D5D5' : 'none')};
     border-top: solid 2px
       ${(props) => (props.state === 'comment' ? '#000' : '#C4C4C4')};
@@ -102,6 +112,11 @@ export const CommentMenu = styled.div<{ state?: string }>`
 export const LikeMenu = styled.div<{ state?: string }>`
   button {
     cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: end;
+    padding-bottom: 0.2rem;
     background: ${(props) =>
       props.state === 'post/like' ? '#D5D5D5' : 'none'};
     border-top: solid 2px
