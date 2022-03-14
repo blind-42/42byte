@@ -135,7 +135,7 @@ export default function Board() {
                     <div>작성일</div>
                   </Category>
                   <ContentWrap>
-                    {contents.length ? (
+                    {!isLoading && contents.length ? (
                       <PostWrap>
                         {contents.map((el: PostPre, idx) => {
                           return <PostPreview key={idx} postData={el} />;
