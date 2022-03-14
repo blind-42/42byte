@@ -33,9 +33,9 @@ export const timeForToday = (value: string) => {
 };
 
 export const isDelOption = (value: number) => {
-  if (value === 1) return '글쓴이';
-  if (value === 2) return '매니저';
-  else return '관리자';
+  if (value === 2) return '매니저에 의해 ';
+  if (value === 3) return '관리자에 의해 ';
+  else return '';
 };
 
 export const whoIsWriter = (
