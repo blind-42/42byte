@@ -123,10 +123,9 @@ export default function PostEditor({
           content: content,
           isImage: isImage,
         })
-        .then(() =>
-          navigate(`/detail?boardId=${boardId}&postId=${urlId}`, {
-            replace: true,
-          }),
+        .then(
+          () =>
+            (window.location.href = `/detail?boardId=${boardId}&postId=${urlId}`),
         )
         .catch((err) => console.log(err));
     }
