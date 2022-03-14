@@ -36,7 +36,6 @@ export interface PostPre {
 export interface PostData {
   boardId: number;
   boardName: string;
-  commentCnt: number;
   content: string;
   createdDate: string;
   id: number;
@@ -46,7 +45,7 @@ export interface PostData {
   likeCnt: number;
   modifiedDate: string;
   title: string;
-  type: string;
+  roleType: string;
   viewCnt: number;
 }
 
