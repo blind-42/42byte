@@ -158,7 +158,7 @@ class AdminControllerImplTest {
             board = boardRepository.save(new Board(user, "board"));
         post = postRepository.findById(1L).orElseGet(()-> null);
         if (post == null)
-            post = postService.save(board, user,"title", "content");
+            post = postService.save(board, user,"title", "content", false);
         comment = commentRepository.findById(1L).orElseGet(()->null);
         if (comment == null)
             comment = commentService.save(board.getId(),post, user, "content");
@@ -271,7 +271,7 @@ class AdminControllerImplTest {
     @DisplayName("게시글 차단 해제 - 신고 횟수")
     void unBlockPost_blame() throws Exception{
         /* 신고 횟수가 5회 이상*/
-        Post blockedPost = postService.save(board,user,"title", "content");
+        Post blockedPost = postService.save(board,user,"title", "content", false);
         blockedPost.setBlameCnt(5L);
         blockedPost.setIsDel(0);
         postService.restorePost(blockedPost);
@@ -288,7 +288,7 @@ class AdminControllerImplTest {
     @DisplayName("게시글 차단 해제 - 관리자 삭제")
     void unBlockPost_Admin() throws Exception{
         /* 관리자에 의해 삭제 */
-        Post blockedPost = postService.save(board,user,"title", "content");
+        Post blockedPost = postService.save(board,user,"title", "content", false);
         blockedPost.setIsDel(3);
 
         postService.restorePost(blockedPost);

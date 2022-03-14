@@ -10,6 +10,8 @@ import com.blind.api.global.utils.ApplicationYmlRead;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 @AllArgsConstructor
 public class TokenServiceImpl implements TokenService {
@@ -33,5 +35,14 @@ public class TokenServiceImpl implements TokenService {
     public Token findByAccessToken(String accessToken){
         return repository.findByAccessToken(accessToken)
                 .orElseThrow(() -> new BusinessException("{token.notfound}"));
+    }
+
+    public User findAdminByRefreshToken(String refreshToken) {
+        User user = repository.findByRefreshToken(refreshToken)
+                .orElseThrow(() -> new BusinessException("token.notfound"))
+                .getUser();
+        if (user.getRoleType() != RoleType.ADMIN)
+            throw new AccessException(applicationYmlRead.getFrontUrl());
+        return user;
     }
 }
