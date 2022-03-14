@@ -41,6 +41,7 @@ export default function Board() {
   });
   const { id, name, contents, page, pages } = boardData;
   const [keyword, setKeyword] = useState('');
+  const [success, setSuccess] = useState(false);
   const currentUrl = window.location.href;
   const boardUrl = currentUrl.split('&page=')[0].split('boardId=')[1];
   const pageUrl = currentUrl.split('&page=')[1];
@@ -55,6 +56,7 @@ export default function Board() {
         setBoardData(res.data);
         innerScrollRef.current?.scrollIntoView(true);
         outerScrollRef.current?.scrollIntoView(true);
+        return setSuccess(true);
       });
     },
     {
@@ -134,19 +136,19 @@ export default function Board() {
                     <div>작성일</div>
                   </Category>
                   <ContentWrap>
-                    {!isLoading && contents.length ? (
-                      <PostWrap>
-                        {contents.map((el: PostPre, idx) => {
-                          return <PostPreview key={idx} postData={el} />;
-                        })}
-                      </PostWrap>
-                    ) : (
+                    {success && !contents.length ? (
                       <NoPost>
                         <img src="images/ghostWithPencil.png" />
                         등록된 게시글이 없습니다.
                         <br />
                         지금 바로 새로운 게시글을 등록해 보세요!
                       </NoPost>
+                    ) : (
+                      <PostWrap>
+                        {contents.map((el: PostPre, idx) => {
+                          return <PostPreview key={idx} postData={el} />;
+                        })}
+                      </PostWrap>
                     )}
                   </ContentWrap>
                   <PageNation
