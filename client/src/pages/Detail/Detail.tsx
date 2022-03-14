@@ -324,15 +324,12 @@ function Detail() {
                         </CommentListWrap>
                       </CommentContainer>
                     </DetailContainer>
+                    <div ref={scrollRef} />
                   </PostContainer>
                 )}
                 {!isMobile && !openEditor && <Footer />}
-                <div ref={scrollRef} />
-                {/* </PostContainer> */}
               </>
             )}
-            {/* {!isMobile && !openEditor && <Footer />} */}
-            {/* {!isMobile && <Footer />} */}
           </ContentFooterWrap>
         </PageContainer>
       </AppContainer>
