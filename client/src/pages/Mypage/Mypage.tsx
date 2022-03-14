@@ -78,7 +78,6 @@ export default function Mypage() {
   return (
     <>
       <AppContainer ref={outerScrollRef}>
-        <Header />
         <PageContainer>
           <TopBar>
             <PageName>
@@ -160,6 +159,7 @@ export default function Mypage() {
             {!isMobile && <Footer />}
           </ContentFooterWrap>
         </PageContainer>
+        <Header />
       </AppContainer>
     </>
   );

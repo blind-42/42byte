@@ -59,7 +59,6 @@ export default function Writing() {
   return (
     <>
       <AppContainer>
-        <Header />
         <PageContainer>
           <TopBar>
             <PageName>글쓰기</PageName>
@@ -87,6 +86,7 @@ export default function Writing() {
             <PostEditor boardId={Number(board)} />
           </ContentWrap>
         </PageContainer>
+        <Header />
       </AppContainer>
     </>
   );

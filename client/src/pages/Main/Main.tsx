@@ -7,9 +7,9 @@ import Header from '../../components/Header/Header';
 import instance from 'utils/functions/axios';
 import { UserData } from 'utils/functions/type';
 import { AppContainer } from 'styles/styled';
-import { LogoImg, SettingsBtn } from './styled';
+import { PageContainer, LogoImg, SettingsBtn } from './styled';
 
-function Main() {
+export default function Main() {
   const [isLoggedIn, setIsLoggedIn] = useRecoilState(LoginState);
   const token = window.location.href.split('?token=')[1];
   const [userData, setUserData] = useState<UserData>({
@@ -57,20 +57,20 @@ function Main() {
 
   return (
     <AppContainer>
+      <PageContainer>
+        <LogoImg>
+          <img src="images/42byteLogo.png" />
+        </LogoImg>
+        {roleType === 'ADMIN' && (
+          <SettingsBtn onClick={moveToAdmin}>
+            <div>
+              <AiFillSetting />
+            </div>
+            <div>Settings</div>
+          </SettingsBtn>
+        )}
+      </PageContainer>
       <Header />
-      <LogoImg>
-        <img src="images/42byteLogo.png" />
-      </LogoImg>
-      {roleType === 'ADMIN' && (
-        <SettingsBtn onClick={moveToAdmin}>
-          <div>
-            <AiFillSetting />
-          </div>
-          <div>Settings</div>
-        </SettingsBtn>
-      )}
     </AppContainer>
   );
 }
-
-export default Main;
