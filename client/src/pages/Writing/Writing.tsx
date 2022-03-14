@@ -84,7 +84,7 @@ export default function Writing() {
                 <RiArrowDownSFill />
               </div>
             </SelectBoard>
-            <PostEditor boardId={+board} />
+            <PostEditor boardId={Number(board)} />
           </ContentWrap>
         </PageContainer>
       </AppContainer>

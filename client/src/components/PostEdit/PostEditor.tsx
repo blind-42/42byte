@@ -16,11 +16,16 @@ import {
 window.Buffer = window.Buffer || require('buffer').Buffer;
 
 type PostDataType = {
+  state?: string;
   detailData?: PostData;
   boardId: number;
 };
 
-export default function PostEditor({ detailData, boardId }: PostDataType) {
+export default function PostEditor({
+  state,
+  detailData,
+  boardId,
+}: PostDataType) {
   const [title, setTitle] = useState<string>('');
   const [content, setContent] = useState<string>('');
   const [isImage, setIsImage] = useState<number>(0);
@@ -35,9 +40,20 @@ export default function PostEditor({ detailData, boardId }: PostDataType) {
     query: '(min-width : 1025px)',
   });
 
-  let editorHeight = 78;
-  if (isTablet) editorHeight = 62;
-  if (isPc) editorHeight = 70;
+  const editorHeight = () => {
+    let height = 78;
+
+    if (state) {
+      height = 83.2;
+      if (isTablet) height = 63.2;
+      if (isPc) height = 71.2;
+      return height;
+    }
+
+    if (isTablet) height = 62;
+    if (isPc) height = 70;
+    return height;
+  };
 
   useEffect(() => {
     if (detailData) {
@@ -132,14 +148,14 @@ export default function PostEditor({ detailData, boardId }: PostDataType) {
             />
           </Title>
           <UploadButton>
-            <button onClick={uploadHandler}>등록</button>
+            <button onClick={uploadHandler}>{state ? '수정' : '등록'}</button>
           </UploadButton>
         </TitleUploadWrap>
         <EditorWrap>
           <Editor
             initialValue={content}
             previewStyle="tab"
-            height={`${editorHeight}vh`}
+            height={`${editorHeight()}vh`}
             initialEditType="markdown"
             useCommandShortcut={true}
             onChange={contentHandler}
