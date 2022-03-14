@@ -97,16 +97,22 @@ export default function Mypage() {
               <MenuWrap>
                 <PostMenu state={pageName}>
                   <button onClick={() => switchToMenu('post')}>
+                    <img src="images/my_post.png" alt="postimg" />
+                    <br />
                     내가 쓴 글
                   </button>
                 </PostMenu>
                 <CommentMenu state={pageName}>
                   <button onClick={() => switchToMenu('comment')}>
+                    <img src="images/my_cmt.png" alt="cmtimg" />
+                    <br />
                     내가 쓴 댓글
                   </button>
                 </CommentMenu>
                 <LikeMenu state={pageName}>
                   <button onClick={() => switchToMenu('post/like')}>
+                    <img src="images/my_like.png" alt="likeimg" />
+                    <br />
                     좋아요한 글
                   </button>
                 </LikeMenu>
