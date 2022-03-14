@@ -199,7 +199,7 @@ function ReComments({ recomment, commentsUserList }: GreetingProps) {
             <Content>
               {isDel ? (
                 <div className="isDel">
-                  &#9986; {isDelOption(isDel)}에 의해 삭제된 댓글 입니다.
+                  &#9986; {isDelOption(isDel)}삭제된 댓글입니다.
                 </div>
               ) : blameCnt >= 5 ? (
                 <div className="isDel">
