@@ -231,6 +231,11 @@ export default function Detail() {
     );
   };
 
+  const exitButtnClickHandler = (event: React.MouseEvent<HTMLDivElement>) => {
+    if (openEditor) alert('지금 나가시면 수정된 사항이 저장되지 않습니다!');
+    navigate(-1);
+  };
+
   if (error) return <Error />;
 
   return (
@@ -247,7 +252,7 @@ export default function Detail() {
             <Squares>
               <div>&#9866;</div>
               <div>&#10064;</div>
-              <div onClick={() => navigate(-1)}>&times;</div>
+              <div onClick={exitButtnClickHandler}>&times;</div>
             </Squares>
           </TopBar>
           <ContentFooterWrap>
@@ -255,7 +260,6 @@ export default function Detail() {
               <Loading />
             ) : (
               <>
-                {/* <PostContainer> */}
                 {openEditor ? (
                   <PostEditor
                     state={'edit'}
