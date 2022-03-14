@@ -6,6 +6,9 @@ export const AppContainer = styled.div`
   justify-items: center;
   background: #6bb8f0;
   height: 100vh;
+  input {
+    -webkit-appearance: none;
+  }
   ${({ theme }) => theme.media.tablet`
 		grid-template-rows: 1fr 2.5rem; 
 	`}

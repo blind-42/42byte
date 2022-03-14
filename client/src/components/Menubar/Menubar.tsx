@@ -145,17 +145,9 @@ export default function Menubar({ menubarHandler }: GreetingProps) {
                   <span>로그아웃</span>
                 </Link>
                 <WritingBtn>
-                  {isLoggedIn ? (
-                    <Link to="/writing">
-                      <input type="button" value="새 글쓰기" />
-                    </Link>
-                  ) : (
-                    <input
-                      type="button"
-                      value="새 글쓰기"
-                      onClick={openLoginModalHandler}
-                    />
-                  )}
+                  <Link to="/writing">
+                    <input type="button" value="새 글쓰기" />
+                  </Link>
                 </WritingBtn>
               </UserMenu>
             )}
