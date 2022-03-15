@@ -122,7 +122,6 @@ export default function Main() {
               <div>Settings</div>
             </AdminPageButton>
           )}
-          ∂
         </PageContainer>
         <Header />
       </AppContainer>
