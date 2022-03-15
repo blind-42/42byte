@@ -236,6 +236,8 @@ export default function Detail() {
       if (window.confirm('지금 나가시면 수정된 사항이 저장되지 않습니다!')) {
         navigate(-1);
       }
+    } else {
+      navigate(-1);
     }
   };
 
