@@ -37,14 +37,14 @@ export const BoardIconWrap = styled.div`
   place-items: center center;
   plage-content: start start;
   ${({ theme }) => theme.media.tablet`
-		top: 1.5rem;
+		top: 1rem;
 		left: 1rem;
-		grid-template-rows: repeat(6, auto);
+		grid-template-rows: repeat(4, auto);
 	`}
   ${({ theme }) => theme.media.desktop`
-		top: 1.5rem;
+		top: 1rem;
 		left: 1rem;
-		grid-template-rows: repeat(6, auto);
+		grid-template-rows: repeat(4, auto);
 	`}
 `;
 
@@ -64,7 +64,7 @@ export const BoardIcon = styled.div`
     overflow-y: hidden;
     text-align: center;
     font-weight: 600;
-    font-size: 1.3rem;
+    font-size: 1.2rem;
     color: #fff;
     margin: 0.3rem 0;
     padding: 0 3px;
@@ -75,16 +75,16 @@ export const BoardIcon = styled.div`
 			height: 4rem;
 		}
 		div {
-			font-size: 1rem;
+			font-size: 0.9rem;
 		}
 	`}
   ${({ theme }) => theme.media.desktop`
-		width: 7rem;
+		width: 6rem;
 		img {
 			height: 4rem;
 		}
 		div {
-			font-size: 1rem;
+			font-size: 0.9rem;
 		}
 	`}
 `;
