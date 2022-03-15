@@ -55,8 +55,9 @@ export default function Writing() {
   };
 
   const exitButtnClickHandler = (event: React.MouseEvent<HTMLDivElement>) => {
-    alert('지금 나가시면 작성된 사항이 저장되지 않습니다!');
-    navigate(-1);
+    if (window.confirm('지금 나가시면 작성된 사항이 저장되지 않습니다!')) {
+      navigate(-1);
+    }
   };
 
   if (error) return <Error />;
