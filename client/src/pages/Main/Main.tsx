@@ -7,7 +7,7 @@ import Header from '../../components/Header/Header';
 import instance from 'utils/functions/axios';
 import { UserData } from 'utils/functions/type';
 import { AppContainer } from 'styles/styled';
-import { PageContainer, LogoImg, SettingsBtn } from './styled';
+import { PageContainer, LogoImg, AdminPageButton } from './styled';
 
 export default function Main() {
   const [isLoggedIn, setIsLoggedIn] = useRecoilState(LoginState);
@@ -62,12 +62,10 @@ export default function Main() {
           <img src="images/42byteLogo.png" />
         </LogoImg>
         {roleType === 'ADMIN' && (
-          <SettingsBtn onClick={moveToAdmin}>
-            <div>
-              <AiFillSetting />
-            </div>
+          <AdminPageButton onClick={moveToAdmin}>
+            <img src="images/adminIcon.png" alt="adminIcon" />
             <div>Settings</div>
-          </SettingsBtn>
+          </AdminPageButton>
         )}
       </PageContainer>
       <Header />

@@ -3,7 +3,7 @@ import styled from 'styled-components';
 export const PageContainer = styled.div``;
 
 export const LogoImg = styled.div`
-  position: fixed;
+  position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
@@ -22,20 +22,20 @@ export const LogoImg = styled.div`
 	`}
 `;
 
-export const SettingsBtn = styled.div`
-  position: fixed;
-  bottom: 7vh;
+export const AdminPageButton = styled.div`
+  cursor: pointer;
+  position: absolute;
+  z-index: 0;
+  bottom: 5rem;
   right: 2rem;
   display: flex;
   flex-direction: column;
   align-items: center;
-  div:nth-child(1) {
-    text-align: center;
-    font-size: 4.8rem;
-    color: #ffeba3;
+  img {
+    height: 7rem;
   }
-  div:last-child {
-    font-weight: 500;
+  div {
+    font-weight: 600;
     font-size: 1.3rem;
     color: #fff;
     background: #001fe7;
@@ -43,19 +43,21 @@ export const SettingsBtn = styled.div`
     padding: 0 3px;
   }
   ${({ theme }) => theme.media.tablet`
-		div:nth-child(1) {
-			font-size: 4.2rem;
+		bottom: 4.5rem;
+		img {
+			height: 5rem;
 		}
-		div:last-child {
-			font-size: 1.1rem;
+		div {
+			font-size: 1rem;
 		}
 	`}
   ${({ theme }) => theme.media.desktop`
-	div:nth-child(1) {
-		font-size: 3.5rem;
-	}
-	div:last-child {
-		font-size: 0.9rem;
-	}
-`}
+		bottom: 4.5rem;
+		img {
+			height: 5rem;
+		}
+		div {
+			font-size: 1rem;
+		}
+	`}
 `;
