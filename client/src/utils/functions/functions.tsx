@@ -3,7 +3,7 @@ import { CommentData } from './type';
 export const stringLimit = (param: string, length: number) => {
   let temp = param;
   if (temp.length > length) {
-    temp = temp.slice(0, length) + '...';
+    temp = temp.slice(0, length - 2) + '...';
   }
   return temp;
 };
