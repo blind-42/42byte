@@ -22,6 +22,7 @@ import java.io.Serializable;
 public class User extends BaseTimeEntity implements Serializable {
     @Id
     @Column(name = "id")
+    @JsonIgnore
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
@@ -32,6 +33,9 @@ public class User extends BaseTimeEntity implements Serializable {
     @Column(name = "PROFILE_IMAGE_URL", length = 512)
     @ColumnDefault("'1.jpg'")
     private String profileImageUrl;
+
+    @Column(name = "is_checked", columnDefinition = "boolean default true")
+    private Boolean isChecked;
 
     @NotNull
     @Enumerated(EnumType.STRING)

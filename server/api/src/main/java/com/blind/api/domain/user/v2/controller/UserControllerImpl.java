@@ -19,8 +19,6 @@ import javax.servlet.http.HttpServletRequest;
 @RestController
 @AllArgsConstructor
 public class UserControllerImpl implements UserController {
-    private final UserRepository userRepository;
-    private final TokenRepository tokenRepository;
     private final TokenService tokenService;
 
     @RequestMapping(value={"/user"}, method= RequestMethod.GET)

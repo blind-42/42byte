@@ -7,6 +7,7 @@ import com.blind.api.domain.comment.service.CommentService;
 import com.blind.api.domain.like.domain.CommentLike;
 import com.blind.api.domain.like.domain.PostLike;
 import com.blind.api.domain.like.service.LikeService;
+import com.blind.api.domain.notification.service.NotificationService;
 import com.blind.api.domain.post.v2.domain.Post;
 import com.blind.api.domain.post.v2.dto.PostDTO;
 import com.blind.api.domain.post.v2.dto.PostResponseDTO;
@@ -14,12 +15,14 @@ import com.blind.api.domain.post.v2.service.PostService;
 import com.blind.api.domain.security.jwt.v1.service.TokenService;
 import com.blind.api.domain.user.v2.domain.RoleType;
 import com.blind.api.domain.user.v2.domain.User;
+import com.blind.api.domain.user.v2.service.UserService;
 import com.blind.api.global.utils.HeaderUtil;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
+import java.time.LocalDateTime;
 
 @RestController
 @AllArgsConstructor
@@ -28,6 +31,8 @@ public class LikeControllerImpl implements LikeController {
     private final TokenService tokenService;
     private final PostService postService;
     private final CommentService commentService;
+    private final NotificationService notificationService;
+    private final UserService userService;
 
     @RequestMapping(value = {"/post/like"}, method=RequestMethod.POST)
     public void postLike(Long postId, HttpServletRequest request){
@@ -40,6 +45,11 @@ public class LikeControllerImpl implements LikeController {
         else{
             likeService.PostLike(post, user, 1L);
             postService.updateLike(post.getId(), -1L);
+        }
+        if (post.getLikeCnt() >= 10 && post.getHotDateTime() == null) {
+            notificationService.save(user, post, "post", post.getTitle(), "Hot 게시물 선정");
+            userService.setCheck(userService.findById(post.getAuthorId()));
+            postService.setHot(post);
         }
     }
 
@@ -59,23 +69,23 @@ public class LikeControllerImpl implements LikeController {
     @RequestMapping(value = {"mypage/post/like"}, method=RequestMethod.GET)
     public PostResponseDTO myPostLike(Pageable pageable, HttpServletRequest request){
         User user = tokenService.findUserByAccessToken(HeaderUtil.getAccessToken(request));
-        Page<PostLike> likeList = likeService.findLikePostByUserId(user.getId(), pageable);
+        Page<Post> posts = postService.findLikePostByUserId(user.getId(), pageable);
         PostResponseDTO responseDTO = new PostResponseDTO();
-        likeList.stream().forEach( postLike -> {
-            responseDTO.getContents().add(PostDTO.from(postLike.getPost(), user.getRoleType()));
+        posts.stream().forEach( post -> {
+            responseDTO.getContents().add(PostDTO.from(post, user.getRoleType()));
         });
-        responseDTO.setPage(likeList.getPageable().getPageNumber());
-        responseDTO.setPages(likeList.getTotalPages());
+        responseDTO.setPage(posts.getPageable().getPageNumber());
+        responseDTO.setPages(posts.getTotalPages());
         return responseDTO;
     }
 
     @RequestMapping(value = {"mypage/comment/like"}, method=RequestMethod.GET)
     public CommentResponseDTO myCommentLike(Pageable pageable, HttpServletRequest request){
         User user = tokenService.findUserByAccessToken(HeaderUtil.getAccessToken(request));
-        Page<CommentLike> likeList = likeService.findLikeCommentByUserId(user.getId(), pageable);
+        Page<Comment> likeList = commentService.findLikeCommentByUserId(user.getId(), pageable);
         CommentResponseDTO dto = new CommentResponseDTO();
-        likeList.stream().forEach( commentLike -> {
-            dto.getContents().add(CommentDTO.from(commentLike.getComment()));
+        likeList.stream().forEach( comment -> {
+            dto.getContents().add(CommentDTO.from(comment));
         });
         dto.setPage(likeList.getPageable().getPageNumber());
         dto.setPages(likeList.getTotalPages());

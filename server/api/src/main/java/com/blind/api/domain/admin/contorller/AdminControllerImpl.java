@@ -26,6 +26,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 @RestController
 @AllArgsConstructor
@@ -223,6 +224,11 @@ public class AdminControllerImpl implements AdminController{
             throw new BusinessException("{invalid.request}");
         Post post = postService.findById(postId);
         postService.restorePost(post);
+        List<Comment> commentList = commentService.findAllComment(postId);
+        commentList.stream().forEach(comment -> {
+            if (comment.getIsDel() == 4)
+                comment.setIsDel(0);
+        });
     }
 
     /*댓글 복구*/

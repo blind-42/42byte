@@ -8,8 +8,6 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.data.repository.query.Param;
 
-import java.util.List;
-
 public interface PostRepository extends PagingAndSortingRepository<Post, Long> {
 
     @Query(nativeQuery = true, value = "select * from post where id not in (select post_id as id from post_blame where user_id = :userId) and board_id = :boardId and is_del = :isDel and blame_count < :blameCnt")
@@ -41,4 +39,8 @@ public interface PostRepository extends PagingAndSortingRepository<Post, Long> {
     Page<Post> findAllByIsDelEquals(Integer isDel, Pageable pageable);
     Page<Post> findAllByBlameCntGreaterThanEqual(Long blameCnt, Pageable pageable);
     Page<Post> findAllByBlameCntGreaterThanEqualOrIsDelGreaterThanEqual(Long blameCnt, Integer isDel, Pageable pageable);
+    @Query(nativeQuery = true, value = "select * from post where id in (select post_id as id from post_like where user_id = :userId) and is_del = 0 and blame_count < 5 and is_notice = false")
+    Page<Post> findAllPostLikeByUserId(@Param("userId") Long userId, Pageable pageable);
+
+    Page<Post> findAllByLikeCntGreaterThanEqualAndIsDelEqualsAndBlameCntLessThanAndIsNoticeNot(Long likeCnt, Integer isDel, Long blameCnt, Boolean isNotice, Pageable pageable);
 }

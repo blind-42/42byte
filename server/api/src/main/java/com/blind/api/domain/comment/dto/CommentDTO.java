@@ -1,6 +1,7 @@
 package com.blind.api.domain.comment.dto;
 
 import com.blind.api.domain.comment.domain.Comment;
+import com.blind.api.global.utils.HashUtil;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
@@ -30,7 +31,7 @@ public class CommentDTO {
         return CommentDTO.builder()
                 .id(comment.getId())
                 .postId(comment.getPost().getId())
-                .authorId(comment.getAuthorId())
+                .authorId(HashUtil.getHashId(comment.getAuthorId(), comment.getPost().getId()))
                 .content(comment.getContent())
                 .likeCnt(comment.getLikeCnt())
                 .isAuthor(comment.getIsAuthor())

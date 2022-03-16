@@ -16,6 +16,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -49,6 +50,7 @@ public class PostServiceImpl implements PostService {
                 .title(title)
                 .content(content)
                 .authorId(user.getId())
+                .viewId(board.getViewId())
                 .isImage(isImage)
                 .build();
         return postRepository.save(post);
@@ -151,5 +153,26 @@ public class PostServiceImpl implements PostService {
             post.setIsDel(0);
         else if (post.getBlameCnt() >= 5)
             post.setBlameCnt(0L);
+    }
+
+    @Override
+    @Transactional
+    public Page<Post> findLikePostByUserId(Long userId, Pageable pageable){
+        return postRepository.findAllPostLikeByUserId(userId, pageable);
+    }
+
+    @Override
+    @Transactional
+    public void setHot(Post post) {
+        post.setHotDateTime(LocalDateTime.now());
+    }
+
+    @Override
+    @Transactional
+    public Page<Post> findAllHot(Pageable pageable) {
+        Long blame = Long.parseLong(applicationYmlRead.getBlame());
+        Long hot = Long.parseLong(applicationYmlRead.getHot());
+
+        return postRepository.findAllByLikeCntGreaterThanEqualAndIsDelEqualsAndBlameCntLessThanAndIsNoticeNot(hot, 0, blame, true, pageable);
     }
 }

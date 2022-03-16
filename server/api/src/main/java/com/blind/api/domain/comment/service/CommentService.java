@@ -40,5 +40,5 @@ public interface CommentService {
     void restoreComment(Comment comment);
 
     List<Comment> findByPost(Long postId, Long userId);
-
+    Page<Comment> findLikeCommentByUserId(Long userId, Pageable pageable);
     }

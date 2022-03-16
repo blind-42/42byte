@@ -40,6 +40,9 @@ public class Board extends BaseTimeEntity {
     @OneToOne()
     User manager;
 
+    @Column(name = "view_id", columnDefinition = "Integer default 0")
+    Long viewId;
+
     @Builder
     public Board(User manager, String name){
         this.manager = manager;
