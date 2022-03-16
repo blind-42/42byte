@@ -62,7 +62,39 @@ export const Topbar = styled.div`
 	`}
 `;
 
-export const NotificationList = styled.div``;
+export const EmptyNotificationMessage = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 25rem;
+  height: 6rem;
+  padding: 1rem;
+  font-size: 1.3rem;
+  ${({ theme }) => theme.media.tablet`
+		width: 18rem;
+		height: 4rem;
+		padding: 0.8rem;
+		font-size: 0.9rem;
+		padding: 0.8rem;
+	`}
+  ${({ theme }) => theme.media.desktop`
+		width: 18rem;
+		height: 4rem;
+		padding: 0.8rem;
+		font-size: 0.9rem;
+	`}
+`;
+
+export const NotificationList = styled.div`
+  overflow-y: scroll;
+  max-height: 60vh;
+  ${({ theme }) => theme.media.tablet`
+		max-height: 50vh;
+	`}
+  ${({ theme }) => theme.media.desktop`
+		max-height: 50vh;
+	`}
+`;
 
 export const NotificationWrap = styled.div`
   display: grid;

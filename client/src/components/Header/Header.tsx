@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useQuery } from 'react-query';
 import { useNavigate } from 'react-router-dom';
 import Menubar from 'components/Menubar/Menubar';
-import Notification from 'components/Notificationbar/Notificationbar';
+import Notificationbar from 'components/Notificationbar/Notificationbar';
 import instance from 'utils/functions/axios';
 import Clock from './Clock';
 import { UserData } from 'utils/functions/type';
@@ -15,7 +15,7 @@ import {
 
 export default function Header() {
   const [showMenu, setShowMenu] = useState(false);
-  const [showNotification, setShowNotification] = useState(false);
+  const [showNotificationbar, setShowNotificationbar] = useState(false);
   const [userData, setUserData] = useState<UserData>({
     createdDate: '',
     modifiedDate: '',
@@ -43,9 +43,7 @@ export default function Header() {
   };
 
   const showNotificationHandler = () => {
-    if (isChecked) {
-      setShowNotification(!showNotification);
-    }
+    setShowNotificationbar(!showNotificationbar);
   };
 
   return (
@@ -59,13 +57,13 @@ export default function Header() {
           </UtilButton>
           <UtilButton onClick={showNotificationHandler}>
             {isChecked ? (
-              <img src="images/notice_on.png" alt="notice" />
-            ) : (
               <img src="images/notice_off.png" alt="notice" />
+            ) : (
+              <img src="images/notice_on.png" alt="notice" />
             )}
           </UtilButton>
-          {showNotification && (
-            <Notification notificationHandler={showNotificationHandler} />
+          {showNotificationbar && (
+            <Notificationbar notificationHandler={showNotificationHandler} />
           )}
         </MenubarLogoWrap>
         <Clock />
