@@ -1,8 +1,14 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { IoEllipsisVerticalOutline } from 'react-icons/io5';
 import ReportModal from 'components/Modal/ReportModal';
 import DeleteModal from 'components/Modal/DeleteModal';
-import { DropdownWrap, Dots, DropdownBox, MenuList } from './styled';
+import {
+  DropdownWrap,
+  HamburgerButton,
+  DropdownBox,
+  DropdownOutside,
+  MenuList,
+} from './styled';
 
 type GreetingProps = {
   isPost: boolean;
@@ -26,24 +32,31 @@ export default function DropdownMenu({
   noticeHandler,
 }: GreetingProps) {
   const [openDropdown, setOpenDropdown] = useState<boolean>(false);
-  const [openDelModal, setOpenDelModal] = useState<boolean>(false);
-  const [openRptModal, setOpenRptModal] = useState<boolean>(false);
+  const [openDeleteModal, setOpenDeleteModal] = useState<boolean>(false);
+  const [openReportModal, setOpenReportModal] = useState<boolean>(false);
+  const outSection = useRef(null);
 
-  const dropdownHandler = () => {
-    setOpenDropdown(!openDropdown);
+  const dropdownHandler = (event: React.MouseEvent<HTMLElement>) => {
+    console.log(event);
+    console.log(outSection);
+    if (outSection.current === event.target) {
+      setOpenDropdown(false);
+    } else {
+      setOpenDropdown(!openDropdown);
+    }
   };
 
   const deleteModalHandler = () => {
     setOpenDropdown(false);
-    setOpenDelModal(!openDelModal);
+    setOpenDeleteModal(!openDeleteModal);
   };
 
   const reportModalHandler = () => {
     setOpenDropdown(false);
-    setOpenRptModal(!openRptModal);
+    setOpenReportModal(!openReportModal);
   };
 
-  const notice = () => {
+  const noticeButtonHandler = () => {
     setOpenDropdown(false);
     if (noticeHandler) noticeHandler();
   };
@@ -51,45 +64,49 @@ export default function DropdownMenu({
   return (
     <>
       <DropdownWrap>
-        {openDelModal && (
+        {openDeleteModal && (
           <DeleteModal
             clickModalHandler={deleteModalHandler}
             deleteHandler={deleteHandler}
           />
         )}
-        {openRptModal && (
+        {openReportModal && (
           <ReportModal
             clickModalHandler={reportModalHandler}
             reportHandler={reportHandler}
           />
         )}
-        <Dots onClick={dropdownHandler}>
+        <HamburgerButton onClick={dropdownHandler}>
           <IoEllipsisVerticalOutline />
-        </Dots>
+        </HamburgerButton>
         {openDropdown && (
           <DropdownBox>
             {isUsers ? (
-              <MenuList>
-                <div onClick={modifyHandler}>수정</div>
-                <div onClick={deleteModalHandler}>삭제</div>
-                {isPost && roleType === 'ADMIN' && (
-                  <div onClick={notice}>
-                    {isNotice ? '공지 내리기' : '공지'}
-                  </div>
-                )}
-              </MenuList>
-            ) : (
-              <MenuList>
-                <div onClick={reportModalHandler}>신고</div>
-                {roleType === 'ADMIN' && (
+              <DropdownOutside ref={outSection} onClick={dropdownHandler}>
+                <MenuList>
+                  <div onClick={modifyHandler}>수정</div>
                   <div onClick={deleteModalHandler}>삭제</div>
-                )}
-                {isPost && roleType === 'ADMIN' && (
-                  <div onClick={notice}>
-                    {isNotice ? '공지 내리기' : '공지'}
-                  </div>
-                )}
-              </MenuList>
+                  {isPost && roleType === 'ADMIN' && (
+                    <div onClick={noticeButtonHandler}>
+                      {isNotice ? '공지 내리기' : '공지'}
+                    </div>
+                  )}
+                </MenuList>
+              </DropdownOutside>
+            ) : (
+              <DropdownOutside ref={outSection} onClick={dropdownHandler}>
+                <MenuList>
+                  <div onClick={reportModalHandler}>신고</div>
+                  {roleType === 'ADMIN' && (
+                    <div onClick={deleteModalHandler}>삭제</div>
+                  )}
+                  {isPost && roleType === 'ADMIN' && (
+                    <div onClick={noticeButtonHandler}>
+                      {isNotice ? '공지 내리기' : '공지'}
+                    </div>
+                  )}
+                </MenuList>
+              </DropdownOutside>
             )}
           </DropdownBox>
         )}
