@@ -46,7 +46,7 @@ public class LikeControllerImpl implements LikeController {
             likeService.PostLike(post, user, 1L);
             postService.updateLike(post.getId(), -1L);
         }
-        if (post.getLikeCnt() >= 10 && post.getHotDateTime() == null) {
+        if (post.getLikeCnt() >= 9 && post.getHotDateTime() == null) {
             notificationService.save(user, post, "post", post.getTitle(), "Hot 게시물 선정");
             userService.setCheck(userService.findById(post.getAuthorId()));
             postService.setHot(post);
