@@ -36,6 +36,7 @@ public class PostControllerImpl implements PostController{
     private final TokenService tokenService;
     private final LikeService likeService;
     private final BoardService boardService;
+    private final CommentService commentService;
 
     /* 게시판 조회 */
     @RequestMapping(value="/board", method = RequestMethod.GET)
@@ -51,6 +52,23 @@ public class PostControllerImpl implements PostController{
         });
         dtoList.setName(board.getName());
         dtoList.setId(board.getId());
+        dtoList.setPage(postList.getPageable().getPageNumber());
+        dtoList.setPages(postList.getTotalPages());
+        return dtoList;
+    }
+
+    @RequestMapping(value="/board/hot", method = RequestMethod.GET)
+    public PostResponseDTO findHotPost(Pageable pageable, HttpServletRequest request) {
+        User user = tokenService.findUserByAccessToken(HeaderUtil.getAccessToken(request));
+        Page<Post> postList = postService.findAllHot(pageable);
+
+        PostResponseDTO<PostDTO> dtoList = new PostResponseDTO();
+        postList.stream().forEach( post -> {
+            if (user.getRoleType() != RoleType.ADMIN)
+                dtoList.getContents().add(PostDTO.from(post, RoleType.USER));
+        });
+        dtoList.setName("Hot 게시판");
+        dtoList.setId(7L);
         dtoList.setPage(postList.getPageable().getPageNumber());
         dtoList.setPages(postList.getTotalPages());
         return dtoList;
@@ -83,14 +101,15 @@ public class PostControllerImpl implements PostController{
     /*게시글 생성*/
     @RequestMapping(value="/post", method = RequestMethod.POST)
     public Post savePost(Long boardId, PostRequestDTO requestDTO, HttpServletRequest request){
-        Board board = boardService.findById(boardId);
         User user = tokenService.findUserByAccessToken(HeaderUtil.getAccessToken(request));
+        boardService.addViewId(boardId);
+        Board board = boardService.findById(boardId);
         return postService.save(board, user, requestDTO.getTitle(), requestDTO.getContent(), requestDTO.getIsImage());
     }
 
     /*게시글 상세조회 페이지*/
     @RequestMapping(value={"/post"}, method = RequestMethod.GET)
-    public PostDetailDTO findPostDetailByPostId (Long boardId, Long postId, HttpServletRequest request){
+    public PostDetailDTO findPostDetailByPostId (Long postId, HttpServletRequest request){
         User user = tokenService.findUserByAccessToken(HeaderUtil.getAccessToken(request));
         Post post = postService.findById(postId);
         Boolean isUsers = StringUtils.equals(post.getAuthorId(), user.getId());
@@ -127,6 +146,11 @@ public class PostControllerImpl implements PostController{
             postService.delete(post, RoleType.USER.getValue());
         else if (post.getIsDel() == 0)
             postService.delete(post, roleType.getValue());
+        List<Comment> commentList = commentService.findAllComment(postId);
+        commentList.stream().forEach(comment -> {
+            if (comment.getIsDel() == 0)
+                commentService.delete(comment, 4);
+        });
     }
 
     @RequestMapping(value={"/post"}, method = RequestMethod.PATCH)

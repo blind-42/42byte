@@ -81,4 +81,10 @@ public class BoardServiceImpl implements BoardService{
         return boardRepository.findAllBoardByManager(manager, pageable);
     }
 
+    @Override
+    @Transactional
+    public void addViewId(Long boardId) {
+        boardRepository.addViewId(boardId);
+    }
+
 }

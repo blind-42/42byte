@@ -11,6 +11,7 @@ import com.blind.api.domain.security.oauth.v2.token.AuthToken;
 import com.blind.api.domain.security.oauth.v2.token.AuthTokenProvider;
 import com.blind.api.domain.user.v2.domain.RoleType;
 import com.blind.api.domain.user.v2.service.UserService;
+import com.blind.api.global.utils.ApplicationYmlRead;
 import com.blind.api.global.utils.CookieUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
@@ -40,6 +41,7 @@ public class OAuthAuthenticationSuccessHandler extends SimpleUrlAuthenticationSu
     private final AppProperties appProperties;
     private final UserRefreshTokenRepository userRefreshTokenRepository;
     private final OAuthAuthorizationRequestBasedOnCookieRepository authorizationRequestRepository;
+    private final ApplicationYmlRead applicationYmlRead;
 
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException {
@@ -101,8 +103,8 @@ public class OAuthAuthenticationSuccessHandler extends SimpleUrlAuthenticationSu
         CookieUtil.deleteCookie(request, response, REFRESH_TOKEN);
         CookieUtil.addCookie(response, REFRESH_TOKEN, refreshToken.getToken(), cookieMaxAge);
 
-//        return UriComponentsBuilder.fromUriString("http://localhost:3000")
-                return UriComponentsBuilder.fromUriString("https://42byte.kr")
+        return UriComponentsBuilder.fromUriString(applicationYmlRead.getFrontUrl())
+//                return UriComponentsBuilder.fromUriString("https://42byte.kr")
                 .queryParam("token", userRefreshToken == null ? accessToken.getToken() : userRefreshToken.getAccessToken())
                 .build().toUriString();
     }

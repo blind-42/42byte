@@ -17,8 +17,6 @@ public interface LikeService {
     public void PostLike(Post post, User user, Long num);
     public void CommentLike(Post post, Comment comment, User user, Long num);
     public void deleteByPost(Post post);
-    public Page<PostLike> findLikePostByUserId(Long userId, Pageable pageable);
-    public Page<CommentLike> findLikeCommentByUserId(Long userId, Pageable pageable);
     public boolean checkPostLike(Post post, User user);
     public boolean checkCommentLike(Comment comment, User user);
     public List<CommentLike> getCommentLikeInPost(Post post, User user);

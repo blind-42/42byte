@@ -126,7 +126,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 userService,
                 appProperties,
                 userRefreshTokenRepository,
-                oAuth2AuthorizationRequestBasedOnCookieRepository()
+                oAuth2AuthorizationRequestBasedOnCookieRepository(),
+                applicationYmlRead
         );
     }
 

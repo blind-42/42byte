@@ -87,10 +87,12 @@ public class ManagementController {
         /* 삭제된 게시글 조회 */
         Page<Post> deletedList = postService.findDeleted(pageable);
 
+        Token token = userRefreshTokenRepository.findByUser((User) request.getSession().getAttribute("user"));
+
         model.addAttribute("blockedList", blockedList.getContent());
         model.addAttribute("blamedList", blamedList.getContent());
         model.addAttribute("deletedList", deletedList.getContent());
-        model.addAttribute("token", HeaderUtil.getAccessToken(request));
+        model.addAttribute("token", token.getAccessToken());
         return "post_management";
     }
 
@@ -105,10 +107,13 @@ public class ManagementController {
         /* 삭제된 게시글 조회 */
         Page<Comment> deletedList = commentService.findDeleted(pageable);
 
+        Token token = userRefreshTokenRepository.findByUser((User) request.getSession().getAttribute("user"));
+
+
         model.addAttribute("blockedList", blockedList.getContent());
         model.addAttribute("blamedList", blamedList.getContent());
         model.addAttribute("deletedList", deletedList.getContent());
-        model.addAttribute("token", HeaderUtil.getAccessToken(request));
+        model.addAttribute("token", token.getAccessToken());
         return "comment_management";
     }
 

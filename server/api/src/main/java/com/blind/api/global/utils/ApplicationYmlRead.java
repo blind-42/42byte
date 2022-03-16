@@ -18,6 +18,10 @@ public class ApplicationYmlRead {
         return van.get("blame");
     }
 
+    public String getHot() {
+        return van.get("hot");
+    }
+
     public String getFrontUrl() {
         return web.get("frontUrl");
     }

@@ -27,4 +27,8 @@ public interface PostService {
     Page<Post> findBlamed(Pageable pageable);
     Page<Post> findBlocked(Pageable pageable);
     void restorePost(Post post);
+    Page<Post> findLikePostByUserId(Long userId, Pageable pageable);
+    void setHot(Post post);
+
+    Page<Post> findAllHot(Pageable pageable);
 }

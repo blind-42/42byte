@@ -68,16 +68,4 @@ public class LikeServiceImpl implements LikeService{
         postLikeRepository.deleteByPostId(post.getId());
         commentLikeRepository.deleteByPostId(post.getId());
     }
-
-    @Override
-    @Transactional
-    public Page<PostLike> findLikePostByUserId(Long userId, Pageable pageable){
-        return postLikeRepository.findAllPostByUserId(userId, pageable);
-    }
-
-    @Override
-    @Transactional
-    public Page<CommentLike> findLikeCommentByUserId(Long userId, Pageable pageable){
-        return commentLikeRepository.findAllCommentByUserId(userId, pageable);
-    }
 }

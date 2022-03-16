@@ -23,4 +23,5 @@ public interface BoardService {
     void deleteBoard(Board board);
     Page<Board> findDeleted(Pageable pageable);
     Page<Board> findAllBoardByUser(User user, Pageable pageable);
-}
+    public void addViewId(Long boardId);
+    }

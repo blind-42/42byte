@@ -2,6 +2,7 @@ package com.blind.api.domain.comment.service;
 
 import com.blind.api.domain.comment.dto.CommentMyDTO;
 import com.blind.api.domain.comment.dto.CommentResponseDTO;
+import com.blind.api.domain.like.domain.CommentLike;
 import com.blind.api.domain.post.v2.domain.Post;
 import com.blind.api.domain.comment.domain.Comment;
 import com.blind.api.domain.comment.repository.CommentRepository;
@@ -143,5 +144,11 @@ public class CommentServiceImpl implements CommentService{
             comment.setIsDel(0);
         else if (comment.getBlameCnt() >= 5)
             comment.setBlameCnt(0L);
+    }
+
+    @Override
+    @Transactional
+    public Page<Comment> findLikeCommentByUserId(Long userId, Pageable pageable){
+        return commentRepository.findAllCommentLikeByUserId(userId, pageable);
     }
 }

@@ -42,7 +42,10 @@ public interface PostController {
     PostResponseDTO findPostByUserId (@SortDefault.SortDefaults({@SortDefault(sort = "id", direction = Sort.Direction.DESC)}) Pageable pageable,
                                       HttpServletRequest request);
 
-    PostDetailDTO findPostDetailByPostId (@RequestParam("boardId") @Positive (message = "{invalid.request}") Long boardId,
-                                          @RequestParam("postId") @Positive (message = "{invalid.request}") Long postId,
+    PostDetailDTO findPostDetailByPostId (@RequestParam("postId") @Positive (message = "{invalid.request}") Long postId,
                                           HttpServletRequest request);
-}
+
+    PostResponseDTO findHotPost(@SortDefault.SortDefaults({
+            @SortDefault(sort = "hotDateTime", direction = Sort.Direction.DESC)})
+                                        Pageable pageable, HttpServletRequest request);
+    }

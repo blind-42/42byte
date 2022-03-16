@@ -6,6 +6,8 @@ import com.blind.api.domain.comment.dto.*;
 import com.blind.api.domain.comment.service.CommentService;
 import com.blind.api.domain.like.domain.CommentLike;
 import com.blind.api.domain.like.service.LikeService;
+import com.blind.api.domain.notification.domain.Noti;
+import com.blind.api.domain.notification.service.NotificationService;
 import com.blind.api.domain.post.v2.domain.Post;
 import com.blind.api.domain.post.v2.service.PostService;
 import com.blind.api.domain.security.jwt.v1.service.TokenService;
@@ -31,6 +33,8 @@ public class CommentControllerImpl implements CommentController {
     private final CommentService commentService;
     private final PostService postService;
     private final TokenService tokenService;
+    private final UserService userService;
+    private final NotificationService notificationService;
 
     @RequestMapping(value={"/comment"}, method=RequestMethod.POST)
     public void saveComment(Long boardId, Long postId, CommentRequestDTO requestDTO, HttpServletRequest request){
@@ -38,8 +42,18 @@ public class CommentControllerImpl implements CommentController {
         Post post = postService.findById(postId);
         if (post.getCommentCnt() >= 1000)
             throw new BusinessException("{invalid.request}");
+        User author = userService.findById(post.getAuthorId());
         commentService.save(boardId,post, user, requestDTO.getContent());
         postService.updateComment(postId, 1L);
+        if (author.getId() != user.getId()) {
+            if (author.getIsChecked() == false) {
+                Noti noti = notificationService.findByUserAndPost(author, post);
+                if (noti != null)
+                    notificationService.delete(noti.getId());
+            }
+            notificationService.save(author, post, "post", post.getTitle(), requestDTO.getContent());
+            userService.setCheck(author);
+        }
     }
 
     @RequestMapping(value={"/comment"}, method = RequestMethod.PUT)

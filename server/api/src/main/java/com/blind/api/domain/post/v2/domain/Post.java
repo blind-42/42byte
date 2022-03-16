@@ -12,6 +12,7 @@ import org.hibernate.annotations.DynamicInsert;
 import org.springframework.util.Assert;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
@@ -23,6 +24,9 @@ public class Post extends BaseTimeEntity {
     @GeneratedValue (strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Long id;
+
+    @Column(name = "view_id")
+    private Long viewId;
 
     @NotNull
     @Column(name = "author_id", length = 20, updatable = false)
@@ -57,17 +61,21 @@ public class Post extends BaseTimeEntity {
     @Column(name = "is_image")
     private Boolean isImage;
 
+    @Column(name = "hot_update_date")
+    private LocalDateTime hotDateTime;
+
     @ManyToOne
     @JsonIgnore
     @JoinColumn(name = "board_id")
     private Board board;
 
     @Builder
-    public Post(Board board, String title, String content, Long authorId, Boolean isImage) {
+    public Post(Board board, String title, String content, Long authorId, Long viewId, Boolean isImage) {
         this.board = board;
         this.title = title;
         this.content = content;
         this.authorId = authorId;
+        this.viewId = viewId;
         this.isImage = isImage;
     }
 }

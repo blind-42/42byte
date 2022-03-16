@@ -1,6 +1,7 @@
 package com.blind.api.web.management.handler;
 
 import com.blind.api.domain.security.jwt.v1.service.TokenService;
+import com.blind.api.domain.user.v2.domain.RoleType;
 import com.blind.api.domain.user.v2.domain.User;
 import com.blind.api.global.utils.ApplicationYmlRead;
 import com.blind.api.global.utils.CookieUtil;
@@ -61,7 +62,7 @@ public class AdminAccessHandler {
             session.setAttribute("user", user);
         }
         User sessionUser = (User)session.getAttribute("user");
-        if (sessionUser == null) // || sessionUser.getRoleType() != RoleType.ADMIN)
+        if (sessionUser == null || sessionUser.getRoleType() != RoleType.ADMIN)
             return redirect(response);
         return method.invoke(target,args);
     }

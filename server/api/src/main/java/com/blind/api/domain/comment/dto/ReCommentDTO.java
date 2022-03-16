@@ -1,6 +1,7 @@
 package com.blind.api.domain.comment.dto;
 
 import com.blind.api.domain.comment.domain.Comment;
+import com.blind.api.global.utils.HashUtil;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Builder;
 import lombok.Getter;
@@ -32,7 +33,7 @@ public class ReCommentDTO {
         return ReCommentDTO.builder()
                 .id(comment.getId())
                 .postId(comment.getPost().getId())
-                .authorId(comment.getAuthorId())
+                .authorId(HashUtil.getHashId(comment.getAuthorId(), comment.getPost().getId()))
                 .rootCommentId(comment.getRootCommentId())
                 .targetAuthorId(comment.getTargetAuthorId())
                 .content(comment.getContent())
