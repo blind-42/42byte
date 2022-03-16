@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 export const AppContainer = styled.div`
   display: grid;
-  grid-template-rows: 1fr 3rem;
+  grid-template-rows: 1fr 4rem;
   justify-items: center;
   background: #6bb8f0;
   height: 100vh;
@@ -116,10 +116,10 @@ export const ContentFooterWrap = styled.div`
   align-items: stretch;
   grid-template-rows: 90vh;
   ${({ theme }) => theme.media.tablet`
-		grid-template-rows: 67vh 8vh;
+		grid-template-rows: 65vh 10vh;
 	`}
   ${({ theme }) => theme.media.desktop`
-		grid-template-rows: 76vh 9vh;
+		grid-template-rows: 75vh 10vh;
 	`}
 `;
 

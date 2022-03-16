@@ -6,13 +6,12 @@ export const FooterWrap = styled.div`
   flex-direction: column;
   justify-content: space-evenly;
   align-items: center;
-  height: 10vh;
   background: #c4c4c4;
   ${({ theme }) => theme.media.tablet`
-		height: 8vh;
+		height: 5rem;
 	`}
   ${({ theme }) => theme.media.desktop`
-		height: 8vh;
+		height: 5rem;
 	`}
 `;
 
@@ -31,10 +30,6 @@ export const GitLink = styled.div`
       width: 2.3rem;
     }
   }
-  // div:last-child {
-  // 	padding-top: 0.3rem;
-  // 	font-size: 2.2rem;
-  // }
   ${({ theme }) => theme.media.tablet`
 		div {
 			margin: 0 0.3rem;
@@ -45,10 +40,6 @@ export const GitLink = styled.div`
 				width: 1.3rem;
 			}
 		}
-		// div:last-child {
-		// 	padding-top: 0.1rem;
-		// 	font-size: 1.13rem;
-		// }
 	`}
   ${({ theme }) => theme.media.desktop`
 		div {
@@ -60,29 +51,25 @@ export const GitLink = styled.div`
 				width: 1.3rem;
 			}
 		}
-		// div:last-child {
-		// 	padding-top: 0.1rem;
-		// 	font-size: 1.13rem;
-		// }
 	`}
 `;
 
 export const Names = styled.div`
   font-size: 0.9rem;
   ${({ theme }) => theme.media.tablet`
-		font-size: 0.6rem;
+		font-size: 0.7rem;
 	`}
   ${({ theme }) => theme.media.desktop`
-		font-size: 0.6rem;
+		font-size: 0.7rem;
 	`}
 `;
 
 export const Copyright = styled.div`
   font-size: 0.9rem;
   ${({ theme }) => theme.media.tablet`
-		font-size: 0.6rem;
+		font-size: 0.7rem;
 	`}
   ${({ theme }) => theme.media.desktop`
-		font-size: 0.6rem;
+		font-size: 0.7rem;
 	`}
 `;
