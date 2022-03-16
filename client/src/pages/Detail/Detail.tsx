@@ -84,8 +84,7 @@ export default function Detail() {
   const [boxState, setBoxState] = useState(isLiked);
   const [openEditor, setOpenEditor] = useState(false);
   const currentUrl = window.location.href;
-  const boardUrl = currentUrl.split('&postId=')[0].split('boardId=')[1];
-  const postUrl = currentUrl.split('&postId=')[1];
+  const postUrl = currentUrl.split('postId=')[1];
   const shortDate = createdDate?.slice(0, 16).replace('T', ' ');
   const navigate = useNavigate();
   const scrollRef = useRef<HTMLDivElement>(null);
@@ -103,13 +102,11 @@ export default function Detail() {
   );
   const results = useQueries([
     {
-      queryKey: ['detail_key', boardUrl, postUrl, boxState],
+      queryKey: ['detail_key', postUrl, boxState],
       queryFn: () => {
-        instance
-          .get(`/post?boardId=${boardUrl}&postId=${postUrl}`)
-          .then((res) => {
-            setDetailData(res.data);
-          });
+        instance.get(`/post?postId=${postUrl}`).then((res) => {
+          setDetailData(res.data);
+        });
       },
       retry: 0,
       refetchOnWindowFocus: false,
@@ -118,13 +115,11 @@ export default function Detail() {
     {
       queryKey: ['comment_key', postUrl],
       queryFn: () => {
-        instance
-          .get(`/comment?boardId=${boardUrl}&postId=${postUrl}`)
-          .then((res) => {
-            setCommentData(res.data.contents);
-            setCommentsUserList(makeCommentUserList(res.data.contents));
-            setCommentTotalCnt(res.data.total);
-          });
+        instance.get(`/comment?postId=${postUrl}`).then((res) => {
+          setCommentData(res.data.contents);
+          setCommentsUserList(makeCommentUserList(res.data.contents));
+          setCommentTotalCnt(res.data.total);
+        });
       },
       retry: 0,
       refetchOnWindowFocus: false,

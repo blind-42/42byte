@@ -98,11 +98,18 @@ export interface CommentPre {
   createdDate: string;
   modifiedDate: string;
 }
-
 export interface UserData {
   createdDate: string;
   modifiedDate: string;
   hashId: string;
   profileImageUrl: string;
+  isChecked: boolean;
   roleType: string;
+}
+export interface NotificationData {
+  id: number;
+  postId: number;
+  contentType: string;
+  title: string;
+  content: string;
 }

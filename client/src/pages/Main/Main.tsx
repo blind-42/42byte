@@ -28,6 +28,7 @@ export default function Main() {
     modifiedDate: '',
     hashId: '',
     profileImageUrl: '',
+    isChecked: false,
     roleType: '',
   });
   const { roleType } = userData;
@@ -38,7 +39,7 @@ export default function Main() {
   });
   const { contents, page, pages } = boardList;
   const { isFetching, isLoading, error, data } = useQuery(
-    ['menubar_key'],
+    ['main_key'],
     () => {
       instance.get('/board/list').then((res) => setBoardList(res.data));
     },
