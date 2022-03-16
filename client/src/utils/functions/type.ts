@@ -21,6 +21,7 @@ export interface BoardData {
 
 export interface PostPre {
   id: number;
+  viewId: number;
   title: string;
   commentCnt: number;
   viewCnt: number;
@@ -39,6 +40,7 @@ export interface PostData {
   content: string;
   createdDate: string;
   id: number;
+  viewId: number;
   isLiked: boolean;
   isNotice: boolean;
   isUsers: boolean;

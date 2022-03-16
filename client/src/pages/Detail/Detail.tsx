@@ -52,6 +52,7 @@ export default function Detail() {
     content: '',
     createdDate: '',
     id: 0,
+    viewId: 0,
     isLiked: false,
     isNotice: false,
     isUsers: false,
@@ -67,6 +68,7 @@ export default function Detail() {
     content,
     createdDate,
     id,
+    viewId,
     isLiked,
     isNotice,
     isUsers,
@@ -252,7 +254,7 @@ export default function Detail() {
               <div onClick={() => navigate(`/board?boardId=${boardId}&page=1`)}>
                 {boardName}
               </div>
-              <div>&nbsp;&nbsp;&#10095;&nbsp;&nbsp;#{id}</div>
+              <div>&nbsp;&nbsp;&#10095;&nbsp;&nbsp;#{viewId}</div>
             </PageName>
             <Squares>
               <div>&#9866;</div>
