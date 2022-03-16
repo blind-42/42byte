@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 export const HeaderContainer = styled.div`
   z-index: 2;
-  height: 3rem;
+  height: 4rem;
   width: 100vw;
   display: flex;
   justify-content: space-between;
@@ -34,51 +34,49 @@ export const MenubarButton = styled.div`
   border-left: solid 2px #fff;
   border-right: solid 2px #000;
   border-bottom: solid 2px #000;
-  width: 6rem;
-  font-size: 1rem;
+  padding: 0 1rem;
+  font-size: 1.1rem;
   font-family: 'Press Start 2P', cursive;
   :hover {
     background: #d5d5d5;
   }
   ${({ theme }) => theme.media.tablet`
-		width: 5.5rem;
+		padding: 0 0.8rem;
 		font-size: 0.8rem;
 	`}
   ${({ theme }) => theme.media.desktop`
-		width: 5rem;
+		padding: 0 0.8rem;
 		font-size: 0.8rem;
 	`}
 `;
 
-export const Logo = styled.div`
+export const UtilButton = styled.div`
+  cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
-  margin: 0 3px;
-  padding: 0 3px;
-  border-right: solid 2px #929191;
-  border-left: solid 2px #929191;
+  margin-left: 3px;
+  padding: 3px;
+  border-top: solid 2px #fff;
+  border-left: solid 2px #fff;
+  border-right: solid 2px #000;
+  border-bottom: solid 2px #000;
+  padding: 0 0.6rem;
   img {
-    border-top: solid 2px #fff;
-    border-left: solid 2px #fff;
-    border-right: solid 2px #000;
-    border-bottom: solid 2px #000;
-    height: 2.5rem;
-    padding: 0 1rem;
+    height: 2rem;
   }
-  img:hover {
+  :hover {
     background: #d5d5d5;
   }
   ${({ theme }) => theme.media.tablet`
 		img {
-			height: 2rem;
-			padding: 0 0.8rem;
+			height: 1.3rem;
 		}
 	`}
   ${({ theme }) => theme.media.desktop`
+		padding: 0 0.6rem;
 		img {
-			height: 2rem;
-			padding: 0 0.8rem;
+			height: 1.4rem;
 		}
 	`}
 `;
@@ -91,15 +89,15 @@ export const TimeBox = styled.div`
   border-left: solid 2px #000;
   border-right: solid 2px #fff;
   border-bottom: solid 2px #fff;
-  width: 7rem;
-  font-size: 1rem;
+  padding: 0 1rem;
+  font-size: 1.1rem;
   font-family: 'Press Start 2P', cursive;
   ${({ theme }) => theme.media.tablet`
-		width: 6rem;
+		padding: 0 0.8rem;
 		font-size: 0.8rem;
 	`}
   ${({ theme }) => theme.media.desktop`
-		width: 5.5rem;
+		padding: 0 0.8rem;
 		font-size: 0.8rem;
 	`}
 `;

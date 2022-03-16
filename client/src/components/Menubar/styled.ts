@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 export const MenubarContainer = styled.div`
   position: absolute;
-  bottom: 3rem;
+  bottom: 4rem;
   left: 0;
   padding: 3px;
   display: flex;
