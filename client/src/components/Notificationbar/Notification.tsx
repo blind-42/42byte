@@ -7,12 +7,8 @@ import { NotificationWrap, ContentWrap, DeleteButton } from './styled';
 
 type GreetingProps = {
   notificationData: NotificationData;
-  notificationHandler: () => void;
 };
-export default function Notification({
-  notificationData,
-  notificationHandler,
-}: GreetingProps) {
+export default function Notification({ notificationData }: GreetingProps) {
   const { id, postId, contentType, title, content } = notificationData;
   const mutationDelete = useMutation(({ path }: { path: string }) =>
     instance.delete(path),
@@ -22,9 +18,7 @@ export default function Notification({
     mutationDelete.mutate(
       { path: `/notification?id=${id}` },
       {
-        onSuccess: () => {
-          notificationHandler();
-        },
+        onSuccess: () => {},
         onError: (err) => {
           console.log(err);
         },
@@ -47,7 +41,7 @@ export default function Notification({
           ) : (
             <div>"{stringLimit(title, 6)}" 댓글에 새로운 댓글이 있습니다.</div>
           )}
-          <div>{stringLimit(content, 10)}</div>
+          <div>{stringLimit(content, 15)}</div>
         </ContentWrap>
         <DeleteButton onClick={deleteNotificationHandler}>&times;</DeleteButton>
       </NotificationWrap>
