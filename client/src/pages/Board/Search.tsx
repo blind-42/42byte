@@ -27,6 +27,7 @@ import {
   WritingButton,
   PostWrap,
   ContentWrap,
+  NoPost,
 } from './styled';
 
 export default function Board() {
@@ -108,27 +109,6 @@ export default function Board() {
           </TopBar>
           <ContentFooterWrap>
             <UtilPostWrap>
-              <UtilWrap>
-                <Search>
-                  <form name="searchForm" onSubmit={searchHandeler}>
-                    <input
-                      type="text"
-                      onChange={keywordHandler}
-                      placeholder="검색어를 입력하세요"
-                    />
-                    <button>
-                      <div>
-                        <GoSearch />
-                      </div>
-                    </button>
-                  </form>
-                </Search>
-                <WritingButton>
-                  <Link to={`/writing?=boardId=${id}`}>
-                    <input type="button" value="글쓰기" />
-                  </Link>
-                </WritingButton>
-              </UtilWrap>
               <PostContainer>
                 <Category ref={innerScrollRef}>
                   <div></div>
@@ -138,12 +118,40 @@ export default function Board() {
                   <div>작성일</div>
                 </Category>
                 <ContentWrap>
-                  <PostWrap>
-                    {contents.map((el: PostPre, idx) => {
-                      return <PostPreview key={idx} postData={el} />;
-                    })}
-                  </PostWrap>
+                  {!contents.length ? (
+                    <NoPost>
+                      <img src="images/ghostWithPencil.png" />
+                      검색 결과가 없습니다.
+                    </NoPost>
+                  ) : (
+                    <PostWrap>
+                      {contents.map((el: PostPre, idx) => {
+                        return <PostPreview key={idx} postData={el} />;
+                      })}
+                    </PostWrap>
+                  )}
                 </ContentWrap>
+                <UtilWrap>
+                  <Search>
+                    <form name="searchForm" onSubmit={searchHandeler}>
+                      <input
+                        type="text"
+                        onChange={keywordHandler}
+                        placeholder="검색어를 입력하세요"
+                      />
+                      <button>
+                        <div>
+                          <GoSearch />
+                        </div>
+                      </button>
+                    </form>
+                  </Search>
+                  <WritingButton>
+                    <Link to={`/writing?=boardId=${id}`}>
+                      <input type="button" value="글쓰기" />
+                    </Link>
+                  </WritingButton>
+                </UtilWrap>
                 <PageNation
                   curPage={page}
                   totalPages={pages}

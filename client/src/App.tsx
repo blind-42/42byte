@@ -4,7 +4,7 @@ import { RecoilRoot } from 'recoil';
 import Main from './pages/Main/Main';
 import Login from './pages/Login/Login';
 import Board from './pages/Board/Board';
-import Search from './pages/Search/Search';
+import Search from './pages/Board/Search';
 import Writing from './pages/Writing/Writing';
 import Detail from './pages/Detail/Detail';
 import Mypage from './pages/Mypage/Mypage';
