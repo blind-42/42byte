@@ -9,12 +9,12 @@ export const UtilWrap = styled.div`
   display: flex;
   align-items: center;
   justify-content: end;
-  margin: 6px 3px;
+  margin: 3px 3px 0 0;
   ${({ theme }) => theme.media.tablet`
-		margin: 6px 3px 0 0;
+		margin: 3px 3px 6px 0;
 	`}
   ${({ theme }) => theme.media.desktop`
-		margin: 6px 3px 0 0;
+			margin: 3px 3px 6px 0;
 	`}
 `;
 
