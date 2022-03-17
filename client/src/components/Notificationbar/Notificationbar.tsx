@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useQueryClient, useQuery, useMutation } from 'react-query';
 import Notification from './Notification';
 import { NotificationData } from 'utils/functions/type';
@@ -18,10 +18,16 @@ export default function Notificationbar({
   notificationHandler,
 }: GreetingProps) {
   const [notificationData, setNotificationData] = useState([]);
+
+  useEffect(() => {
+    if (notificationData) {
+      window.addEventListener('click', notificationHandler, { once: true });
+    }
+  });
+
   const { isFetching, isLoading, error, data } = useQuery(
     ['notification_key'],
     () => {
-      console.log('1');
       instance
         .get('/notification')
         .then((res) => setNotificationData(res.data));
@@ -33,20 +39,31 @@ export default function Notificationbar({
     },
   );
 
+  const removeNoticeListkHandler = () => {
+    window.removeEventListener('click', notificationHandler);
+    notificationHandler();
+  };
+
   return (
     <>
       <NotificationContainer>
-        <Topbar>
-          <div onClick={notificationHandler}>&times;</div>
+        <Topbar onClick={(e) => e.stopPropagation()}>
+          <div onClick={removeNoticeListkHandler}>&times;</div>
         </Topbar>
         {notificationData.length === 0 ? (
-          <EmptyNotificationMessage>
+          <EmptyNotificationMessage onClick={(e) => e.stopPropagation()}>
             새로운 알림이 없습니다!
           </EmptyNotificationMessage>
         ) : (
           <NotificationList>
             {notificationData.map((el: NotificationData, idx) => {
-              return <Notification key={idx} notificationData={el} />;
+              return (
+                <Notification
+                  key={idx}
+                  notificationData={el}
+                  removeNoticeListkHandler={removeNoticeListkHandler}
+                />
+              );
             })}
           </NotificationList>
         )}
