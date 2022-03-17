@@ -30,7 +30,7 @@ export const MainIconWrap = styled.div`
   top: 2rem;
   left: 2rem;
   display: grid;
-  grid-template-rows: repeat(3, auto);
+  grid-template-rows: repeat(6, auto);
   grid-auto-flow: column;
   row-gap: 1rem;
   column-gap: 1rem;
@@ -39,12 +39,12 @@ export const MainIconWrap = styled.div`
   ${({ theme }) => theme.media.tablet`
 		top: 1rem;
 		left: 1rem;
-		grid-template-rows: repeat(4, auto);
+		grid-template-rows: repeat(6, auto);
 	`}
   ${({ theme }) => theme.media.desktop`
 		top: 1rem;
 		left: 1rem;
-		grid-template-rows: repeat(4, auto);
+		grid-template-rows: repeat(6, auto);
 	`}
 `;
 
