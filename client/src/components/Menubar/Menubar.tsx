@@ -81,7 +81,7 @@ export default function Menubar({ menubarHandler }: GreetingProps) {
       {openLoginModal && (
         <LoginModal openLoginModalHandler={openLoginModalHandler} />
       )}
-      <MenubarContainer>
+      <MenubarContainer onClick={(e) => e.stopPropagation()}>
         <Topbar>
           <div onClick={menubarHandler}>&times;</div>
         </Topbar>
