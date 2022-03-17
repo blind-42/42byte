@@ -26,7 +26,6 @@
     <td><img src="https://user-images.githubusercontent.com/90084199/156929132-d7303470-ebb3-42f8-86fe-a6b15ec839b9.png" width=100 height=100></td>
     <td><img src="https://user-images.githubusercontent.com/90181905/156929812-8d1b6078-9b2b-4bd5-9da3-7aa868e067e0.png" width=100 height=100></td>
     <td><img src="https://user-images.githubusercontent.com/90084199/158573057-c5f9532d-1f5d-49d3-b12d-770ea6152782.png" width=100 height=100></td>
-/td>
   </tr>
   <tr>
     <td align=center><a href="https://github.com/pearpearB">@jabae</a></td>
