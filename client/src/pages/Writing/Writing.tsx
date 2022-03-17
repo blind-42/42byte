@@ -54,19 +54,24 @@ export default function Writing() {
     setBoard(event.target.value);
   };
 
+  const exitButtnClickHandler = (event: React.MouseEvent<HTMLDivElement>) => {
+    if (window.confirm('지금 나가시면 작성된 사항이 저장되지 않습니다!')) {
+      navigate(-1);
+    }
+  };
+
   if (error) return <Error />;
 
   return (
     <>
       <AppContainer>
-        <Header />
         <PageContainer>
           <TopBar>
             <PageName>글쓰기</PageName>
             <Squares>
               <div>&#9866;</div>
               <div>&#10064;</div>
-              <div onClick={() => navigate(-1)}>&times;</div>
+              <div onClick={exitButtnClickHandler}>&times;</div>
             </Squares>
           </TopBar>
           <ContentWrap>
@@ -87,6 +92,7 @@ export default function Writing() {
             <PostEditor boardId={Number(board)} />
           </ContentWrap>
         </PageContainer>
+        <Header />
       </AppContainer>
     </>
   );

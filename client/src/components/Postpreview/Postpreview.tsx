@@ -12,6 +12,7 @@ type GreetingProps = {
 function PostPreview({ postData }: GreetingProps) {
   const {
     id,
+    viewId,
     title,
     commentCnt,
     viewCnt,
@@ -30,9 +31,9 @@ function PostPreview({ postData }: GreetingProps) {
 
   return (
     <>
-      <Link to={`/detail?boardId=1&postId=${id}`}>
+      <Link to={`/detail?=postId=${id}`}>
         <PreviewContainer state={isNotice}>
-          {isNotice ? <NoticeMark>공지</NoticeMark> : <div>{id}</div>}
+          {isNotice ? <NoticeMark>공지</NoticeMark> : <div>{viewId}</div>}
           <div>
             {isMobile ? (
               <h3>{stringLimit(title, 12)}</h3>

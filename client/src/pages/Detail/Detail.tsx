@@ -38,43 +38,44 @@ import {
   CommentListWrap,
   FLine,
 } from './styled';
+import DeleteModal from 'components/Modal/DeleteModal';
 
 interface CommentTotal {
   contents: CommentData;
   total: number;
 }
 
-function Detail() {
+export default function Detail() {
   const [detailData, setDetailData] = useState<PostData>({
     boardId: 0,
     boardName: '',
-    commentCnt: 0,
     content: '',
     createdDate: '',
     id: 0,
+    viewId: 0,
     isLiked: false,
     isNotice: false,
     isUsers: false,
     likeCnt: 0,
     modifiedDate: '',
     title: '',
-    type: '',
+    roleType: '',
     viewCnt: 0,
   });
   const {
     boardId,
     boardName,
-    commentCnt,
     content,
     createdDate,
     id,
+    viewId,
     isLiked,
     isNotice,
     isUsers,
     likeCnt,
     modifiedDate,
     title,
-    type,
+    roleType,
     viewCnt,
   } = detailData;
   const [commentData, setCommentData] = useState([]);
@@ -83,8 +84,7 @@ function Detail() {
   const [boxState, setBoxState] = useState(isLiked);
   const [openEditor, setOpenEditor] = useState(false);
   const currentUrl = window.location.href;
-  const boardUrl = currentUrl.split('&postId=')[0].split('boardId=')[1];
-  const postUrl = currentUrl.split('&postId=')[1];
+  const postUrl = currentUrl.split('postId=')[1];
   const shortDate = createdDate?.slice(0, 16).replace('T', ' ');
   const navigate = useNavigate();
   const scrollRef = useRef<HTMLDivElement>(null);
@@ -102,13 +102,11 @@ function Detail() {
   );
   const results = useQueries([
     {
-      queryKey: ['detail_key', boardUrl, postUrl, boxState],
+      queryKey: ['detail_key', postUrl, boxState],
       queryFn: () => {
-        instance
-          .get(`/post?boardId=${boardUrl}&postId=${postUrl}`)
-          .then((res) => {
-            setDetailData(res.data);
-          });
+        instance.get(`/post?postId=${postUrl}`).then((res) => {
+          setDetailData(res.data);
+        });
       },
       retry: 0,
       refetchOnWindowFocus: false,
@@ -117,13 +115,11 @@ function Detail() {
     {
       queryKey: ['comment_key', postUrl],
       queryFn: () => {
-        instance
-          .get(`/comment?boardId=${boardUrl}&postId=${postUrl}`)
-          .then((res) => {
-            setCommentData(res.data.contents);
-            setCommentsUserList(makeCommentUserList(res.data.contents));
-            setCommentTotalCnt(res.data.total);
-          });
+        instance.get(`/comment?postId=${postUrl}`).then((res) => {
+          setCommentData(res.data.contents);
+          setCommentsUserList(makeCommentUserList(res.data.contents));
+          setCommentTotalCnt(res.data.total);
+        });
       },
       retry: 0,
       refetchOnWindowFocus: false,
@@ -232,24 +228,33 @@ function Detail() {
     );
   };
 
+  const exitButtnClickHandler = (event: React.MouseEvent<HTMLDivElement>) => {
+    if (openEditor) {
+      if (window.confirm('지금 나가시면 수정된 사항이 저장되지 않습니다!')) {
+        navigate(-1);
+      }
+    } else {
+      navigate(-1);
+    }
+  };
+
   if (error) return <Error />;
 
   return (
     <>
       <AppContainer>
-        <Header />
         <PageContainer>
           <TopBar>
             <PageName>
               <div onClick={() => navigate(`/board?boardId=${boardId}&page=1`)}>
                 {boardName}
               </div>
-              <div>&nbsp;&nbsp;&#10095;&nbsp;&nbsp;#{id}</div>
+              <div>&nbsp;&nbsp;&#10095;&nbsp;&nbsp;#{viewId}</div>
             </PageName>
             <Squares>
               <div>&#9866;</div>
               <div>&#10064;</div>
-              <div onClick={() => navigate(-1)}>&times;</div>
+              <div onClick={exitButtnClickHandler}>&times;</div>
             </Squares>
           </TopBar>
           <ContentFooterWrap>
@@ -257,7 +262,6 @@ function Detail() {
               <Loading />
             ) : (
               <>
-                {/* <PostContainer> */}
                 {openEditor ? (
                   <PostEditor
                     state={'edit'}
@@ -284,7 +288,7 @@ function Detail() {
                           isPost={true}
                           isUsers={isUsers}
                           isNotice={isNotice}
-                          roleType={type}
+                          roleType={roleType}
                           modifyHandler={modifyPostHandler}
                           deleteHandler={deletePostHandler}
                           reportHandler={reportHandler}
@@ -316,6 +320,7 @@ function Detail() {
                             return (
                               <Comments
                                 key={el.id}
+                                roleType={roleType}
                                 comment={el}
                                 commentsUserList={commentsUserList}
                               />
@@ -332,9 +337,8 @@ function Detail() {
             )}
           </ContentFooterWrap>
         </PageContainer>
+        <Header />
       </AppContainer>
     </>
   );
 }
-
-export default Detail;

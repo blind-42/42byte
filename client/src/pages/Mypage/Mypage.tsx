@@ -78,7 +78,6 @@ export default function Mypage() {
   return (
     <>
       <AppContainer ref={outerScrollRef}>
-        <Header />
         <PageContainer>
           <TopBar>
             <PageName>
@@ -98,22 +97,19 @@ export default function Mypage() {
                 <PostMenu state={pageName}>
                   <button onClick={() => switchToMenu('post')}>
                     <img src="images/my_post.png" alt="postimg" />
-                    <br />
-                    내가 쓴 글
+                    <div>내가 쓴 글</div>
                   </button>
                 </PostMenu>
                 <CommentMenu state={pageName}>
                   <button onClick={() => switchToMenu('comment')}>
                     <img src="images/my_cmt.png" alt="cmtimg" />
-                    <br />
-                    내가 쓴 댓글
+                    <div>내가 쓴 댓글</div>
                   </button>
                 </CommentMenu>
                 <LikeMenu state={pageName}>
                   <button onClick={() => switchToMenu('post/like')}>
                     <img src="images/my_like.png" alt="likeimg" />
-                    <br />
-                    좋아요한 글
+                    <div>좋아요한 글</div>
                   </button>
                 </LikeMenu>
               </MenuWrap>
@@ -160,6 +156,7 @@ export default function Mypage() {
             {!isMobile && <Footer />}
           </ContentFooterWrap>
         </PageContainer>
+        <Header />
       </AppContainer>
     </>
   );

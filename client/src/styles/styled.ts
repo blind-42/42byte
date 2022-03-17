@@ -2,10 +2,13 @@ import styled from 'styled-components';
 
 export const AppContainer = styled.div`
   display: grid;
-  grid-template-rows: 1fr 3rem;
+  grid-template-rows: 1fr 4rem;
   justify-items: center;
   background: #6bb8f0;
   height: 100vh;
+  input[type='button'] {
+    -webkit-appearance: none;
+  }
   ${({ theme }) => theme.media.tablet`
 		grid-template-rows: 1fr 2.5rem; 
 	`}
@@ -15,15 +18,11 @@ export const AppContainer = styled.div`
 `;
 
 export const PageContainer = styled.div`
-  height: 100vh;
   width: 100vw;
   background: #c4c4c4;
   padding: 3px;
   ${({ theme }) => theme.media.tablet`
-		position: fixed;
-		top: 50%;
-		left: 50%;
-		transform: translate(-50%, -53%);
+		margin: auto 0;
 		width: 90vw;
 		height: 80vh;
 		border-top: solid 2px #fff;
@@ -32,10 +31,7 @@ export const PageContainer = styled.div`
 		border-bottom: solid 2px #000;
 	`}
   ${({ theme }) => theme.media.desktop`
-		position: fixed;
-		top: 50%;
-		left: 50%;
-		transform: translate(-50%, -53%);
+		margin: auto 0;
 		width: 90vh;
 		height: 90vh;
 		border-top: solid 2px #fff;
@@ -120,10 +116,10 @@ export const ContentFooterWrap = styled.div`
   align-items: stretch;
   grid-template-rows: 90vh;
   ${({ theme }) => theme.media.tablet`
-		grid-template-rows: 67vh 8vh;
+		grid-template-rows: 65vh 10vh;
 	`}
   ${({ theme }) => theme.media.desktop`
-		grid-template-rows: 76vh 9vh;
+		grid-template-rows: 75vh 10vh;
 	`}
 `;
 

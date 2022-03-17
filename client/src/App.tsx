@@ -4,11 +4,10 @@ import { RecoilRoot } from 'recoil';
 import Main from './pages/Main/Main';
 import Login from './pages/Login/Login';
 import Board from './pages/Board/Board';
-import Search from './pages/Search/Search';
+import Search from './pages/Board/Search';
 import Writing from './pages/Writing/Writing';
 import Detail from './pages/Detail/Detail';
 import Mypage from './pages/Mypage/Mypage';
-import Notice from './pages/Notice/Notice';
 import Error from './pages/Error/Error';
 import * as ROUTES from './utils/functions/routes';
 import { IsUserRedirect, PrivateRoute } from './utils/functions/routerRestrict';
@@ -42,9 +41,6 @@ export default function App() {
               </Route>
               <Route path={ROUTES.MYPAGE} element={<PrivateRoute />}>
                 <Route path="/mypage" element={<Mypage />} />
-              </Route>
-              <Route path={ROUTES.NOTICE} element={<PrivateRoute />}>
-                <Route path="/notice" element={<Notice />} />
               </Route>
               <Route path="/error" element={<Error />} />
             </Routes>

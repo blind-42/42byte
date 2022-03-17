@@ -10,7 +10,7 @@
 
 <!-- Title -->
 <div align=center>
-  <p> 간단한 소개글 </p>
+  <p> 42좋은 42사람들을 위한 익명 커뮤니티 </p>
   배포주소 : https://42byte.kr
 <!-- Content -->
   
@@ -25,7 +25,7 @@
     <td><img src="https://user-images.githubusercontent.com/90084199/156928743-e23197c1-b902-4a22-b617-0c15b02f9802.gif" width=100 height=100></td>
     <td><img src="https://user-images.githubusercontent.com/90084199/156929132-d7303470-ebb3-42f8-86fe-a6b15ec839b9.png" width=100 height=100></td>
     <td><img src="https://user-images.githubusercontent.com/90181905/156929812-8d1b6078-9b2b-4bd5-9da3-7aa868e067e0.png" width=100 height=100></td>
-    <td>그릴려고 마음먹는 중</td>
+    <td><img src="https://user-images.githubusercontent.com/90084199/158573057-c5f9532d-1f5d-49d3-b12d-770ea6152782.png" width=100 height=100></td>
   </tr>
   <tr>
     <td align=center><a href="https://github.com/pearpearB">@jabae</a></td>
@@ -41,10 +41,12 @@
 <p> 
   <img src="https://img.shields.io/badge/html5-E34F26?style=for-the-badge&logo=html5&logoColor=white"> 
   <img src="https://img.shields.io/badge/css-1572B6?style=for-the-badge&logo=css3&logoColor=white"> 
-  <img src="https://img.shields.io/badge/javascript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black"> 
+  <img src="https://img.shields.io/badge/styled components-C46A87?style=for-the-badge&logo=styledcomponents&logoColor=white"> 
+  <img src="https://img.shields.io/badge/javascript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black">
+  <img src="https://img.shields.io/badge/typescript-3D63B4?style=for-the-badge&logo=typescript&logoColor=white"> 
+  <br>
   <img src="https://img.shields.io/badge/jquery-0769AD?style=for-the-badge&logo=jquery&logoColor=white">
   <img src="https://img.shields.io/badge/node.js-339933?style=for-the-badge&logo=Node.js&logoColor=white">
-  <br>
   <img src="https://img.shields.io/badge/java-007396?style=for-the-badge&logo=java&logoColor=white"> 
   <img src="https://img.shields.io/badge/spring-6DB33F?style=for-the-badge&logo=spring&logoColor=white">   
   <img src="https://img.shields.io/badge/apache tomcat-f9de85?style=for-the-badge&logo=apachetomcat&logoColor=white">

@@ -1,4 +1,5 @@
 import { useState, useRef, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import S3 from 'react-aws-s3-typescript';
 import { v4 as uuidv4 } from 'uuid';
 import { useMediaQuery } from 'react-responsive';
@@ -30,6 +31,7 @@ export default function PostEditor({
   const [content, setContent] = useState<string>('');
   const [isImage, setIsImage] = useState<number>(0);
   const editorRef = useRef<Editor>(null);
+  const navigate = useNavigate();
   const currentUrl = window.location.href;
   const urlId = currentUrl.split('&postId=')[1];
 
@@ -108,9 +110,10 @@ export default function PostEditor({
           content: content,
           isImage: isImage,
         })
-        .then(
-          (res) =>
-            (window.location.href = `/detail?boardId=${boardId}&postId=${res.data.id}`),
+        .then((res) =>
+          navigate(`/detail?boardId=${boardId}&postId=${res.data.id}`, {
+            replace: true,
+          }),
         )
         .catch((err) => console.log(err));
     } else {

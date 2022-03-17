@@ -21,6 +21,7 @@ export interface BoardData {
 
 export interface PostPre {
   id: number;
+  viewId: number;
   title: string;
   commentCnt: number;
   viewCnt: number;
@@ -36,17 +37,17 @@ export interface PostPre {
 export interface PostData {
   boardId: number;
   boardName: string;
-  commentCnt: number;
   content: string;
   createdDate: string;
   id: number;
+  viewId: number;
   isLiked: boolean;
   isNotice: boolean;
   isUsers: boolean;
   likeCnt: number;
   modifiedDate: string;
   title: string;
-  type: string;
+  roleType: string;
   viewCnt: number;
 }
 
@@ -97,11 +98,18 @@ export interface CommentPre {
   createdDate: string;
   modifiedDate: string;
 }
-
 export interface UserData {
   createdDate: string;
   modifiedDate: string;
   hashId: string;
   profileImageUrl: string;
+  isChecked: boolean;
   roleType: string;
+}
+export interface NotificationData {
+  id: number;
+  postId: number;
+  contentType: string;
+  title: string;
+  content: string;
 }

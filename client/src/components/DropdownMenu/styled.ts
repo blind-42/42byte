@@ -5,7 +5,10 @@ export const DropdownWrap = styled.div`
   display: inline-block;
 `;
 
-export const Dots = styled.div`
+export const HamburgerButton = styled.div`
+  button {
+    all: unset;
+  }
   cursor: pointer;
   font-size: 1.5rem;
   color: #929191;
@@ -17,10 +20,9 @@ export const Dots = styled.div`
 	`}
 `;
 
-export const DropdownBox = styled.div`
-  display: flex;
-  align-items: stretch;
-  justify-content: center;
+export const DropdownBox = styled.div``;
+
+export const MenuList = styled.div`
   position: absolute;
   z-index: 1;
   right: 0;
@@ -31,15 +33,6 @@ export const DropdownBox = styled.div`
   border-bottom: solid 1px #000;
   width: 7rem;
   padding: 0.3rem 0;
-  ${({ theme }) => theme.media.tablet`
-		width: 5.3rem;
-	`}
-  ${({ theme }) => theme.media.desktop`
-		width: 5.3rem;
-	`}
-`;
-
-export const MenuList = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -51,6 +44,7 @@ export const MenuList = styled.div`
     margin: 0.3rem 0;
   }
   ${({ theme }) => theme.media.tablet`
+		width: 5.3rem;
 		div {
 			font-size: 0.75rem;
 			line-height: 0.75rem;
@@ -58,6 +52,7 @@ export const MenuList = styled.div`
 		}
 	`}
   ${({ theme }) => theme.media.desktop`
+		width: 5.3rem;
 		div {
 			font-size: 0.75rem;
 			line-height: 0.75rem;

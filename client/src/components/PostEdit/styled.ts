@@ -56,7 +56,7 @@ export const UploadButton = styled.div`
     font-size: 1.2rem;
     font-weight: 700;
     height: 3rem;
-    width: 5rem;
+    padding: 0 1.2rem;
     letter-spacing: 0.1rem;
     border-top: solid 2px #fff;
     border-left: solid 2px #fff;
@@ -67,14 +67,14 @@ export const UploadButton = styled.div`
 		button {
 			font-size: 0.9rem;
 			height: 2rem;
-			width: 4rem;
+			padding: 0 1rem;
 		}
 	`}
   ${({ theme }) => theme.media.desktop`
 		button {
 			font-size: 0.9rem;
 			height: 2rem;
-			width: 4rem;
+			padding: 0 1rem;
 		}
 	`}
 `;

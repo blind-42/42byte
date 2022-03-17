@@ -27,6 +27,7 @@ import {
   WritingButton,
   PostWrap,
   ContentWrap,
+  NoPost,
 } from './styled';
 
 export default function Board() {
@@ -97,7 +98,6 @@ export default function Board() {
   return (
     <>
       <AppContainer ref={outerScrollRef}>
-        <Header />
         <PageContainer>
           <TopBar>
             <PageName>{name}</PageName>
@@ -109,6 +109,35 @@ export default function Board() {
           </TopBar>
           <ContentFooterWrap>
             <UtilPostWrap>
+              <PostContainer>
+                <Category ref={innerScrollRef}>
+                  <div></div>
+                  <div>제목</div>
+                  <div>조회</div>
+                  <div>추천</div>
+                  <div>작성일</div>
+                </Category>
+                <ContentWrap>
+                  {!contents.length ? (
+                    <NoPost>
+                      <img src="images/ghostWithPencil.png" />
+                      검색 결과가 없습니다.
+                    </NoPost>
+                  ) : (
+                    <PostWrap>
+                      {contents.map((el: PostPre, idx) => {
+                        return <PostPreview key={idx} postData={el} />;
+                      })}
+                    </PostWrap>
+                  )}
+                </ContentWrap>
+
+                <PageNation
+                  curPage={page}
+                  totalPages={pages}
+                  pageChangeHandler={pageChangeHandler}
+                />
+              </PostContainer>
               <UtilWrap>
                 <Search>
                   <form name="searchForm" onSubmit={searchHandeler}>
@@ -130,31 +159,11 @@ export default function Board() {
                   </Link>
                 </WritingButton>
               </UtilWrap>
-              <PostContainer>
-                <Category ref={innerScrollRef}>
-                  <div></div>
-                  <div>제목</div>
-                  <div>조회</div>
-                  <div>추천</div>
-                  <div>작성일</div>
-                </Category>
-                <ContentWrap>
-                  <PostWrap>
-                    {contents.map((el: PostPre, idx) => {
-                      return <PostPreview key={idx} postData={el} />;
-                    })}
-                  </PostWrap>
-                </ContentWrap>
-                <PageNation
-                  curPage={page}
-                  totalPages={pages}
-                  pageChangeHandler={pageChangeHandler}
-                />
-              </PostContainer>
             </UtilPostWrap>
             <Footer />
           </ContentFooterWrap>
         </PageContainer>
+        <Header />
       </AppContainer>
     </>
   );

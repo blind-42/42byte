@@ -41,6 +41,7 @@ export default function Board() {
   });
   const { id, name, contents, page, pages } = boardData;
   const [keyword, setKeyword] = useState('');
+  const [success, setSuccess] = useState(false);
   const currentUrl = window.location.href;
   const boardUrl = currentUrl.split('&page=')[0].split('boardId=')[1];
   const pageUrl = currentUrl.split('&page=')[1];
@@ -55,6 +56,7 @@ export default function Board() {
         setBoardData(res.data);
         innerScrollRef.current?.scrollIntoView(true);
         outerScrollRef.current?.scrollIntoView(true);
+        return setSuccess(true);
       });
     },
     {
@@ -78,7 +80,9 @@ export default function Board() {
 
   const searchHandeler = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    navigate(`/search?boardId=${boardUrl}&keyword=${keyword}`);
+    if (keyword) {
+      navigate(`/search?boardId=${boardUrl}&keyword=${keyword}`);
+    }
   };
 
   if (error) return <Error />;
@@ -86,7 +90,6 @@ export default function Board() {
   return (
     <>
       <AppContainer ref={outerScrollRef}>
-        <Header />
         <PageContainer>
           <TopBar>
             <PageName>
@@ -102,6 +105,41 @@ export default function Board() {
           </TopBar>
           <ContentFooterWrap>
             <UtilPostWrap>
+              {isLoading ? (
+                <Loading />
+              ) : (
+                <PostContainer>
+                  <Category ref={innerScrollRef}>
+                    <div></div>
+                    <div>제목</div>
+                    <div>조회</div>
+                    <div>추천</div>
+                    <div>작성일</div>
+                  </Category>
+                  <ContentWrap>
+                    {success && !contents.length ? (
+                      <NoPost>
+                        <img src="images/ghostWithPencil.png" />
+                        등록된 게시글이 없습니다.
+                        <br />
+                        지금 바로 새로운 게시글을 등록해 보세요!
+                      </NoPost>
+                    ) : (
+                      <PostWrap>
+                        {contents.map((el: PostPre, idx) => {
+                          return <PostPreview key={idx} postData={el} />;
+                        })}
+                      </PostWrap>
+                    )}
+                  </ContentWrap>
+
+                  <PageNation
+                    curPage={page}
+                    totalPages={pages}
+                    pageChangeHandler={pageChangeHandler}
+                  />
+                </PostContainer>
+              )}
               <UtilWrap>
                 <Search>
                   <form name="searchForm" onSubmit={searchHandeler}>
@@ -123,44 +161,11 @@ export default function Board() {
                   </Link>
                 </WritingButton>
               </UtilWrap>
-              {isLoading ? (
-                <Loading />
-              ) : (
-                <PostContainer>
-                  <Category ref={innerScrollRef}>
-                    <div></div>
-                    <div>제목</div>
-                    <div>조회</div>
-                    <div>추천</div>
-                    <div>작성일</div>
-                  </Category>
-                  <ContentWrap>
-                    {!isLoading && contents.length ? (
-                      <PostWrap>
-                        {contents.map((el: PostPre, idx) => {
-                          return <PostPreview key={idx} postData={el} />;
-                        })}
-                      </PostWrap>
-                    ) : (
-                      <NoPost>
-                        <img src="images/ghostWithPencil.png" />
-                        등록된 게시글이 없습니다.
-                        <br />
-                        지금 바로 새로운 게시글을 등록해 보세요!
-                      </NoPost>
-                    )}
-                  </ContentWrap>
-                  <PageNation
-                    curPage={page}
-                    totalPages={pages}
-                    pageChangeHandler={pageChangeHandler}
-                  />
-                </PostContainer>
-              )}
             </UtilPostWrap>
             {!isMobile && <Footer />}
           </ContentFooterWrap>
         </PageContainer>
+        <Header />
       </AppContainer>
     </>
   );

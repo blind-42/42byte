@@ -1,14 +1,15 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { IoEllipsisVerticalOutline } from 'react-icons/io5';
 import ReportModal from 'components/Modal/ReportModal';
 import DeleteModal from 'components/Modal/DeleteModal';
-import { DropdownWrap, Dots, DropdownBox, MenuList } from './styled';
+import { DropdownWrap, HamburgerButton, DropdownBox, MenuList } from './styled';
+import { ALL } from 'dns';
 
 type GreetingProps = {
   isPost: boolean;
   isUsers: boolean;
   isNotice?: boolean;
-  roleType?: string;
+  roleType: string;
   modifyHandler: () => void;
   deleteHandler: () => void;
   reportHandler: (reportIssue: string) => void;
@@ -26,24 +27,36 @@ export default function DropdownMenu({
   noticeHandler,
 }: GreetingProps) {
   const [openDropdown, setOpenDropdown] = useState<boolean>(false);
-  const [openDelModal, setOpenDelModal] = useState<boolean>(false);
-  const [openRptModal, setOpenRptModal] = useState<boolean>(false);
+  const [openDeleteModal, setOpenDeleteModal] = useState<boolean>(false);
+  const [openReportModal, setOpenReportModal] = useState<boolean>(false);
 
   const dropdownHandler = () => {
     setOpenDropdown(!openDropdown);
   };
 
+  useEffect(() => {
+    if (openDropdown) {
+      window.addEventListener(
+        'click',
+        () => {
+          setOpenDropdown(false);
+        },
+        { once: true },
+      );
+    }
+  });
+
   const deleteModalHandler = () => {
     setOpenDropdown(false);
-    setOpenDelModal(!openDelModal);
+    setOpenDeleteModal(!openDeleteModal);
   };
 
   const reportModalHandler = () => {
     setOpenDropdown(false);
-    setOpenRptModal(!openRptModal);
+    setOpenReportModal(!openReportModal);
   };
 
-  const notice = () => {
+  const noticeButtonHandler = () => {
     setOpenDropdown(false);
     if (noticeHandler) noticeHandler();
   };
@@ -51,43 +64,43 @@ export default function DropdownMenu({
   return (
     <>
       <DropdownWrap>
-        {openDelModal && (
+        {openDeleteModal && (
           <DeleteModal
             clickModalHandler={deleteModalHandler}
             deleteHandler={deleteHandler}
           />
         )}
-        {openRptModal && (
+        {openReportModal && (
           <ReportModal
             clickModalHandler={reportModalHandler}
             reportHandler={reportHandler}
           />
         )}
-        <Dots onClick={dropdownHandler}>
+        <HamburgerButton onClick={dropdownHandler}>
           <IoEllipsisVerticalOutline />
-        </Dots>
+        </HamburgerButton>
         {openDropdown && (
           <DropdownBox>
             {isUsers ? (
-              <MenuList>
+              <MenuList onClick={(e) => e.stopPropagation()}>
                 <div onClick={modifyHandler}>수정</div>
                 <div onClick={deleteModalHandler}>삭제</div>
-                {isPost && roleType !== 'user' && (
-                  <div onClick={notice}>
+                {isPost && roleType === 'ADMIN' && (
+                  <div onClick={noticeButtonHandler}>
                     {isNotice ? '공지 내리기' : '공지'}
                   </div>
                 )}
               </MenuList>
             ) : (
-              <MenuList>
+              <MenuList onClick={(e) => e.stopPropagation()}>
                 <div onClick={reportModalHandler}>신고</div>
-                {isPost && roleType !== 'user' && (
-                  <div onClick={notice}>
+                {roleType === 'ADMIN' && (
+                  <div onClick={deleteModalHandler}>삭제</div>
+                )}
+                {isPost && roleType === 'ADMIN' && (
+                  <div onClick={noticeButtonHandler}>
                     {isNotice ? '공지 내리기' : '공지'}
                   </div>
-                )}
-                {roleType !== 'user' && (
-                  <div onClick={deleteModalHandler}>삭제</div>
                 )}
               </MenuList>
             )}
