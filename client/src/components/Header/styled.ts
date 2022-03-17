@@ -50,6 +50,18 @@ export const MenubarButton = styled.div`
 	`}
 `;
 
+export const HeaderBackdrop = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: var(--modal-index);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100vw;
+  height: 100vh;
+`;
+
 export const UtilButton = styled.div`
   cursor: pointer;
   display: flex;
