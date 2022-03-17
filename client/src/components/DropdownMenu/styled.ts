@@ -22,8 +22,6 @@ export const HamburgerButton = styled.div`
 
 export const DropdownBox = styled.div``;
 
-export const DropdownOutside = styled.div``;
-
 export const MenuList = styled.div`
   position: absolute;
   z-index: 1;

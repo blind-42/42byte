@@ -1,14 +1,9 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { IoEllipsisVerticalOutline } from 'react-icons/io5';
 import ReportModal from 'components/Modal/ReportModal';
 import DeleteModal from 'components/Modal/DeleteModal';
-import {
-  DropdownWrap,
-  HamburgerButton,
-  DropdownBox,
-  DropdownOutside,
-  MenuList,
-} from './styled';
+import { DropdownWrap, HamburgerButton, DropdownBox, MenuList } from './styled';
+import { ALL } from 'dns';
 
 type GreetingProps = {
   isPost: boolean;
@@ -34,17 +29,22 @@ export default function DropdownMenu({
   const [openDropdown, setOpenDropdown] = useState<boolean>(false);
   const [openDeleteModal, setOpenDeleteModal] = useState<boolean>(false);
   const [openReportModal, setOpenReportModal] = useState<boolean>(false);
-  const outSection = useRef(null);
 
-  const dropdownHandler = (event: React.MouseEvent<HTMLElement>) => {
-    console.log(event);
-    console.log(outSection);
-    if (outSection.current === event.target) {
-      setOpenDropdown(false);
-    } else {
-      setOpenDropdown(!openDropdown);
-    }
+  const dropdownHandler = () => {
+    setOpenDropdown(!openDropdown);
   };
+
+  useEffect(() => {
+    if (openDropdown) {
+      window.addEventListener(
+        'click',
+        () => {
+          setOpenDropdown(false);
+        },
+        { once: true },
+      );
+    }
+  });
 
   const deleteModalHandler = () => {
     setOpenDropdown(false);
@@ -82,31 +82,27 @@ export default function DropdownMenu({
         {openDropdown && (
           <DropdownBox>
             {isUsers ? (
-              <DropdownOutside ref={outSection} onClick={dropdownHandler}>
-                <MenuList>
-                  <div onClick={modifyHandler}>수정</div>
-                  <div onClick={deleteModalHandler}>삭제</div>
-                  {isPost && roleType === 'ADMIN' && (
-                    <div onClick={noticeButtonHandler}>
-                      {isNotice ? '공지 내리기' : '공지'}
-                    </div>
-                  )}
-                </MenuList>
-              </DropdownOutside>
+              <MenuList onClick={(e) => e.stopPropagation()}>
+                <div onClick={modifyHandler}>수정</div>
+                <div onClick={deleteModalHandler}>삭제</div>
+                {isPost && roleType === 'ADMIN' && (
+                  <div onClick={noticeButtonHandler}>
+                    {isNotice ? '공지 내리기' : '공지'}
+                  </div>
+                )}
+              </MenuList>
             ) : (
-              <DropdownOutside ref={outSection} onClick={dropdownHandler}>
-                <MenuList>
-                  <div onClick={reportModalHandler}>신고</div>
-                  {roleType === 'ADMIN' && (
-                    <div onClick={deleteModalHandler}>삭제</div>
-                  )}
-                  {isPost && roleType === 'ADMIN' && (
-                    <div onClick={noticeButtonHandler}>
-                      {isNotice ? '공지 내리기' : '공지'}
-                    </div>
-                  )}
-                </MenuList>
-              </DropdownOutside>
+              <MenuList onClick={(e) => e.stopPropagation()}>
+                <div onClick={reportModalHandler}>신고</div>
+                {roleType === 'ADMIN' && (
+                  <div onClick={deleteModalHandler}>삭제</div>
+                )}
+                {isPost && roleType === 'ADMIN' && (
+                  <div onClick={noticeButtonHandler}>
+                    {isNotice ? '공지 내리기' : '공지'}
+                  </div>
+                )}
+              </MenuList>
             )}
           </DropdownBox>
         )}
