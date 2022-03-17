@@ -21,6 +21,7 @@ export default function Notificationbar({
   const { isFetching, isLoading, error, data } = useQuery(
     ['notification_key'],
     () => {
+      console.log('1');
       instance
         .get('/notification')
         .then((res) => setNotificationData(res.data));
@@ -45,7 +46,7 @@ export default function Notificationbar({
         ) : (
           <NotificationList>
             {notificationData.map((el: NotificationData, idx) => {
-              return <Notification notificationData={el} />;
+              return <Notification key={idx} notificationData={el} />;
             })}
           </NotificationList>
         )}
