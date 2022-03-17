@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 
 export const CommentPreviewContainer = styled.div`
+  cursor: pointer;
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
