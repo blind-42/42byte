@@ -105,27 +105,6 @@ export default function Board() {
           </TopBar>
           <ContentFooterWrap>
             <UtilPostWrap>
-              <UtilWrap>
-                <Search>
-                  <form name="searchForm" onSubmit={searchHandeler}>
-                    <input
-                      type="text"
-                      onChange={keywordHandler}
-                      placeholder="검색어를 입력하세요"
-                    />
-                    <button>
-                      <div>
-                        <GoSearch />
-                      </div>
-                    </button>
-                  </form>
-                </Search>
-                <WritingButton>
-                  <Link to={`/writing?=boardId=${id}`}>
-                    <input type="button" value="글쓰기" />
-                  </Link>
-                </WritingButton>
-              </UtilWrap>
               {isLoading ? (
                 <Loading />
               ) : (
@@ -153,6 +132,27 @@ export default function Board() {
                       </PostWrap>
                     )}
                   </ContentWrap>
+                  <UtilWrap>
+                    <Search>
+                      <form name="searchForm" onSubmit={searchHandeler}>
+                        <input
+                          type="text"
+                          onChange={keywordHandler}
+                          placeholder="검색어를 입력하세요"
+                        />
+                        <button>
+                          <div>
+                            <GoSearch />
+                          </div>
+                        </button>
+                      </form>
+                    </Search>
+                    <WritingButton>
+                      <Link to={`/writing?=boardId=${id}`}>
+                        <input type="button" value="글쓰기" />
+                      </Link>
+                    </WritingButton>
+                  </UtilWrap>
                   <PageNation
                     curPage={page}
                     totalPages={pages}

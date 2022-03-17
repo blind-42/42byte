@@ -2,13 +2,6 @@ import styled from 'styled-components';
 
 export const UtilPostWrap = styled.div`
   display: grid;
-  grid-template-rows: 2.5rem auto;
-  ${({ theme }) => theme.media.tablet`
-		grid-template-rows: 1.8rem auto;
-	`}
-  ${({ theme }) => theme.media.desktop`
-		grid-template-rows: 1.8rem auto;
-	`}
 `;
 
 export const UtilWrap = styled.div`
@@ -16,6 +9,13 @@ export const UtilWrap = styled.div`
   display: flex;
   align-items: center;
   justify-content: end;
+  margin: 6px 3px;
+  ${({ theme }) => theme.media.tablet`
+		margin: 6px 3px 0 0;
+	`}
+  ${({ theme }) => theme.media.desktop`
+		margin: 6px 3px 0 0;
+	`}
 `;
 
 export const Search = styled.div`
@@ -26,6 +26,7 @@ export const Search = styled.div`
   border-right: solid 2px #fff;
   border-bottom: solid 2px #fff;
   height: 2.3rem;
+  margin: 0 3px;
   background: #fff;
   form {
     display: flex;
@@ -97,7 +98,6 @@ export const WritingButton = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-left: 3px;
   input {
     cursor: pointer;
     background: #518edb;
