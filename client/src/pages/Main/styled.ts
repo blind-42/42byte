@@ -35,7 +35,7 @@ export const MainIconWrap = styled.div`
   row-gap: 1rem;
   column-gap: 1rem;
   place-items: center center;
-  plage-content: start start;
+  place-content: start start;
   ${({ theme }) => theme.media.tablet`
 		top: 1rem;
 		left: 1rem;
