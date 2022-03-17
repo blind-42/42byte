@@ -42,17 +42,13 @@ public class CommentControllerImpl implements CommentController {
         Post post = postService.findById(postId);
         if (post.getCommentCnt() >= 1000)
             throw new BusinessException("{invalid.request}");
-        User author = userService.findById(post.getAuthorId());
+        User postAuthor = userService.findById(post.getAuthorId());
         commentService.save(boardId,post, user, requestDTO.getContent());
         postService.updateComment(postId, 1L);
-        if (author.getId() != user.getId()) {
-            if (author.getIsChecked() == false) {
-                Noti noti = notificationService.findByUserAndPost(author, post);
-                if (noti != null)
-                    notificationService.delete(noti.getId());
-            }
-            notificationService.save(author, post, "post", post.getTitle(), requestDTO.getContent());
-            userService.setCheck(author);
+        notificationService.checkNoti(postAuthor, user, post);
+        if (postAuthor.getId() != user.getId()) {
+            notificationService.save(postAuthor, post, "post", post.getTitle(), requestDTO.getContent());
+            userService.setCheck(postAuthor);
         }
     }
 
@@ -88,7 +84,7 @@ public class CommentControllerImpl implements CommentController {
     }
 
     @RequestMapping(value={"/comment"}, method = RequestMethod.GET)
-    public CommentListResponseDTO findCommentByPost (Long boardId, Long postId, HttpServletRequest request){
+    public CommentListResponseDTO findCommentByPost (Long postId, HttpServletRequest request){
         Post post = postService.findById(postId);
         User user = tokenService.findUserByAccessToken(HeaderUtil.getAccessToken(request));
         HashMap<Long, CommentDTO> commentDTOHashMap = new LinkedHashMap<>(1001, 1);

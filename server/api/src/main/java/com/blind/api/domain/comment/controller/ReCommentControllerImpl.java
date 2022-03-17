@@ -33,7 +33,7 @@ public class ReCommentControllerImpl implements ReCommentController {
     private final NotificationService notificationService;
 
     @RequestMapping(value = "/recomment", method = RequestMethod.POST)
-    public void createReComment(Long targetCmmtId, CommentRequestDTO requestDTO, HttpServletRequest request) {
+    public void saveReComment(Long targetCmmtId, CommentRequestDTO requestDTO, HttpServletRequest request) {
         Comment targetCmmt = commentService.findCommentById(targetCmmtId);
         Comment rootCmmt = targetCmmt;
         while (rootCmmt.getRootCommentId() != null)
@@ -43,26 +43,18 @@ public class ReCommentControllerImpl implements ReCommentController {
         Post post = rootCmmt.getPost();
         reCommentService.save(targetCmmt, rootCmmtId, user.getId(), requestDTO.getContent());
         postService.updateComment(rootCmmt.getPost().getId(), 1L);
-        User rtAuthor = userService.findById(rootCmmt.getAuthorId());
+        User targetAuthor = userService.findById(rootCmmt.getTargetAuthorId());
         User pstAuthor = userService.findById(post.getAuthorId());
 
         if (pstAuthor.getId() != user.getId()) {
-            if (pstAuthor.getIsChecked() == false) {
-                Noti noti = notificationService.findByUserAndPost(pstAuthor, post);
-                if (noti != null)
-                    notificationService.delete(noti.getId());
-            }
+            notificationService.checkNoti(pstAuthor, user, post);
             notificationService.save(pstAuthor, post, "post", post.getTitle(), requestDTO.getContent());
             userService.setCheck(pstAuthor);
         }
-        if (rtAuthor.getId() != user.getId()) {
-            if (rtAuthor.getIsChecked() == false) {
-                Noti noti = notificationService.findByUserAndPost(rtAuthor, post);
-                if (noti != null)
-                    notificationService.delete(noti.getId());
-            }
-                notificationService.save(rtAuthor, post, "comment", rootCmmt.getContent(), requestDTO.getContent());
-                userService.setCheck(rtAuthor);
-            }
+        if (targetAuthor.getId() != user.getId()) {
+            notificationService.checkNoti(targetAuthor, user, post);
+            notificationService.save(targetAuthor, post, "comment", rootCmmt.getContent(), requestDTO.getContent());
+            userService.setCheck(targetAuthor);
         }
     }
+}

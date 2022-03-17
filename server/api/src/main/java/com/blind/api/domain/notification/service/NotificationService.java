@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @AllArgsConstructor
@@ -18,18 +17,25 @@ public class NotificationService {
 
     @Transactional
     public Noti save(User user, Post post, String contentType, String title, String content) {
-        return notificationRepository.save(Noti.builder()
-                .user(user)
-                .post(post)
-                .contentType(contentType)
-                .title(title)
-                .content(content)
-                .build());
+        Noti noti = notificationRepository.findByUserAndPost(user, post);
+        if (noti != null) {
+            noti =  notificationRepository.save(Noti.builder()
+                    .user(user)
+                    .post(post)
+                    .contentType(contentType)
+                    .title(title)
+                    .content(content)
+                    .build());
+        } else {
+            noti.setContent(content);
+            noti.setCount(noti.getCount() + 1L);
+        }
+        return noti;
     }
 
     @Transactional
     public List<Noti> getNoti(User user) {
-        return notificationRepository.findByUser(user);
+        return notificationRepository.findByUserOrderByCreatedDateDesc(user);
     }
 
     @Transactional
@@ -39,5 +45,19 @@ public class NotificationService {
 
     public Noti findByUserAndPost(User user, Post post) {
         return notificationRepository.findByUserAndPost(user, post);
+    }
+
+    @Transactional
+    public void deleteByUser(User user) {
+        notificationRepository.deleteAllByUser(user);
+    }
+
+    @Transactional
+    public void checkNoti(User rootUser, User authorUser, Post post) {
+        if (rootUser.getIsChecked() == true) {
+            Noti noti = notificationRepository.findByUserAndPost(rootUser, post);
+            if (noti != null)
+                notificationRepository.deleteById(post.getId());
+        }
     }
 }

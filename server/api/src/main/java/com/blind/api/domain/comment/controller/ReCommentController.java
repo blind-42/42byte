@@ -8,5 +8,5 @@ import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 public interface ReCommentController {
-    void createReComment(@RequestParam(value = "commentId")Long targetCmmtId, @RequestBody @Valid CommentRequestDTO content, HttpServletRequest request);
+    void saveReComment(@RequestParam(value = "commentId")Long targetCmmtId, @RequestBody @Valid CommentRequestDTO content, HttpServletRequest request);
 }
