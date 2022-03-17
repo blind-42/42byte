@@ -10,11 +10,11 @@ type GreetingProps = {
 };
 export default function Notification({ notificationData }: GreetingProps) {
   const { id, postId, contentType, title, content } = notificationData;
+  const navigate = useNavigate();
+  const queryClient = useQueryClient();
   const mutationDelete = useMutation(({ path }: { path: string }) =>
     instance.delete(path),
   );
-  const navigate = useNavigate();
-  const queryClient = useQueryClient();
 
   const deleteNotificationHandler = () => {
     mutationDelete.mutate(
@@ -30,14 +30,15 @@ export default function Notification({ notificationData }: GreetingProps) {
     );
   };
 
+  const deleteAndNavigaterHandler = () => {
+    deleteNotificationHandler();
+    navigate(`/detail?=postId=${postId}`);
+  };
+
   return (
     <>
       <NotificationWrap>
-        <ContentWrap
-          onClick={() => {
-            navigate(`/detail?=postId=${postId}`);
-          }}
-        >
+        <ContentWrap onClick={deleteAndNavigaterHandler}>
           {contentType === 'post' ? (
             <div>
               "{stringLimit(title, 6)}" 게시글에 새로운 댓글이 있습니다.
