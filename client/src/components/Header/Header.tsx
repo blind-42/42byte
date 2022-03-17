@@ -14,8 +14,6 @@ import {
 } from './styled';
 
 export default function Header() {
-  const [showMenu, setShowMenu] = useState(false);
-  const [showNotificationbar, setShowNotificationbar] = useState(false);
   const [userData, setUserData] = useState<UserData>({
     createdDate: '',
     modifiedDate: '',
@@ -24,7 +22,9 @@ export default function Header() {
     isChecked: false,
     roleType: '',
   });
-  const { isChecked } = userData;
+  const [isChecked, setIsChecked] = useState(userData.isChecked);
+  const [showMenu, setShowMenu] = useState(false);
+  const [showNotificationbar, setShowNotificationbar] = useState(false);
   const navigate = useNavigate();
   const { isFetching, isLoading, error, data } = useQuery(
     ['user_key'],
@@ -43,6 +43,7 @@ export default function Header() {
   };
 
   const showNotificationHandler = () => {
+    setIsChecked(true);
     setShowNotificationbar(!showNotificationbar);
   };
 
