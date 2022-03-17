@@ -24,7 +24,7 @@ export const LogoImg = styled.div`
 	`}
 `;
 
-export const BoardIconWrap = styled.div`
+export const MainIconWrap = styled.div`
   position: absolute;
   z-index: 1;
   top: 2rem;
@@ -48,7 +48,7 @@ export const BoardIconWrap = styled.div`
 	`}
 `;
 
-export const BoardIcon = styled.div`
+export const MainIcon = styled.div`
   display: flex;
   flex-direction: column;
   width: 8rem;
