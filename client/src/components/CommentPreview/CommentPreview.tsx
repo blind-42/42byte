@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { CommentPre } from 'utils/functions/type';
 import { stringLimit, timeForToday } from 'utils/functions/functions';
 import { CommentPreviewContainer, CommentWrap, OriginalPost } from './styled';
@@ -24,6 +24,7 @@ function CommentPreview({ commentData }: GreetingProps) {
     createdDate,
     modifiedDate,
   } = commentData;
+  const navigate = useNavigate();
 
   const isMobile = useMediaQuery({
     query: '(max-width:767px)',
@@ -31,26 +32,26 @@ function CommentPreview({ commentData }: GreetingProps) {
 
   return (
     <>
-      <Link to={`/detail?boardId=1&postId=${postId}`}>
-        <CommentPreviewContainer>
-          <CommentWrap>
-            {isMobile ? (
-              <div>{stringLimit(content, 16)}</div>
-            ) : (
-              <div>{stringLimit(content, 25)}</div>
-            )}
-            <div>{timeForToday(createdDate)}</div>
-          </CommentWrap>
-          <OriginalPost>
-            {isMobile ? (
-              <h3>{stringLimit(title, 16)}</h3>
-            ) : (
-              <h3>{stringLimit(title, 30)}</h3>
-            )}
-            <div>[{commentCnt}]</div>
-          </OriginalPost>
-        </CommentPreviewContainer>
-      </Link>
+      <CommentPreviewContainer
+        onClick={() => navigate(`/detail?=postId=${postId}`)}
+      >
+        <CommentWrap>
+          {isMobile ? (
+            <div>{stringLimit(content, 16)}</div>
+          ) : (
+            <div>{stringLimit(content, 25)}</div>
+          )}
+          <div>{timeForToday(createdDate)}</div>
+        </CommentWrap>
+        <OriginalPost>
+          {isMobile ? (
+            <h3>{stringLimit(title, 16)}</h3>
+          ) : (
+            <h3>{stringLimit(title, 30)}</h3>
+          )}
+          <div>[{commentCnt}]</div>
+        </OriginalPost>
+      </CommentPreviewContainer>
     </>
   );
 }
