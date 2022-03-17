@@ -5,7 +5,7 @@ import Menubar from 'components/Menubar/Menubar';
 import Notificationbar from 'components/Notificationbar/Notificationbar';
 import instance from 'utils/functions/axios';
 import Clock from './Clock';
-import { UserData } from 'utils/functions/type';
+import { NotificationData } from 'utils/functions/type';
 import {
   HeaderContainer,
   MenubarLogoWrap,
@@ -15,25 +15,20 @@ import {
 } from './styled';
 
 export default function Header() {
-  const [userData, setUserData] = useState<UserData>({
-    createdDate: '',
-    modifiedDate: '',
-    hashId: '',
-    profileImageUrl: '',
-    isChecked: false,
-    roleType: '',
-  });
-  const [noticeChecked, setNoticeChecked] = useState(true);
   const [showMenu, setShowMenu] = useState(false);
   const [showNotificationbar, setShowNotificationbar] = useState(false);
+  const [notificationData, setNotificationData] = useState<NotificationData>({
+    total: 0,
+    contents: [],
+  });
+  const { total, contents } = notificationData;
   const navigate = useNavigate();
-  const { data } = useQuery(
-    ['user_key'],
+  const { isFetching, isLoading, error, data } = useQuery(
+    ['notification_key'],
     () => {
-      instance.get('/user').then((res) => {
-        setUserData(res.data);
-        setNoticeChecked(res.data.isChecked);
-      });
+      instance
+        .get('/notification')
+        .then((res) => setNotificationData(res.data));
     },
     {
       retry: 0,
@@ -47,7 +42,6 @@ export default function Header() {
   };
 
   const showNotificationHandler = () => {
-    setNoticeChecked(true);
     setShowNotificationbar(!showNotificationbar);
   };
 
@@ -64,16 +58,22 @@ export default function Header() {
           <UtilButton onClick={() => navigate('/')}>
             <img src="images/bLogo.png" alt="LOGO" />
           </UtilButton>
-          <UtilButton onClick={showNotificationHandler}>
-            {noticeChecked ? (
-              <img src="images/notice_off.png" alt="notice" />
-            ) : (
+          {total ? (
+            <UtilButton onClick={showNotificationHandler}>
               <img src="images/notice_on.png" alt="notice" />
-            )}
-          </UtilButton>
+              <div>{total}</div>
+            </UtilButton>
+          ) : (
+            <UtilButton onClick={showNotificationHandler}>
+              <img src="images/notice_off.png" alt="notice" />
+            </UtilButton>
+          )}
           {showNotificationbar && (
             <HeaderBackdrop onClick={showNotificationHandler}>
-              <Notificationbar notificationHandler={showNotificationHandler} />
+              <Notificationbar
+                notificationHandler={showNotificationHandler}
+                notificationData={notificationData}
+              />
             </HeaderBackdrop>
           )}
         </MenubarLogoWrap>

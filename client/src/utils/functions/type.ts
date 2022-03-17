@@ -103,14 +103,19 @@ export interface UserData {
   modifiedDate: string;
   hashId: string;
   profileImageUrl: string;
-  isChecked: boolean;
   roleType: string;
 }
 export interface NotificationData {
+  total: number;
+  contents: NotificationDetail[];
+}
+
+export interface NotificationDetail {
   id: number;
   postId: number;
   contentType: string;
   title: string;
   content: string;
+  isChecked: boolean;
   modifiedDate: string;
 }
