@@ -34,7 +34,7 @@ export default function Notificationbar({
 
   return (
     <>
-      <NotificationContainer>
+      <NotificationContainer onClick={(e) => e.stopPropagation()}>
         <Topbar>
           <div onClick={notificationHandler}>&times;</div>
         </Topbar>
