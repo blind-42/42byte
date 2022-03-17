@@ -49,7 +49,7 @@ function PostPreview({ postData }: GreetingProps) {
           </div>
           <div>{viewCnt}</div>
           <div>{likeCnt}</div>
-          <div>{timeForToday(createdDate)}</div>
+          <div>{timeForToday(createdDate, 'post')}</div>
         </PreviewContainer>
       </Link>
     </>

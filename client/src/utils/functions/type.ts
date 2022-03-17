@@ -112,4 +112,5 @@ export interface NotificationData {
   contentType: string;
   title: string;
   content: string;
+  modifiedDate: string;
 }

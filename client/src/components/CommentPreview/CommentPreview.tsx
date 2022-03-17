@@ -41,7 +41,7 @@ function CommentPreview({ commentData }: GreetingProps) {
           ) : (
             <div>{stringLimit(content, 25)}</div>
           )}
-          <div>{timeForToday(createdDate)}</div>
+          <div>{timeForToday(createdDate, 'post')}</div>
         </CommentWrap>
         <OriginalPost>
           {isMobile ? (
