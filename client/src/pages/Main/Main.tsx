@@ -98,18 +98,18 @@ export default function Main() {
             <img src="images/42byteLogo.png" />
           </LogoImg>
           <BoardIconWrap>
-            {contents.map((el: BoardPre, idx) => {
+            {contents.map((el: BoardPre) => {
               return (
                 !el.isDel &&
                 (isLoggedIn ? (
-                  <BoardIcon>
-                    <Link to={`/board?=boardId=${el.id}`} key={idx}>
+                  <BoardIcon key={el.id}>
+                    <Link to={`/board?=boardId=${el.id}`}>
                       <img src="images/folder.png" />
                       <div>{stringLimit(el.name, 7)}</div>
                     </Link>
                   </BoardIcon>
                 ) : (
-                  <BoardIcon onClick={openLoginModalHandler}>
+                  <BoardIcon onClick={openLoginModalHandler} key={el.id}>
                     <img src="images/folder.png" />
                     <div>{stringLimit(el.name, 7)}</div>
                   </BoardIcon>
