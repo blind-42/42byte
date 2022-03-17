@@ -2,14 +2,25 @@ import { useQueryClient, useMutation } from 'react-query';
 import { useNavigate } from 'react-router-dom';
 import { NotificationData } from 'utils/functions/type';
 import instance from 'utils/functions/axios';
-import { stringLimit } from 'utils/functions/functions';
-import { NotificationWrap, ContentWrap, DeleteButton } from './styled';
+import { stringLimit, timeForToday } from 'utils/functions/functions';
+import {
+  NotificationWrap,
+  ContentWrap,
+  NotificationPhrase,
+  ContentDetailWrap,
+  DeleteButton,
+} from './styled';
 
 type GreetingProps = {
   notificationData: NotificationData;
+  notificationHandler: () => void;
 };
-export default function Notification({ notificationData }: GreetingProps) {
-  const { id, postId, contentType, title, content } = notificationData;
+export default function Notification({
+  notificationData,
+  notificationHandler,
+}: GreetingProps) {
+  const { id, postId, contentType, title, content, modifiedDate } =
+    notificationData;
   const mutationDelete = useMutation(({ path }: { path: string }) =>
     instance.delete(path),
   );
@@ -36,16 +47,30 @@ export default function Notification({ notificationData }: GreetingProps) {
         <ContentWrap
           onClick={() => {
             navigate(`/detail?=postId=${postId}`);
+            notificationHandler();
           }}
         >
-          {contentType === 'post' ? (
-            <div>
-              "{stringLimit(title, 6)}" 게시글에 새로운 댓글이 있습니다.
-            </div>
-          ) : (
-            <div>"{stringLimit(title, 6)}" 댓글에 새로운 댓글이 있습니다.</div>
-          )}
-          <div>{stringLimit(content, 15)}</div>
+          <NotificationPhrase>
+            {contentType === 'post' ? (
+              <div>
+                {stringLimit(
+                  `"${stringLimit(title, 6)}" 게시글에 새로운 댓글이 있습니다.`,
+                  22,
+                )}
+              </div>
+            ) : (
+              <div>
+                {stringLimit(
+                  `"${stringLimit(title, 6)}" 댓글에 새로운 댓글이 있습니다.`,
+                  22,
+                )}
+              </div>
+            )}
+          </NotificationPhrase>
+          <ContentDetailWrap>
+            <div>{stringLimit(content, 12)}</div>
+            <div>{timeForToday(modifiedDate, 'notification')}</div>
+          </ContentDetailWrap>
         </ContentWrap>
         <DeleteButton onClick={deleteNotificationHandler}>&times;</DeleteButton>
       </NotificationWrap>
