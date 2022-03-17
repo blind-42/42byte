@@ -99,13 +99,16 @@ export default function Main() {
           </LogoImg>
           <MainIconWrap>
             <MainIcon>
-              <a href="https://intra.42.fr/">
+              <a href="https://intra.42.fr/" target="_blank">
                 <img src="images/42explorer.png" alt="42intra" />
                 <div>42Intra</div>
               </a>
             </MainIcon>
             <MainIcon>
-              <a href="https://app.gather.town/app/Zq3peLuvz5isVQ0f/42seoul">
+              <a
+                href="https://app.gather.town/app/Zq3peLuvz5isVQ0f/42seoul"
+                target="_blank"
+              >
                 <img src="images/gathertownLogo.png" alt="gathertown" />
                 <div>GatherTo..</div>
               </a>
