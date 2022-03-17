@@ -14,8 +14,8 @@ import { AppContainer } from 'styles/styled';
 import {
   PageContainer,
   LogoImg,
-  BoardIconWrap,
-  BoardIcon,
+  MainIconWrap,
+  MainIcon,
   AdminPageButton,
 } from './styled';
 
@@ -97,26 +97,38 @@ export default function Main() {
           <LogoImg>
             <img src="images/42byteLogo.png" />
           </LogoImg>
-          <BoardIconWrap>
+          <MainIconWrap>
+            <MainIcon>
+              <a href="https://intra.42.fr/">
+                <img src="images/42explorer.png" alt="42intra" />
+                <div>42Intra</div>
+              </a>
+            </MainIcon>
+            <MainIcon>
+              <a href="https://app.gather.town/app/Zq3peLuvz5isVQ0f/42seoul">
+                <img src="images/gathertownLogo.png" alt="gathertown" />
+                <div>GatherTo..</div>
+              </a>
+            </MainIcon>
             {contents.map((el: BoardPre) => {
               return (
                 !el.isDel &&
                 (isLoggedIn ? (
-                  <BoardIcon key={el.id}>
+                  <MainIcon key={el.id}>
                     <Link to={`/board?=boardId=${el.id}`}>
                       <img src="images/folder.png" />
                       <div>{stringLimit(el.name, 7)}</div>
                     </Link>
-                  </BoardIcon>
+                  </MainIcon>
                 ) : (
-                  <BoardIcon onClick={openLoginModalHandler} key={el.id}>
+                  <MainIcon onClick={openLoginModalHandler} key={el.id}>
                     <img src="images/folder.png" />
                     <div>{stringLimit(el.name, 7)}</div>
-                  </BoardIcon>
+                  </MainIcon>
                 ))
               );
             })}
-          </BoardIconWrap>
+          </MainIconWrap>
           {roleType === 'ADMIN' && (
             <AdminPageButton onClick={moveToAdmin}>
               <img src="images/adminIcon.png" alt="adminIcon" />
