@@ -1,4 +1,4 @@
-import { useMutation } from 'react-query';
+import { useQueryClient, useMutation } from 'react-query';
 import { useNavigate } from 'react-router-dom';
 import { NotificationData } from 'utils/functions/type';
 import instance from 'utils/functions/axios';
@@ -14,11 +14,15 @@ export default function Notification({ notificationData }: GreetingProps) {
     instance.delete(path),
   );
   const navigate = useNavigate();
+  const queryClient = useQueryClient();
+
   const deleteNotificationHandler = () => {
     mutationDelete.mutate(
       { path: `/notification?id=${id}` },
       {
-        onSuccess: () => {},
+        onSuccess: () => {
+          queryClient.invalidateQueries(['notification_key']);
+        },
         onError: (err) => {
           console.log(err);
         },
