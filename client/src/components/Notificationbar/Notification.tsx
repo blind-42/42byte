@@ -7,12 +7,8 @@ import { NotificationWrap, ContentWrap, DeleteButton } from './styled';
 
 type GreetingProps = {
   notificationData: NotificationData;
-  removeNoticeListkHandler: () => void;
 };
-export default function Notification({
-  notificationData,
-  removeNoticeListkHandler,
-}: GreetingProps) {
+export default function Notification({ notificationData }: GreetingProps) {
   const { id, postId, contentType, title, content } = notificationData;
   const mutationDelete = useMutation(({ path }: { path: string }) =>
     instance.delete(path),
@@ -34,15 +30,14 @@ export default function Notification({
     );
   };
 
-  const removeNoticeListAndNavigateHandler = () => {
-    removeNoticeListkHandler();
-    navigate(`/detail?=postId=${postId}`);
-  };
-
   return (
     <>
       <NotificationWrap>
-        <ContentWrap onClick={removeNoticeListAndNavigateHandler}>
+        <ContentWrap
+          onClick={() => {
+            navigate(`/detail?=postId=${postId}`);
+          }}
+        >
           {contentType === 'post' ? (
             <div>
               "{stringLimit(title, 6)}" 게시글에 새로운 댓글이 있습니다.
