@@ -1,6 +1,6 @@
 import { useQueryClient, useMutation } from 'react-query';
 import { useNavigate } from 'react-router-dom';
-import { NotificationData } from 'utils/functions/type';
+import { NotificationData, NotificationDetail } from 'utils/functions/type';
 import instance from 'utils/functions/axios';
 import { stringLimit, timeForToday } from 'utils/functions/functions';
 import {
@@ -12,18 +12,22 @@ import {
 } from './styled';
 
 type GreetingProps = {
-  notificationData: NotificationData;
+  notificationDetail: NotificationDetail;
   notificationHandler: () => void;
 };
 export default function Notification({
-  notificationData,
+  notificationDetail,
   notificationHandler,
 }: GreetingProps) {
-  const { id, postId, contentType, title, content, modifiedDate } =
-    notificationData;
+  const { id, postId, contentType, title, content, isChecked, modifiedDate } =
+    notificationDetail;
+  const mutationPut = useMutation(({ path }: { path: string }) =>
+    instance.put(path),
+  );
   const mutationDelete = useMutation(({ path }: { path: string }) =>
     instance.delete(path),
   );
+
   const navigate = useNavigate();
   const queryClient = useQueryClient();
 
@@ -41,15 +45,26 @@ export default function Notification({
     );
   };
 
+  const clickNotificationHandler = () => {
+    mutationPut.mutate(
+      { path: `/notification/check?id=${id}` },
+      {
+        onSuccess: () => {
+          queryClient.invalidateQueries(['notification_key']);
+          navigate(`/detail?=postId=${postId}`);
+          notificationHandler();
+        },
+        onError: (err) => {
+          console.log(err);
+        },
+      },
+    );
+  };
+
   return (
     <>
-      <NotificationWrap>
-        <ContentWrap
-          onClick={() => {
-            navigate(`/detail?=postId=${postId}`);
-            notificationHandler();
-          }}
-        >
+      <NotificationWrap state={isChecked}>
+        <ContentWrap onClick={clickNotificationHandler}>
           <NotificationPhrase>
             {contentType === 'post' ? (
               <div>

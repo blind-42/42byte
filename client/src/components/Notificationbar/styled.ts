@@ -85,9 +85,15 @@ export const EmptyNotificationMessage = styled.div`
 	`}
 `;
 
+export const ContentContainer = styled.div``;
+
 export const NotificationList = styled.div`
   overflow-y: scroll;
   max-height: 60vh;
+  border-top: solid 2px #000;
+  border-left: solid 2px #000;
+  border-right: solid 2px #fff;
+  border-bottom: solid 2px #fff;
   ${({ theme }) => theme.media.tablet`
 		max-height: 50vh;
 	`}
@@ -96,7 +102,48 @@ export const NotificationList = styled.div`
 	`}
 `;
 
-export const NotificationWrap = styled.div`
+export const NotificationTool = styled.div`
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  color: #5b5b5b;
+  margin: 1rem;
+  font-size: 1.2rem;
+  div {
+    cursor: pointer;
+  }
+  div:nth-child(1) {
+    padding-right: 1rem;
+  }
+  div:last-child {
+    padding-left: 1rem;
+    border-left: solid 1px #737272;
+  }
+  ${({ theme }) => theme.media.tablet`
+		margin: 0.7rem;
+		font-size: 0.8rem;
+		div:nth-child(1) {
+			padding-right: 0.6rem;
+		}
+		div:last-child {
+			padding-left: 0.6rem;
+			border-left: solid 1px #737272;
+		}
+	`}
+  ${({ theme }) => theme.media.desktop`
+	margin: 0.7rem;
+	font-size: 0.8rem;
+	div:nth-child(1) {
+		padding-right: 0.6rem;
+	}
+	div:last-child {
+		padding-left: 0.6rem;
+		border-left: solid 1px #737272;
+	}
+`}
+`;
+
+export const NotificationWrap = styled.div<{ state?: boolean }>`
   display: grid;
   grid-template-columns: auto 1rem;
   column-gap: 0.5rem;
@@ -104,17 +151,19 @@ export const NotificationWrap = styled.div`
   padding: 1.2rem 1rem;
   width: 25rem;
   border-bottom: solid 1.5px #929191;
+  border-top: solid 1.5px #fff;
+  background: ${(props) => (props.state ? '#c4c4c4' : '#D5D5D5')};
   ${({ theme }) => theme.media.tablet`
 		grid-template-columns: auto 0.8rem;
 		column-gap: 0.3rem;
-		padding: 0.8rem;
+		padding: 0.9rem 0.8rem;
 		width: 20rem;
 		border-bottom: solid 1px #929191;
 	`}
   ${({ theme }) => theme.media.desktop`
 		grid-template-columns: auto 0.8rem;
 		column-gap: 0.3rem;
-		padding: 0.8rem;
+		padding: 0.9rem 0.8rem;
 		width: 18rem;
 		border-bottom: solid 1px #929191;
 	`}
@@ -127,7 +176,6 @@ export const NotificationPhrase = styled.div`
   line-height: 130%;
   color: #000;
   font-size: 1.3rem;
-
   ${({ theme }) => theme.media.tablet`
 		font-size: 0.9rem;
 	`}
@@ -152,7 +200,7 @@ export const ContentDetailWrap = styled.div`
   }
   ${({ theme }) => theme.media.tablet`
 	font-size: 0.9rem;
-	margin-top: 0.5rem;
+	margin-top: 0.6rem;
 	div:nth-child(1) {
     padding-right: 0.5rem;
   }
@@ -162,7 +210,7 @@ export const ContentDetailWrap = styled.div`
 `}
   ${({ theme }) => theme.media.desktop`
 	font-size: 0.9rem;
-	margin-top: 0.5rem;
+	margin-top: 0.6rem;
 	div:nth-child(1) {
     padding-right: 0.5rem;
   }

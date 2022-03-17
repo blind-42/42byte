@@ -28,7 +28,6 @@ export default function Main() {
     modifiedDate: '',
     hashId: '',
     profileImageUrl: '',
-    isChecked: false,
     roleType: '',
   });
   const { roleType } = userData;

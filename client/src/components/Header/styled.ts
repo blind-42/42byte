@@ -77,6 +77,22 @@ export const UtilButton = styled.div`
   img {
     height: 2rem;
   }
+  div {
+    position: fixed;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #bf2d2d;
+    color: #fff;
+    margin-left: 1.4rem;
+    margin-bottom: 1rem;
+    padding-bottom: 0.1rem;
+    font-size: 1.1rem;
+    font-weight: 500;
+    width: 1.5rem;
+    height: 1.5rem;
+  }
   :hover {
     background: #d5d5d5;
   }
@@ -84,11 +100,27 @@ export const UtilButton = styled.div`
 		img {
 			height: 1.3rem;
 		}
+		div {
+			margin-left: 1.3rem;
+			margin-bottom: 0.5rem;
+			font-size: 0.7rem;
+			font-weight: 500;
+			width: 0.9rem;
+			height: 0.9rem;
+		}
 	`}
   ${({ theme }) => theme.media.desktop`
 		padding: 0 0.6rem;
 		img {
 			height: 1.4rem;
+		}
+		div {
+			margin-left: 1.3rem;
+			margin-bottom: 0.5rem;
+			font-size: 0.7rem;
+			font-weight: 500;
+			width: 1rem;
+			height: 1rem;
 		}
 	`}
 `;
