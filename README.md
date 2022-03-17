@@ -11,7 +11,8 @@
 <!-- Title -->
 <div align=center>
   <p> 42좋은 42사람들을 위한 익명 커뮤니티 </p>
-  배포주소 : https://42byte.kr
+  <h3> 배포주소 </h3>
+  https://42byte.kr
 <!-- Content -->
   
 <!-- Tech Stack -->
