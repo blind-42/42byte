@@ -11,6 +11,7 @@ import {
   MenubarLogoWrap,
   MenubarButton,
   UtilButton,
+  HeaderBackdrop,
 } from './styled';
 
 export default function Header() {
@@ -41,10 +42,10 @@ export default function Header() {
     },
   );
 
-  const menubarHandler = () => {
+  const showMenubarHandler = () => {
     setShowMenu(!showMenu);
   };
-  console.log(noticeChecked);
+
   const showNotificationHandler = () => {
     setNoticeChecked(true);
     setShowNotificationbar(!showNotificationbar);
@@ -54,8 +55,12 @@ export default function Header() {
     <>
       <HeaderContainer>
         <MenubarLogoWrap>
-          <MenubarButton onClick={menubarHandler}>MENU</MenubarButton>
-          {showMenu && <Menubar menubarHandler={menubarHandler} />}
+          <MenubarButton onClick={showMenubarHandler}>MENU</MenubarButton>
+          {showMenu && (
+            <HeaderBackdrop onClick={showMenubarHandler}>
+              <Menubar menubarHandler={showMenubarHandler} />
+            </HeaderBackdrop>
+          )}
           <UtilButton onClick={() => navigate('/')}>
             <img src="images/bLogo.png" alt="LOGO" />
           </UtilButton>
@@ -67,7 +72,9 @@ export default function Header() {
             )}
           </UtilButton>
           {showNotificationbar && (
-            <Notificationbar notificationHandler={showNotificationHandler} />
+            <HeaderBackdrop onClick={showNotificationHandler}>
+              <Notificationbar notificationHandler={showNotificationHandler} />
+            </HeaderBackdrop>
           )}
         </MenubarLogoWrap>
         <Clock />
