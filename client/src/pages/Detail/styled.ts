@@ -10,6 +10,7 @@ export const PostContainer = styled.div`
   border-right: solid 2px #fff;
   border-bottom: solid 2px #fff;
   padding: 0.3rem;
+  margin: 3px 0;
   background: #d5d5d5;
 `;
 
