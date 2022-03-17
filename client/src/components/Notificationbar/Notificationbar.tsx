@@ -45,7 +45,13 @@ export default function Notificationbar({
         ) : (
           <NotificationList>
             {notificationData.map((el: NotificationData, idx) => {
-              return <Notification key={idx} notificationData={el} />;
+              return (
+                <Notification
+                  key={idx}
+                  notificationData={el}
+                  notificationHandler={notificationHandler}
+                />
+              );
             })}
           </NotificationList>
         )}

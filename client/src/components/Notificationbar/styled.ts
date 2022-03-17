@@ -101,7 +101,7 @@ export const NotificationWrap = styled.div`
   grid-template-columns: auto 1rem;
   column-gap: 0.5rem;
   align-items: start;
-  padding: 1rem;
+  padding: 1.2rem 1rem;
   width: 25rem;
   border-bottom: solid 1.5px #929191;
   ${({ theme }) => theme.media.tablet`
@@ -120,27 +120,56 @@ export const NotificationWrap = styled.div`
 	`}
 `;
 
-export const ContentWrap = styled.div`
+export const ContentWrap = styled.div``;
+
+export const NotificationPhrase = styled.div`
   cursor: pointer;
   line-height: 130%;
   color: #000;
   font-size: 1.3rem;
-  div:last-child {
-    margin-top: 1rem;
-    color: #737272;
-  }
+
   ${({ theme }) => theme.media.tablet`
 		font-size: 0.9rem;
-		div:last-child {
-			margin-top: 0.7rem;
-		}
 	`}
   ${({ theme }) => theme.media.desktop`
 		font-size: 0.9rem;
-		div:last-child {
-			margin-top: 0.7rem;
-		}
 	`}
+`;
+
+export const ContentDetailWrap = styled.div`
+  display: flex;
+  margin-top: 0.7rem;
+  color: #737272;
+  font-size: 1.3rem;
+  div:nth-child(1) {
+    padding-right: 0.8rem;
+  }
+  div:last-child {
+    color: #518edb;
+    font-weight: 500;
+    border-left: solid 1.5px #929191;
+    padding-left: 0.8rem;
+  }
+  ${({ theme }) => theme.media.tablet`
+	font-size: 0.9rem;
+	margin-top: 0.5rem;
+	div:nth-child(1) {
+    padding-right: 0.5rem;
+  }
+	div:last-child {
+		padding-left: 0.5rem;
+	}
+`}
+  ${({ theme }) => theme.media.desktop`
+	font-size: 0.9rem;
+	margin-top: 0.5rem;
+	div:nth-child(1) {
+    padding-right: 0.5rem;
+  }
+	div:last-child {
+		padding-left: 0.5rem;
+	}
+`}
 `;
 
 export const DeleteButton = styled.div`

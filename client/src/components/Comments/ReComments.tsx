@@ -183,7 +183,7 @@ function ReComments({ roleType, recomment, commentsUserList }: GreetingProps) {
               <Info isUsers={isUsers}>
                 <h3>{writer}</h3>
                 <div>
-                  {timeForToday(createdDate)}{' '}
+                  {timeForToday(createdDate, 'comment')}{' '}
                   {createdDate !== modifiedDate && '수정됨'}
                 </div>
               </Info>
