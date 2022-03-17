@@ -4,6 +4,8 @@ import com.blind.api.domain.notification.domain.Noti;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.time.LocalDateTime;
+
 @Getter
 @Setter
 public class NotiDTO {
@@ -12,6 +14,7 @@ public class NotiDTO {
     private String contentType;
     private String title;
     private String content;
+    private LocalDateTime modifiedDate;
 
     public NotiDTO(Noti noti) {
         this.id = noti.getId();
@@ -19,5 +22,6 @@ public class NotiDTO {
         this.contentType = noti.getContentType();
         this.title = noti.getTitle();
         this.content = noti.getContent();
+        this.modifiedDate = noti.getModifiedDate();
     }
 }

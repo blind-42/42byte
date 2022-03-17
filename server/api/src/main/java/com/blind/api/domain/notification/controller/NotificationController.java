@@ -1,5 +1,6 @@
 package com.blind.api.domain.notification.controller;
 
+import com.blind.api.domain.notification.DTO.NotiDTO;
 import com.blind.api.domain.notification.domain.Noti;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -8,6 +9,6 @@ import java.util.List;
 
 public interface NotificationController {
 
-    List<Noti> getNoti(HttpServletRequest request);
+    List<NotiDTO> getNoti(HttpServletRequest request);
     void delNoti(HttpServletRequest request, @RequestParam("id") Long id);
 }

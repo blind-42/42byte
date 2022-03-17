@@ -2,6 +2,7 @@ package com.blind.api.domain.notification.domain;
 
 import com.blind.api.domain.post.v2.domain.Post;
 import com.blind.api.domain.user.v2.domain.User;
+import com.blind.api.global.entity.BaseTimeEntity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Builder;
 import lombok.Getter;
@@ -16,7 +17,7 @@ import javax.persistence.*;
 @Setter
 @NoArgsConstructor
 @DynamicInsert
-public class Noti {
+public class Noti extends BaseTimeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
@@ -39,6 +40,9 @@ public class Noti {
 
     @Column(name = "content")
     private String content;
+
+    @Column(name = "count", columnDefinition = "Integer default 1")
+    private Long count;
 
     @Builder
     public Noti(User user, Post post, String contentType, String title, String content) {

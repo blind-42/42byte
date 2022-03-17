@@ -32,5 +32,5 @@ public interface CommentController {
 
     CommentResponseDTO findCommentByUserId (@SortDefault.SortDefaults({@SortDefault(sort = "id", direction = Sort.Direction.DESC)}) Pageable pageable,
                                                    HttpServletRequest request);
-    CommentListResponseDTO findCommentByPost (@RequestParam("boardId") @Positive (message = "{invalid.request}")Long boardId, @RequestParam("postId") @Positive (message = "{invalid.request}")Long postId, HttpServletRequest request);
+    CommentListResponseDTO findCommentByPost (@RequestParam("postId") @Positive (message = "{invalid.request}")Long postId, HttpServletRequest request);
     }
