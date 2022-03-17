@@ -22,14 +22,17 @@ export default function Header() {
     isChecked: false,
     roleType: '',
   });
-  const [isChecked, setIsChecked] = useState(userData.isChecked);
+  const [noticeChecked, setNoticeChecked] = useState(true);
   const [showMenu, setShowMenu] = useState(false);
   const [showNotificationbar, setShowNotificationbar] = useState(false);
   const navigate = useNavigate();
-  const { isFetching, isLoading, error, data } = useQuery(
+  const { data } = useQuery(
     ['user_key'],
     () => {
-      instance.get('/user').then((res) => setUserData(res.data));
+      instance.get('/user').then((res) => {
+        setUserData(res.data);
+        setNoticeChecked(res.data.isChecked);
+      });
     },
     {
       retry: 0,
@@ -41,9 +44,9 @@ export default function Header() {
   const menubarHandler = () => {
     setShowMenu(!showMenu);
   };
-
+  console.log(noticeChecked);
   const showNotificationHandler = () => {
-    setIsChecked(true);
+    setNoticeChecked(true);
     setShowNotificationbar(!showNotificationbar);
   };
 
@@ -57,7 +60,7 @@ export default function Header() {
             <img src="images/bLogo.png" alt="LOGO" />
           </UtilButton>
           <UtilButton onClick={showNotificationHandler}>
-            {isChecked ? (
+            {noticeChecked ? (
               <img src="images/notice_off.png" alt="notice" />
             ) : (
               <img src="images/notice_on.png" alt="notice" />
