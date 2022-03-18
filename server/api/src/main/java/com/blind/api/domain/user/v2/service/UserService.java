@@ -29,11 +29,6 @@ public class UserService {
     }
 
     @Transactional
-    public void setRoleType(User user, RoleType type){
-        user.setRoleType(type);
-    }
-
-    @Transactional
     public List<User> findAllByRoleType(RoleType roleType) {
         return userRepository.findAllByRoleType(roleType);
     }
@@ -41,6 +36,11 @@ public class UserService {
     @Transactional
     public Page<User> findAll(Pageable pageable){
         return userRepository.findAll(pageable);
+    }
+
+    @Transactional
+    public void setRoleType(User user, RoleType type){
+        user.setRoleType(type);
     }
 
     @Transactional

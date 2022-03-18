@@ -133,11 +133,11 @@ class PostControllerTest {
     @Transactional
     @DisplayName("전체 게시판 조회")
     void findAllPost() throws Exception {
-        postService.save(board, user, "title", "content");
-        postService.save(board, user, "title", "content");
-        postService.save(board, user, "title", "content");
-        postService.save(board, user, "title", "content");
-        postService.save(board, user, "title", "content");
+        postService.save(board, user, "title", "content", false);
+        postService.save(board, user, "title", "content", false);
+        postService.save(board, user, "title", "content", false);
+        postService.save(board, user, "title", "content", false);
+        postService.save(board, user, "title", "content", false);
         mockMvc.perform(get("/board")
                     .param("boardId", String.valueOf(board.getId()))
                     .header("Authorization", "Bearer access"))
@@ -153,12 +153,12 @@ class PostControllerTest {
     void searchPost() throws Exception{
         String keyword = "title";
 
-        postService.save(board, user, "title", "content");
-        postService.save(board, user, "title", "content");
-        postService.save(board, user, "title", "content");
-        postService.save(board, user, "title", "content");
-        postService.save(board, user, "title", "content");
-        postService.save(board, user, "title", "content");
+        postService.save(board, user, "title", "content", false);
+        postService.save(board, user, "title", "content", false);
+        postService.save(board, user, "title", "content", false);
+        postService.save(board, user, "title", "content", false);
+        postService.save(board, user, "title", "content", false);
+        postService.save(board, user, "title", "content", false);
         mockMvc.perform(get("/board/search")
                         .param("keyword", keyword)
                         .header("Authorization", "Bearer access"))
@@ -190,7 +190,7 @@ class PostControllerTest {
     void findPostDetailByPostId() throws Exception{
         MultiValueMap<String, String> param = new LinkedMultiValueMap<>();
 
-        Post post = postService.save(board, user, "title", "content");
+        Post post = postService.save(board, user, "title", "content", false);
         param.add("boardId", String.valueOf(board.getId()));
         param.add("postId", String.valueOf(post.getId()));
         Comment targetCmmt = commentService.save(board.getId(), post, user,"comment");
@@ -218,7 +218,7 @@ class PostControllerTest {
         body.put("title", "변경");
         body.put("content", "내용 변경");
 
-        Post post = postService.save(board, user, "title", "content");
+        Post post = postService.save(board, user, "title", "content", false);
         param.add("boardId", String.valueOf(board.getId()));
         param.add("postId", String.valueOf(post.getId()));
         mockMvc.perform(put("/post").contentType(MediaType.APPLICATION_JSON)
@@ -235,7 +235,7 @@ class PostControllerTest {
     @DisplayName("게시글 삭제")
     void deletePost() throws Exception{
 
-        Post post = postService.save(board, user, "title", "content");
+        Post post = postService.save(board, user, "title", "content", false);
         commentService.save(board.getId(), post, user,"comment");
         likeService.PostLike(post, user, 1L);
         mockMvc.perform(delete("/post")
@@ -250,11 +250,11 @@ class PostControllerTest {
     @Transactional
     @DisplayName("내가 쓴 게시글 조회")
     void findPostByUserId() throws Exception{
-        postService.save(board, user, "title", "content");
-        postService.save(board, user, "title", "content");
-        postService.save(board, user, "title", "content");
-        postService.save(board, user, "title", "content");
-        postService.save(board, user, "title", "content");
+        postService.save(board, user, "title", "content", false);
+        postService.save(board, user, "title", "content", false);
+        postService.save(board, user, "title", "content", false);
+        postService.save(board, user, "title", "content", false);
+        postService.save(board, user, "title", "content", false);
         mockMvc.perform(get("/mypage/post")
                 .header("Authorization", "Bearer access"))
                 .andExpect(status().isOk())

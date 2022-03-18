@@ -32,12 +32,11 @@ public class ImgControllerImpl implements ImgController{
     }
 
     @RequestMapping(value={"/image"}, method= RequestMethod.GET)
-    public List<Image> GetImage(ImageRequestDTO imageRequestDTO, HttpServletRequest request) {
-//        User user = tokenService.findUserByAccessToken(HeaderUtil.getAccessToken(request));
+    public List<Image> GetImage(HttpServletRequest request) {
+        User user = tokenService.findUserByAccessToken(HeaderUtil.getAccessToken(request));
 
-        List<Image> profileImage = imageService.findProfileImg();
-//        if (user.getRoleType() != RoleType.ADMIN)
-//            throw new BusinessException("{invalid.request}");
+        if (user.getRoleType() != RoleType.ADMIN)
+            throw new BusinessException("{invalid.request}");
         return imageService.findAll();
     }
 }

@@ -34,12 +34,6 @@ public class BlameServiceImpl implements BlameService{
 
     @Override
     @Transactional
-    public void deleteByPost(Post post) {
-        postBlameRepository.deleteByPost(post);
-    }
-
-    @Override
-    @Transactional
     public boolean checkPostBlame(Post post, User user) {
         return postBlameRepository.findByPostAndUser(post, user) != null ? true : false ;
     }

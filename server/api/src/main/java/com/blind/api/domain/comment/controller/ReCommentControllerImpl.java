@@ -29,6 +29,7 @@ public class ReCommentControllerImpl implements ReCommentController {
     private final UserService userService;
     private final NotificationService notificationService;
 
+    /*대댓글 저장*/
     @RequestMapping(value = "/recomment", method = RequestMethod.POST)
     public void saveReComment(Long targetCmmtId, CommentRequestDTO requestDTO, HttpServletRequest request) {
         Comment targetCmmt = commentService.findCommentById(targetCmmtId);
@@ -44,15 +45,18 @@ public class ReCommentControllerImpl implements ReCommentController {
         User pstAuthor = userService.findById(post.getAuthorId());
         User rootAuthor = userService.findById(rootCmmt.getAuthorId());
 
+        /*알림 보내기 -> 게시글 작성자(새로운 댓글)*/
         if (pstAuthor.getId() != user.getId()) {
             notificationService.updateNoti(pstAuthor, post);
             notificationService.save(pstAuthor, post, "post", post.getTitle(), requestDTO.getContent());
         }
+        /*알림 보내기 -> 타겟 댓글 작성자(새로운 댓글)*/
         if (targetAuthor.getId() != user.getId()) {
             notificationService.updateNoti(targetAuthor, post);
             notificationService.save(targetAuthor, post, "comment", targetCmmt.getContent(), requestDTO.getContent());
             userService.setCheck(targetAuthor);
         }
+        /*알림 보내기 -> 루트 댓글 작성자(새로운 댓글)*/
         if (targetCmmt.getAuthorId() != rootCmmt.getAuthorId() && rootAuthor.getId() != user.getId()) {
             notificationService.updateNoti(rootAuthor, post);
             notificationService.save(rootAuthor, post, "comment", rootCmmt.getContent(), requestDTO.getContent());

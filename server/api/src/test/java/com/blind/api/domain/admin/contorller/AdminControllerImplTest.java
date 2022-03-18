@@ -1,7 +1,6 @@
 package com.blind.api.domain.admin.contorller;
 
 import com.blind.api.common.RestDocsConfiguration;
-import com.blind.api.domain.admin.service.AdminService;
 import com.blind.api.domain.board.v1.domain.Board;
 import com.blind.api.domain.board.v1.repository.BoardRepository;
 import com.blind.api.domain.board.v1.service.BoardService;
@@ -33,10 +32,6 @@ import org.springframework.util.MultiValueMap;
 
 import javax.transaction.Transactional;
 
-import java.util.HashMap;
-import java.util.Map;
-
-import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -85,10 +80,6 @@ class AdminControllerImplTest {
     @Autowired
     @Mock
     private BoardService boardService;
-
-    @Autowired
-    @Mock
-    private AdminService adminService;
 
     @Autowired
     @Mock
@@ -180,13 +171,12 @@ class AdminControllerImplTest {
     @Transactional
     @DisplayName("관리자 삭제")
     void deleteAdmin() throws Exception{
-        adminService.setAdmin(user1);
+        user1.setRoleType(RoleType.ADMIN);
         mockMvc.perform(delete("/admin/User")
                         .param("targetUserId", String.valueOf(user1.getId()))
                         .header("Authorization", "Bearer access0"))
                 .andExpect(status().isOk())
-                .andDo(document("delete-admin"))
-        ;
+                .andDo(document("delete-admin"));
     }
 
     @Test
@@ -298,5 +288,73 @@ class AdminControllerImplTest {
                 .andExpect(status().isOk())
                 .andDo(document("all-board"))
         ;
+    }
+
+    @Test
+    void allUsers() {
+    }
+
+    @Test
+    void registerAdmin() {
+    }
+
+    @Test
+    void unRegisterAdmin() {
+    }
+
+    @Test
+    void registerManager() {
+    }
+
+    @Test
+    void unRegisterManager() {
+    }
+
+    @Test
+    void blockedPost() {
+    }
+
+    @Test
+    void blockedComment() {
+    }
+
+    @Test
+    void deletedBoard() {
+    }
+
+    @Test
+    void deletedPost() {
+    }
+
+    @Test
+    void deletedComment() {
+    }
+
+    @Test
+    void blamedPost() {
+    }
+
+    @Test
+    void blamedComment() {
+    }
+
+    @Test
+    void testDeleteBoard() {
+    }
+
+    @Test
+    void testDeletePost() {
+    }
+
+    @Test
+    void testDeleteComment() {
+    }
+
+    @Test
+    void restorePost() {
+    }
+
+    @Test
+    void restoreComment() {
     }
 }

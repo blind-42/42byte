@@ -38,6 +38,32 @@ public class PostControllerImpl implements PostController{
     private final BoardService boardService;
     private final CommentService commentService;
 
+    /*게시글 생성*/
+    @RequestMapping(value="/post", method = RequestMethod.POST)
+    public Post savePost(Long boardId, PostRequestDTO requestDTO, HttpServletRequest request){
+        User user = tokenService.findUserByAccessToken(HeaderUtil.getAccessToken(request));
+        boardService.addViewId(boardId);
+        Board board = boardService.findById(boardId);
+        return postService.save(board, user, requestDTO.getTitle(), requestDTO.getContent(), requestDTO.getIsImage());
+    }
+
+    /*게시글 상세조회 페이지*/
+    @RequestMapping(value={"/post"}, method = RequestMethod.GET)
+    public PostDetailDTO findPostDetailByPostId (Long postId, HttpServletRequest request){
+        User user = tokenService.findUserByAccessToken(HeaderUtil.getAccessToken(request));
+        Post post = postService.findById(postId);
+        Boolean isUsers = StringUtils.equals(post.getAuthorId(), user.getId());
+        Boolean isLiked = likeService.checkPostLike(post, user);
+        RoleType roleType = setRoleType(user, post.getBoard());
+
+        if (roleType == RoleType.USER && post.getIsDel() >= 1)
+            throw new BusinessException("{invalid.request}");
+        PostDetailDTO postDetailDTO = PostDetailDTO.from(post, isUsers, isLiked, setRoleType(user,post.getBoard()));
+
+        postService.updateView(postId);
+        return postDetailDTO;
+    }
+
     /* 게시판 조회 */
     @RequestMapping(value="/board", method = RequestMethod.GET)
     public PostResponseDTO findAllPost(Long boardId, Pageable pageable, HttpServletRequest request) {
@@ -64,11 +90,10 @@ public class PostControllerImpl implements PostController{
 
         PostResponseDTO<PostDTO> dtoList = new PostResponseDTO();
         postList.stream().forEach( post -> {
-            if (user.getRoleType() != RoleType.ADMIN)
-                dtoList.getContents().add(PostDTO.from(post, RoleType.USER));
+                dtoList.getContents().add(PostDTO.from(post, user.getRoleType()));
         });
         dtoList.setName("Hot 게시판");
-        dtoList.setId(7L);
+        dtoList.setId(10000L);
         dtoList.setPage(postList.getPageable().getPageNumber());
         dtoList.setPages(postList.getTotalPages());
         return dtoList;
@@ -98,30 +123,20 @@ public class PostControllerImpl implements PostController{
         return dtoList;
     }
 
-    /*게시글 생성*/
-    @RequestMapping(value="/post", method = RequestMethod.POST)
-    public Post savePost(Long boardId, PostRequestDTO requestDTO, HttpServletRequest request){
+    /*마이페이지 (내가 쓴 글)*/
+    @RequestMapping(value={"/mypage/post"}, method = RequestMethod.GET)
+    public PostResponseDTO findPostByUserId (Pageable pageable, HttpServletRequest request){
         User user = tokenService.findUserByAccessToken(HeaderUtil.getAccessToken(request));
-        boardService.addViewId(boardId);
-        Board board = boardService.findById(boardId);
-        return postService.save(board, user, requestDTO.getTitle(), requestDTO.getContent(), requestDTO.getIsImage());
-    }
+        Page<Post> savePageable = postService.findPostByIdIn(user, pageable);
 
-    /*게시글 상세조회 페이지*/
-    @RequestMapping(value={"/post"}, method = RequestMethod.GET)
-    public PostDetailDTO findPostDetailByPostId (Long postId, HttpServletRequest request){
-        User user = tokenService.findUserByAccessToken(HeaderUtil.getAccessToken(request));
-        Post post = postService.findById(postId);
-        Boolean isUsers = StringUtils.equals(post.getAuthorId(), user.getId());
-        Boolean isLiked = likeService.checkPostLike(post, user);
-        RoleType roleType = setRoleType(user, post.getBoard());
-
-        if (roleType == RoleType.USER && post.getIsDel() >= 1)
-            throw new BusinessException("{invalid.request}");
-        PostDetailDTO postDetailDTO = PostDetailDTO.from(post, isUsers, isLiked, setRoleType(user,post.getBoard()));
-
-        postService.updateView(postId);
-        return postDetailDTO;
+        PostResponseDTO dtoList = new PostResponseDTO();
+        savePageable.stream().forEach( post -> {
+            RoleType roleType = setRoleType(user, post.getBoard());
+            dtoList.getContents().add(PostDTO.from(post, roleType));
+        });
+        dtoList.setPage(savePageable.getPageable().getPageNumber());
+        dtoList.setPages(savePageable.getTotalPages());
+        return dtoList;
     }
 
     /*게시글 수정*/
@@ -153,6 +168,7 @@ public class PostControllerImpl implements PostController{
         });
     }
 
+    /*공지 등록*/
     @RequestMapping(value={"/post"}, method = RequestMethod.PATCH)
     public void setNotice(Long postId, HttpServletRequest request){
         Post post = postService.findById(postId);
@@ -166,23 +182,6 @@ public class PostControllerImpl implements PostController{
             postService.setNotice(post);
         else
             postService.deleteNotice(post);
-    }
-
-    /*마이페이지 (내가 쓴 글)*/
-    @RequestMapping(value={"/mypage/post"}, method = RequestMethod.GET)
-    public PostResponseDTO findPostByUserId (Pageable pageable, HttpServletRequest request){
-        User user = tokenService.findUserByAccessToken(HeaderUtil.getAccessToken(request));
-        Page<Post> savePageable = postService.findPostByIdIn(user, pageable);
-
-        PostResponseDTO dtoList = new PostResponseDTO();
-        savePageable.stream().forEach( post -> {
-            RoleType roleType = setRoleType(user, post.getBoard());
-            dtoList.getContents().add(PostDTO.from(post, roleType));
-        });
-        dtoList.setPage(savePageable.getPageable().getPageNumber());
-        dtoList.setPages(savePageable.getTotalPages());
-
-        return dtoList;
     }
 
     RoleType setRoleType(User user, Board board) {

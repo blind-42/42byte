@@ -16,7 +16,6 @@ import javax.validation.constraints.Positive;
 import java.util.Map;
 
 public interface BlameController {
-    public void postBlame(@RequestParam("postId") @Positive(message = "{invalid.request}") Long postId, @RequestBody @Valid BlameRequestDTO requestDTO, HttpServletRequest request);
-    public void commentBlame(@RequestParam("commentId") @Positive(message = "{invalid.request}") Long commentId, @RequestBody @Valid BlameRequestDTO requestDTO, HttpServletRequest request);
-
+    void postBlame(@RequestParam("postId") @Positive(message = "{invalid.request}") Long postId, @RequestBody @Valid BlameRequestDTO requestDTO, HttpServletRequest request);
+    void commentBlame(@RequestParam("commentId") @Positive(message = "{invalid.request}") Long commentId, @RequestBody @Valid BlameRequestDTO requestDTO, HttpServletRequest request);
 }

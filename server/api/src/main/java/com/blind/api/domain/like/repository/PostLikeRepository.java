@@ -13,6 +13,6 @@ import java.util.List;
 public interface PostLikeRepository extends JpaRepository<PostLike, Long> {
     PostLike findByPostAndUser(Post post, User user);
     void deleteByPost(Post post);
-    public void deleteByPostId(Long postId);
+    void deleteByPostId(Long postId);
     void deleteByPostAndUser(Post post, User user);
 }

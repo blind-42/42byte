@@ -22,17 +22,17 @@ public interface PostController {
                   @RequestBody @Valid PostRequestDTO requestDTO,
                   HttpServletRequest request);
 
-    void updatePost(@RequestParam @Positive (message = "{invalid.request}") Long postId,
-                    @RequestBody @Valid PostRequestDTO requestDTO,
-                    HttpServletRequest request);
-
-    void deletePost(@RequestParam @Positive (message = "{invalid.request}") Long postId,
-                    HttpServletRequest request);
+    PostDetailDTO findPostDetailByPostId (@RequestParam("postId") @Positive (message = "{invalid.request}") Long postId,
+                                          HttpServletRequest request);
 
     PostResponseDTO findAllPost(@RequestParam("boardId") @Positive (message = "{invalid.request}") Long boardId,
                                 @SortDefault.SortDefaults({
                                         @SortDefault(sort = "is_notice", direction = Sort.Direction.DESC),
                                         @SortDefault(sort = "id", direction = Sort.Direction.DESC)}) Pageable pageable, HttpServletRequest request);
+
+    /*?????????????sort 변수명이 신기해요ㅠㅠ*/
+    PostResponseDTO findHotPost(@SortDefault(sort = "hotDateTime", direction = Sort.Direction.DESC) Pageable pageable,
+                                HttpServletRequest request);
 
     PostResponseDTO searchPost(@RequestParam("boardId") @PositiveOrZero(message = "{invalid.request}") Long boardId, @RequestParam("keyword") @Length (min = 1, max= 255, message = "{invalid.request}") String keyword,
                                @SortDefault.SortDefaults({
@@ -42,10 +42,13 @@ public interface PostController {
     PostResponseDTO findPostByUserId (@SortDefault.SortDefaults({@SortDefault(sort = "id", direction = Sort.Direction.DESC)}) Pageable pageable,
                                       HttpServletRequest request);
 
-    PostDetailDTO findPostDetailByPostId (@RequestParam("postId") @Positive (message = "{invalid.request}") Long postId,
-                                          HttpServletRequest request);
+    void updatePost(@RequestParam @Positive (message = "{invalid.request}") Long postId,
+                    @RequestBody @Valid PostRequestDTO requestDTO,
+                    HttpServletRequest request);
 
-    PostResponseDTO findHotPost(@SortDefault.SortDefaults({
-            @SortDefault(sort = "hotDateTime", direction = Sort.Direction.DESC)})
-                                        Pageable pageable, HttpServletRequest request);
-    }
+    void deletePost(@RequestParam @Positive (message = "{invalid.request}") Long postId,
+                    HttpServletRequest request);
+
+    void setNotice(@RequestParam @Positive (message = "{invalid.request}") Long postId,
+                   HttpServletRequest request);
+}

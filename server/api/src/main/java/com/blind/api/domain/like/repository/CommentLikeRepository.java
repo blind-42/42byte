@@ -14,7 +14,4 @@ public interface CommentLikeRepository extends JpaRepository<CommentLike, Long> 
     CommentLike findByCommentAndUser(Comment comment, User user);
     void deleteByPostId(Long postId);
     void deleteByCommentAndUser(Comment comment, User user);
-    Page<CommentLike> findAllCommentByUserId(Long userId, Pageable pageable);
-
-    List<CommentLike> findAllByPostAndUser(Post post, User user);
 }

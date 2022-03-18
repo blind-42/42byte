@@ -30,6 +30,7 @@ public class BlameControllerImpl implements BlameController{
     private final TokenService tokenService;
     private final BlameService blameService;
 
+    /*게시글 신고*/
     @RequestMapping(value = {"/post/blame"}, method= RequestMethod.POST)
     public void postBlame(Long postId, BlameRequestDTO requestDTO, HttpServletRequest request) {
         Post post = postService.findById(postId);
@@ -41,6 +42,7 @@ public class BlameControllerImpl implements BlameController{
         }
     }
 
+    /*댓글 신고*/
     @RequestMapping(value = {"/comment/blame"}, method= RequestMethod.POST)
     public void commentBlame(Long commentId, BlameRequestDTO requestDTO , HttpServletRequest request) {
         Comment comment = commentService.findCommentById(commentId);

@@ -9,8 +9,6 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 public interface NotificationController {
-
-    NotiResponseDTO getNoti(HttpServletRequest request);
     void delNoti(HttpServletRequest request, @RequestParam("id") Long id);
     void checkNoti(HttpServletRequest request, @RequestParam("id") Long id);
     }

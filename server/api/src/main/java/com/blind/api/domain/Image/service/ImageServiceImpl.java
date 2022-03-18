@@ -16,8 +16,8 @@ public class ImageServiceImpl implements ImageService {
 
     @Override
     @Transactional
-    public List<Image> findProfileImg() {
-        return imageRepository.findAllByType(ImgType.PROFILE);
+    public Image saveImg(String url, ImgType type) {
+        return imageRepository.save(new Image(url, type));
     }
 
     @Override
@@ -28,7 +28,7 @@ public class ImageServiceImpl implements ImageService {
 
     @Override
     @Transactional
-    public Image saveImg(String url, ImgType type) {
-        return imageRepository.save(new Image(url, type));
+    public List<Image> findProfileImg() {
+        return imageRepository.findAllByType(ImgType.PROFILE);
     }
 }

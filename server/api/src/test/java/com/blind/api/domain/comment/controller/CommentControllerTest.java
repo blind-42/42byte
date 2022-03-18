@@ -81,6 +81,7 @@ class CommentControllerTest {
     private Token token;
     private User user;
     private Board board;
+    private Post post;
 
     @BeforeEach
     void init() {
@@ -102,6 +103,8 @@ class CommentControllerTest {
         board = boardService.findBoardByName("board").orElseGet(()-> null);
         if (board == null)
             board = boardService.save(new Board(user, "board"));
+        if (post == null)
+            post = postService.save(board, user,"title", "content", false);
     }
 
     @Test
@@ -112,7 +115,6 @@ class CommentControllerTest {
         Map<String, String> body = new HashMap<>();
         body.put("content", "내용");
 
-        Post post = postService.save(board, user,"title", "content");
         param.add("boardId", String.valueOf(board.getId()));
         param.add("postId", String.valueOf(post.getId()));
         mockMvc.perform(post("/comment").contentType(MediaType.APPLICATION_JSON)
@@ -131,7 +133,6 @@ class CommentControllerTest {
         Map<String, String> body = new HashMap<>();
         body.put("content", "수정된 내용");
 
-        Post post = postService.save(board, user ,"title", "content");
         Comment comment = commentService.save(board.getId(), post, user, "내용");
         mockMvc.perform(put("/comment").contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(body))
@@ -146,7 +147,6 @@ class CommentControllerTest {
     @Transactional
     @DisplayName("댓글 삭제")
     void deleteComment() throws Exception{
-        Post post = postService.save(board, user ,"title", "content");
         Comment comment = commentService.save(board.getId(), post, user, "내용");
         mockMvc.perform(delete("/comment")
                         .param("commentId", String.valueOf(comment.getId()))
@@ -160,9 +160,8 @@ class CommentControllerTest {
     @Transactional
     @DisplayName("내가 쓴 댓글 조회")
     void findCommentByUserId() throws Exception{
-        Post post = postService.save(board, user,"title", "content");
         for (int i = 0; i< 24; i++){
-            commentService.save(board.getId(), post,user, "내용1");
+            commentService.save(board.getId(), post, user,"내용1");
         }
         mockMvc.perform(get("/mypage/comment")
                         .header("Authorization", "Bearer access"))
