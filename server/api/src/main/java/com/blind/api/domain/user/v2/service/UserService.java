@@ -44,17 +44,12 @@ public class UserService {
     }
 
     @Transactional
-    public List<User> findAllUsers() {
-        return userRepository.findAll();
-    }
-
-    @Transactional
     public void setCheck(User user) {
-        user.setIsChecked(false);
+        user.setIsNotification(false);
     }
 
     @Transactional
     public void delCheck(User user) {
-        user.setIsChecked(true);
+        user.setIsNotification(true);
     }
 }

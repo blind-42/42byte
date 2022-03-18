@@ -4,9 +4,6 @@ import com.blind.api.domain.board.v1.domain.Board;
 import com.blind.api.domain.comment.domain.Comment;
 import com.blind.api.domain.comment.dto.*;
 import com.blind.api.domain.comment.service.CommentService;
-import com.blind.api.domain.like.domain.CommentLike;
-import com.blind.api.domain.like.service.LikeService;
-import com.blind.api.domain.notification.domain.Noti;
 import com.blind.api.domain.notification.service.NotificationService;
 import com.blind.api.domain.post.v2.domain.Post;
 import com.blind.api.domain.post.v2.service.PostService;
@@ -17,10 +14,7 @@ import com.blind.api.domain.user.v2.service.UserService;
 import com.blind.api.global.exception.BusinessException;
 import com.blind.api.global.utils.HeaderUtil;
 import lombok.AllArgsConstructor;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
-import org.springframework.data.web.SortDefault;
 import org.springframework.web.bind.annotation.*;
 import org.thymeleaf.util.StringUtils;
 
@@ -45,8 +39,8 @@ public class CommentControllerImpl implements CommentController {
         User postAuthor = userService.findById(post.getAuthorId());
         commentService.save(boardId,post, user, requestDTO.getContent());
         postService.updateComment(postId, 1L);
-        notificationService.checkNoti(postAuthor, user, post);
         if (postAuthor.getId() != user.getId()) {
+            notificationService.updateNoti(postAuthor, post);
             notificationService.save(postAuthor, post, "post", post.getTitle(), requestDTO.getContent());
             userService.setCheck(postAuthor);
         }

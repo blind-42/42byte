@@ -34,8 +34,9 @@ public class User extends BaseTimeEntity implements Serializable {
     @ColumnDefault("'1.jpg'")
     private String profileImageUrl;
 
-    @Column(name = "is_checked", columnDefinition = "boolean default true")
-    private Boolean isChecked;
+    @Column(name = "is_notification", columnDefinition = "boolean default true")
+    @JsonIgnore
+    private Boolean isNotification;
 
     @NotNull
     @Enumerated(EnumType.STRING)

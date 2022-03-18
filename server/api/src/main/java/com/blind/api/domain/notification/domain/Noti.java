@@ -41,15 +41,20 @@ public class Noti extends BaseTimeEntity {
     @Column(name = "content")
     private String content;
 
-    @Column(name = "count", columnDefinition = "Integer default 1")
+    @Column(name = "count")
     private Long count;
 
+    @Column(name = "is_checked")
+    private Boolean isChecked;
+
     @Builder
-    public Noti(User user, Post post, String contentType, String title, String content) {
+    public Noti(User user, Post post, String contentType, String title, Long count, String content, Boolean isChecked) {
         this.user = user;
         this.post = post;
         this.contentType = contentType;
         this.title = title;
+        this.count = count;
         this.content = content;
+        this.isChecked = isChecked;
     }
 }
