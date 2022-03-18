@@ -33,7 +33,7 @@ function CommentPreview({ commentData }: GreetingProps) {
   return (
     <>
       <CommentPreviewContainer
-        onClick={() => navigate(`/detail?=postId=${postId}`)}
+        onClick={() => navigate(`/detail?postId=${postId}`)}
       >
         <CommentWrap>
           {isMobile ? (

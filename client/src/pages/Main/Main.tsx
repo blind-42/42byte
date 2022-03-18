@@ -117,7 +117,7 @@ export default function Main() {
                 !el.isDel &&
                 (isLoggedIn ? (
                   <MainIcon key={el.id}>
-                    <Link to={`/board?=boardId=${el.id}`}>
+                    <Link to={`/board?boardId=${el.id}`}>
                       <img src="images/folder.png" />
                       <div>{stringLimit(el.name, 7)}</div>
                     </Link>
