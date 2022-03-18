@@ -4,6 +4,7 @@ import com.blind.api.domain.notification.domain.Noti;
 import com.blind.api.domain.notification.repository.NotificationRepository;
 import com.blind.api.domain.post.v2.domain.Post;
 import com.blind.api.domain.user.v2.domain.User;
+import com.blind.api.global.exception.BusinessException;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -18,13 +19,15 @@ public class NotificationService {
     @Transactional
     public Noti save(User user, Post post, String contentType, String title, String content) {
         Noti noti = notificationRepository.findByUserAndPost(user, post);
-        if (noti != null) {
+        if (noti == null) {
             noti =  notificationRepository.save(Noti.builder()
                     .user(user)
                     .post(post)
                     .contentType(contentType)
                     .title(title)
                     .content(content)
+                    .count(1L)
+                    .isChecked(false)
                     .build());
         } else {
             noti.setContent(content);
@@ -39,12 +42,8 @@ public class NotificationService {
     }
 
     @Transactional
-    public void delete(Long id) {
-        notificationRepository.deleteById(id);
-    }
-
-    public Noti findByUserAndPost(User user, Post post) {
-        return notificationRepository.findByUserAndPost(user, post);
+    public void deleteOne(User user, Long id) {
+        notificationRepository.deleteByUserAndId(user, id);
     }
 
     @Transactional
@@ -53,11 +52,31 @@ public class NotificationService {
     }
 
     @Transactional
-    public void checkNoti(User rootUser, User authorUser, Post post) {
-        if (rootUser.getIsChecked() == true) {
+    public void updateNoti(User rootUser, Post post) {
+        if (rootUser.getIsNotification() == true) {
             Noti noti = notificationRepository.findByUserAndPost(rootUser, post);
             if (noti != null)
                 notificationRepository.deleteById(post.getId());
         }
+    }
+
+    @Transactional
+    public void checkNoti(Noti noti) {
+        noti.setIsChecked(true);
+    }
+
+    @Transactional
+    public void checkAllNoti(User user) {
+        notificationRepository.checkAllByUser(user);
+    }
+
+    @Transactional
+    public Noti findById(User user, Long id) {
+        return notificationRepository.findByUserAndId(user, id);
+    }
+
+    @Transactional
+    public Integer getUnchecked(User user) {
+        return notificationRepository.countByUserAndIsChecked(user, false);
     }
 }

@@ -14,6 +14,7 @@ public class NotiDTO {
     private String contentType;
     private String title;
     private String content;
+    private Boolean isChecked;
     private LocalDateTime modifiedDate;
 
     public NotiDTO(Noti noti) {
@@ -22,6 +23,7 @@ public class NotiDTO {
         this.contentType = noti.getContentType();
         this.title = noti.getTitle();
         this.content = noti.getContent();
+        this.isChecked = noti.getIsChecked();
         this.modifiedDate = noti.getModifiedDate();
     }
 }

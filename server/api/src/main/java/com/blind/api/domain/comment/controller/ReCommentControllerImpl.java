@@ -4,7 +4,6 @@ import com.blind.api.domain.comment.domain.Comment;
 import com.blind.api.domain.comment.dto.CommentRequestDTO;
 import com.blind.api.domain.comment.service.CommentService;
 import com.blind.api.domain.comment.service.ReCommentService;
-import com.blind.api.domain.notification.domain.Noti;
 import com.blind.api.domain.notification.service.NotificationService;
 import com.blind.api.domain.post.v2.domain.Post;
 import com.blind.api.domain.post.v2.service.PostService;
@@ -18,9 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.management.Notification;
 import javax.servlet.http.HttpServletRequest;
-import java.util.List;
 
 @RestController
 @AllArgsConstructor
@@ -36,25 +33,30 @@ public class ReCommentControllerImpl implements ReCommentController {
     public void saveReComment(Long targetCmmtId, CommentRequestDTO requestDTO, HttpServletRequest request) {
         Comment targetCmmt = commentService.findCommentById(targetCmmtId);
         Comment rootCmmt = targetCmmt;
-        while (rootCmmt.getRootCommentId() != null)
-            rootCmmt = commentService.findCommentById(rootCmmt.getRootCommentId());
+        if (targetCmmt.getRootCommentId() != null)
+            rootCmmt = commentService.findCommentById(targetCmmt.getRootCommentId());
         User user = tokenService.findUserByAccessToken(HeaderUtil.getAccessToken(request));
         Long rootCmmtId = rootCmmt.getId();
         Post post = rootCmmt.getPost();
         reCommentService.save(targetCmmt, rootCmmtId, user.getId(), requestDTO.getContent());
         postService.updateComment(rootCmmt.getPost().getId(), 1L);
-        User targetAuthor = userService.findById(rootCmmt.getTargetAuthorId());
+        User targetAuthor = userService.findById(targetCmmt.getAuthorId());
         User pstAuthor = userService.findById(post.getAuthorId());
+        User rootAuthor = userService.findById(rootCmmt.getAuthorId());
 
         if (pstAuthor.getId() != user.getId()) {
-            notificationService.checkNoti(pstAuthor, user, post);
+            notificationService.updateNoti(pstAuthor, post);
             notificationService.save(pstAuthor, post, "post", post.getTitle(), requestDTO.getContent());
-            userService.setCheck(pstAuthor);
         }
         if (targetAuthor.getId() != user.getId()) {
-            notificationService.checkNoti(targetAuthor, user, post);
-            notificationService.save(targetAuthor, post, "comment", rootCmmt.getContent(), requestDTO.getContent());
+            notificationService.updateNoti(targetAuthor, post);
+            notificationService.save(targetAuthor, post, "comment", targetCmmt.getContent(), requestDTO.getContent());
             userService.setCheck(targetAuthor);
+        }
+        if (targetCmmt.getAuthorId() != rootCmmt.getAuthorId() && rootAuthor.getId() != user.getId()) {
+            notificationService.updateNoti(rootAuthor, post);
+            notificationService.save(rootAuthor, post, "comment", rootCmmt.getContent(), requestDTO.getContent());
+            userService.setCheck(rootAuthor);
         }
     }
 }
