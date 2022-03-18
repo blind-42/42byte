@@ -167,7 +167,7 @@ export default function Detail() {
       { path: `/post?postId=${id}` },
       {
         onSuccess: () => {
-          window.location.href = `/board?boardId=${boardId}&page=1`;
+          navigate(`/board?boardId=${boardId}&page=1`, { replace: true });
         },
         onError: () => {
           window.location.href = '/error';
@@ -187,7 +187,7 @@ export default function Detail() {
         {
           onSuccess: () => {
             alert('신고가 정상적으로 처리되었습니다.');
-            window.location.href = `/board?boardId=${boardId}&page=1`;
+            navigate(`/board?boardId=${boardId}&page=1`, { replace: true });
           },
           onError: () => {
             window.location.href = '/error';
