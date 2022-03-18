@@ -93,6 +93,7 @@ export const AdminPageButton = styled.div`
   div {
     font-weight: 600;
     font-size: 1.3rem;
+    text-shadow: 2px 2px 2px #000;
     color: #fff;
     margin: 0.3rem 0;
     padding: 0 3px;
