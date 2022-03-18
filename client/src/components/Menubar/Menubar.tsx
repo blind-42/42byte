@@ -95,7 +95,7 @@ export default function Menubar({ menubarHandler }: GreetingProps) {
                 return (
                   !el.isDel &&
                   (isLoggedIn ? (
-                    <Link to={`/board?=boardId=${el.id}`} key={idx}>
+                    <Link to={`/board?boardId=${el.id}`} key={idx}>
                       <div onClick={menubarHandler}>
                         <img src="images/folder.png" />{' '}
                         {stringLimit(el.name, 10)}

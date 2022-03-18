@@ -31,7 +31,7 @@ function PostPreview({ postData }: GreetingProps) {
 
   return (
     <>
-      <Link to={`/detail?=postId=${id}`}>
+      <Link to={`/detail?postId=${id}`}>
         <PreviewContainer state={isNotice}>
           {isNotice ? <NoticeMark>공지</NoticeMark> : <div>{viewId}</div>}
           <div>

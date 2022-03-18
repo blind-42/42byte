@@ -44,7 +44,7 @@ export default function Notification({ notificationDetail }: GreetingProps) {
       {
         onSuccess: () => {
           queryClient.invalidateQueries(['notification_key']);
-          window.location.href = `/detail?=postId=${postId}`;
+          window.location.href = `/detail?postId=${postId}`;
         },
         onError: (err) => {
           console.log(err);
