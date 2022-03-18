@@ -42,6 +42,7 @@ export default function Board() {
   const [keyword, setKeyword] = useState(
     decodeURI(window.location.search.split('keyword=')[1].split('&page=')[0]),
   );
+  const [success, setSuccess] = useState(false);
   const boardUrl = window.location.search.split('&')[0].split('=')[1];
   const pageUrl = window.location.search.split('&page=')[1];
   const navigate = useNavigate();
@@ -63,6 +64,7 @@ export default function Board() {
           setBoardData(res.data);
           innerScrollRef.current?.scrollIntoView(true);
           outerScrollRef.current?.scrollIntoView(true);
+          return setSuccess(true);
         });
     },
     {
@@ -73,7 +75,7 @@ export default function Board() {
   );
 
   const pageChangeHandler = (page: number) => {
-    navigate(`/search?boardId=${id}&keyword=${keyword}&page=${page}`); //
+    navigate(`/search?boardId=${id}&keyword=${keyword}&page=${page}`);
   };
 
   const keywordHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -118,7 +120,7 @@ export default function Board() {
                   <div>작성일</div>
                 </Category>
                 <ContentWrap>
-                  {!contents.length ? (
+                  {success && !contents.length ? (
                     <NoPost>
                       <img src="images/ghostWithPencil.png" />
                       검색 결과가 없습니다.
