@@ -5,7 +5,7 @@ import Header from 'components/Header/Header';
 import Footer from 'components/Footer/Footer';
 import PostPreview from 'components/Postpreview/Postpreview';
 import PageNation from 'components/PageNation/PageNation';
-// import Loading from 'pages/Loading/Loading';
+import Loading from 'components/Modal/Loading';
 import Error from 'pages/Error/Error';
 import instance from 'utils/functions/axios';
 import { BoardData, PostPre } from 'utils/functions/type';
@@ -42,6 +42,7 @@ export default function Board() {
   const [keyword, setKeyword] = useState(
     decodeURI(window.location.search.split('keyword=')[1].split('&page=')[0]),
   );
+  const [success, setSuccess] = useState(false);
   const boardUrl = window.location.search.split('&')[0].split('=')[1];
   const pageUrl = window.location.search.split('&page=')[1];
   const navigate = useNavigate();
@@ -52,7 +53,7 @@ export default function Board() {
     instance.get(path),
   );
 
-  const { error, data } = useQuery(
+  const { isLoading, error, data } = useQuery(
     ['search_key', boardUrl, pageUrl],
     () => {
       instance
@@ -63,6 +64,7 @@ export default function Board() {
           setBoardData(res.data);
           innerScrollRef.current?.scrollIntoView(true);
           outerScrollRef.current?.scrollIntoView(true);
+          return setSuccess(true);
         });
     },
     {
@@ -73,7 +75,7 @@ export default function Board() {
   );
 
   const pageChangeHandler = (page: number) => {
-    navigate(`/search?boardId=${id}&keyword=${keyword}&page=${page}`); //
+    navigate(`/search?boardId=${id}&keyword=${keyword}&page=${page}`);
   };
 
   const keywordHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -109,35 +111,39 @@ export default function Board() {
           </TopBar>
           <ContentFooterWrap>
             <UtilPostWrap>
-              <PostContainer>
-                <Category ref={innerScrollRef}>
-                  <div></div>
-                  <div>제목</div>
-                  <div>조회</div>
-                  <div>추천</div>
-                  <div>작성일</div>
-                </Category>
-                <ContentWrap>
-                  {!contents.length ? (
-                    <NoPost>
-                      <img src="images/ghostWithPencil.png" />
-                      검색 결과가 없습니다.
-                    </NoPost>
-                  ) : (
-                    <PostWrap>
-                      {contents.map((el: PostPre, idx) => {
-                        return <PostPreview key={idx} postData={el} />;
-                      })}
-                    </PostWrap>
-                  )}
-                </ContentWrap>
+              {isLoading ? (
+                <Loading />
+              ) : (
+                <PostContainer>
+                  <Category ref={innerScrollRef}>
+                    <div></div>
+                    <div>제목</div>
+                    <div>조회</div>
+                    <div>추천</div>
+                    <div>작성일</div>
+                  </Category>
+                  <ContentWrap>
+                    {success && !contents.length ? (
+                      <NoPost>
+                        <img src="images/ghostWithPencil.png" />
+                        검색 결과가 없습니다.
+                      </NoPost>
+                    ) : (
+                      <PostWrap>
+                        {contents.map((el: PostPre, idx) => {
+                          return <PostPreview key={idx} postData={el} />;
+                        })}
+                      </PostWrap>
+                    )}
+                  </ContentWrap>
 
-                <PageNation
-                  curPage={page}
-                  totalPages={pages}
-                  pageChangeHandler={pageChangeHandler}
-                />
-              </PostContainer>
+                  <PageNation
+                    curPage={page}
+                    totalPages={pages}
+                    pageChangeHandler={pageChangeHandler}
+                  />
+                </PostContainer>
+              )}
               <UtilWrap>
                 <Search>
                   <form name="searchForm" onSubmit={searchHandeler}>
