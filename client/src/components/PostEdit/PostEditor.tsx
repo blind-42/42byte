@@ -35,7 +35,7 @@ export default function PostEditor({
   const editorRef = useRef<Editor>(null);
   const navigate = useNavigate();
   const currentUrl = window.location.href;
-  const urlId = currentUrl.split('&postId=')[1];
+  const urlId = currentUrl.split('postId=')[1];
 
   const isTablet = useMediaQuery({
     query: '(min-width : 768px) and (max-width :1024px)',
