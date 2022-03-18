@@ -25,6 +25,7 @@ export default function Writing() {
   });
   const { contents, page, pages } = boardList;
   const [board, setBoard] = useState('1');
+  const [isPostData, setIsPostData] = useState<boolean>(false);
   const navigate = useNavigate();
 
   const { isLoading, error, data } = useQuery(
@@ -55,7 +56,11 @@ export default function Writing() {
   };
 
   const exitButtnClickHandler = (event: React.MouseEvent<HTMLDivElement>) => {
-    if (window.confirm('지금 나가시면 작성된 사항이 저장되지 않습니다!')) {
+    if (isPostData) {
+      if (window.confirm('지금 나가시면 작성된 사항이 저장되지 않습니다!')) {
+        navigate(-1);
+      }
+    } else {
       navigate(-1);
     }
   };
@@ -89,7 +94,7 @@ export default function Writing() {
                 <RiArrowDownSFill />
               </div>
             </SelectBoard>
-            <PostEditor boardId={Number(board)} />
+            <PostEditor boardId={Number(board)} setIsPostData={setIsPostData} />
           </ContentWrap>
         </PageContainer>
         <Header />
