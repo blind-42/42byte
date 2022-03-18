@@ -25,15 +25,14 @@ export default function CommentInput({
   // 	}
   // }
 
-  const submitValidHandler = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+  const submitValidHandler = () => {
     submitCmtHandler(comment);
     setComment('');
   };
 
   return (
     <>
-      <CommentInputWrap onSubmit={submitValidHandler} noValidate>
+      <CommentInputWrap>
         {placeholder ? (
           <textarea
             placeholder={placeholder}
@@ -50,7 +49,7 @@ export default function CommentInput({
         )}
         <div>
           <span>{comment.length} / 300</span>
-          <input type="submit" value="등록" />
+          <input type="button" onClick={submitValidHandler} value="등록" />
         </div>
       </CommentInputWrap>
     </>
