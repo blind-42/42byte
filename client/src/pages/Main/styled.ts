@@ -25,33 +25,21 @@ export const LogoImg = styled.div`
 `;
 
 export const MainIconWrap = styled.div`
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  max-height: 95%;
   position: absolute;
   z-index: 1;
-  top: 2rem;
-  left: 2rem;
-  display: grid;
-  grid-template-rows: repeat(6, auto);
-  grid-auto-flow: column;
-  row-gap: 1rem;
-  column-gap: 1rem;
-  place-items: center center;
-  place-content: start start;
-  ${({ theme }) => theme.media.tablet`
-		top: 1rem;
-		left: 1rem;
-		grid-template-rows: repeat(6, auto);
-	`}
-  ${({ theme }) => theme.media.desktop`
-		top: 1rem;
-		left: 1rem;
-		grid-template-rows: repeat(6, auto);
-	`}
+  top: 3px;
+  left: 3px;
 `;
 
 export const MainIcon = styled.div`
   display: flex;
   flex-direction: column;
   width: 8rem;
+  margin: 0.5rem 0rem;
   a {
     display: flex;
     flex-direction: column;
@@ -65,6 +53,7 @@ export const MainIcon = styled.div`
     text-align: center;
     font-weight: 600;
     font-size: 1.2rem;
+    text-shadow: 2px 2px 2px #000;
     color: #fff;
     margin: 0.3rem 0;
     padding: 0 3px;
@@ -104,6 +93,7 @@ export const AdminPageButton = styled.div`
   div {
     font-weight: 600;
     font-size: 1.3rem;
+    text-shadow: 2px 2px 2px #000;
     color: #fff;
     margin: 0.3rem 0;
     padding: 0 3px;
