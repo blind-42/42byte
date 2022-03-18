@@ -1,6 +1,5 @@
 import { useQueryClient, useMutation } from 'react-query';
-import { useNavigate } from 'react-router-dom';
-import { NotificationData, NotificationDetail } from 'utils/functions/type';
+import { NotificationDetail } from 'utils/functions/type';
 import instance from 'utils/functions/axios';
 import { stringLimit, timeForToday } from 'utils/functions/functions';
 import {
@@ -13,12 +12,8 @@ import {
 
 type GreetingProps = {
   notificationDetail: NotificationDetail;
-  notificationHandler: () => void;
 };
-export default function Notification({
-  notificationDetail,
-  notificationHandler,
-}: GreetingProps) {
+export default function Notification({ notificationDetail }: GreetingProps) {
   const { id, postId, contentType, title, content, isChecked, modifiedDate } =
     notificationDetail;
   const mutationPut = useMutation(({ path }: { path: string }) =>
@@ -27,8 +22,6 @@ export default function Notification({
   const mutationDelete = useMutation(({ path }: { path: string }) =>
     instance.delete(path),
   );
-
-  const navigate = useNavigate();
   const queryClient = useQueryClient();
 
   const deleteNotificationHandler = () => {
@@ -51,8 +44,7 @@ export default function Notification({
       {
         onSuccess: () => {
           queryClient.invalidateQueries(['notification_key']);
-          navigate(`/detail?=postId=${postId}`);
-          notificationHandler();
+          window.location.href = `/detail?=postId=${postId}`;
         },
         onError: (err) => {
           console.log(err);

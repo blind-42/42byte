@@ -1,5 +1,4 @@
-import { useState } from 'react';
-import { useQueryClient, useQuery, useMutation } from 'react-query';
+import { useQueryClient, useMutation } from 'react-query';
 import Notification from './Notification';
 import { NotificationData, NotificationDetail } from 'utils/functions/type';
 import instance from 'utils/functions/axios';
@@ -77,13 +76,7 @@ export default function Notificationbar({
             </NotificationTool>
             <NotificationList>
               {contents.map((el: NotificationDetail, idx) => {
-                return (
-                  <Notification
-                    key={idx}
-                    notificationDetail={el}
-                    notificationHandler={notificationHandler}
-                  />
-                );
+                return <Notification key={idx} notificationDetail={el} />;
               })}
             </NotificationList>
           </ContentContainer>
