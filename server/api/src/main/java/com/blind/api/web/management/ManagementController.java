@@ -1,6 +1,5 @@
 package com.blind.api.web.management;
 
-import com.blind.api.domain.admin.service.AdminService;
 import com.blind.api.domain.blame.domain.CommentBlame;
 import com.blind.api.domain.blame.domain.PostBlame;
 import com.blind.api.domain.blame.service.BlameService;

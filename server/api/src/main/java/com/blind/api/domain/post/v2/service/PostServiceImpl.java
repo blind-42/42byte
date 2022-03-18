@@ -23,24 +23,7 @@ import java.util.List;
 @AllArgsConstructor
 public class PostServiceImpl implements PostService {
     private final PostRepository postRepository;
-
-    @Autowired
     private final ApplicationYmlRead applicationYmlRead;
-
-    @Override
-    @Transactional
-    public Page<Post> findAllByBoardId(Long boardId, User user, Pageable pageable) {
-        Long blame = Long.parseLong(applicationYmlRead.getBlame());
-        Page<Post> postList = postRepository.findPostForUser(boardId, 0, blame, user.getId(), pageable);
-
-        return postList;
-    }
-
-    @Override
-    @Transactional
-    public Post findById(Long postId) {
-        return postRepository.findById(postId).orElseThrow(() -> new BusinessException("{post.notfound}"));
-    }
 
     @Override
     @Transactional
@@ -58,43 +41,26 @@ public class PostServiceImpl implements PostService {
 
     @Override
     @Transactional
+    public Post findById(Long postId) {
+        return postRepository.findById(postId).orElseThrow(() -> new BusinessException("{post.notfound}"));
+    }
+
+    @Override
+    @Transactional
+    public Page<Post> findAllByBoardId(Long boardId, User user, Pageable pageable) {
+        Long blame = Long.parseLong(applicationYmlRead.getBlame());
+        Page<Post> postList = postRepository.findPostForUser(boardId, 0, blame, user.getId(), pageable);
+
+        return postList;
+    }
+
+    @Override
+    @Transactional
     public Page<Post> search(Long boardId, User user, String keyword, Pageable pageable) {
         Long blame = Long.parseLong(applicationYmlRead.getBlame());
         if (boardId == 0)
             return postRepository.findPostsWithKeyword(0, blame, user.getId(), keyword, pageable);
         return postRepository.findPostsWithKeywordByBoard(boardId, 0, blame, user.getId(), keyword, pageable);
-    }
-
-    @Override
-    @Transactional
-    public void updateLike(Long id, Long add) {
-        postRepository.updateLike(id, add);
-    }
-
-    @Override
-    @Transactional
-    public void updateView(Long id) {
-        postRepository.updateView(id);
-    }
-
-    @Override
-    @Transactional
-    public void updatePost(Post post, String title, String content, Boolean isImage) {
-        post.setTitle(title);
-        post.setContent(content);
-        post.setIsImage(isImage);
-    }
-
-    @Override
-    @Transactional
-    public void deletePost(Post post) {
-        postRepository.deleteById(post.getId());
-    }
-
-    @Override
-    @Transactional
-    public void delete(Post post, Integer type) {
-        post.setIsDel(type);
     }
 
     @Override
@@ -105,26 +71,17 @@ public class PostServiceImpl implements PostService {
 
     @Override
     @Transactional
-    public void updateComment(Long id, Long add) {
-        postRepository.updateComment(id, add);
+    public Page<Post> findLikePostByUserId(Long userId, Pageable pageable){
+        return postRepository.findAllPostLikeByUserId(userId, pageable);
     }
 
     @Override
     @Transactional
-    public void addBlameCnt(Long id) {
-        postRepository.addBlameCnt(id);
-    }
+    public Page<Post> findAllHot(Pageable pageable) {
+        Long blame = Long.parseLong(applicationYmlRead.getBlame());
+        Long hot = Long.parseLong(applicationYmlRead.getHot());
 
-    @Override
-    @Transactional
-    public void setNotice(Post post) {
-        post.setIsNotice(true);
-    }
-
-    @Override
-    @Transactional
-    public void deleteNotice(Post post) {
-        post.setIsNotice(false);
+        return postRepository.findAllByLikeCntGreaterThanEqualAndIsDelEqualsAndBlameCntLessThanAndIsNoticeNot(hot, 0, blame, true, pageable);
     }
 
     @Override
@@ -148,17 +105,8 @@ public class PostServiceImpl implements PostService {
 
     @Override
     @Transactional
-    public void restorePost(Post post) {
-        if (post.getIsDel() > 0)
-            post.setIsDel(0);
-        else if (post.getBlameCnt() >= 5)
-            post.setBlameCnt(0L);
-    }
-
-    @Override
-    @Transactional
-    public Page<Post> findLikePostByUserId(Long userId, Pageable pageable){
-        return postRepository.findAllPostLikeByUserId(userId, pageable);
+    public void setNotice(Post post) {
+        post.setIsNotice(true);
     }
 
     @Override
@@ -169,10 +117,62 @@ public class PostServiceImpl implements PostService {
 
     @Override
     @Transactional
-    public Page<Post> findAllHot(Pageable pageable) {
-        Long blame = Long.parseLong(applicationYmlRead.getBlame());
-        Long hot = Long.parseLong(applicationYmlRead.getHot());
+    public void updatePost(Post post, String title, String content, Boolean isImage) {
+        post.setTitle(title);
+        post.setContent(content);
+        post.setIsImage(isImage);
+    }
 
-        return postRepository.findAllByLikeCntGreaterThanEqualAndIsDelEqualsAndBlameCntLessThanAndIsNoticeNot(hot, 0, blame, true, pageable);
+    @Override
+    @Transactional
+    public void updateComment(Long id, Long add) {
+        postRepository.updateComment(id, add);
+    }
+
+    @Override
+    @Transactional
+    public void updateLike(Long id, Long add) {
+        postRepository.updateLike(id, add);
+    }
+
+    @Override
+    @Transactional
+    public void updateView(Long id) {
+        postRepository.updateView(id);
+    }
+
+    @Override
+    @Transactional
+    public void addBlameCnt(Long id) {
+        postRepository.addBlameCnt(id);
+    }
+
+    @Override
+    @Transactional
+    public void deleteNotice(Post post) {
+        post.setIsNotice(false);
+    }
+
+    /*영구 삭제*/
+    @Override
+    @Transactional
+    public void deletePost(Post post) {
+        postRepository.deleteById(post.getId());
+    }
+
+    /*isDel 변경*/
+    @Override
+    @Transactional
+    public void delete(Post post, Integer type) {
+        post.setIsDel(type);
+    }
+
+    @Override
+    @Transactional
+    public void restorePost(Post post) {
+        if (post.getIsDel() > 0)
+            post.setIsDel(0);
+        else if (post.getBlameCnt() >= 5)
+            post.setBlameCnt(0L);
     }
 }

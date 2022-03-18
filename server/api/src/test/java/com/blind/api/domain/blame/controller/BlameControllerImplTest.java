@@ -110,7 +110,7 @@ class BlameControllerImplTest {
         }
         post = postRepository.findById(1L).orElseGet(()-> null);
         if (post == null)
-            post = postService.save(board, user,"title", "content");
+            post = postService.save(board, user,"title", "content", false);
         comment = commentRepository.findById(1L).orElseGet(()->null);
         if (comment == null)
             comment = commentService.save(board.getId(),post, user, "content");

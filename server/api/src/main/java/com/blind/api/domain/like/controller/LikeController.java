@@ -11,15 +11,15 @@ import javax.servlet.http.HttpServletRequest;
 import javax.validation.constraints.Positive;
 
 public interface LikeController {
-    public void postLike(@RequestParam("postId") @Positive (message = "{invalid.request}") Long postId, HttpServletRequest request);
+    void postLike(@RequestParam("postId") @Positive (message = "{invalid.request}") Long postId, HttpServletRequest request);
 
-    public void commentLike(@RequestParam("postId") @Positive (message = "{invalid.request}") Long postId, @RequestParam("commentId") Long commentId, HttpServletRequest request);
+    void commentLike(@RequestParam("postId") @Positive (message = "{invalid.request}") Long postId, @RequestParam("commentId") Long commentId, HttpServletRequest request);
 
-    public PostResponseDTO myPostLike(@SortDefault.SortDefaults({
+    PostResponseDTO myPostLike(@SortDefault.SortDefaults({
                                               @SortDefault(sort = "post.id", direction = Sort.Direction.DESC)}) Pageable pageable,
                                       HttpServletRequest request);
 
-    public CommentResponseDTO myCommentLike(@SortDefault.SortDefaults({
+    CommentResponseDTO myCommentLike(@SortDefault.SortDefaults({
                                                     @SortDefault(sort = "post.id", direction = Sort.Direction.DESC)}) Pageable pageable,
                                             HttpServletRequest request);
 }

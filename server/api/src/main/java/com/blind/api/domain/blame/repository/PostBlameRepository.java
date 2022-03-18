@@ -11,7 +11,6 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 public interface PostBlameRepository extends JpaRepository<PostBlame, Long> {
-    void deleteByPost(Post post);
     Page<PostBlame> findAll(Pageable pageable);
     PostBlame findByPostAndUser(Post post, User user);
 }

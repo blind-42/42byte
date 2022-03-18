@@ -8,6 +8,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface CommentBlameRepository extends JpaRepository<CommentBlame, Long> {
-    public CommentBlame findByCommentAndUser(Comment comment, User user);
-    public Page<CommentBlame> findAll(Pageable pageable);
+    CommentBlame findByCommentAndUser(Comment comment, User user);
+    Page<CommentBlame> findAll(Pageable pageable);
 }

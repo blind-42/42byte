@@ -9,26 +9,27 @@ import org.springframework.data.domain.Pageable;
 import java.util.List;
 
 public interface PostService {
-    Page<Post> findAllByBoardId(Long boardId, User user, Pageable pageable);
-    Post findById(Long postId);
     Post save(Board board, User user, String title, String content, Boolean isImage);
+    Post findById(Long postId);
+
+    Page<Post> findAllByBoardId(Long boardId, User user, Pageable pageable);
     Page<Post> search(Long boardId, User user, String keyword, Pageable pageable);
-    void updateLike(Long postId, Long add);
-    void updateView(Long postId);
-    void updatePost(Post post, String title, String content, Boolean isImage);
-    void deletePost(Post post);
-    void delete(Post post, Integer type);
     Page<Post> findPostByIdIn(User user, Pageable pageable);
-    void updateComment(Long id, Long add);
-    void addBlameCnt(Long id);
-    void deleteNotice(Post post);
-    void setNotice(Post post);
+    Page<Post> findLikePostByUserId(Long userId, Pageable pageable);
+    Page<Post> findAllHot(Pageable pageable);
     Page<Post> findDeleted(Pageable pageable);
     Page<Post> findBlamed(Pageable pageable);
     Page<Post> findBlocked(Pageable pageable);
-    void restorePost(Post post);
-    Page<Post> findLikePostByUserId(Long userId, Pageable pageable);
-    void setHot(Post post);
 
-    Page<Post> findAllHot(Pageable pageable);
+    void setHot(Post post);
+    void setNotice(Post post);
+    void updatePost(Post post, String title, String content, Boolean isImage);
+    void updateComment(Long id, Long add);
+    void updateLike(Long postId, Long add);
+    void updateView(Long postId);
+    void addBlameCnt(Long id);
+    void deleteNotice(Post post);
+    void deletePost(Post post);
+    void delete(Post post, Integer type);
+    void restorePost(Post post);
 }

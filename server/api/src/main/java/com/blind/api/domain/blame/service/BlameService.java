@@ -9,11 +9,12 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 public interface BlameService {
-    public void blamePost(Post post, User user, String reason);
-    public void blameComment(Comment comment, User user, String reason);
-    public void deleteByPost(Post post);
-    public boolean checkPostBlame(Post post, User user);
-    public boolean checkCommentBlame(Comment comment, User user);
-    public Page<PostBlame> findAllPost(Pageable pageable);
-    public Page<CommentBlame> findAllComment(Pageable pageable);
+    void blamePost(Post post, User user, String reason);
+    void blameComment(Comment comment, User user, String reason);
+
+    Page<PostBlame> findAllPost(Pageable pageable);
+    Page<CommentBlame> findAllComment(Pageable pageable);
+
+    boolean checkPostBlame(Post post, User user);
+    boolean checkCommentBlame(Comment comment, User user);
 }

@@ -37,6 +37,11 @@ public class NotificationService {
     }
 
     @Transactional
+    public Noti findById(User user, Long id) {
+        return notificationRepository.findByUserAndId(user, id);
+    }
+
+    @Transactional
     public List<Noti> getNoti(User user) {
         return notificationRepository.findByUserOrderByCreatedDateDesc(user);
     }
@@ -68,11 +73,6 @@ public class NotificationService {
     @Transactional
     public void checkAllNoti(User user) {
         notificationRepository.checkAllByUser(user);
-    }
-
-    @Transactional
-    public Noti findById(User user, Long id) {
-        return notificationRepository.findByUserAndId(user, id);
     }
 
     @Transactional

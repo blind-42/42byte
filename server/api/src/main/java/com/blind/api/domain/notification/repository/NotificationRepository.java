@@ -11,12 +11,14 @@ import org.springframework.data.repository.query.Param;
 import java.util.List;
 
 public interface NotificationRepository extends JpaRepository<Noti, Long> {
-    List<Noti> findByUserOrderByCreatedDateDesc(User user);
-    void deleteByUserAndId(User user, Long id);
-    Noti findByUserAndPost(User user, Post post);
-    void deleteAllByUser(User user);
-    Integer countByUserAndIsChecked(User user, Boolean isChecked);
     Noti findByUserAndId(User user, Long id);
+    Noti findByUserAndPost(User user, Post post);
+    List<Noti> findByUserOrderByCreatedDateDesc(User user);
+
+    void deleteByUserAndId(User user, Long id);
+    void deleteAllByUser(User user);
+
+    Integer countByUserAndIsChecked(User user, Boolean isChecked);
 
     @Query("update Noti p set p.isChecked = true where p.user = :user")
     @Modifying

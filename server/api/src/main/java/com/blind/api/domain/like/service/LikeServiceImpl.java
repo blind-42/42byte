@@ -47,6 +47,13 @@ public class LikeServiceImpl implements LikeService{
 
     @Override
     @Transactional
+    public void deleteByPost(Post post) {
+        postLikeRepository.deleteByPostId(post.getId());
+        commentLikeRepository.deleteByPostId(post.getId());
+    }
+
+    @Override
+    @Transactional
     public boolean checkPostLike(Post post, User user) {
         return postLikeRepository.findByPostAndUser(post, user) != null ? true : false;
     }
@@ -55,17 +62,5 @@ public class LikeServiceImpl implements LikeService{
     @Transactional
     public boolean checkCommentLike(Comment comment, User user) {
         return commentLikeRepository.findByCommentAndUser(comment, user) != null ? true : false;
-    }
-
-    @Transactional
-    public List<CommentLike> getCommentLikeInPost(Post post, User user) {
-        return commentLikeRepository.findAllByPostAndUser(post, user);
-    }
-
-    @Override
-    @Transactional
-    public void deleteByPost(Post post) {
-        postLikeRepository.deleteByPostId(post.getId());
-        commentLikeRepository.deleteByPostId(post.getId());
     }
 }

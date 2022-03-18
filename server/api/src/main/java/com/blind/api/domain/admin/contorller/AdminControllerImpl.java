@@ -38,6 +38,7 @@ public class AdminControllerImpl implements AdminController{
     private final CommentService commentService;
     private final LikeService likeService;
 
+    /*전체 유저 조회*/
     @RequestMapping(value = "/admin/user", method = RequestMethod.GET)
     public Page<User> allUsers(HttpServletRequest request, Pageable pageable) {
         if (!isAdmin(request))
@@ -97,36 +98,6 @@ public class AdminControllerImpl implements AdminController{
         return dtoList;
     }
 
-    /*삭제된 게시글 조회*/
-    @RequestMapping(value = "/admin/deleted/post", method = RequestMethod.GET)
-    public PostResponseDTO deletedPost(HttpServletRequest request, Pageable pageable) {
-        if (!isAdmin(request))
-            throw new BusinessException("{invalid.request}");
-        PostResponseDTO dtoList = new PostResponseDTO<>();
-        Page<Post> postList = postService.findDeleted(pageable);
-        postList.stream().forEach( post -> {
-            dtoList.getContents().add(PostDTO.from(post, RoleType.ADMIN));
-        });
-        dtoList.setPage(postList.getPageable().getPageNumber());
-        dtoList.setPages(postList.getTotalPages());
-        return dtoList;
-    }
-
-    /*신고된 게시글 조회*/
-    @RequestMapping(value = "/admin/blamed/post", method = RequestMethod.GET)
-    public PostResponseDTO blamedPost(HttpServletRequest request, Pageable pageable) {
-        if (!isAdmin(request))
-            throw new BusinessException("{invalid.request}");
-        PostResponseDTO dtoList = new PostResponseDTO<>();
-        Page<Post> postList = postService.findBlamed(pageable);
-        postList.stream().forEach( post -> {
-            dtoList.getContents().add(PostDTO.from(post, RoleType.ADMIN));
-        });
-        dtoList.setPage(postList.getPageable().getPageNumber());
-        dtoList.setPages(postList.getTotalPages());
-        return dtoList;
-    }
-
     /*차단된 댓글 조회*/
     @RequestMapping(value = "/admin/blocked/comment", method = RequestMethod.GET)
     public CommentResponseDTO blockedComment(HttpServletRequest request, Pageable pageable) {
@@ -134,36 +105,6 @@ public class AdminControllerImpl implements AdminController{
             throw new BusinessException("{invalid.request}");
         CommentResponseDTO dtoList = new CommentResponseDTO();
         Page<Comment> commnetList = commentService.findBlocked(pageable);
-        commnetList.stream().forEach( comment -> {
-            dtoList.getContents().add(CommentDTO.from(comment));
-        });
-        dtoList.setPage(commnetList.getPageable().getPageNumber());
-        dtoList.setPages(commnetList.getTotalPages());
-        return dtoList;
-    }
-
-    /*삭제된 댓글 조회*/
-    @RequestMapping(value = "/admin/deleted/comment", method = RequestMethod.GET)
-    public CommentResponseDTO deletedComment(HttpServletRequest request, Pageable pageable) {
-        if (!isAdmin(request))
-            throw new BusinessException("{invalid.request}");
-        CommentResponseDTO dtoList = new CommentResponseDTO();
-        Page<Comment> commnetList = commentService.findDeleted(pageable);
-        commnetList.stream().forEach( comment -> {
-            dtoList.getContents().add(CommentDTO.from(comment));
-        });
-        dtoList.setPage(commnetList.getPageable().getPageNumber());
-        dtoList.setPages(commnetList.getTotalPages());
-        return dtoList;
-    }
-
-    /*신고된 댓글 조회*/
-    @RequestMapping(value = "/admin/blamed/comment", method = RequestMethod.GET)
-    public CommentResponseDTO blamedComment(HttpServletRequest request, Pageable pageable) {
-        if (!isAdmin(request))
-            throw new BusinessException("{invalid.request}");
-        CommentResponseDTO dtoList = new CommentResponseDTO();
-        Page<Comment> commnetList = commentService.findBlamed(pageable);
         commnetList.stream().forEach( comment -> {
             dtoList.getContents().add(CommentDTO.from(comment));
         });
@@ -186,6 +127,67 @@ public class AdminControllerImpl implements AdminController{
         dtoList.setPages(boardList.getTotalPages());
         return dtoList;
     }
+
+    /*삭제된 게시글 조회*/
+    @RequestMapping(value = "/admin/deleted/post", method = RequestMethod.GET)
+    public PostResponseDTO deletedPost(HttpServletRequest request, Pageable pageable) {
+        if (!isAdmin(request))
+            throw new BusinessException("{invalid.request}");
+        PostResponseDTO dtoList = new PostResponseDTO<>();
+        Page<Post> postList = postService.findDeleted(pageable);
+        postList.stream().forEach( post -> {
+            dtoList.getContents().add(PostDTO.from(post, RoleType.ADMIN));
+        });
+        dtoList.setPage(postList.getPageable().getPageNumber());
+        dtoList.setPages(postList.getTotalPages());
+        return dtoList;
+    }
+
+    /*삭제된 댓글 조회*/
+    @RequestMapping(value = "/admin/deleted/comment", method = RequestMethod.GET)
+    public CommentResponseDTO deletedComment(HttpServletRequest request, Pageable pageable) {
+        if (!isAdmin(request))
+            throw new BusinessException("{invalid.request}");
+        CommentResponseDTO dtoList = new CommentResponseDTO();
+        Page<Comment> commnetList = commentService.findDeleted(pageable);
+        commnetList.stream().forEach( comment -> {
+            dtoList.getContents().add(CommentDTO.from(comment));
+        });
+        dtoList.setPage(commnetList.getPageable().getPageNumber());
+        dtoList.setPages(commnetList.getTotalPages());
+        return dtoList;
+    }
+
+    /*신고된 게시글 조회*/
+    @RequestMapping(value = "/admin/blamed/post", method = RequestMethod.GET)
+    public PostResponseDTO blamedPost(HttpServletRequest request, Pageable pageable) {
+        if (!isAdmin(request))
+            throw new BusinessException("{invalid.request}");
+        PostResponseDTO dtoList = new PostResponseDTO<>();
+        Page<Post> postList = postService.findBlamed(pageable);
+        postList.stream().forEach( post -> {
+            dtoList.getContents().add(PostDTO.from(post, RoleType.ADMIN));
+        });
+        dtoList.setPage(postList.getPageable().getPageNumber());
+        dtoList.setPages(postList.getTotalPages());
+        return dtoList;
+    }
+
+    /*신고된 댓글 조회*/
+    @RequestMapping(value = "/admin/blamed/comment", method = RequestMethod.GET)
+    public CommentResponseDTO blamedComment(HttpServletRequest request, Pageable pageable) {
+        if (!isAdmin(request))
+            throw new BusinessException("{invalid.request}");
+        CommentResponseDTO dtoList = new CommentResponseDTO();
+        Page<Comment> commnetList = commentService.findBlamed(pageable);
+        commnetList.stream().forEach( comment -> {
+            dtoList.getContents().add(CommentDTO.from(comment));
+        });
+        dtoList.setPage(commnetList.getPageable().getPageNumber());
+        dtoList.setPages(commnetList.getTotalPages());
+        return dtoList;
+    }
+
 
     /* 게시판 영구 삭제 */
     @RequestMapping(value = "/admin/board", method = RequestMethod.DELETE)

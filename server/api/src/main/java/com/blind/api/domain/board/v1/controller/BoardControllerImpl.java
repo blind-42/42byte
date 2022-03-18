@@ -35,6 +35,7 @@ public class BoardControllerImpl implements BoardController {
     private final BoardService boardService;
     private final TokenService tokenService;
 
+    /*게시판 생성*/
     @RequestMapping(value="/board", method = RequestMethod.POST)
     public BoardDTO createBoard(BoardRequestDTO requestDTO, HttpServletRequest request) {
         String name = requestDTO.getName().trim();
@@ -43,6 +44,7 @@ public class BoardControllerImpl implements BoardController {
         return BoardDTO.from(board);
     }
 
+    /*게시판 목록 조회*/
     @RequestMapping(value="/board/list", method = RequestMethod.GET)
     public BoardResponseDTO findAllBoard(Pageable pageable, HttpServletRequest request) {
         BoardResponseDTO dtoList = new BoardResponseDTO();
@@ -56,6 +58,7 @@ public class BoardControllerImpl implements BoardController {
         return dtoList;
     }
 
+    /*내가 만든 게시판 조회*/
     @RequestMapping(value={"/mypage/board"}, method = RequestMethod.GET)
     public BoardPageResponseDTO findAllBoardByUserId (Pageable pageable, HttpServletRequest request){
         User user = tokenService.findUserByAccessToken(HeaderUtil.getAccessToken(request));

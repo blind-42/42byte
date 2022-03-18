@@ -114,7 +114,7 @@ class ReCommentControllerTest {
     @Transactional
     @DisplayName("대댓글 저장")
     void saveReComment() throws Exception{
-        Post post = postService.save(board, user,"title", "content");
+        Post post = postService.save(board, user,"title", "content", false);
         Comment comment = commentService.save(board.getId(), post, user, "내용");
         MultiValueMap<String, String> param = new LinkedMultiValueMap<>();
         param.add("commentId", String.valueOf(comment.getId()));
@@ -134,7 +134,7 @@ class ReCommentControllerTest {
     @Transactional
     @DisplayName("대댓글 저장")
     void saveReReComment() throws Exception{
-        Post post = postService.save(board, user,"title", "content");
+        Post post = postService.save(board, user,"title", "content", false);
         Comment comment = commentService.save(board.getId(), post, user, "내용");
         Comment comment1 = reCommentService.save(comment, comment.getId(), user.getId(), "hi");
         MultiValueMap<String, String> param = new LinkedMultiValueMap<>();

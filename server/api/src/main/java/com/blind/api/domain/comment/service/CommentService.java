@@ -12,33 +12,25 @@ import java.util.List;
 
 public interface CommentService {
     Comment save(Long boardId, Post post, User user, String content);
-
-    void update(Comment comment, String content);
-
-    List<Comment> findAllComment(Long postId);
-
-    void delete(Comment comment, Integer type);
-
-    void deleteComment(Comment comment);
-
-    void deleteCommentByPostId(Long postId);
-
-    Page<Comment> findCommentByAuthorId(Long userId, Pageable pageable);
-
-    void updateLike(Long id, Long add);
-
-    CommentResponseDTO findCommentByIdIn(Long userId, Pageable pageable);
-
     Comment findCommentById(Long id);
 
-    void addBlameCnt(Long id);
+    List<Comment> findAllComment(Long postId);
+    List<Comment> findByPostAndUser(Long postId, Long userId);
+
+    Page<Comment> findCommentByUser(Long userId, Pageable pageable);
+    Page<Comment> findLikeCommentByUserId(Long userId, Pageable pageable);
 
     Page<Comment> findDeleted(Pageable pageable);
     Page<Comment> findBlamed(Pageable pageable);
     Page<Comment> findBlocked(Pageable pageable);
 
+    void update(Comment comment, String content);
+    /*일반삭제(isDel 변경)*/
+    void delete(Comment comment, Integer type);
+    /*영구삭제*/
+    void deleteComment(Comment comment);
+    void deleteCommentByPostId(Long postId);
+    void updateLike(Long id, Long add);
+    void addBlameCnt(Long id);
     void restoreComment(Comment comment);
-
-    List<Comment> findByPost(Long postId, Long userId);
-    Page<Comment> findLikeCommentByUserId(Long userId, Pageable pageable);
-    }
+}
