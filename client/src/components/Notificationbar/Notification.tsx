@@ -68,17 +68,11 @@ export default function Notification({
           <NotificationPhrase>
             {contentType === 'post' ? (
               <div>
-                {stringLimit(
-                  `"${stringLimit(title, 6)}" 게시글에 새로운 댓글이 있습니다.`,
-                  22,
-                )}
+                {`"${stringLimit(title, 6)}" 게시글에 새로운 댓글이 있습니다.`}
               </div>
             ) : (
               <div>
-                {stringLimit(
-                  `"${stringLimit(title, 6)}" 댓글에 새로운 댓글이 있습니다.`,
-                  22,
-                )}
+                {`"${stringLimit(title, 6)}" 댓글에 새로운 댓글이 있습니다.`}
               </div>
             )}
           </NotificationPhrase>
