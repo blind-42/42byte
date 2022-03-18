@@ -116,7 +116,7 @@ export default function PostEditor({
           isImage: isImage,
         })
         .then((res) =>
-          navigate(`/detail?boardId=${boardId}&postId=${res.data.id}`, {
+          navigate(`/detail?postId=${res.data.id}`, {
             replace: true,
           }),
         )
@@ -128,10 +128,7 @@ export default function PostEditor({
           content: content,
           isImage: isImage,
         })
-        .then(
-          () =>
-            (window.location.href = `/detail?boardId=${boardId}&postId=${urlId}`),
-        )
+        .then(() => (window.location.href = `/detail?postId=${urlId}`))
         .catch((err) => console.log(err));
     }
   };

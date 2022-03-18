@@ -156,7 +156,7 @@ export default function Board() {
                   </form>
                 </Search>
                 <WritingButton>
-                  <Link to={`/writing?=boardId=${id}`}>
+                  <Link to={`/writing?boardId=${id}`}>
                     <input type="button" value="글쓰기" />
                   </Link>
                 </WritingButton>
