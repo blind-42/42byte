@@ -267,6 +267,7 @@ export default function Detail() {
                     state={'edit'}
                     detailData={detailData}
                     boardId={boardId}
+                    setIsPostData={() => {}}
                   />
                 ) : (
                   <PostContainer>

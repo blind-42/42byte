@@ -20,12 +20,14 @@ type PostDataType = {
   state?: string;
   detailData?: PostData;
   boardId: number;
+  setIsPostData: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 export default function PostEditor({
   state,
   detailData,
   boardId,
+  setIsPostData,
 }: PostDataType) {
   const [title, setTitle] = useState<string>('');
   const [content, setContent] = useState<string>('');
@@ -78,6 +80,9 @@ export default function PostEditor({
       setIsImage(1);
     } else {
       setIsImage(0);
+    }
+    if (content) {
+      setIsPostData(true);
     }
   });
 
