@@ -73,7 +73,8 @@ export const UtilButton = styled.div`
   border-left: solid 2px #fff;
   border-right: solid 2px #000;
   border-bottom: solid 2px #000;
-  padding: 0 0.6rem;
+  /* padding: 0 0.6rem; */
+  width: 3.7rem;
   img {
     height: 2rem;
   }
@@ -97,6 +98,7 @@ export const UtilButton = styled.div`
     background: #d5d5d5;
   }
   ${({ theme }) => theme.media.tablet`
+	width: 2.7rem;
 		img {
 			height: 1.3rem;
 		}
@@ -110,7 +112,8 @@ export const UtilButton = styled.div`
 		}
 	`}
   ${({ theme }) => theme.media.desktop`
-		padding: 0 0.6rem;
+		// padding: 0 0.6rem;
+		width: 2.7rem;
 		img {
 			height: 1.4rem;
 		}
