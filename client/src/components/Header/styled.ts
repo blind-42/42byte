@@ -60,6 +60,7 @@ export const HeaderBackdrop = styled.div`
   align-items: center;
   width: 100vw;
   height: 100vh;
+  max-height: -webkit-fill-available;
 `;
 
 export const UtilButton = styled.div`
