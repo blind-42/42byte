@@ -56,7 +56,7 @@ export default function Header() {
             </HeaderBackdrop>
           )}
           <UtilButton onClick={() => navigate('/')}>
-            <img src="images/bLogo.png" alt="LOGO" />
+            <img src="images/BLogo.png" alt="LOGO" />
           </UtilButton>
           {total ? (
             <UtilButton onClick={showNotificationHandler}>
