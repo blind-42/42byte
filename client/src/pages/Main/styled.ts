@@ -49,7 +49,6 @@ export const MainIcon = styled.div`
     height: 5.5rem;
   }
   div {
-    overflow-y: hidden;
     text-align: center;
     font-weight: 600;
     font-size: 1.2rem;
