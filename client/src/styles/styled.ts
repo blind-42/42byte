@@ -6,6 +6,7 @@ export const AppContainer = styled.div`
   justify-items: center;
   background: #6bb8f0;
   height: 100vh;
+  max-height: -webkit-fill-available;
   input[type='button'] {
     -webkit-appearance: none;
   }
