@@ -25,21 +25,33 @@ export const LogoImg = styled.div`
 `;
 
 export const MainIconWrap = styled.div`
-  display: flex;
-  flex-direction: column;
-  flex-wrap: wrap;
-  max-height: 95%;
   position: absolute;
   z-index: 1;
-  top: 3px;
-  left: 3px;
+  top: 2rem;
+  left: 2rem;
+  display: grid;
+  grid-template-rows: repeat(6, auto);
+  grid-auto-flow: column;
+  row-gap: 1rem;
+  column-gap: 1rem;
+  place-items: center center;
+  place-content: start start;
+  ${({ theme }) => theme.media.tablet`
+		top: 1rem;
+		left: 1rem;
+		grid-template-rows: repeat(6, auto);
+	`}
+  ${({ theme }) => theme.media.desktop`
+		top: 1rem;
+		left: 1rem;
+		grid-template-rows: repeat(6, auto);
+	`}
 `;
 
 export const MainIcon = styled.div`
   display: flex;
   flex-direction: column;
   width: 8rem;
-  margin: 0.5rem 0rem;
   a {
     display: flex;
     flex-direction: column;
