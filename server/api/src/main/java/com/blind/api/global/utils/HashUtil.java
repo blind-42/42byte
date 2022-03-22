@@ -12,8 +12,10 @@ import java.nio.charset.StandardCharsets;
 public class HashUtil {
     public static Long getHashId(Long Id, Long salt) {
 
-//        log.info();
-        return Hashing.sipHash24(Id, salt).hashString(Id.toString(), StandardCharsets.UTF_8).asLong();
+        Long result = Long.valueOf(Hashing.sipHash24(Id, salt).hashString(Id.toString(), StandardCharsets.UTF_8).asInt());
+        if (result < 0)
+            result = result * -1 + Integer.MAX_VALUE;
+        return result;
     }
 }
 

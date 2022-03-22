@@ -32,6 +32,8 @@ import org.springframework.util.MultiValueMap;
 
 import javax.transaction.Transactional;
 
+import java.util.HashMap;
+
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -146,7 +148,7 @@ class AdminControllerImplTest {
         }
         board = boardRepository.findBoardByName("board").orElseGet(()-> null);
         if (board == null)
-            board = boardRepository.save(new Board(user, "board"));
+            board = boardRepository.save(new Board(user1, "board"));
         post = postRepository.findById(1L).orElseGet(()-> null);
         if (post == null)
             post = postService.save(board, user,"title", "content", false);
@@ -159,24 +161,14 @@ class AdminControllerImplTest {
     @Transactional
     @DisplayName("관리자 등록")
     void setAdmin() throws Exception{
-        mockMvc.perform(post("/admin/User")
-                .param("targetUserId", String.valueOf(user1.getId()))
-                .header("Authorization", "Bearer access0"))
-                .andExpect(status().isOk())
-                .andDo(document("set-admin"))
-                ;
-    }
+        performPost("/admin/user", "set-admin", "userId", user1.getId().toString());
+        }
 
     @Test
     @Transactional
     @DisplayName("관리자 삭제")
     void deleteAdmin() throws Exception{
-        user1.setRoleType(RoleType.ADMIN);
-        mockMvc.perform(delete("/admin/User")
-                        .param("targetUserId", String.valueOf(user1.getId()))
-                        .header("Authorization", "Bearer access0"))
-                .andExpect(status().isOk())
-                .andDo(document("delete-admin"));
+        performDelete("/admin/user", "delete-admin", "userId", user1.getId().toString());
     }
 
     @Test
@@ -185,62 +177,36 @@ class AdminControllerImplTest {
     void setManager() throws Exception{
         MultiValueMap<String, String> body = new LinkedMultiValueMap<>();
         body.add("boardId", String.valueOf(board.getId()));
-        body.add("targetUserId", String.valueOf(user1.getId()));
-        mockMvc.perform(post("/admin/manager")
-                        .params(body)
-                        .header("Authorization", "Bearer access0"))
-                .andExpect(status().isOk())
-                .andDo(document("set-manager"))
-        ;
+        body.add("userId", String.valueOf(user1.getId()));
+        performPostWithParams("/admin/manager", "set-manager", body);
     }
 
     @Test
     @Transactional
     @DisplayName("매니저 삭제")
     void deleteManager() throws Exception{
-        boardService.setManager(board, user1);
-        mockMvc.perform(delete("/admin/manager")
-                        .param("boardId", String.valueOf(board.getId()))
-                        .header("Authorization", "Bearer access0"))
-                .andExpect(status().isOk())
-                .andDo(document("delete-manager"))
-        ;
+        performDelete("/admin/manager", "delete-manager", "boardId", String.valueOf(board.getId()));
     }
 
     @Test
     @Transactional
     @DisplayName("게시판 삭제")
     void deleteBoard() throws Exception{
-        mockMvc.perform(delete("/admin/delete/board")
-                        .param("boardId", String.valueOf(board.getId()))
-                        .header("Authorization", "Bearer access0"))
-                .andExpect(status().isOk())
-                .andDo(document("delete-board"))
-        ;
+        performDelete("/admin/board", "delete-board", "boardId", String.valueOf(board.getId()));
     }
 
     @Test
     @Transactional
     @DisplayName("게시글 삭제")
     void deletePost() throws Exception{
-        mockMvc.perform(delete("/admin/delete/post")
-                        .param("postId", String.valueOf(post.getId()))
-                        .header("Authorization", "Bearer access0"))
-                .andExpect(status().isOk())
-                .andDo(document("delete-post"))
-        ;
+        performDelete("/admin/post", "delete-post", "postId", post.getId().toString());
     }
 
     @Test
     @Transactional
     @DisplayName("댓글 삭제")
     void deleteComment() throws Exception {
-        mockMvc.perform(delete("/admin/delete/comment")
-                        .param("commentId", String.valueOf(comment.getId()))
-                        .header("Authorization", "Bearer access0"))
-                .andExpect(status().isOk())
-                .andDo(document("delete-comment"))
-        ;
+        performDelete("/admin/comment", "delete-comment", "commentId", comment.getId().toString());
     }
 
     @Test
@@ -249,11 +215,7 @@ class AdminControllerImplTest {
     void findAllManagers() throws Exception{
         boardService.save(user2, "something");
         boardService.save(user1, "wow");
-        mockMvc.perform(get("/admin/manager")
-                        .header("Authorization", "Bearer access0"))
-                .andExpect(status().isOk())
-                .andDo(document("all-board"))
-        ;
+        performGet("/admin/manager", "all-manager", " ", " ");
     }
 
     @Test
@@ -264,13 +226,7 @@ class AdminControllerImplTest {
         Post blockedPost = postService.save(board,user,"title", "content", false);
         blockedPost.setBlameCnt(5L);
         blockedPost.setIsDel(0);
-        postService.restorePost(blockedPost);
-        mockMvc.perform(post("/admin/restore/post")
-                        .param("postId", blockedPost.getId().toString())
-                        .header("Authorization", "Bearer access0"))
-                .andExpect(status().isOk())
-                .andDo(document("all-board"))
-        ;
+        performPost("/admin/restore/post", "unblock-post", "postId", post.getId().toString());
     }
 
     @Test
@@ -279,82 +235,103 @@ class AdminControllerImplTest {
     void unBlockPost_Admin() throws Exception{
         /* 관리자에 의해 삭제 */
         Post blockedPost = postService.save(board,user,"title", "content", false);
-        blockedPost.setIsDel(3);
+        postService.delete(blockedPost, 3);
+        Post blockedPost1 = postService.findById(blockedPost.getId());
+        performPost("/admin/restore/post", "unblock-post", "postId", blockedPost1.getId().toString());
+    }
 
-        postService.restorePost(blockedPost);
-        mockMvc.perform(post("/admin/restore/post")
-                        .param("postId", blockedPost.getId().toString())
+    @Test
+    @Transactional
+    @DisplayName("차단된 게시글 조회")
+    void blockedPost() throws Exception {
+        performGet("/admin/blocked/post", "get-blocked-post", " ", " ");
+    }
+
+    @Test
+    @Transactional
+    @DisplayName("차단된 댓글 조회")
+    void blockedComment() throws Exception {
+        comment.setIsDel(3);
+        performGet("/admin/blocked/comment", "get-blocked-comment", " ", " ");
+    }
+
+    @Test
+    @Transactional
+    @DisplayName("삭제된 게시판 조회")
+    void deletedBoard() throws Exception{
+        Board delBoard = boardService.save(user2, "hi");
+        delBoard.setIsDel(3);
+        performGet("/admin/deleted/board", "get-deleted-board", " ", " ");
+    }
+
+    @Test
+    @Transactional
+    @DisplayName("삭제된 게시글 조회")
+    void deletedPost() throws Exception {
+        comment.setIsDel(1);
+        performGet("/admin/deleted/post", "get-deleted-post", " ", " ");
+
+    }
+
+    @Test
+    @Transactional
+    @DisplayName("삭제된 댓글 조회")
+    void deletedComment() throws Exception{
+        performGet("/admin/deleted/comment", "get-deleted-comment", " ", " ");
+
+    }
+
+    @Test
+    @Transactional
+    @DisplayName("신고된 게시글 조회")
+    void blamedPost() throws Exception{
+        postService.addBlameCnt(post.getId());
+        performGet("/admin/blamed/post", "get-blamed-post", " ", " ");
+
+    }
+
+    @Test
+    @Transactional
+    @DisplayName("신고된 댓글 조회")
+    void blamedComment() throws Exception{
+        commentService.addBlameCnt(comment.getId());
+        performGet("/admin/blamed/comment", "get-blamed-comment", " ", " ");
+
+    }
+
+    private void performPost(String uri, String docName, String paramName, String param) throws Exception{
+        mockMvc.perform(post(uri)
+                        .param(paramName, param)
                         .header("Authorization", "Bearer access0"))
                 .andExpect(status().isOk())
-                .andDo(document("all-board"))
+                .andDo(document("admin/" + docName))
         ;
     }
 
-    @Test
-    void allUsers() {
+    private void performPostWithParams(String uri, String docName, MultiValueMap<String, String> params) throws Exception{
+        mockMvc.perform(post(uri)
+                        .params(params)
+                        .header("Authorization", "Bearer access0"))
+                .andExpect(status().isOk())
+                .andDo(document("admin/" + docName))
+        ;
     }
 
-    @Test
-    void registerAdmin() {
+    private void performGet(String uri, String docName, String paramName, String param) throws Exception{
+        mockMvc.perform(get(uri)
+                        .param(paramName, param)
+                        .header("Authorization", "Bearer access0"))
+                .andExpect(status().isOk())
+                .andDo(document("admin/" + docName))
+        ;
     }
 
-    @Test
-    void unRegisterAdmin() {
-    }
-
-    @Test
-    void registerManager() {
-    }
-
-    @Test
-    void unRegisterManager() {
-    }
-
-    @Test
-    void blockedPost() {
-    }
-
-    @Test
-    void blockedComment() {
-    }
-
-    @Test
-    void deletedBoard() {
-    }
-
-    @Test
-    void deletedPost() {
-    }
-
-    @Test
-    void deletedComment() {
-    }
-
-    @Test
-    void blamedPost() {
-    }
-
-    @Test
-    void blamedComment() {
-    }
-
-    @Test
-    void testDeleteBoard() {
-    }
-
-    @Test
-    void testDeletePost() {
-    }
-
-    @Test
-    void testDeleteComment() {
-    }
-
-    @Test
-    void restorePost() {
-    }
-
-    @Test
-    void restoreComment() {
+    private void performDelete(String uri, String docName, String paramName, String param) throws Exception{
+        mockMvc.perform(delete(uri)
+                        .param(paramName, param)
+                        .header("Authorization", "Bearer access0"))
+                .andExpect(status().isOk())
+                .andDo(document("admin/" + docName))
+        ;
     }
 }

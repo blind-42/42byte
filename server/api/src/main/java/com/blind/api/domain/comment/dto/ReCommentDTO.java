@@ -35,7 +35,7 @@ public class ReCommentDTO {
                 .postId(comment.getPost().getId())
                 .authorId(HashUtil.getHashId(comment.getAuthorId(), comment.getPost().getId()))
                 .rootCommentId(comment.getRootCommentId())
-                .targetAuthorId(comment.getTargetAuthorId())
+                .targetAuthorId(HashUtil.getHashId(comment.getTargetAuthorId(), comment.getPost().getId()))
                 .content(comment.getContent())
                 .likeCnt(comment.getLikeCnt())
                 .isAuthor(comment.getIsAuthor())

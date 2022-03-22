@@ -255,10 +255,42 @@ class PostControllerTest {
         postService.save(board, user, "title", "content", false);
         postService.save(board, user, "title", "content", false);
         postService.save(board, user, "title", "content", false);
-        mockMvc.perform(get("/mypage/post")
-                .header("Authorization", "Bearer access"))
+        performGet("/mypage/post", "post-mypage", " ", " ");
+    }
+
+    private void performPost(String uri, String docName, String paramName, String param) throws Exception{
+        mockMvc.perform(post(uri)
+                        .param(paramName, param)
+                        .header("Authorization", "Bearer access0"))
                 .andExpect(status().isOk())
-                .andDo(document("post-mypage"))
-                ;
+                .andDo(document("admin/" + docName))
+        ;
+    }
+
+    private void performPostWithParams(String uri, String docName, MultiValueMap<String, String> params) throws Exception{
+        mockMvc.perform(post(uri)
+                        .params(params)
+                        .header("Authorization", "Bearer access0"))
+                .andExpect(status().isOk())
+                .andDo(document("admin/" + docName))
+        ;
+    }
+
+    private void performGet(String uri, String docName, String paramName, String param) throws Exception{
+        mockMvc.perform(get(uri)
+                        .param(paramName, param)
+                        .header("Authorization", "Bearer access0"))
+                .andExpect(status().isOk())
+                .andDo(document("admin/" + docName))
+        ;
+    }
+
+    private void performDelete(String uri, String docName, String paramName, String param) throws Exception{
+        mockMvc.perform(delete(uri)
+                        .param(paramName, param)
+                        .header("Authorization", "Bearer access0"))
+                .andExpect(status().isOk())
+                .andDo(document("admin/" + docName))
+        ;
     }
 }

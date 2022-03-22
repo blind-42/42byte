@@ -38,6 +38,7 @@ public class LikeControllerImpl implements LikeController {
     public void postLike(Long postId, HttpServletRequest request){
         Post post = postService.findById(postId);
         User user = tokenService.findUserByAccessToken(HeaderUtil.getAccessToken(request));
+        User postUser = userService.findById(post.getAuthorId());
         if (likeService.checkPostLike(post, user) == false) {
             likeService.PostLike(post, user, 0L);
             postService.updateLike(post.getId(), 1L);
@@ -48,7 +49,7 @@ public class LikeControllerImpl implements LikeController {
         }
         /*좋아요 10개 이상이면 핫 게시물 등록*/
         if (post.getLikeCnt() >= 9 && post.getHotDateTime() == null) {
-            notificationService.save(user, post, "post", post.getTitle(), "Hot 게시물 선정");
+            notificationService.save(postUser, post, "post", post.getTitle(), "Hot 게시물 선정");
             userService.setCheck(userService.findById(post.getAuthorId()));
             postService.setHot(post);
         }
