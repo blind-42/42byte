@@ -117,5 +117,5 @@ export interface NotificationDetail {
   title: string;
   content: string;
   isChecked: boolean;
-  modifiedDate: string;
+  createdDate: string;
 }

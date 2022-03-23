@@ -27,8 +27,8 @@ export const LogoImg = styled.div`
 export const MainIconWrap = styled.div`
   position: absolute;
   z-index: 1;
-  top: 2rem;
-  left: 2rem;
+  top: 1.5rem;
+  left: 1rem;
   display: grid;
   grid-template-rows: repeat(6, auto);
   grid-auto-flow: column;
@@ -38,12 +38,16 @@ export const MainIconWrap = styled.div`
   place-content: start start;
   ${({ theme }) => theme.media.tablet`
 		top: 1rem;
-		left: 1rem;
+		left: 0.7rem;
+		row-gap: 1rem;
+		column-gap: 0.7rem;
 		grid-template-rows: repeat(6, auto);
 	`}
   ${({ theme }) => theme.media.desktop`
 		top: 1rem;
-		left: 1rem;
+		left: 0.7rem;
+		row-gap: 1rem;
+		column-gap: 0.7rem;
 		grid-template-rows: repeat(6, auto);
 	`}
 `;
@@ -93,7 +97,7 @@ export const AdminPageButton = styled.div`
   cursor: pointer;
   position: absolute;
   z-index: 0;
-  bottom: 5rem;
+  bottom: 6rem;
   right: 2rem;
   display: flex;
   flex-direction: column;

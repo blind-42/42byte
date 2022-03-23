@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useQuery } from 'react-query';
 import { useNavigate } from 'react-router-dom';
+import { useMediaQuery } from 'react-responsive';
 import Menubar from 'components/Menubar/Menubar';
 import Notificationbar from 'components/Notificationbar/Notificationbar';
 import instance from 'utils/functions/axios';
@@ -8,9 +9,11 @@ import Clock from './Clock';
 import { NotificationData } from 'utils/functions/type';
 import {
   HeaderContainer,
-  MenubarLogoWrap,
+  MenubarNotificationWrap,
+  LogoClockWrap,
   MenubarButton,
   UtilButton,
+  Logo,
   HeaderBackdrop,
 } from './styled';
 
@@ -37,6 +40,10 @@ export default function Header() {
     },
   );
 
+  const isMobile = useMediaQuery({
+    query: '(max-width:767px)',
+  });
+
   const showMenubarHandler = () => {
     setShowMenu(!showMenu);
   };
@@ -48,16 +55,13 @@ export default function Header() {
   return (
     <>
       <HeaderContainer>
-        <MenubarLogoWrap>
+        <MenubarNotificationWrap>
           <MenubarButton onClick={showMenubarHandler}>MENU</MenubarButton>
           {showMenu && (
             <HeaderBackdrop onClick={showMenubarHandler}>
               <Menubar menubarHandler={showMenubarHandler} />
             </HeaderBackdrop>
           )}
-          <UtilButton onClick={() => navigate('/')}>
-            <img src="images/BLogo.png" alt="LOGO" />
-          </UtilButton>
           {total ? (
             <UtilButton onClick={showNotificationHandler}>
               <img src="images/notice_on.png" alt="notice" />
@@ -76,8 +80,17 @@ export default function Header() {
               />
             </HeaderBackdrop>
           )}
-        </MenubarLogoWrap>
-        <Clock />
+        </MenubarNotificationWrap>
+        <LogoClockWrap>
+          <Logo onClick={() => navigate('/')}>
+            {isMobile ? (
+              <img src="images/BLogo.png" alt="LOGO" />
+            ) : (
+              <img src="images/42byteLogo.png" alt="LOGO" />
+            )}
+          </Logo>
+          <Clock />
+        </LogoClockWrap>
       </HeaderContainer>
     </>
   );

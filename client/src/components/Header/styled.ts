@@ -20,9 +20,14 @@ export const HeaderContainer = styled.div`
 	`}
 `;
 
-export const MenubarLogoWrap = styled.div`
+export const MenubarNotificationWrap = styled.div`
   display: flex;
   justify-content: flex-start;
+`;
+
+export const LogoClockWrap = styled.div`
+  display: flex;
+  justify-content: flex-end;
 `;
 
 export const MenubarButton = styled.div`
@@ -62,19 +67,42 @@ export const HeaderBackdrop = styled.div`
   height: 100vh;
 `;
 
+export const Logo = styled.div`
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 12px;
+  img {
+    height: 2.4rem;
+  }
+  ${({ theme }) => theme.media.tablet`
+		margin: 0 6px;
+		img {
+			height: 1.8rem;
+		}
+	`}
+  ${({ theme }) => theme.media.desktop`
+		margin: 0 6px;
+		img {
+			height: 1.8rem;
+		}
+	`}
+`;
+
 export const UtilButton = styled.div`
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-left: 3px;
+  margin: 0 3px;
   padding: 3px;
   border-top: solid 2px #fff;
   border-left: solid 2px #fff;
   border-right: solid 2px #000;
   border-bottom: solid 2px #000;
-  /* padding: 0 0.6rem; */
-  width: 3.7rem;
+  padding: 0 0.6rem;
+  // width: 3.7rem;
   img {
     height: 2rem;
   }
@@ -98,22 +126,8 @@ export const UtilButton = styled.div`
     background: #d5d5d5;
   }
   ${({ theme }) => theme.media.tablet`
-	width: 2.7rem;
-		img {
-			height: 1.3rem;
-		}
-		div {
-			margin-left: 1.3rem;
-			margin-bottom: 0.5rem;
-			font-size: 0.7rem;
-			font-weight: 500;
-			width: 0.9rem;
-			height: 0.9rem;
-		}
-	`}
-  ${({ theme }) => theme.media.desktop`
-		// padding: 0 0.6rem;
-		width: 2.7rem;
+		padding: 0 0.5rem;
+		// width: 2.7rem;
 		img {
 			height: 1.4rem;
 		}
@@ -121,7 +135,20 @@ export const UtilButton = styled.div`
 			margin-left: 1.3rem;
 			margin-bottom: 0.5rem;
 			font-size: 0.7rem;
-			font-weight: 500;
+			width: 0.9rem;
+			height: 0.9rem;
+		}
+	`}
+  ${({ theme }) => theme.media.desktop`
+		padding: 0 0.5rem;
+		// width: 2.7rem;
+		img {
+			height: 1.4rem;
+		}
+		div {
+			margin-left: 1.3rem;
+			margin-bottom: 0.5rem;
+			font-size: 0.7rem;
 			width: 1rem;
 			height: 1rem;
 		}
