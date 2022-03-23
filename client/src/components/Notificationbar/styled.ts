@@ -14,11 +14,11 @@ export const NotificationContainer = styled.div`
   border-right: solid 2px #000;
   border-bottom: solid 2px #000;
   ${({ theme }) => theme.media.tablet`
-		left: 8.5rem;
+		left: 5.5rem;
 		bottom: 2.5rem;
 	`}
   ${({ theme }) => theme.media.desktop`
-		left: 8.5rem;
+		left: 5.5rem;
 		bottom: 2.5rem;
 	`}
 `;

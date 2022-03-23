@@ -14,7 +14,7 @@ type GreetingProps = {
   notificationDetail: NotificationDetail;
 };
 export default function Notification({ notificationDetail }: GreetingProps) {
-  const { id, postId, contentType, title, content, isChecked, modifiedDate } =
+  const { id, postId, contentType, title, content, isChecked, createdDate } =
     notificationDetail;
   const mutationPut = useMutation(({ path }: { path: string }) =>
     instance.put(path),
@@ -70,7 +70,7 @@ export default function Notification({ notificationDetail }: GreetingProps) {
           </NotificationPhrase>
           <ContentDetailWrap>
             <div>{stringLimit(content, 12)}</div>
-            <div>{timeForToday(modifiedDate, 'notification')}</div>
+            <div>{timeForToday(createdDate, 'notification')}</div>
           </ContentDetailWrap>
         </ContentWrap>
         <DeleteButton onClick={deleteNotificationHandler}>&times;</DeleteButton>
