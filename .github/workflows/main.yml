@@ -18,6 +18,18 @@ jobs:
         run: npm install
         working-directory: ./client
 
+      - name: ls in client
+        run: ls -la
+        working-directory: ./client
+
+      - name: ls in build
+        run: ls -la
+        working-directory: ./client/build
+
+      - name: pwd in build
+        run: pwd
+        working-directory: ./client/build
+
       - name: build
         env:
           REACT_APP_ACCESS_ID: ${{ secrets.REACT_APP_ACCESS_ID }}
@@ -37,7 +49,7 @@ jobs:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_IAM_MANAGER_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_IAM_MANAGER_SECRET_ACCESS_KEY }}
           AWS_REGION: ${{ secrets.AWS_BUCKET_REGION }}
-          # SOURCE_DIR: '/home/runner/work/blind-42/42byte/client/build'
+          SOURCE_DIR: '/home/runner/work/42byte/client/build'
 
       - name: 캐시 무효화
         env:
