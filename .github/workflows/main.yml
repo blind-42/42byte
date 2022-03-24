@@ -37,7 +37,7 @@ jobs:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_IAM_MANAGER_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_IAM_MANAGER_SECRET_ACCESS_KEY }}
           AWS_REGION: ${{ secrets.AWS_BUCKET_REGION }}
-          SOURCE_DIR: './client/build'
+          SOURCE_DIR: '/home/runner/work/42byte/42byte/client/build'
 
       - name: 캐시 무효화
         env:
