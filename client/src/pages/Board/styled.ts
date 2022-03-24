@@ -8,7 +8,7 @@ export const UtilWrap = styled.div`
   background: #c4c4c4;
   display: flex;
   align-items: center;
-  justify-content: end;
+  justify-content: flex-end;
   margin: 3px 3px 0 0;
   ${({ theme }) => theme.media.tablet`
 		margin: 3px 3px 6px 0;
