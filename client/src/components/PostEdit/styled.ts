@@ -3,6 +3,7 @@ import styled from 'styled-components';
 export const EditorContainer = styled.div`
   display: grid;
   grid-template-rows: 3.5rem auto;
+  margin-bottom: 4rem;
   ${({ theme }) => theme.media.tablet`
 		grid-template-rows: 2.5rem auto;
 	`}

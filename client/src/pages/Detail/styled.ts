@@ -17,6 +17,7 @@ export const PostContainer = styled.div`
 export const DetailContainer = styled.div`
   margin: 0.5rem;
   word-spacing: 0.02rem;
+  margin-bottom: 4rem;
 `;
 
 export const Title = styled.div<{ state?: boolean }>`
