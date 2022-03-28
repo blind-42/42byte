@@ -21,6 +21,7 @@ export const PageContainer = styled.div`
   width: 100vw;
   background: #c4c4c4;
   padding: 3px;
+  height: calc(100% - 4rem);
   ${({ theme }) => theme.media.tablet`
 		margin: auto 0;
 		width: 90vw;
@@ -38,7 +39,7 @@ export const PageContainer = styled.div`
 		border-left: solid 2px #fff;
 		border-right: solid 2px #000;
 		border-bottom: solid 2px #000;
-	`}
+	`};
 `;
 
 export const TopBar = styled.div<{ err?: boolean }>`
