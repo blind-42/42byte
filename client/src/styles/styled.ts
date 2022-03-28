@@ -5,8 +5,8 @@ export const AppContainer = styled.div`
   grid-template-rows: 1fr 4rem;
   justify-items: center;
   background: #6bb8f0;
-  /* height: 100vh; */
   height: 100%;
+  margin-bottom: 4rem;
   input[type='button'] {
     -webkit-appearance: none;
   }
