@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 export const NotificationContainer = styled.div`
-  position: absolute;
+  position: fixed;
   bottom: 4rem;
   left: 0;
   padding: 3px;

@@ -8,7 +8,7 @@ export const UtilPostWrap = styled.div`
 	`}
   ${({ theme }) => theme.media.desktop`
 		grid-template-rows: 1.8rem auto;
-	`}
+	`};
 `;
 
 export const UtilWrap = styled.div`
