@@ -58,10 +58,10 @@ public class NotificationService {
 
     @Transactional
     public void updateNoti(User rootUser, Post post) {
-        if (rootUser.getIsNotification() == true) {
+        if (rootUser.getIsNotification() == false) {
             Noti noti = notificationRepository.findByUserAndPost(rootUser, post);
             if (noti != null)
-                notificationRepository.deleteById(post.getId());
+                notificationRepository.delete(noti);
         }
     }
 
