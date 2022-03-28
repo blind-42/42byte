@@ -72,6 +72,7 @@ export const GlobalStyle = createGlobalStyle`
   html {
     /* 모바일버전 rem 상대단위 기준점 */
     font-size: 12px;
+    height: 100%;
   }
 
   body {
@@ -81,6 +82,7 @@ export const GlobalStyle = createGlobalStyle`
     -moz-osx-font-smoothing: grayscale;
     color: var(--color-black);
     position: relative;
+    height: 100%;
   }
 
   input[type='email'],
@@ -97,5 +99,8 @@ export const GlobalStyle = createGlobalStyle`
     html {
       font-size: 16px;
     }
+  }
+  #root {
+    height: 100%;
   }
 `;
