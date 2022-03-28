@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { useState } from 'react';
 import { CommentInputWrap } from './styled';
 
@@ -24,6 +25,10 @@ export default function CommentInput({
   // 		setComment('')
   // 	}
   // }
+
+  useEffect(() => {
+    if (defaultContent) setComment(defaultContent);
+  }, []);
 
   const submitValidHandler = () => {
     submitCmtHandler(comment);
