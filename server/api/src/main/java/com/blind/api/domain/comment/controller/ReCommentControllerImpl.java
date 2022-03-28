@@ -49,6 +49,7 @@ public class ReCommentControllerImpl implements ReCommentController {
         if (pstAuthor.getId() != user.getId()) {
             notificationService.updateNoti(pstAuthor, post);
             notificationService.save(pstAuthor, post, "post", post.getTitle(), requestDTO.getContent());
+            userService.setCheck(pstAuthor);
         }
         /*알림 보내기 -> 타겟 댓글 작성자(새로운 댓글)*/
         if (targetAuthor.getId() != user.getId()) {
@@ -57,7 +58,7 @@ public class ReCommentControllerImpl implements ReCommentController {
             userService.setCheck(targetAuthor);
         }
         /*알림 보내기 -> 루트 댓글 작성자(새로운 댓글)*/
-        if (targetCmmt.getAuthorId() != rootCmmt.getAuthorId() && rootAuthor.getId() != user.getId()) {
+        if (targetAuthor.getId() != rootCmmt.getAuthorId() && rootAuthor.getId() != user.getId()) {
             notificationService.updateNoti(rootAuthor, post);
             notificationService.save(rootAuthor, post, "comment", rootCmmt.getContent(), requestDTO.getContent());
             userService.setCheck(rootAuthor);
