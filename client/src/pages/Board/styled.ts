@@ -2,6 +2,7 @@ import styled from 'styled-components';
 
 export const UtilPostWrap = styled.div`
   display: grid;
+  margin-bottom: 4rem;
 `;
 
 export const UtilWrap = styled.div`
