@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useQueryClient, useMutation } from 'react-query';
 import instance from 'utils/functions/axios';
 import DropdownMenu from 'components/DropdownMenu/DropdownMenu';
@@ -64,6 +64,18 @@ function ReComments({ roleType, recomment, commentsUserList }: GreetingProps) {
     ({ path, data }: { path: string; data?: object }) =>
       instance.put(path, data),
   );
+
+  useEffect(() => {
+    if (openReReCmt) {
+      window.addEventListener(
+        'click',
+        () => {
+          setOpenReReCmt(false);
+        },
+        { once: true },
+      );
+    }
+  });
 
   const modifyCmtHandler = () => {
     setOpenEditor(!openEditor);
@@ -239,7 +251,7 @@ function ReComments({ roleType, recomment, commentsUserList }: GreetingProps) {
         <>
           <GLine />
           <FLine />
-          <RecommentContainer>
+          <RecommentContainer onClick={(e) => e.stopPropagation()}>
             <span>&#8627;</span>
             <ReCommentWrap>
               <CommentInput
