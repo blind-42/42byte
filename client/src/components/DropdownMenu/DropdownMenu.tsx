@@ -1,9 +1,8 @@
-import React, { useState, useRef, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { IoEllipsisVerticalOutline } from 'react-icons/io5';
 import ReportModal from 'components/Modal/ReportModal';
 import DeleteModal from 'components/Modal/DeleteModal';
 import { DropdownWrap, HamburgerButton, DropdownBox, MenuList } from './styled';
-import { ALL } from 'dns';
 
 type GreetingProps = {
   isPost: boolean;
@@ -30,10 +29,6 @@ export default function DropdownMenu({
   const [openDeleteModal, setOpenDeleteModal] = useState<boolean>(false);
   const [openReportModal, setOpenReportModal] = useState<boolean>(false);
 
-  const dropdownHandler = () => {
-    setOpenDropdown(!openDropdown);
-  };
-
   useEffect(() => {
     if (openDropdown) {
       window.addEventListener(
@@ -45,6 +40,10 @@ export default function DropdownMenu({
       );
     }
   });
+
+  const dropdownHandler = () => {
+    setOpenDropdown(!openDropdown);
+  };
 
   const deleteModalHandler = () => {
     setOpenDropdown(false);

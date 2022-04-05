@@ -1,5 +1,5 @@
 import React from 'react';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useQueryClient, useMutation } from 'react-query';
 import instance from 'utils/functions/axios';
 import DropdownMenu from 'components/DropdownMenu/DropdownMenu';
@@ -32,7 +32,6 @@ type GreetingProps = {
   roleType: string;
   comment: CommentData;
   commentsUserList: number[];
-  // setReRender: React.Dispatch<React.SetStateAction<boolean>>
 };
 
 function Comments({ roleType, comment, commentsUserList }: GreetingProps) {
@@ -68,6 +67,18 @@ function Comments({ roleType, comment, commentsUserList }: GreetingProps) {
     ({ path, data }: { path: string; data?: object }) =>
       instance.put(path, data),
   );
+
+  useEffect(() => {
+    if (openReCmt) {
+      window.addEventListener(
+        'click',
+        () => {
+          setOpenReCmt(false);
+        },
+        { once: true },
+      );
+    }
+  });
 
   const modifyCmtHandler = () => {
     setOpenEditor(!openEditor);
@@ -226,7 +237,7 @@ function Comments({ roleType, comment, commentsUserList }: GreetingProps) {
         <>
           <GLine />
           <FLine />
-          <RecommentContainer>
+          <RecommentContainer onClick={(e) => e.stopPropagation()}>
             <span>&#8627;</span>
             <ReCommentWrap>
               <CommentInput

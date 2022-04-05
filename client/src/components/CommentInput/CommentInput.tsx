@@ -15,20 +15,13 @@ export default function CommentInput({
 }: Props) {
   const [comment, setComment] = useState<string>('');
 
-  const newCmtInputHandler = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    setComment(e.target.value);
-  };
-
-  // const submitKeyboardHandler = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
-  // 	if (e.key === 'Enter') {
-  // 		submitCmtHandler(comment)
-  // 		setComment('')
-  // 	}
-  // }
-
   useEffect(() => {
     if (defaultContent) setComment(defaultContent);
   }, []);
+
+  const newCmtInputHandler = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    setComment(e.target.value);
+  };
 
   const submitValidHandler = () => {
     submitCmtHandler(comment);
