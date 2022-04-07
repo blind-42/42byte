@@ -158,7 +158,6 @@ function Comments({ roleType, comment, commentsUserList }: GreetingProps) {
       },
       {
         onSuccess: () => {
-          // queryClient.invalidateQueries(['comment_key']);
           if (boxState) setUsersLikeCnt(usersLikeCnt - 1);
           else setUsersLikeCnt(usersLikeCnt + 1);
           setBoxState(!boxState);
