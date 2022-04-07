@@ -51,6 +51,7 @@ function Comments({ roleType, comment, commentsUserList }: GreetingProps) {
     recomments,
   } = comment;
   const [boxState, setBoxState] = useState<boolean>(isLiked);
+  const [usersLikeCnt, setUsersLikeCnt] = useState(likeCnt);
   const [openEditor, setOpenEditor] = useState<boolean>(false);
   const [openReCmt, setOpenReCmt] = useState<boolean>(false);
   const writer = whoIsWriter(isAuthor, commentsUserList, authorId);
@@ -157,7 +158,9 @@ function Comments({ roleType, comment, commentsUserList }: GreetingProps) {
       },
       {
         onSuccess: () => {
-          queryClient.invalidateQueries(['comment_key']);
+          // queryClient.invalidateQueries(['comment_key']);
+          if (boxState) setUsersLikeCnt(usersLikeCnt - 1);
+          else setUsersLikeCnt(usersLikeCnt + 1);
           setBoxState(!boxState);
         },
         onError: () => {
@@ -228,7 +231,7 @@ function Comments({ roleType, comment, commentsUserList }: GreetingProps) {
               <div>
                 <GrLike />
               </div>
-              <div>{likeCnt}</div>
+              <div>{usersLikeCnt}</div>
             </LikesBox>
           </CommentBottom>
         </CommentWrap>
