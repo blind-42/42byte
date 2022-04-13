@@ -97,13 +97,13 @@ export default function Menubar({ menubarHandler }: GreetingProps) {
                   (isLoggedIn ? (
                     <Link to={`/board?boardId=${el.id}`} key={idx}>
                       <div onClick={menubarHandler}>
-                        <img src="images/folder.png" />{' '}
+                        <img src="images/folder.png" alt='folder-img'/>{' '}
                         {stringLimit(el.name, 10)}
                       </div>
                     </Link>
                   ) : (
                     <div onClick={openLoginModalHandler}>
-                      <img src="images/folder.png" /> {stringLimit(el.name, 10)}
+                      <img src="images/folder.png" alt='folder-img'/> {stringLimit(el.name, 10)}
                     </div>
                   ))
                 );

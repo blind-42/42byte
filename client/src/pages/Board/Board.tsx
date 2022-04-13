@@ -119,7 +119,7 @@ export default function Board() {
                   <ContentWrap>
                     {success && !contents.length ? (
                       <NoPost>
-                        <img src="images/ghostWithPencil.png" />
+                        <img src="images/ghostWithPencil.png" alt='ghost-img'/>
                         등록된 게시글이 없습니다.
                         <br />
                         지금 바로 새로운 게시글을 등록해 보세요!
