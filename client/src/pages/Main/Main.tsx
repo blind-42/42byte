@@ -94,7 +94,7 @@ export default function Main() {
       <AppContainer>
         <PageContainer>
           <LogoImg>
-            <img src="images/42byteLogo.png" />
+            <img src="images/42byteLogo.png" alt='42byte-Logo'/>
           </LogoImg>
           <MainIconWrap>
             <MainIcon>
@@ -118,13 +118,13 @@ export default function Main() {
                 (isLoggedIn ? (
                   <MainIcon key={el.id}>
                     <Link to={`/board?boardId=${el.id}`}>
-                      <img src="images/folder.png" />
+                      <img src="images/folder.png" alt='folder-img'/>
                       <div>{stringLimit(el.name, 7)}</div>
                     </Link>
                   </MainIcon>
                 ) : (
                   <MainIcon onClick={openLoginModalHandler} key={el.id}>
-                    <img src="images/folder.png" />
+                    <img src="images/folder.png" alt='folder-img'/>
                     <div>{stringLimit(el.name, 7)}</div>
                   </MainIcon>
                 ))

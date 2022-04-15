@@ -125,7 +125,7 @@ export default function Board() {
                   <ContentWrap>
                     {success && !contents.length ? (
                       <NoPost>
-                        <img src="images/ghostWithPencil.png" />
+                        <img src="images/ghostWithPencil.png" alt='ghost-img'/>
                         검색 결과가 없습니다.
                       </NoPost>
                     ) : (

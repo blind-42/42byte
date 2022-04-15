@@ -42,7 +42,7 @@ function PostPreview({ postData }: GreetingProps) {
             )}
             {isImage && (
               <div>
-                <img src="images/image.png" />
+                <img src="images/image.png" alt='picture-img'/>
               </div>
             )}
             <div>[{commentCnt}]</div>
