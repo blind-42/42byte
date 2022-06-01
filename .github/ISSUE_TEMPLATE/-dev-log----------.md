@@ -2,7 +2,7 @@
 name: "[Dev-Log 마크다운 템플릿]"
 about: Dev-Log를 작성하는 마크다운 템플릿 입니다.
 title: "[Dev-Log]"
-labels: dev-log
+labels: ''
 assignees: ''
 
 ---
