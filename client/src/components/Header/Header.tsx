@@ -84,9 +84,9 @@ export default function Header() {
         <LogoClockWrap>
           <Logo onClick={() => navigate('/')}>
             {isMobile ? (
-              <img src="images/BLogo.png" alt="LOGO" />
+              <img src="images/BLogo.png" alt="B-Logo" />
             ) : (
-              <img src="images/42byteLogo.png" alt="LOGO" />
+              <img src="images/42byteLogo.png" alt="42byte-Logo" />
             )}
           </Logo>
           <Clock />

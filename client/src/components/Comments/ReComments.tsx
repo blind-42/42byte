@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useQueryClient, useMutation } from 'react-query';
 import instance from 'utils/functions/axios';
 import DropdownMenu from 'components/DropdownMenu/DropdownMenu';
@@ -48,6 +48,7 @@ function ReComments({ roleType, recomment, commentsUserList }: GreetingProps) {
     targetAuthorId,
   } = recomment;
   const [boxState, setBoxState] = useState<boolean>(isLiked);
+  const [usersLikeCnt, setUsersLikeCnt] = useState(likeCnt);
   const [openEditor, setOpenEditor] = useState<boolean>(false);
   const [openReReCmt, setOpenReReCmt] = useState<boolean>(false);
   const writer = whoIsWriter(isAuthor, commentsUserList, authorId);
@@ -64,6 +65,18 @@ function ReComments({ roleType, recomment, commentsUserList }: GreetingProps) {
     ({ path, data }: { path: string; data?: object }) =>
       instance.put(path, data),
   );
+
+  useEffect(() => {
+    if (openReReCmt) {
+      window.addEventListener(
+        'click',
+        () => {
+          setOpenReReCmt(false);
+        },
+        { once: true },
+      );
+    }
+  });
 
   const modifyCmtHandler = () => {
     setOpenEditor(!openEditor);
@@ -142,7 +155,8 @@ function ReComments({ roleType, recomment, commentsUserList }: GreetingProps) {
       },
       {
         onSuccess: () => {
-          queryClient.invalidateQueries(['comment_key']);
+          if (boxState) setUsersLikeCnt(usersLikeCnt - 1);
+          else setUsersLikeCnt(usersLikeCnt + 1);
           setBoxState(!boxState);
         },
         onError: () => {
@@ -229,7 +243,7 @@ function ReComments({ roleType, recomment, commentsUserList }: GreetingProps) {
                 <div>
                   <GrLike />
                 </div>
-                <div>{likeCnt}</div>
+                <div>{usersLikeCnt}</div>
               </LikesBox>
             </CommentBottom>
           </ReCommentWrap>
@@ -239,7 +253,7 @@ function ReComments({ roleType, recomment, commentsUserList }: GreetingProps) {
         <>
           <GLine />
           <FLine />
-          <RecommentContainer>
+          <RecommentContainer onClick={(e) => e.stopPropagation()}>
             <span>&#8627;</span>
             <ReCommentWrap>
               <CommentInput

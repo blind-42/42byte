@@ -81,7 +81,8 @@ export default function Detail() {
   const [commentData, setCommentData] = useState([]);
   const [commentsUserList, setCommentsUserList] = useState([-1]);
   const [commentTotalCnt, setCommentTotalCnt] = useState(0);
-  const [boxState, setBoxState] = useState(isLiked);
+  const [boxState, setBoxState] = useState(false);
+  const [usersLikeCnt, setUsersLikeCnt] = useState(0);
   const [openEditor, setOpenEditor] = useState(false);
   const currentUrl = window.location.href;
   const postUrl = currentUrl.split('postId=')[1];
@@ -102,10 +103,12 @@ export default function Detail() {
   );
   const results = useQueries([
     {
-      queryKey: ['detail_key', postUrl, boxState],
+      queryKey: ['detail_key', postUrl],
       queryFn: () => {
         instance.get(`/post?postId=${postUrl}`).then((res) => {
           setDetailData(res.data);
+          setBoxState(res.data.isLiked);
+          setUsersLikeCnt(res.data.likeCnt);
         });
       },
       retry: 0,
@@ -219,6 +222,8 @@ export default function Detail() {
       { path: `/post/like?postId=${postUrl}`, data: undefined },
       {
         onSuccess: () => {
+          if (boxState) setUsersLikeCnt(usersLikeCnt - 1);
+          else setUsersLikeCnt(usersLikeCnt + 1);
           setBoxState(!boxState);
         },
         onError: () => {
@@ -302,11 +307,11 @@ export default function Detail() {
                         </ContentWrap>
                       )}
                       <LikeWrap>
-                        <LikesBox boxState={isLiked} onClick={likeBoxHandler}>
+                        <LikesBox boxState={boxState} onClick={likeBoxHandler}>
                           <div>
                             <GrLike />
                           </div>
-                          <div>{likeCnt}</div>
+                          <div>{usersLikeCnt}</div>
                         </LikesBox>
                       </LikeWrap>
                       <CommentContainer>

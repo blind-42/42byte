@@ -1,5 +1,5 @@
 import React from 'react';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useQueryClient, useMutation } from 'react-query';
 import instance from 'utils/functions/axios';
 import DropdownMenu from 'components/DropdownMenu/DropdownMenu';
@@ -32,7 +32,6 @@ type GreetingProps = {
   roleType: string;
   comment: CommentData;
   commentsUserList: number[];
-  // setReRender: React.Dispatch<React.SetStateAction<boolean>>
 };
 
 function Comments({ roleType, comment, commentsUserList }: GreetingProps) {
@@ -52,6 +51,7 @@ function Comments({ roleType, comment, commentsUserList }: GreetingProps) {
     recomments,
   } = comment;
   const [boxState, setBoxState] = useState<boolean>(isLiked);
+  const [usersLikeCnt, setUsersLikeCnt] = useState(likeCnt);
   const [openEditor, setOpenEditor] = useState<boolean>(false);
   const [openReCmt, setOpenReCmt] = useState<boolean>(false);
   const writer = whoIsWriter(isAuthor, commentsUserList, authorId);
@@ -68,6 +68,18 @@ function Comments({ roleType, comment, commentsUserList }: GreetingProps) {
     ({ path, data }: { path: string; data?: object }) =>
       instance.put(path, data),
   );
+
+  useEffect(() => {
+    if (openReCmt) {
+      window.addEventListener(
+        'click',
+        () => {
+          setOpenReCmt(false);
+        },
+        { once: true },
+      );
+    }
+  });
 
   const modifyCmtHandler = () => {
     setOpenEditor(!openEditor);
@@ -146,7 +158,8 @@ function Comments({ roleType, comment, commentsUserList }: GreetingProps) {
       },
       {
         onSuccess: () => {
-          queryClient.invalidateQueries(['comment_key']);
+          if (boxState) setUsersLikeCnt(usersLikeCnt - 1);
+          else setUsersLikeCnt(usersLikeCnt + 1);
           setBoxState(!boxState);
         },
         onError: () => {
@@ -217,7 +230,7 @@ function Comments({ roleType, comment, commentsUserList }: GreetingProps) {
               <div>
                 <GrLike />
               </div>
-              <div>{likeCnt}</div>
+              <div>{usersLikeCnt}</div>
             </LikesBox>
           </CommentBottom>
         </CommentWrap>
@@ -226,7 +239,7 @@ function Comments({ roleType, comment, commentsUserList }: GreetingProps) {
         <>
           <GLine />
           <FLine />
-          <RecommentContainer>
+          <RecommentContainer onClick={(e) => e.stopPropagation()}>
             <span>&#8627;</span>
             <ReCommentWrap>
               <CommentInput
