@@ -1,4 +1,3 @@
-import { Link } from 'react-router-dom';
 import { PageName, Squares, TopBar } from 'styles/styled';
 import {
   ModalBackdrop,
