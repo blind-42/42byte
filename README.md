@@ -1,4 +1,4 @@
-<div align=center><img src="https://capsule-render.vercel.app/api?type=slice&text=%20개발바닥%20&desc=Web%20Development%20Team&fontSize=36&height=130&fontAlign=82&descAlign=81&fontAlignY=17&descAlignY=37&rotate=8&descrotate=8&animation=fadeIn&color=gradient&customColorList=3" width=2000></div><br><br>
+<div align=center><img src="https://capsule-render.vercel.app/api?type=slice&text=%2042byte%20&desc=Web%20Development%20Team&fontSize=36&height=130&fontAlign=82&descAlign=81&fontAlignY=17&descAlignY=37&rotate=8&descrotate=8&animation=fadeIn&color=gradient&customColorList=3" width=2000></div><br><br>
 
 <!-- Logo -->
 <p align="center">
