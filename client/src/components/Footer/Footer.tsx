@@ -1,5 +1,3 @@
-import { AiFillAlert } from 'react-icons/ai';
-import { FaGithubAlt } from 'react-icons/fa';
 import { FooterWrap, GitLink, Names, Copyright } from './styled';
 
 function Footer() {
@@ -8,14 +6,12 @@ function Footer() {
       <FooterWrap>
         <GitLink>
           <div>
-            <a href="https://github.com/blind-42/Blind42/wiki/정책-정의서(1.3-update)">
-              {/* <AiFillAlert /> */}
+            <a href="https://github.com/blind-42/42byte/wiki/%EC%A0%95%EC%B1%85-%EC%A0%95%EC%9D%98%EC%84%9C">
               <img src="images/scroll.png" alt="scroll-img" />
             </a>
           </div>
           <div>
             <a href="https://github.com/blind-42/Blind42">
-              {/* <FaGithubAlt /> */}
               <img src="images/githubLogo.png" alt="githubLogo-img" />
             </a>
           </div>
