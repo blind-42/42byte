@@ -84,7 +84,7 @@ export default function DropdownMenu({
               <MenuList onClick={(e) => e.stopPropagation()}>
                 <div onClick={modifyHandler}>수정</div>
                 <div onClick={deleteModalHandler}>삭제</div>
-                {isPost && roleType === 'ADMIN' && (
+                {isPost && (roleType === 'ADMIN' || roleType === 'MANAGER') && (
                   <div onClick={noticeButtonHandler}>
                     {isNotice ? '공지 내리기' : '공지'}
                   </div>
@@ -93,10 +93,10 @@ export default function DropdownMenu({
             ) : (
               <MenuList onClick={(e) => e.stopPropagation()}>
                 <div onClick={reportModalHandler}>신고</div>
-                {roleType === 'ADMIN' && (
+                {(roleType === 'ADMIN' || roleType === 'MANAGER') && (
                   <div onClick={deleteModalHandler}>삭제</div>
                 )}
-                {isPost && roleType === 'ADMIN' && (
+                {isPost && (roleType === 'ADMIN' || roleType === 'MANAGER') && (
                   <div onClick={noticeButtonHandler}>
                     {isNotice ? '공지 내리기' : '공지'}
                   </div>
